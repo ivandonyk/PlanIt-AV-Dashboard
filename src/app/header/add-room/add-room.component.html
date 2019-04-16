@@ -1,0 +1,151 @@
+<div class="container">
+
+  <!--<mat-toolbar color="primary">-->
+  <!--<span>Add Building</span>-->
+  <!--</mat-toolbar>-->
+  <h1 mat-dialog-title>Add Room</h1>
+
+
+  <div mat-dialog-content>
+
+
+    <form [formGroup]="addRoomForm" (ngSubmit)="onSubmit()" class="form">
+
+      <!--pre-filled from building from the Building screen-->
+      <mat-form-field class="form-element">
+        <mat-select matInput placeholder="Building Name" formControlName="buildingName">
+          <mat-option *ngFor="let building of buildings" [value]="building">{{building}}</mat-option>
+          <!--<mat-error *ngIf="address2.invalid && (address2.dirty || address2.touched)">Address is too long</mat-error>-->
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Room Name" formControlName="roomName">
+        <mat-error
+          *ngIf="roomName.invalid && (roomName.dirty || roomName.touched)">{{getRoomNameErrorMessage()}}</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="form-element">
+      <mat-select placeholder="Room Type" formControlName="roomType">
+      <mat-option *ngFor="let roomType of roomType" [value]="roomType">{{roomType}}</mat-option>
+      </mat-select>
+      <!--<mat-error *ngIf="roomType.invalid && (state.dirty || state.touched)">State is required</mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-horizontal">
+        <mat-select matInput placeholder="Tier" formControlName="tier">
+        <mat-option *ngFor="let tier of tiers" [value]="tier">{{tier}}</mat-option>
+        <!--<mat-error *ngIf="address2.invalid && (address2.dirty || address2.touched)">Address is too long</mat-error>-->
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-horizontal">
+        <input matInput placeholder="Floor" formControlName="floor">
+        <!--<mat-error *ngIf="address2.invalid && (address2.dirty || address2.touched)">Address is too long</mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-horizontal">
+        <input matInput [matDatepicker]="datePicker1" placeholder="Last Remodel Date" formControlName="dateOfLastRemodel">
+        <mat-datepicker-toggle matSuffix [for]="datePicker1"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker1></mat-datepicker>
+      </mat-form-field>
+
+      <span layout="row"><h4>Room Details</h4></span>
+      <mat-divider></mat-divider>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Integrator" formControlName="integrator">
+        <!--<mat-error *ngIf="address2.invalid && (address2.dirty || address2.touched)">Address is too long</mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-element-half">
+        <mat-select placeholder="Seating Type" formControlName="seatingType">
+          <mat-option *ngFor="let seatingType of seatingTypes" [value]="seatingType">{{seatingType}}</mat-option>
+        </mat-select>
+        <!--<mat-error *ngIf="roomType.invalid && (state.dirty || state.touched)">State is required</mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-element-half">
+        <input matInput placeholder="Seating Capacity" formControlName="seatingCapacity">
+        <!--<mat-error *ngIf="address2.invalid && (address2.dirty || address2.touched)">Address is too long</mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-element-small">
+      <input matInput placeholder="Dimensions" formControlName="dimensions">
+    </mat-form-field>
+      <mat-form-field class="form-element-small">
+        <input matInput placeholder="Ceiling Height" formControlName="ceilingHeight">
+      </mat-form-field>
+
+      <mat-form-field class="form-element-small">
+        <mat-select placeholder="Ceiling Type" formControlName="ceilingType">
+          <mat-option *ngFor="let ceilingType of ceilingTypes" [value]="ceilingType">{{ceilingType}}</mat-option>
+        </mat-select>
+        <!--<mat-error *ngIf="roomType.invalid && (state.dirty || state.touched)">State is required</mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-element-small">
+        <input matInput [matDatepicker]="datePicker2" placeholder="Original Av Install" formControlName="origAvInstallDate">
+        <mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker2></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="form-element-small">
+        <input matInput placeholder="Original AV Cost" formControlName="origAvSysCost">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Original AV Contractor" formControlName="origAvContractor">
+        <!--<mat-error *ngIf="address2.invalid && (address2.dirty || address2.touched)">Address is too long</mat-error>-->
+      </mat-form-field>
+
+
+      <mat-form-field class="form-element-small">
+        <input matInput [matDatepicker]="datePicker3" placeholder="AV Last Update" formControlName="avLastUpdDate">
+        <mat-datepicker-toggle matSuffix [for]="datePicker3"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker3></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="form-element-small">
+        <input matInput placeholder="Last Update AV Cost" formControlName="avLastUpdCost">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Last Update AV Contractor" formControlName="lastAvUpdContractor">
+        <!--<mat-error *ngIf="address2.invalid && (address2.dirty || address2.touched)">Address is too long</mat-error>-->
+      </mat-form-field>
+
+      <mat-form-field class="form-element-small">
+        <input matInput placeholder="Next AV Update Year" formControlName="nextAvUpdate">
+      </mat-form-field>
+
+      <mat-form-field class="form-element-small">
+        <input matInput placeholder="Next AV Update Cost" formControlName="nextAvUpdEstCost">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <textarea matInput #input maxlength="1000" placeholder="Note" formControlName="notes"></textarea>
+        <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
+      </mat-form-field>
+
+
+    </form>
+    <!--</mat-card-content>-->
+  </div>
+<br/>
+  <div mat-dialog-actions>
+    <!--<button mat-raised-button color="primary" [disabled]="!addRoomForm.valid" (click)="onSubmit()" >Add</button>-->
+    <button mat-raised-button color="primary" (click)="onSubmit()" >Add</button>
+    <button mat-raised-button color="primary" (click)="revert()">Reset</button>
+    <button mat-raised-button color="primary" (click)="cancel()" >Cancel</button>
+
+  </div>
+
+
+
+</div>
+

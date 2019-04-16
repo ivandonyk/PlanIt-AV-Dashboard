@@ -1,0 +1,48 @@
+<mat-sidenav-container class="example-container">
+
+    <mat-sidenav opened mode="side" color="warn">
+
+    <mat-list>
+
+
+      <mat-list-item>
+        <a [routerLink]="[{ outlets: { 'sidebarRoute': ['dashboard'] } }]"><button mat-raised-button color="transparent" >  My Plan It</button> </a>
+        <!--<button mat-raised-button color="accent">-->
+        <!--Add Equipment-->
+        <!--</button>-->
+      </mat-list-item>
+
+
+      <mat-list-item>
+        <!-- <a [routerLink]="[{ outlets: { 'sidebarRoute': ['building'] } }]"><button mat-raised-button color="accent" > -->
+        <!--<button mat-raised-button color="accent" >-->
+        <!--Buildings-->
+        <!--</button>-->
+        Systems
+      </mat-list-item>
+
+      <mat-list-item>
+        Project Planning
+        <!--<button mat-raised-button color="accent">-->
+        <!--Rooms-->
+        <!--</button>-->
+      </mat-list-item>
+
+
+    <!--<mat-list-item>-->
+      <!--<a [routerLink]="[{ outlets: { 'sidebarRoute': ['building'] } }]"><button mat-raised-button color="accent" > Building </button>-->
+        <!--&lt;!&ndash;<button mat-raised-button color="accent" >&ndash;&gt;-->
+          <!--&lt;!&ndash;Buildings&ndash;&gt;-->
+        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+      <!--</a>-->
+    <!--</mat-list-item>-->
+
+    </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet name="sidebarRoute" ></router-outlet>
+     <!--<app-master-list></app-master-list>-->
+    </mat-sidenav-content>
+
+
+</mat-sidenav-container>
