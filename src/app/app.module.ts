@@ -14,6 +14,8 @@ import {
   MatSnackBarModule, MatSelectModule, MatDatepickerModule,
 } from '@angular/material';
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { RouterModule } from '@angular/router';
+
 
 // import { FlexLayoutModule} from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -40,6 +42,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { AddRoomComponent } from './header/add-room/add-room.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddEquipmentComponent } from './header/add-equipment/add-equipment.component';
+import { SystemsComponent } from './systems/systems.component';
+import { ProjectPlanningComponent } from './project-planning/project-planning.component';
 
 
 @NgModule({
@@ -56,6 +60,8 @@ import { AddEquipmentComponent } from './header/add-equipment/add-equipment.comp
     AddRoomComponent,
     DashboardComponent,
     AddEquipmentComponent,
+    SystemsComponent,
+    ProjectPlanningComponent
   ],
   entryComponents: [
     AddBuildingComponent,
@@ -86,6 +92,7 @@ import { AddEquipmentComponent } from './header/add-equipment/add-equipment.comp
     MatDatepickerModule,
     MatMomentDateModule,
     MatTableModule,
+    RouterModule.forRoot([])
     // FlexLayoutModule,
 
   ],

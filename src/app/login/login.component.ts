@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
     password : new FormControl(''),
 
   })
-  
+
   constructor(loginService: LoginService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
     //TODO : use eventemitter with form value
     console.log('In onSubmit...Yeah!');
     this.router.navigate(['/home']);
-
 
   }
 

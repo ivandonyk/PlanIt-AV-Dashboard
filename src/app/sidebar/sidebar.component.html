@@ -6,23 +6,32 @@
 
 
       <mat-list-item>
-        <a [routerLink]="[{ outlets: { 'sidebarRoute': ['dashboard'] } }]"><button mat-raised-button color="transparent" >  My Plan It</button> </a>
+        <a routerLink="/home/dashboard">
+          <button mat-raised-button color="transparent" >  My Plan It</button>
+        </a>
         <!--<button mat-raised-button color="accent">-->
         <!--Add Equipment-->
         <!--</button>-->
       </mat-list-item>
 
 
-      <mat-list-item>
+      <mat-list-item >
         <!-- <a [routerLink]="[{ outlets: { 'sidebarRoute': ['building'] } }]"><button mat-raised-button color="accent" > -->
         <!--<button mat-raised-button color="accent" >-->
         <!--Buildings-->
         <!--</button>-->
-        Systems
+        <a routerLink="/home/systems">
+          <button mat-raised-button color="transparent" >  Systems</button>
+        </a>
+
       </mat-list-item>
 
       <mat-list-item>
-        Project Planning
+
+        <a routerLink="/home/project-planning">
+          <button mat-raised-button color="transparent" >  Project Planning</button>
+        </a>
+
         <!--<button mat-raised-button color="accent">-->
         <!--Rooms-->
         <!--</button>-->
@@ -40,7 +49,7 @@
     </mat-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <router-outlet name="sidebarRoute" ></router-outlet>
+      <router-outlet  ></router-outlet>
      <!--<app-master-list></app-master-list>-->
     </mat-sidenav-content>
 
