@@ -4,6 +4,7 @@ export interface LoginResult{
     lastName: string;
     userName: string;
     role: string;
+    token: string;
     message: Number;
 
 }

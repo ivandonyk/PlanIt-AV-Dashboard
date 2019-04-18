@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Building } from '../interface/building.model';
+import { Building } from '../_models/building.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class BuildingService {
 
-  constructor(private httpClient: HttpClient) { 
-      
+  constructor(private httpClient: HttpClient) {
+
   }
 
   getBuildings(): Observable<Building[]>{

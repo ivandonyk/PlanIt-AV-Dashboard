@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent} from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import {ErrorPageComponent} from './error-page/error-page.component';
-import { SystemsComponent } from './systems/systems.component';
-import { ProjectPlanningComponent } from './project-planning/project-planning.component';
+import { LoginComponent} from './_pages/login/login.component';
+import { HomeComponent } from './_pages/home/home.component';
+import { DashboardComponent } from './_pages/dashboard/dashboard.component';
+import {ErrorPageComponent} from './_pages/error-page/error-page.component';
+import { SystemsComponent } from './_pages/systems/systems.component';
+import { ProjectPlanningComponent } from './_pages/project-planning/project-planning.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 
 const appRoutes: Routes = [
@@ -20,25 +21,26 @@ const appRoutes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',
-        component: DashboardComponent
+        component: DashboardComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'systems',
-        component: SystemsComponent
+        component: SystemsComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'project-planning',
-        component: ProjectPlanningComponent
+        component: ProjectPlanningComponent,
+        canActivate: [AuthGuard],
       }
     ]
   },
   { path: '**', redirectTo: '/login', pathMatch: 'full'},
-  // { path: 'master', outlet: 'sidebarRoute', component: MasterListComponent},
-  // { path: 'building', outlet: 'sidebarRoute', component: BuildingComponent},
-  // { path: '', redirectTo: '/login', pathMatch: 'full'},
 ];
 
 @NgModule({

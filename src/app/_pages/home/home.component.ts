@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarRoutesModule} from '../sidebar/sidebar-routes.module';
+import { SidebarRoutesModule} from '../../_components/sidebar/sidebar-routes.module';
 
 @Component({
   selector: 'app-home',

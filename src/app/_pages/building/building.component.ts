@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Building } from '../interface/building.model';
-import { BuildingService } from '../services/building.service';
+import { Building } from '../../_models/building.model';
+import { BuildingService } from '../../_services/building.service';
 import { MatTableDataSource} from '@angular/material';
 
 @Component({
@@ -13,9 +13,9 @@ export class BuildingComponent implements OnInit {
   displayedColumns: string[] = ['buildingSeqNbr','building', 'buildingDesc', 'location', 'businessAcctSeqNbr'];
   dataSource;
   buildings: Building[];
-  
-  constructor(private buildingService: BuildingService) { 
-    
+
+  constructor(private buildingService: BuildingService) {
+
 
   }
 

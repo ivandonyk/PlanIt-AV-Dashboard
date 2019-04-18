@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatDialogRef, MatSnackBar} from '@angular/material';
-import {HandleError} from '../../http-error-handler.service';
+import {HandleError} from '../../../_services/http-error-handler.service';
 import {AddBuildingService} from './add-building.service';
-import {AddBuildingFormModel} from '../../model/addBuildingFormModel';
-import {AddBuildingApiModel} from '../../model/addBuildingApiModel';
+import {AddBuildingFormModel} from '../../../_models/addBuildingFormModel';
+import {AddBuildingApiModel} from '../../../_models/addBuildingApiModel';
 
 
 @Component({

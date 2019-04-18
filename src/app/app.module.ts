@@ -15,6 +15,9 @@ import {
 } from '@angular/material';
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { fakeBackendProvider } from './_helpers/fake-backend';
 
 
 // import { FlexLayoutModule} from '@angular/flex-layout';
@@ -25,25 +28,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 
 
-
+// components
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { MasterListComponent } from './master-list/master-list.component';
+import { HeaderComponent } from './_components/header/header.component';
+import { SidebarComponent } from './_components/sidebar/sidebar.component';
+import { MasterListComponent } from './_pages/master-list/master-list.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
-import { BuildingComponent } from './building/building.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { AddBuildingComponent } from './header/add-building/add-building.component';
-import { HttpErrorHandler } from './http-error-handler.service';
-import {MessageService} from './message.service';
-import { ErrorPageComponent } from './error-page/error-page.component';
-import { AddRoomComponent } from './header/add-room/add-room.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AddEquipmentComponent } from './header/add-equipment/add-equipment.component';
-import { SystemsComponent } from './systems/systems.component';
-import { ProjectPlanningComponent } from './project-planning/project-planning.component';
+import { BuildingComponent } from './_pages/building/building.component';
+import { LoginComponent } from './_pages/login/login.component';
+import { HomeComponent } from './_pages/home/home.component';
+import { AddBuildingComponent } from './_components/header/add-building/add-building.component';
+import { HttpErrorHandler } from './_services/http-error-handler.service';
+import {MessageService} from './_services/message.service';
+import { ErrorPageComponent } from './_pages/error-page/error-page.component';
+import { AddRoomComponent } from './_components/header/add-room/add-room.component';
+import { DashboardComponent } from './_pages/dashboard/dashboard.component';
+import { AddEquipmentComponent } from './_components/header/add-equipment/add-equipment.component';
+import { SystemsComponent } from './_pages/systems/systems.component';
+import { ProjectPlanningComponent } from './_pages/project-planning/project-planning.component';
 
 
 @NgModule({
@@ -96,7 +98,12 @@ import { ProjectPlanningComponent } from './project-planning/project-planning.co
     // FlexLayoutModule,
 
   ],
-  providers: [HttpErrorHandler, MessageService],
+  providers: [
+    HttpErrorHandler,
+    MessageService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

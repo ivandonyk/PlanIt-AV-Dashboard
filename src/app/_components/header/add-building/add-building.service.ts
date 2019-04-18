@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { environment} from '../../../environments/environment';
+import { environment} from '../../../../environments/environment';
 import { Router } from '@angular/router';
-import {AddBuildingApiModel} from '../../model/addBuildingApiModel';
+import {AddBuildingApiModel} from '../../../_models/addBuildingApiModel';
 import {catchError, retry} from 'rxjs/operators';
-import {HandleError} from '../../http-error-handler.service';
+import {HandleError} from '../../../_services/http-error-handler.service';
 
 //TODO - Error handling...send message back to screen?? or route to error page
 

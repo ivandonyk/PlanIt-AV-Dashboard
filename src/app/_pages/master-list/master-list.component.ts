@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RestService } from '../rest.service';
+import { RestService } from '../../_services/rest.service';
 import { HttpClient } from '@angular/common/http';
 
 export interface PeriodicElement {
@@ -35,19 +35,19 @@ export class MasterListComponent implements OnInit {
   dataSource = ELEMENT_DATA;
 
 
-  constructor(private http: HttpClient) { 
-    
+  constructor(private http: HttpClient) {
+
   }
 
   ngOnInit() {
 
     console.log("In ngOnInit MasterListComponent");
     // this.http.get('http://localhost:8080/PlanItAv/getMessage').subscribe(
-     
+
     //   data =>  {console.log(data);
     //   }
     // )
-    
+
   }
 
 
