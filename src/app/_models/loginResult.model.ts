@@ -1,4 +1,4 @@
-export interface LoginResult{
+export interface LoginResult {
 
     firstName: String;
     lastName: string;

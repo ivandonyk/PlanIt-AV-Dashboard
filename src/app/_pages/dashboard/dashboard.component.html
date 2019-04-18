@@ -1,3 +1,100 @@
-<p>
-  dashboard works!
-</p>
+<div class="header">
+  <div class="logo">
+    <img src="https://angular.io/assets/images/logos/angular/angular.png" alt="">
+  </div>
+  <div class="name">
+    Client Company Name
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="card" *ngIf="dashboardData.Systems">
+    <mat-list>
+      <h3 mat-subheader>Systems Overview</h3>
+      <mat-list-item *ngIf="dashboardData.Systems.nbrBuildings">
+        <h4 mat-line>{{dashboardData.Systems.nbrBuildings}} Buildings</h4>
+      </mat-list-item>
+      <mat-list-item *ngIf="dashboardData.Systems.nbrRooms">
+        <h4 mat-line>{{dashboardData.Systems.nbrRooms}} Rooms</h4>
+      </mat-list-item>
+      <mat-list-item *ngIf="dashboardData.Systems.nbrEquipment">
+        <h4 mat-line>{{dashboardData.Systems.nbrEquipment}} Pieces of Equipment</h4>
+      </mat-list-item>
+    </mat-list>
+
+  </div>
+
+
+
+
+
+  <div class="card" *ngIf="dashboardData.Lifecycle">
+
+    <mat-list>
+      <h3 mat-subheader>Lifecycle</h3>
+      <mat-list-item>
+        <h4 mat-line>Equipment Age Range</h4>
+        <span mat-line>{{dashboardData.Lifecycle.coreEquipmentAge}}</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <h4 mat-line>Rooms to Upgrade</h4>
+        <span mat-line *ngFor="let item of dashboardData.Lifecycle.roomsToUpgrade">
+          {{item.nbrRoomsUpg}} {{item.year}}
+        </span>
+
+      </mat-list-item>
+
+    </mat-list>
+
+  </div>
+
+
+
+
+
+
+  <div class="card" *ngIf="dashboardData.Support">
+
+    <mat-list>
+      <h3 mat-subheader>Support</h3>
+
+
+      <mat-list-item>
+        <h4 mat-line>Reported Issues</h4>
+        <span mat-line *ngIf="dashboardData.Support.rptIssueMonth">
+          {{dashboardData.Support.rptIssueMonth}} this Month
+        </span>
+        <span mat-line *ngIf="dashboardData.Support.rptIssue12Months">
+          {{dashboardData.Support.rptIssue12Months}} Last 12 Month
+        </span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <h4 mat-line>Service Calls</h4>
+        <span mat-line *ngIf="dashboardData.Support.serviceCallMonth">
+          {{dashboardData.Support.serviceCallMonth}} this Month
+        </span>
+        <span mat-line *ngIf="dashboardData.Support.serviceCall12Months">
+          {{dashboardData.Support.serviceCall12Months}} Last 12 Month
+        </span>
+      </mat-list-item>
+
+      <!--<mat-list-item>-->
+        <!--<h4 mat-line>Rooms with Most Issues (12 mos)</h4>-->
+        <!--<span mat-line>X Worst Room</span>-->
+        <!--<span mat-line>X Next Worst Room</span>-->
+        <!--<span mat-line>X Next Worst Room</span>-->
+      <!--</mat-list-item>-->
+
+    </mat-list>
+
+  </div>
+
+
+
+
+
+
+</div>

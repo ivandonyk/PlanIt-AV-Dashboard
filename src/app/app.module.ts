@@ -26,6 +26,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 // components
@@ -94,6 +95,7 @@ import { ProjectPlanningComponent } from './_pages/project-planning/project-plan
     MatDatepickerModule,
     MatMomentDateModule,
     MatTableModule,
+    MatGridListModule,
     RouterModule.forRoot([])
     // FlexLayoutModule,
 

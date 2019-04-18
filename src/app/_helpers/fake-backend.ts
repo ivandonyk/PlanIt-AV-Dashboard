@@ -34,6 +34,43 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       }
 
 
+
+
+      if (request.url.endsWith('/dashboard') && request.method === 'GET') {
+        if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
+          return of(new HttpResponse(
+            {
+              status: 200,
+              body: {
+                  'Systems': {
+                    'nbrBuildings': 5,
+                    'nbrRooms': 10,
+                    'nbrEquipment': 100,
+                  },
+                  'Lifecycle': {
+                    'coreEquipmentAge': 'x to x years',
+                    'roomsToUpgrade': [{
+                      'nbrRoomsUpg': 7,
+                      'year': 2019,
+                    }]
+                  },
+                  'Support': {
+                    'rptIssueMonth': '',
+                    'rptIssue12Months': 17,
+                    'serviceCallMonth': 8,
+                    'serviceCall12Months': 10,
+                  }
+              }
+            }
+            ));
+        } else {
+          return throwError({ error: { message: 'Unauthorised' } });
+        }
+      }
+
+
+
+
       return next.handle(request);
 
     }))
