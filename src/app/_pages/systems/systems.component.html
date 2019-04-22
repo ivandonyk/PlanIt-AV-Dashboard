@@ -1,3 +1,106 @@
-<p>
-  systems works!
-</p>
+<div class="header">
+  <mat-tab-group [color]="'accent'">
+    <mat-tab label="Building">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="slider">
+
+
+        <div class="slide" [ngClass]="{'active': currentBuilding == item.buildingId}" (click)="openBuildingDetail(item.buildingId)" *ngFor="let item of currentSlides.slides">
+
+
+
+
+          <mat-list>
+            <h3 mat-subheader>Building {{item.buildingId}}</h3>
+            <mat-list-item *ngIf="item.coreEquipment">
+              <mat-icon mat-list-icon>fiber_manual_record
+              </mat-icon>
+              <h4 mat-line>{{item.coreEquipment}}</h4>
+            </mat-list-item>
+            <mat-list-item *ngIf="item.roomsToReplace">
+              <mat-icon mat-list-icon>fiber_manual_record
+              </mat-icon>
+              <h4 mat-line>{{item.roomsToReplace}} Rooms</h4>
+            </mat-list-item>
+          </mat-list>
+
+
+
+
+        </div>
+
+
+        <button *ngIf="dataSlides.length > 3" (click)="previousSlide()" mat-icon-button class="previousSlide">
+          <mat-icon >arrow_back_ios</mat-icon>
+        </button>
+
+        <button *ngIf="dataSlides.length > 3" (click)="nextSlide()" mat-icon-button class="nextSlide">
+          <mat-icon >arrow_forward_ios</mat-icon>
+        </button>
+      </div>
+
+      <div class="rooms-table-cont" [ngStyle]="{'display': dataSource ? 'block': 'none'}">
+        <table mat-table  [dataSource]="dataSource" matSort class="mat-elevation-z8 rooms-table">
+
+          <ng-container matColumnDef="colorCode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-icon mat-list-icon [ngStyle]="{'color': element.colorCode}">fiber_manual_record</mat-icon>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="roomName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
+            <td mat-cell *matCellDef="let element"> {{element.roomName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="coreAge">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Core Age </th>
+            <td mat-cell *matCellDef="let element"> {{element.coreAge}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="equipmentAge">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Equipment Age </th>
+            <td mat-cell *matCellDef="let element"> {{element.equipmentAge}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="replace">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Replace/Upgrade </th>
+            <td mat-cell *matCellDef="let element"> {{element.replace}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="lastInstall">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Install </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastInstall}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+
+
+
+    </mat-tab>
+    <mat-tab label="Rooms"> Rooms </mat-tab>
+    <mat-tab label="Equipment"> Equipment </mat-tab>
+  </mat-tab-group>
+</div>
+
+

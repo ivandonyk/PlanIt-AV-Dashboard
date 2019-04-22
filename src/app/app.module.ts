@@ -27,7 +27,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
-
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSortModule } from '@angular/material';
 
 // components
 import { AppComponent } from './app.component';
@@ -82,7 +83,6 @@ import { ProjectPlanningComponent } from './_pages/project-planning/project-plan
     MatInputModule,
     MatSidenavModule,
     MatListModule,
-    MatTableModule,
     MatCardModule,
     MatDialogModule,
     MatSnackBarModule,
@@ -96,6 +96,8 @@ import { ProjectPlanningComponent } from './_pages/project-planning/project-plan
     MatMomentDateModule,
     MatTableModule,
     MatGridListModule,
+    MatTabsModule,
+    MatSortModule,
     RouterModule.forRoot([])
     // FlexLayoutModule,
 

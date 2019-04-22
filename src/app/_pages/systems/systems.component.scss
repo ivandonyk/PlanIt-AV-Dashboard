@@ -1,0 +1,62 @@
+.header{
+
+
+  .slider{
+    margin: 20px 50px;
+    display: flex;
+    align-items: safe;
+    //justify-content: space-around;
+    justify-content: flex-start;
+    position: relative;
+
+    .slide{
+      background: #fff;
+      padding: 10px;
+      box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+      border-radius: 4px;
+      width: 33%;
+      margin-left: 20px;
+      min-height: 200px;
+
+
+      &.active{
+        border-bottom: 2px solid #ff4081;
+      }
+
+      .mat-icon{
+        width: 10px;
+        height: 10px;
+        font-size: 10px;
+      }
+
+      &:nth-child(1){
+        margin-left: 0;
+      }
+    }
+
+
+   button{
+     position: absolute;
+     top: calc(50% - 20px);
+   }
+  .previousSlide{
+      left: -50px
+    }
+  .nextSlide{
+      right: -50px
+    }
+  }
+
+
+}
+
+.rooms-table-cont{
+  margin: 15px 20px;
+
+
+  table{
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+}
