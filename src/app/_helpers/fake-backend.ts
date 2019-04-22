@@ -34,10 +34,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return throwError({ error: { message: 'Username or password is incorrect' } });
         }
       }
-
-
-
-
       if (request.url.endsWith('/dashboard') && request.method === 'GET') {
         if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
           return of(new HttpResponse(
@@ -69,7 +65,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return throwError({ error: { message: 'Unauthorised' } });
         }
       }
-
       if (request.url.endsWith('/getBuildings') && request.method === 'GET') {
         if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
           return of(new HttpResponse(
@@ -277,9 +272,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return throwError({ error: { message: 'Unauthorised' } });
         }
       }
-
-
-
 
       return next.handle(request);
 

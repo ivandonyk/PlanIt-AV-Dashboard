@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Slides, SlideData, Room, Rooms} from '../../_models/systems.model';
+import {Slides, SlideData, Room} from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
 import {MatSort, MatTableDataSource} from '@angular/material';
 
@@ -9,6 +9,7 @@ import {MatSort, MatTableDataSource} from '@angular/material';
   templateUrl: 'systems.component.html',
   styleUrls: ['./systems.component.scss']
 })
+
 export class SystemsComponent implements OnInit {
   public dataSlides: Array<SlideData> = [];
   public dataRooms: Array<Room> = [];
@@ -20,7 +21,6 @@ export class SystemsComponent implements OnInit {
 
   public displayedColumns: string[] = ['colorCode', 'roomName', 'coreAge', 'equipmentAge', 'replace', 'lastInstall'];
   public dataSource: any;
-
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -60,7 +60,6 @@ export class SystemsComponent implements OnInit {
       ++this.currentSlides.index;
       this.currentSlides['slides'].push(this.dataSlides[this.currentSlides.index]);
       this.currentSlides['slides'].shift();
-
     } else {
       this.currentSlides.index = 0;
       this.currentSlides['slides'].shift();
@@ -74,7 +73,6 @@ export class SystemsComponent implements OnInit {
         this.dataRooms = data;
         this.dataSource = new MatTableDataSource(this.dataRooms);
         this.dataSource.sort = this.sort;
-        console.log(this);
       }, error => {
         console.log(error);
       });
