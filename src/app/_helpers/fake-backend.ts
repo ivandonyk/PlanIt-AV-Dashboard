@@ -16,7 +16,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     return of(null).pipe(mergeMap(() => {
 
-
       if (request.url.endsWith('/login') && request.method === 'POST') {
         if (request.body.userName === testUser.userName && request.body.password === testUser.password) {
           const body = {
@@ -26,7 +25,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             lastName: testUser.lastName,
             role: testUser.role,
             message: testUser.message,
-            token: 'fake-jwt-token'
+            token: 'fake-jwt-token',
+            businessId: '1',
           };
           return of(new HttpResponse({ status: 200, body }));
         } else {
@@ -65,213 +65,216 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return throwError({ error: { message: 'Unauthorised' } });
         }
       }
-      if (request.url.endsWith('/getBuildings') && request.method === 'GET') {
-        if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
-          return of(new HttpResponse(
-            {
-              status: 200,
-              body: [
-                {
-                  'buildingId': 1,
-                  'nbrRooms': 1078,
-                  'coreEquipment': 'X to X Core Equipment',
-                  'roomsToReplace': 'Replace every room'
-                },
-                {
-                  'buildingId': 2,
-                  'nbrRooms': 24,
-                  'coreEquipment': 'Core Equipment building 1',
-                  'roomsToReplace': 'Rooms are good..'
-                },
-                {
-                  'buildingId': 3,
-                  'nbrRooms': 1078,
-                  'coreEquipment': 'X to X Core Equipment',
-                  'roomsToReplace': 'Replace every room'
-                },
-                {
-                  'buildingId': 4,
-                  'nbrRooms': 24,
-                  'coreEquipment': 'Core Equipment building 1',
-                  'roomsToReplace': 'Rooms are good..'
-                }
-              ],
-            }
-            ));
-        } else {
-          return throwError({ error: { message: 'Unauthorised' } });
-        }
-      }
 
-      if (request.url.endsWith('/getRooms') && request.method === 'GET') {
-        if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
-          const roomId = request.params.getAll('buildingId');
 
-          const roomsArr = [
-            {
-              buildingId: 1,
-              rooms: [
-                {
-                  'roomId': 1,
-                  'roomName': 'Test Room',
-                  'coreAge': 'Old',
-                  'equipmentAge': 'Not as old',
-                  'replace': '2020',
-                  'lastInstall': '2015',
-                  'colorCode': 'red',
-                  'type': null,
-                  'tier': null
-                },
-                {
-                  'roomId': 2,
-                  'roomName': 'Another Test Room',
-                  'coreAge': 'New',
-                  'equipmentAge': 'Pretty good',
-                  'replace': '2022',
-                  'lastInstall': '2015',
-                  'colorCode': 'green',
-                  'type': null,
-                  'tier': null
-                },
-                {
-                  'roomId': 3,
-                  'roomName': 'Another Test Room',
-                  'coreAge': 'New',
-                  'equipmentAge': 'Pretty good',
-                  'replace': '2022',
-                  'lastInstall': '2015',
-                  'colorCode': 'yellow',
-                  'type': null,
-                  'tier': null
-                },
-                {
-                  'roomId': 4,
-                  'roomName': 'Another Test Room',
-                  'coreAge': 'New',
-                  'equipmentAge': 'Pretty good',
-                  'replace': '2022',
-                  'lastInstall': '2015',
-                  'colorCode': 'red',
-                  'type': null,
-                  'tier': null
-                }
-              ]
-            },
-            {
-              buildingId: 2,
-              rooms: [
-                {
-                  'roomId': 1,
-                  'roomName': 'Test Room 2',
-                  'coreAge': 'Old',
-                  'equipmentAge': 'Not as old',
-                  'replace': '2020',
-                  'lastInstall': '2015',
-                  'colorCode': 'red',
-                  'type': null,
-                  'tier': null
-                },
-                {
-                  'roomId': 2,
-                  'roomName': 'Another Test Room 2',
-                  'coreAge': 'New',
-                  'equipmentAge': 'Pretty good',
-                  'replace': '2022',
-                  'lastInstall': '2015',
-                  'colorCode': 'red',
-                  'type': null,
-                  'tier': null
-                }
-              ]
-            },
-            {
-              buildingId: 3,
-              rooms: [
-                {
-                  'roomId': 1,
-                  'roomName': 'Test Room',
-                  'coreAge': 'Old',
-                  'equipmentAge': 'Not as old',
-                  'replace': '2020',
-                  'lastInstall': '2015',
-                  'colorCode': 'red',
-                  'type': null,
-                  'tier': null
-                },
-                {
-                  'roomId': 2,
-                  'roomName': 'Another Test Room',
-                  'coreAge': 'New',
-                  'equipmentAge': 'Pretty good',
-                  'replace': '2022',
-                  'lastInstall': '2015',
-                  'colorCode': 'green',
-                  'type': null,
-                  'tier': null
-                },
-                {
-                  'roomId': 3,
-                  'roomName': 'Another Test Room',
-                  'coreAge': 'New',
-                  'equipmentAge': 'Pretty good',
-                  'replace': '2022',
-                  'lastInstall': '2015',
-                  'colorCode': 'yellow',
-                  'type': null,
-                  'tier': null
-                },
-                {
-                  'roomId': 4,
-                  'roomName': 'Another Test Room',
-                  'coreAge': 'New',
-                  'equipmentAge': 'Pretty good',
-                  'replace': '2022',
-                  'lastInstall': '2015',
-                  'colorCode': 'red',
-                  'type': null,
-                  'tier': null
-                }
-              ]
-            },
-            {
-              buildingId: 4,
-              rooms: [
-                {
-                  'roomId': 1,
-                  'roomName': 'Test Room 2',
-                  'coreAge': 'Old',
-                  'equipmentAge': 'Not as old',
-                  'replace': '2020',
-                  'lastInstall': '2015',
-                  'colorCode': 'red',
-                  'type': null,
-                  'tier': null
-                },
-                {
-                  'roomId': 2,
-                  'roomName': 'Another Test Room 2',
-                  'coreAge': 'New',
-                  'equipmentAge': 'Pretty good',
-                  'replace': '2022',
-                  'lastInstall': '2015',
-                  'colorCode': 'red',
-                  'type': null,
-                  'tier': null
-                }
-              ]
-            },
-          ];
-          const body = roomsArr.filter(item => item.buildingId === +(roomId))[0] ? roomsArr.filter(item => item.buildingId === +(roomId))[0].rooms : [];
-          return of(new HttpResponse(
-            {
-              status: 200,
-              body: body,
-            }
-            ));
-        } else {
-          return throwError({ error: { message: 'Unauthorised' } });
-        }
-      }
+
+      // if (request.url.endsWith('/getBuildings') && request.method === 'GET') {
+      //   if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
+      //     return of(new HttpResponse(
+      //       {
+      //         status: 200,
+      //         body: [
+      //           {
+      //             'buildingId': 1,
+      //             'nbrRooms': 1078,
+      //             'coreEquipment': 'X to X Core Equipment',
+      //             'roomsToReplace': 'Replace every room'
+      //           },
+      //           {
+      //             'buildingId': 2,
+      //             'nbrRooms': 24,
+      //             'coreEquipment': 'Core Equipment building 1',
+      //             'roomsToReplace': 'Rooms are good..'
+      //           },
+      //           {
+      //             'buildingId': 3,
+      //             'nbrRooms': 1078,
+      //             'coreEquipment': 'X to X Core Equipment',
+      //             'roomsToReplace': 'Replace every room'
+      //           },
+      //           {
+      //             'buildingId': 4,
+      //             'nbrRooms': 24,
+      //             'coreEquipment': 'Core Equipment building 1',
+      //             'roomsToReplace': 'Rooms are good..'
+      //           }
+      //         ],
+      //       }
+      //       ));
+      //   } else {
+      //     return throwError({ error: { message: 'Unauthorised' } });
+      //   }
+      // }
+
+      // if (request.url.endsWith('/getRooms') && request.method === 'GET') {
+      //   if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
+      //     const roomId = request.params.getAll('buildingId');
+      //
+      //     const roomsArr = [
+      //       {
+      //         buildingId: 1,
+      //         rooms: [
+      //           {
+      //             'roomId': 1,
+      //             'roomName': 'Test Room',
+      //             'coreAge': 'Old',
+      //             'equipmentAge': 'Not as old',
+      //             'replace': '2020',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'red',
+      //             'type': null,
+      //             'tier': null
+      //           },
+      //           {
+      //             'roomId': 2,
+      //             'roomName': 'Another Test Room',
+      //             'coreAge': 'New',
+      //             'equipmentAge': 'Pretty good',
+      //             'replace': '2022',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'green',
+      //             'type': null,
+      //             'tier': null
+      //           },
+      //           {
+      //             'roomId': 3,
+      //             'roomName': 'Another Test Room',
+      //             'coreAge': 'New',
+      //             'equipmentAge': 'Pretty good',
+      //             'replace': '2022',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'yellow',
+      //             'type': null,
+      //             'tier': null
+      //           },
+      //           {
+      //             'roomId': 4,
+      //             'roomName': 'Another Test Room',
+      //             'coreAge': 'New',
+      //             'equipmentAge': 'Pretty good',
+      //             'replace': '2022',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'red',
+      //             'type': null,
+      //             'tier': null
+      //           }
+      //         ]
+      //       },
+      //       {
+      //         buildingId: 2,
+      //         rooms: [
+      //           {
+      //             'roomId': 1,
+      //             'roomName': 'Test Room 2',
+      //             'coreAge': 'Old',
+      //             'equipmentAge': 'Not as old',
+      //             'replace': '2020',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'red',
+      //             'type': null,
+      //             'tier': null
+      //           },
+      //           {
+      //             'roomId': 2,
+      //             'roomName': 'Another Test Room 2',
+      //             'coreAge': 'New',
+      //             'equipmentAge': 'Pretty good',
+      //             'replace': '2022',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'red',
+      //             'type': null,
+      //             'tier': null
+      //           }
+      //         ]
+      //       },
+      //       {
+      //         buildingId: 3,
+      //         rooms: [
+      //           {
+      //             'roomId': 1,
+      //             'roomName': 'Test Room',
+      //             'coreAge': 'Old',
+      //             'equipmentAge': 'Not as old',
+      //             'replace': '2020',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'red',
+      //             'type': null,
+      //             'tier': null
+      //           },
+      //           {
+      //             'roomId': 2,
+      //             'roomName': 'Another Test Room',
+      //             'coreAge': 'New',
+      //             'equipmentAge': 'Pretty good',
+      //             'replace': '2022',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'green',
+      //             'type': null,
+      //             'tier': null
+      //           },
+      //           {
+      //             'roomId': 3,
+      //             'roomName': 'Another Test Room',
+      //             'coreAge': 'New',
+      //             'equipmentAge': 'Pretty good',
+      //             'replace': '2022',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'yellow',
+      //             'type': null,
+      //             'tier': null
+      //           },
+      //           {
+      //             'roomId': 4,
+      //             'roomName': 'Another Test Room',
+      //             'coreAge': 'New',
+      //             'equipmentAge': 'Pretty good',
+      //             'replace': '2022',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'red',
+      //             'type': null,
+      //             'tier': null
+      //           }
+      //         ]
+      //       },
+      //       {
+      //         buildingId: 4,
+      //         rooms: [
+      //           {
+      //             'roomId': 1,
+      //             'roomName': 'Test Room 2',
+      //             'coreAge': 'Old',
+      //             'equipmentAge': 'Not as old',
+      //             'replace': '2020',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'red',
+      //             'type': null,
+      //             'tier': null
+      //           },
+      //           {
+      //             'roomId': 2,
+      //             'roomName': 'Another Test Room 2',
+      //             'coreAge': 'New',
+      //             'equipmentAge': 'Pretty good',
+      //             'replace': '2022',
+      //             'lastInstall': '2015',
+      //             'colorCode': 'red',
+      //             'type': null,
+      //             'tier': null
+      //           }
+      //         ]
+      //       },
+      //     ];
+      //     const body = roomsArr.filter(item => item.buildingId === +(roomId))[0] ? roomsArr.filter(item => item.buildingId === +(roomId))[0].rooms : [];
+      //     return of(new HttpResponse(
+      //       {
+      //         status: 200,
+      //         body: body,
+      //       }
+      //       ));
+      //   } else {
+      //     return throwError({ error: { message: 'Unauthorised' } });
+      //   }
+      // }
 
       return next.handle(request);
 

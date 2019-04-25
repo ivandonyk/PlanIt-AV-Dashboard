@@ -1,4 +1,4 @@
-export interface LoginResult {
+export interface UserData {
 
     firstName: String;
     lastName: string;
@@ -6,5 +6,6 @@ export interface LoginResult {
     role: string;
     token: string;
     message: Number;
+    businessId: Number;
 
 }

@@ -1,6 +1,3 @@
-
-
-
 export interface SlideData {
   buildingId: number;
   nbrRooms: number;
@@ -26,8 +23,14 @@ export interface Room {
 }
 
 export interface Rooms {
-  buildingId: number | string;
-  rooms: Room;
+  rooms: Room[];
+}
+
+export interface Buildings {
+  systemBuilding: {
+    buildings: SlideData;
+    rooms: Room;
+  };
 }
 
 

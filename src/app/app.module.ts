@@ -29,6 +29,7 @@ import { MatCardModule } from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSortModule } from '@angular/material';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 // components
 import { AppComponent } from './app.component';
@@ -98,6 +99,7 @@ import { ProjectPlanningComponent } from './_pages/project-planning/project-plan
     MatGridListModule,
     MatTabsModule,
     MatSortModule,
+    MatExpansionModule,
     RouterModule.forRoot([])
     // FlexLayoutModule,
 

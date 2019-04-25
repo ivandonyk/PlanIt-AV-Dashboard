@@ -10,7 +10,7 @@ import { MatTableDataSource} from '@angular/material';
 })
 export class BuildingComponent implements OnInit {
 
-  displayedColumns: string[] = ['buildingSeqNbr','building', 'buildingDesc', 'location', 'businessAcctSeqNbr'];
+  displayedColumns: string[] = ['buildingSeqNbr', 'building', 'buildingDesc', 'location', 'businessAcctSeqNbr'];
   dataSource;
   buildings: Building[];
 

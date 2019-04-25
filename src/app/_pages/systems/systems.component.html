@@ -34,34 +34,34 @@
 
           <ng-container matColumnDef="colorCode">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-            <td mat-cell *matCellDef="let element">
+            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element">
               <mat-icon mat-list-icon [ngStyle]="{'color': element.colorCode}">fiber_manual_record</mat-icon>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="roomName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
-            <td mat-cell *matCellDef="let element"> {{element.roomName}} </td>
+            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.roomName}} </td>
           </ng-container>
 
           <ng-container matColumnDef="coreAge">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Core Age </th>
-            <td mat-cell *matCellDef="let element"> {{element.coreAge}} </td>
+            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.coreAge}} </td>
           </ng-container>
 
           <ng-container matColumnDef="equipmentAge">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Equipment Age </th>
-            <td mat-cell *matCellDef="let element"> {{element.equipmentAge}} </td>
+            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.equipmentAge}} </td>
           </ng-container>
 
           <ng-container matColumnDef="replace">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Replace/Upgrade </th>
-            <td mat-cell *matCellDef="let element"> {{element.replace}} </td>
+            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.replace}} </td>
           </ng-container>
 
           <ng-container matColumnDef="lastInstall">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Install </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastInstall}} </td>
+            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.lastInstall}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -69,8 +69,133 @@
         </table>
       </div>
 
+
+
+      <div class="room-modal-overlay" (click)="opemRoomDetailed(false)" *ngIf="roomModalShown"></div>
+      <div class="room-modal" *ngIf="roomModalShown">
+        <div class="header">
+          <div class="title">
+            Building A - Room One (Alternative location)
+          </div>
+          <div class="actions">
+            <div class="header-btn">
+              Edit
+            </div>
+            <div class="header-btn">
+              Expand
+            </div>
+            <div (click)="opemRoomDetailed(false)" class="header-btn">
+              X Close
+            </div>
+          </div>
+        </div>
+        <div class="carousel">
+        </div>
+        <div class="subheader">
+
+          <div>
+            <span>
+              Core Age
+            </span>
+            X to X
+          </div>
+
+          <div>
+            <span>
+              Equipment Age
+            </span>
+            X to X
+          </div>
+          <div>
+            <span>
+              Issues YTD
+            </span>
+            XX
+          </div>
+
+          <div>
+            <span>
+              Replace/Upgrade
+            </span>
+            XXXX
+          </div>
+
+          <div>
+            <span>
+              Last Install
+            </span>
+            XXXX
+          </div>
+
+          <div>
+            <span>
+              Integrator
+            </span>
+            Bob's AV & Dry Cleaning
+          </div>
+
+
+        </div>
+
+
+
+
+
+        <mat-accordion>
+
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Design Documents
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Core Equipment
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Other Equipment
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Issues
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+
+          </mat-expansion-panel>
+
+
+
+        </mat-accordion>
+
+
+
+
+      </div>
+
     </mat-tab>
     <mat-tab label="Rooms"> Rooms </mat-tab>
     <mat-tab label="Equipment"> Equipment </mat-tab>
   </mat-tab-group>
 </div>
+
+
+

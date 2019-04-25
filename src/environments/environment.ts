@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   //  baseUrl: 'http://PlanItAvJar.us-east-2.elasticbeanstalk.com',
-  baseUrl: 'http://localhost:5000',
+  baseUrl: 'http://planitavjar.us-east-2.elasticbeanstalk.com',
 };
 
 /*

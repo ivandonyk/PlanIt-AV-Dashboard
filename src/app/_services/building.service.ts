@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Building } from '../_models/building.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,9 @@ export class BuildingService {
 
   }
 
-  getBuildings(): Observable<Building[]>{
+  getBuildings(): Observable<Building[]> {
 
-    console.log("In ngOnInit BuildingService");
-    // return this.httpClient.get<Building[]>('http://localhost:8080/PlanItAv/getBuildings');
-    return this.httpClient.get<Building[]>('http://planitavbackend-env.ddb9nxgi32.us-east-2.elasticbeanstalk.com/getBuildings');
+    return this.httpClient.get<Building[]>(environment.baseUrl + '/getBuildings', {});
 
     }
 }

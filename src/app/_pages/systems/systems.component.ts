@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Slides, SlideData, Room} from '../../_models/systems.model';
+import {Slides, SlideData, Room, Buildings, Rooms} from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
-import {MatSort, MatTableDataSource} from '@angular/material';
-
+import {MatSort, MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-systems',
@@ -18,26 +17,26 @@ export class SystemsComponent implements OnInit {
     index: 0,
     slides: []
   };
-
+  public roomModalShown: Boolean = false;
   public displayedColumns: string[] = ['colorCode', 'roomName', 'coreAge', 'equipmentAge', 'replace', 'lastInstall'];
   public dataSource: any;
 
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private systServ: SystemsService
+    private systServ: SystemsService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
     this.systServ.getBuildings()
-      .subscribe((data: SlideData[]) => {
-        this.dataSlides = data;
+      .subscribe((data: Buildings) => {
+      this.dataSlides = data.systemBuilding.buildings;
         this.dataSlides.forEach((item, index) => {
           this.currentSlides['index'] = 2;
           if (index <= 2) {
             this.currentSlides['slides'].push(item);
           }
-
         });
       }, error => {
         console.log(error);
@@ -69,13 +68,23 @@ export class SystemsComponent implements OnInit {
   openBuildingDetail(id: number | string) {
     this.currentBuilding = id;
     this.systServ.getBuildingRooms(id)
-      .subscribe((data: Room[]) => {
-        this.dataRooms = data;
+      .subscribe((data: Rooms) => {
+        this.dataRooms = data.rooms;
         this.dataSource = new MatTableDataSource(this.dataRooms);
         this.dataSource.sort = this.sort;
       }, error => {
         console.log(error);
       });
   }
+
+  opemRoomDetailed(status?: boolean, id?: number) {
+    console.log(status)
+    if (!status) {
+      this.roomModalShown = false;
+    } else {
+      this.roomModalShown = true;
+    }
+  }
+
 
 }
