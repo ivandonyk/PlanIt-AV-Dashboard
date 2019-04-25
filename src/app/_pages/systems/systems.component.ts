@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {Slides, SlideData, Room, Buildings, Rooms} from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
-import {MatSort, MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-systems',
@@ -25,7 +25,6 @@ export class SystemsComponent implements OnInit {
 
   constructor(
     private systServ: SystemsService,
-    public dialog: MatDialog
   ) { }
 
   ngOnInit() {

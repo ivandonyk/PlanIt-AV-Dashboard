@@ -42,7 +42,7 @@ import { LoginComponent } from './_pages/login/login.component';
 import { HomeComponent } from './_pages/home/home.component';
 import { AddBuildingComponent } from './_components/header/add-building/add-building.component';
 import { HttpErrorHandler } from './_services/http-error-handler.service';
-import {MessageService} from './_services/message.service';
+import { MessageService} from './_services/message.service';
 import { ErrorPageComponent } from './_pages/error-page/error-page.component';
 import { AddRoomComponent } from './_components/header/add-room/add-room.component';
 import { DashboardComponent } from './_pages/dashboard/dashboard.component';
@@ -101,7 +101,6 @@ import { ProjectPlanningComponent } from './_pages/project-planning/project-plan
     MatSortModule,
     MatExpansionModule,
     RouterModule.forRoot([])
-    // FlexLayoutModule,
 
   ],
   providers: [
