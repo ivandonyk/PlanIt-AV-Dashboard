@@ -1,9 +1,7 @@
 <div class="header">
   <mat-tab-group [color]="'accent'">
     <mat-tab label="Building">
-
       <div class="slider">
-
         <div class="slide" [ngClass]="{'active': currentBuilding == item.buildingId}" (click)="openBuildingDetail(item.buildingId)" *ngFor="let item of currentSlides.slides">
 
           <mat-list>
@@ -23,54 +21,42 @@
         <button *ngIf="dataSlides.length > 3" (click)="previousSlide()" mat-icon-button class="previousSlide">
           <mat-icon >arrow_back_ios</mat-icon>
         </button>
-
         <button *ngIf="dataSlides.length > 3" (click)="nextSlide()" mat-icon-button class="nextSlide">
           <mat-icon >arrow_forward_ios</mat-icon>
         </button>
       </div>
-
       <div class="rooms-table-cont" [ngStyle]="{'display': dataSource ? 'block': 'none'}">
         <table mat-table  [dataSource]="dataSource" matSort class="mat-elevation-z8 rooms-table">
-
           <ng-container matColumnDef="colorCode">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
             <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element">
               <mat-icon mat-list-icon [ngStyle]="{'color': element.colorCode}">fiber_manual_record</mat-icon>
             </td>
           </ng-container>
-
           <ng-container matColumnDef="roomName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
             <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.roomName}} </td>
           </ng-container>
-
           <ng-container matColumnDef="coreAge">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Core Age </th>
             <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.coreAge}} </td>
           </ng-container>
-
           <ng-container matColumnDef="equipmentAge">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Equipment Age </th>
             <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.equipmentAge}} </td>
           </ng-container>
-
           <ng-container matColumnDef="replace">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Replace/Upgrade </th>
             <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.replace}} </td>
           </ng-container>
-
           <ng-container matColumnDef="lastInstall">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Install </th>
             <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.lastInstall}} </td>
           </ng-container>
-
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
-
-
-
       <div class="room-modal-overlay" (click)="opemRoomDetailed(false)" *ngIf="roomModalShown"></div>
       <div class="room-modal" *ngIf="roomModalShown">
         <div class="header">
@@ -134,63 +120,38 @@
             Bob's AV & Dry Cleaning
           </div>
 
-
         </div>
-
-
-
-
-
         <mat-accordion>
-
-
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Design Documents
               </mat-panel-title>
-
             </mat-expansion-panel-header>
-
           </mat-expansion-panel>
-
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Core Equipment
               </mat-panel-title>
-
             </mat-expansion-panel-header>
-
           </mat-expansion-panel>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Other Equipment
               </mat-panel-title>
-
             </mat-expansion-panel-header>
-
           </mat-expansion-panel>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Issues
               </mat-panel-title>
-
             </mat-expansion-panel-header>
-
           </mat-expansion-panel>
-
-
-
         </mat-accordion>
-
-
-
-
       </div>
-
     </mat-tab>
     <mat-tab label="Rooms"> Rooms </mat-tab>
     <mat-tab label="Equipment"> Equipment </mat-tab>
