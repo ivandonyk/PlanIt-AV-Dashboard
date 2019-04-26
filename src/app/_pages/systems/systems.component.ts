@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Slides, SlideData, Room, Buildings, Rooms} from '../../_models/systems.model';
+import {Slides, RoomDetails, Room, Buildings, Rooms} from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
 import {MatSort, MatTableDataSource } from '@angular/material';
 
@@ -10,7 +10,7 @@ import {MatSort, MatTableDataSource } from '@angular/material';
 })
 
 export class SystemsComponent implements OnInit {
-  public dataSlides: Array<SlideData> = [];
+  public dataSlides: any = [];
   public dataRooms: Array<Room> = [];
   public currentBuilding: Number | String;
   public currentSlides: Slides = {
@@ -42,7 +42,7 @@ export class SystemsComponent implements OnInit {
       });
   }
   previousSlide() {
-    if ((this.currentSlides.index - 3) >= 0){
+    if ((this.currentSlides.index - 3) >= 0) {
       this.currentSlides['slides'].unshift(this.dataSlides[this.currentSlides.index - 3]);
       --this.currentSlides.index;
       this.currentSlides['slides'].pop();
@@ -77,11 +77,16 @@ export class SystemsComponent implements OnInit {
   }
 
   opemRoomDetailed(status?: boolean, id?: number) {
-    console.log(status)
     if (!status) {
       this.roomModalShown = false;
     } else {
-      this.roomModalShown = true;
+      this.systServ.getRoomDetails(id)
+        .subscribe((data: RoomDetails) => {
+          console.log(data);
+          this.roomModalShown = true;
+        }, error => {
+          console.log(error);
+        });
     }
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../_services/dashboard.service';
-import { Dashboard } from '../../_models/dashboard.model';
+import { Dashboard, Systems, Lifecycle, Support } from '../../_models/dashboard.model';
 
 
 @Component({
@@ -9,7 +9,11 @@ import { Dashboard } from '../../_models/dashboard.model';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  public dashboardData: Dashboard;
+  public dashboardData: {
+    systems?: Systems
+    lifecycle?: Lifecycle
+    support?: Support
+  };
 
 
   constructor(
@@ -18,9 +22,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.dashServ.getDashboardData()
-      .subscribe(data => {
+      .subscribe((data: Dashboard) => {
         console.log(data);
-        this.dashboardData = data;
+        this.dashboardData = data.dashboard;
       }, error => {
         console.log(error);
       });

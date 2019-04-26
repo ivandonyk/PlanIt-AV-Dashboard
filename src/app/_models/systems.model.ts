@@ -33,4 +33,26 @@ export interface Buildings {
   };
 }
 
+export interface RoomDetails {
+  avLastUpdateCost: number;
+  avLastUpdateDate: string;
+  ceilingHeight: number;
+  ceilingType: string;
+  dateOfLastRemodel: string;
+  dimensions: string;
+  floor: number;
+  integrator: string;
+  lastAvContractor: string;
+  nextAvUpdCost: number;
+  nextAvUpdateDt: string;
+  notes: string;
+  origAvContractor: string;
+  origAvInstallDate: string;
+  origAvSystemCost: number;
+  roomName: string;
+  seatingCapacity: number;
+  seatingType: string;
+  tier: number;
+}
+
 

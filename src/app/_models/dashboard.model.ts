@@ -23,7 +23,9 @@ export interface Support {
 }
 
 export interface Dashboard {
-  Systems: Systems;
-  Lifecycle: Lifecycle;
-  Support: Support;
+  dashboard: {
+    systems?: Systems;
+    lifecycle?: Lifecycle;
+    support?: Support;
+  };
 }

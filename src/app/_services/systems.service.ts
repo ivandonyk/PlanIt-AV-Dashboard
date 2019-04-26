@@ -2,16 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment} from '../../environments/environment';
-import {Rooms, Room, Buildings} from '../_models/systems.model';
-import {UserData} from '../_models/Userdata.model';
+import {Rooms, RoomDetails, Buildings} from '../_models/systems.model';
+import {UserData} from '../_models/userdata.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SystemsService {
-
-
-
   constructor(private httpClient: HttpClient) { }
 
   getBuildings(): Observable<Buildings> {
@@ -20,6 +17,16 @@ export class SystemsService {
 
 
     return this.httpClient.get<Buildings>(environment.baseUrl + '/getBuildings', {
+      params: params
+    });
+  }
+
+
+  getRoomDetails(id?: number): Observable<RoomDetails> {
+    const params = new HttpParams().set('roomId', String(id));
+
+
+    return this.httpClient.get<RoomDetails>(environment.baseUrl + '/getRoomDetail', {
       params: params
     });
   }
