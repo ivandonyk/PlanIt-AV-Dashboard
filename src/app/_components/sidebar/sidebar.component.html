@@ -49,6 +49,8 @@
     </mat-list>
     </mat-sidenav>
     <mat-sidenav-content>
+      <mat-progress-bar [color]="'warn'" *ngIf="globalVars.spinner" mode="indeterminate"></mat-progress-bar>
+
       <router-outlet  ></router-outlet>
      <!--<app-master-list></app-master-list>-->
     </mat-sidenav-content>

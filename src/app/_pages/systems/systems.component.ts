@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {Slides, RoomDetails, Room, Buildings, Rooms} from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
 import {MatSort, MatTableDataSource } from '@angular/material';
+import { GlobalVarsHelper } from '../../_helpers/global-vars';
 
 @Component({
   selector: 'app-systems',
@@ -25,9 +26,13 @@ export class SystemsComponent implements OnInit {
 
   constructor(
     private systServ: SystemsService,
+    public globalVars: GlobalVarsHelper
+
   ) { }
 
   ngOnInit() {
+    this.globalVars.spinner = true;
+
     this.systServ.getBuildings()
       .subscribe((data: Buildings) => {
       this.dataSlides = data.systemBuilding.buildings;
@@ -37,8 +42,11 @@ export class SystemsComponent implements OnInit {
             this.currentSlides['slides'].push(item);
           }
         });
+        this.globalVars.spinner = false;
       }, error => {
         console.log(error);
+        this.globalVars.spinner = false;
+
       });
   }
   previousSlide() {
@@ -65,14 +73,17 @@ export class SystemsComponent implements OnInit {
     }
   }
   openBuildingDetail(id: number | string) {
+    this.globalVars.spinner = true;
     this.currentBuilding = id;
     this.systServ.getBuildingRooms(id)
       .subscribe((data: Rooms) => {
         this.dataRooms = data.rooms;
         this.dataSource = new MatTableDataSource(this.dataRooms);
         this.dataSource.sort = this.sort;
+        this.globalVars.spinner = false;
       }, error => {
         console.log(error);
+        this.globalVars.spinner = false;
       });
   }
 
@@ -80,11 +91,14 @@ export class SystemsComponent implements OnInit {
     if (!status) {
       this.roomModalShown = false;
     } else {
+      this.globalVars.spinner = true;
       this.systServ.getRoomDetails(id)
         .subscribe((data: RoomDetails) => {
           console.log(data);
+          this.globalVars.spinner = false;
           this.roomModalShown = true;
         }, error => {
+          this.globalVars.spinner = false;
           console.log(error);
         });
     }

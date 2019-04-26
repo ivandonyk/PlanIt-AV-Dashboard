@@ -12,7 +12,9 @@ import {
   MatListModule,
   MatTableModule,
   MatSnackBarModule, MatSelectModule, MatDatepickerModule,
+  MatProgressBarModule
 } from '@angular/material';
+
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -100,6 +102,7 @@ import { ProjectPlanningComponent } from './_pages/project-planning/project-plan
     MatTabsModule,
     MatSortModule,
     MatExpansionModule,
+    MatProgressBarModule,
     RouterModule.forRoot([])
 
   ],

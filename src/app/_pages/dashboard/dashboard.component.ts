@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../_services/dashboard.service';
 import { Dashboard, Systems, Lifecycle, Support } from '../../_models/dashboard.model';
+import { GlobalVarsHelper } from '../../_helpers/global-vars';
 
 
 @Component({
@@ -17,14 +18,19 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(
-    private dashServ: DashboardService
+    private dashServ: DashboardService,
+    public globalVars: GlobalVarsHelper
+
   ) { }
 
   ngOnInit() {
+    this.globalVars.spinner = true;
+
     this.dashServ.getDashboardData()
       .subscribe((data: Dashboard) => {
         console.log(data);
         this.dashboardData = data.dashboard;
+        this.globalVars.spinner = false;
       }, error => {
         console.log(error);
       });
