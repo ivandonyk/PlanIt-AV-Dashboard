@@ -7,6 +7,7 @@ import {ErrorPageComponent} from './_pages/error-page/error-page.component';
 import { SystemsComponent } from './_pages/systems/systems.component';
 import { ProjectPlanningComponent } from './_pages/project-planning/project-planning.component';
 import { AuthGuard } from './_guards/auth.guard';
+import {RoomdetailComponent} from './_pages/roomdetail/roomdetail.component';
 
 
 const appRoutes: Routes = [
@@ -36,6 +37,11 @@ const appRoutes: Routes = [
       {
         path: 'project-planning',
         component: ProjectPlanningComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'room-detail/:id',
+        component: RoomdetailComponent,
         canActivate: [AuthGuard],
       }
     ]

@@ -22,7 +22,7 @@ export class SystemsService {
   }
 
 
-  getRoomDetails(id?: number): Observable<RoomDetails> {
+  getRoomDetails(id?: number | string): Observable<RoomDetails> {
     const params = new HttpParams().set('roomId', String(id));
 
 

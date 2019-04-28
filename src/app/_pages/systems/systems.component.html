@@ -64,10 +64,13 @@
             Building A - Room One (Alternative location)
           </div>
           <div class="actions">
-            <div class="header-btn">
+            <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
               Edit
             </div>
-            <div class="header-btn">
+            <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
+              Info
+            </div>
+            <div class="header-btn" routerLink="/home/room-detail/{{roomId}}">
               Expand
             </div>
             <div (click)="opemRoomDetailed(false)" class="header-btn">
@@ -75,62 +78,23 @@
             </div>
           </div>
         </div>
-        <div class="carousel">
+        <div *ngIf="!roomModalShownEdit"  class="carousel">
           <div class="slide-main">
-            <img src="https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg" alt="">
+            <div  (click)="openImage(mainPictureIndex)" [ngStyle]="{'background-image': 'url(' + roomDetailImages[mainPictureIndex].thumb + ')'}" alt=""></div>
           </div>
-
           <div class="scroller">
-           <div class="slide">
-             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv" alt="">
-           </div>
-           <div class="slide">
-             <img src="http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg" alt="">
-           </div>
-
-           <div class="slide">
-             <img src="https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg" alt="">
-           </div>
-
-         </div>
+            <div class="slide"   *ngFor="let slide of roomDetailImages | slice:1; let i = index" [attr.data-index]="i">
+              <div (click)="openImage(i+1)" [ngStyle]="{'background-image': 'url(' + slide.thumb + ')'}"  alt=""></div>
+            </div>
+          </div>
+          <button  (click)="previousSlideRoom()" mat-icon-button class="previousSlide">
+            <mat-icon >arrow_back_ios</mat-icon>
+          </button>
+          <button  (click)="nextSlideRoom()" mat-icon-button class="nextSlide">
+            <mat-icon >arrow_forward_ios</mat-icon>
+          </button>
         </div>
-        <div class="subheader">
+        <div *ngIf="!roomModalShownEdit"  class="subheader">
           <div>
             <span>
               Core Age
@@ -173,7 +137,7 @@
           </div>
 
         </div>
-        <mat-accordion>
+        <mat-accordion  *ngIf="!roomModalShownEdit" >
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -203,6 +167,124 @@
             </mat-expansion-panel-header>
           </mat-expansion-panel>
         </mat-accordion>
+
+        <div *ngIf="roomModalShownEdit" class="room-modal-edit">
+          <form [formGroup]="form">
+            <mat-form-field >
+              <mat-label>
+                Room Name
+              </mat-label>
+              <input matInput  formControlName="roomName"  placeholder="Room Name">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Tier
+              </mat-label>
+              <input matInput  formControlName="tier"  type="number" placeholder="Tier">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Floor
+              </mat-label>
+              <input matInput  formControlName="floor"  type="number" placeholder="Floor">
+            </mat-form-field>
+            <mat-form-field >
+              <input matInput  formControlName="dateOfLastRemodel"  [matDatepicker]="dateOfLastRemodel" placeholder="Date Of Last Remodel">
+              <mat-datepicker-toggle matSuffix [for]="dateOfLastRemodel"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfLastRemodel></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Integrator
+              </mat-label>
+              <input matInput  formControlName="integrator"  placeholder="Integrator">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Seating Type
+              </mat-label>
+              <input matInput  formControlName="seatingType"  placeholder="Seating Type">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Seating Capacity
+              </mat-label>
+              <input matInput  formControlName="seatingCapacity"  type="number" placeholder="Seating Capacity">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Dimensions
+              </mat-label>
+              <input matInput  formControlName="dimensions"  type="text" placeholder="Dimensions">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Ceiling Height
+              </mat-label>
+              <input matInput  formControlName="ceilingHeight"  type="number" placeholder="Ceiling Height">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Ceiling Type
+              </mat-label>
+              <input matInput  formControlName="ceilingType"  type="text" placeholder="Ceiling Type">
+            </mat-form-field>
+            <mat-form-field >
+              <input matInput  formControlName="origAvInstallDate"  [matDatepicker]="origAvInstallDate" placeholder="Orig Av Install Date">
+              <mat-datepicker-toggle matSuffix [for]="origAvInstallDate"></mat-datepicker-toggle>
+              <mat-datepicker #origAvInstallDate></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Orig Av System Cost
+              </mat-label>
+              <input matInput  formControlName="origAvSystemCost"  type="number" placeholder="Orig Av System Cost">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Orig Av Contractor
+              </mat-label>
+              <input matInput  formControlName="origAvContractor"  type="text" placeholder="Orig Av Contractor">
+            </mat-form-field>
+            <mat-form-field >
+              <input matInput  formControlName="avLastUpdateDate"  [matDatepicker]="avLastUpdateDate" placeholder="av Last Update Date">
+              <mat-datepicker-toggle matSuffix [for]="avLastUpdateDate"></mat-datepicker-toggle>
+              <mat-datepicker #avLastUpdateDate></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Av Last Update Cost
+              </mat-label>
+              <input matInput  formControlName="avLastUpdateCost"  type="number" placeholder="Av Last Update Cost">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Last Av Contractor
+              </mat-label>
+              <input matInput type="text" formControlName="lastAvContractor" placeholder="Last Av Contractor">
+            </mat-form-field>
+            <mat-form-field >
+              <input matInput  formControlName="nextAvUpdateDt"  [matDatepicker]="nextAvUpdateDt" placeholder="Next Av Update Dt">
+              <mat-datepicker-toggle matSuffix [for]="nextAvUpdateDt"></mat-datepicker-toggle>
+              <mat-datepicker #nextAvUpdateDt></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Next Av Update Cost
+              </mat-label>
+              <input matInput  formControlName="nextAvUpdCost"  type="text" placeholder="Next Av Update Cost">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Notes
+              </mat-label>
+              <input matInput  formControlName="notes"  type="text" placeholder="Notes">
+            </mat-form-field>
+          </form>
+          <ngx-dropzone
+            [label]="'Drop your image here'"
+          ></ngx-dropzone>
+        </div>
       </div>
     </mat-tab>
     <mat-tab label="Rooms"> Rooms </mat-tab>

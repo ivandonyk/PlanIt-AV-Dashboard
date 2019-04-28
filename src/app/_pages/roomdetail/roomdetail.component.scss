@@ -1,65 +1,7 @@
-.header{
-
-  .slider{
-    margin: 20px 50px;
-    display: flex;
-    align-items: safe;
-    justify-content: flex-start;
-    position: relative;
-
-    .slide{
-      background: #fff;
-      padding: 10px;
-      box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-      border-radius: 4px;
-      width: 33%;
-      margin-left: 20px;
-      min-height: 200px;
-
-
-      &.active{
-        border-bottom: 2px solid #ff4081;
-      }
-
-      .mat-icon{
-        width: 10px;
-        height: 10px;
-        font-size: 10px;
-      }
-
-      &:nth-child(1){
-        margin-left: 0;
-      }
-    }
-
-
-   button{
-     position: absolute;
-     top: calc(50% - 20px);
-   }
-  .previousSlide{
-      left: -50px
-    }
-  .nextSlide{
-      right: -50px
-    }
-  }
-
-
-}
-
-.room-modal{
-  //min-height: 600px;
-  width: 80%;
-  margin: 40px auto;
+.room-detail-page{
+  padding: 20px;
   background: #fff;
   display: block;
-  border-radius: 4px;
-  z-index: 10;
-  position: fixed;
-  top:40px;
-  left: 15%;
-  box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
   color: rgba(0,0,0,.87);
 
 
@@ -74,7 +16,6 @@
     padding:0 20px;
 
     .actions{
-      min-width: 230px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -122,11 +63,8 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      //justify-content: space-evenly;
+
       height: 250px;
-
-
-
 
       .slide{
 
@@ -145,11 +83,6 @@
       }
     }
 
-
-
-
-
-
     .previousSlide{
       position: absolute;
       left:11px;
@@ -161,7 +94,7 @@
       color: #fff;
 
       &:hover{
-      background: rgba(0,0,0, .8);
+        background: rgba(0,0,0, .8);
       }
     }
 
@@ -176,7 +109,7 @@
       color: #fff;
 
       &:hover{
-      background: rgba(0,0,0, .8);
+        background: rgba(0,0,0, .8);
       }
     }
 
@@ -211,31 +144,5 @@
   }
 }
 
-.room-modal-overlay {
-  content: '';
-  position: fixed;
-  top:0;
-  left:0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,.32);
-}
-
-.rooms-table-cont{
-  margin: 15px 20px;
 
 
-  table{
-    width: 100%;
-    border-radius: 4px;
-    overflow: hidden;
-
-    tr{
-      cursor: pointer;
-
-      &.mat-row:hover{
-        background: #f3f3f3;
-      }
-    }
-  }
-}

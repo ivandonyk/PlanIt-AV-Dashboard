@@ -20,6 +20,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { fakeBackendProvider } from './_helpers/fake-backend';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { LightboxModule } from 'ngx-lightbox';
 
 
 // import { FlexLayoutModule} from '@angular/flex-layout';
@@ -51,7 +53,7 @@ import { DashboardComponent } from './_pages/dashboard/dashboard.component';
 import { AddEquipmentComponent } from './_components/header/add-equipment/add-equipment.component';
 import { SystemsComponent } from './_pages/systems/systems.component';
 import { ProjectPlanningComponent } from './_pages/project-planning/project-planning.component';
-
+import { RoomdetailComponent } from "./_pages/roomdetail/roomdetail.component";
 
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import { ProjectPlanningComponent } from './_pages/project-planning/project-plan
     DashboardComponent,
     AddEquipmentComponent,
     SystemsComponent,
-    ProjectPlanningComponent
+    ProjectPlanningComponent,
+    RoomdetailComponent
   ],
   entryComponents: [
     AddBuildingComponent,
@@ -103,6 +106,8 @@ import { ProjectPlanningComponent } from './_pages/project-planning/project-plan
     MatSortModule,
     MatExpansionModule,
     MatProgressBarModule,
+    NgxDropzoneModule,
+    LightboxModule,
     RouterModule.forRoot([])
 
   ],

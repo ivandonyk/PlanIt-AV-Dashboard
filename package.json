@@ -27,6 +27,8 @@
     "core-js": "^2.5.4",
     "material-design-icons": "^3.0.1",
     "moment": "^2.24.0",
+    "ngx-dropzone": "^1.1.5",
+    "ngx-lightbox": "^1.2.0",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.26"
   },
