@@ -56,6 +56,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <app-room-table-component data="dataSource" displayedColumns="displayedColumns"></app-room-table-component>
       </div>
       <div class="room-modal-overlay" (click)="opemRoomDetailed(false)" *ngIf="roomModalShown"></div>
       <div class="room-modal" *ngIf="roomModalShown">
@@ -78,22 +79,8 @@
             </div>
           </div>
         </div>
-        <div *ngIf="!roomModalShownEdit"  class="carousel">
-          <div class="slide-main">
-            <div  (click)="openImage(mainPictureIndex)" [ngStyle]="{'background-image': 'url(' + roomDetailImages[mainPictureIndex].thumb + ')'}" alt=""></div>
-          </div>
-          <div class="scroller">
-            <div class="slide"   *ngFor="let slide of roomDetailImages | slice:1; let i = index" [attr.data-index]="i">
-              <div (click)="openImage(i+1)" [ngStyle]="{'background-image': 'url(' + slide.thumb + ')'}"  alt=""></div>
-            </div>
-          </div>
-          <button  (click)="previousSlideRoom()" mat-icon-button class="previousSlide">
-            <mat-icon >arrow_back_ios</mat-icon>
-          </button>
-          <button  (click)="nextSlideRoom()" mat-icon-button class="nextSlide">
-            <mat-icon >arrow_forward_ios</mat-icon>
-          </button>
-        </div>
+        <app-carousel-component *ngIf="!roomModalShownEdit" roomDetailImages="{{roomDetailImages}}"></app-carousel-component>
+
         <div *ngIf="!roomModalShownEdit"  class="subheader">
           <div>
             <span>
@@ -291,6 +278,10 @@
     <mat-tab label="Equipment"> Equipment </mat-tab>
   </mat-tab-group>
 </div>
+
+
+
+
 
 
 

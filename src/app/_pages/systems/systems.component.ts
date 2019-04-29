@@ -26,7 +26,7 @@ export class SystemsComponent implements OnInit {
   public roomModalShownEdit: Boolean = false;
   public displayedColumns: string[] = ['colorCode', 'roomName', 'coreAge', 'equipmentAge', 'replace', 'lastInstall'];
   public dataSource: any;
-  public roomDetailImages: Array<{src: string, caption: string, thumb: string}> = [{
+  public roomDetailImages: string = JSON.stringify([{
     src: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
     caption: '',
     thumb: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
@@ -79,9 +79,8 @@ export class SystemsComponent implements OnInit {
     caption: '',
     thumb: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
   }
-  ];
+  ]);
   public form: FormGroup;
-  public mainPictureIndex: number = 0;
   public roomId: number = null;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -215,25 +214,5 @@ export class SystemsComponent implements OnInit {
         });
     }
   }
-  previousSlideRoom() {
-    if (this.mainPictureIndex !== 0) {
-      --this.mainPictureIndex;
-    } else {
-      this.mainPictureIndex =  this.roomDetailImages.length - 1;
-    }
 
-  }
-  nextSlideRoom() {
-
-    if (this.mainPictureIndex < this.roomDetailImages.length - 1) {
-      ++this.mainPictureIndex;
-    } else {
-      this.mainPictureIndex = 0;
-    }
-
-  }
-
-  openImage(imageIndex): void {
-    this.lightbox.open(this.roomDetailImages, imageIndex);
-  }
 }

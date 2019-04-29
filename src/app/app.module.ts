@@ -53,7 +53,9 @@ import { DashboardComponent } from './_pages/dashboard/dashboard.component';
 import { AddEquipmentComponent } from './_components/header/add-equipment/add-equipment.component';
 import { SystemsComponent } from './_pages/systems/systems.component';
 import { ProjectPlanningComponent } from './_pages/project-planning/project-planning.component';
-import { RoomdetailComponent } from "./_pages/roomdetail/roomdetail.component";
+import { RoomdetailComponent } from './_pages/roomdetail/roomdetail.component';
+import { CarouselComponent } from './_components/carousel/carousel.component';
+import { RoomsTableComponent } from './_components/rooms-table/rooms-table.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { RoomdetailComponent } from "./_pages/roomdetail/roomdetail.component";
     AddEquipmentComponent,
     SystemsComponent,
     ProjectPlanningComponent,
-    RoomdetailComponent
+    RoomdetailComponent,
+    CarouselComponent,
+    RoomsTableComponent
   ],
   entryComponents: [
     AddBuildingComponent,

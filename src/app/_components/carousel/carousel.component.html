@@ -1,0 +1,16 @@
+<div  class="carousel" *ngIf="images">
+  <div class="slide-main">
+    <div  (click)="openImage(mainPictureIndex)" [ngStyle]="{'background-image': 'url(' + images[mainPictureIndex].thumb + ')'}" alt=""></div>
+  </div>
+  <div class="scroller">
+    <div class="slide"   *ngFor="let slide of images | slice:1; let i = index" [attr.data-index]="i">
+      <div (click)="openImage(i+1)" [ngStyle]="{'background-image': 'url(' + slide.thumb + ')'}"  alt=""></div>
+    </div>
+  </div>
+  <button  (click)="previousSlideRoom()" mat-icon-button class="previousSlide">
+    <mat-icon >arrow_back_ios</mat-icon>
+  </button>
+  <button  (click)="nextSlideRoom()" mat-icon-button class="nextSlide">
+    <mat-icon >arrow_forward_ios</mat-icon>
+  </button>
+</div>
