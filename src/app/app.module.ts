@@ -34,6 +34,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSortModule } from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 // components
 import { AppComponent } from './app.component';
@@ -112,6 +113,7 @@ import { RoomsTableComponent } from './_components/rooms-table/rooms-table.compo
     MatProgressBarModule,
     NgxDropzoneModule,
     LightboxModule,
+    DragScrollModule,
     RouterModule.forRoot([])
 
   ],

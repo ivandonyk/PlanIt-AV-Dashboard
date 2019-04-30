@@ -26,37 +26,7 @@
         </button>
       </div>
       <div class="rooms-table-cont" [ngStyle]="{'display': dataSource ? 'block': 'none'}">
-        <table mat-table  [dataSource]="dataSource" matSort class="mat-elevation-z8 rooms-table">
-          <ng-container matColumnDef="colorCode">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element">
-              <mat-icon mat-list-icon [ngStyle]="{'color': element.colorCode}">fiber_manual_record</mat-icon>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="roomName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
-            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.roomName}} </td>
-          </ng-container>
-          <ng-container matColumnDef="coreAge">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Core Age </th>
-            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.coreAge}} </td>
-          </ng-container>
-          <ng-container matColumnDef="equipmentAge">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Equipment Age </th>
-            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.equipmentAge}} </td>
-          </ng-container>
-          <ng-container matColumnDef="replace">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Replace/Upgrade </th>
-            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.replace}} </td>
-          </ng-container>
-          <ng-container matColumnDef="lastInstall">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Install </th>
-            <td (click)="opemRoomDetailed(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.lastInstall}} </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <app-room-table-component data="dataSource" displayedColumns="displayedColumns"></app-room-table-component>
+        <app-room-table-component *ngIf="dataSource" (clickRow)="opemRoomDetailed(true, $event)"  dataSource="{{dataSource}}" displayedColumns="{{displayedColumns}}"></app-room-table-component>
       </div>
       <div class="room-modal-overlay" (click)="opemRoomDetailed(false)" *ngIf="roomModalShown"></div>
       <div class="room-modal" *ngIf="roomModalShown">
@@ -71,7 +41,7 @@
             <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
               Info
             </div>
-            <div class="header-btn" routerLink="/home/room-detail/{{roomId}}">
+            <div class="header-btn" (click)="expand(roomId)">
               Expand
             </div>
             <div (click)="opemRoomDetailed(false)" class="header-btn">
@@ -95,12 +65,7 @@
             </span>
             X to X
           </div>
-          <div>
-            <span>
-              Issues YTD
-            </span>
-            XX
-          </div>
+
 
           <div>
             <span>

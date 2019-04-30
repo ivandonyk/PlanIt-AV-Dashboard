@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Slides, RoomDetails, Room, Buildings, Rooms} from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
-import {MatSort, MatTableDataSource } from '@angular/material';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
-import { Lightbox } from 'ngx-lightbox';
 
 
 @Component({
@@ -24,71 +22,90 @@ export class SystemsComponent implements OnInit {
   };
   public roomModalShown: Boolean = false;
   public roomModalShownEdit: Boolean = false;
-  public displayedColumns: string[] = ['colorCode', 'roomName', 'coreAge', 'equipmentAge', 'replace', 'lastInstall'];
-  public dataSource: any;
-  public roomDetailImages: string = JSON.stringify([{
-    src: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
-    caption: '',
-    thumb: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv',
-  }, {
-    src: 'http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg',
-    caption: '',
-    thumb: 'http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-  }, {
-    src: 'http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg',
-    caption: '',
-    thumb: 'http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI',
-  }, {
-    src: 'https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg',
-  }, {
-    src: 'https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg',
-  }, {
-    src: 'https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg',
-  }, {
-    src: 'https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg',
-  }, {
-    src: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
-  }
+  public displayedColumns: string = JSON.stringify([
+    {
+      key: 'roomName',
+      title: 'Room',
+    },
+    {
+      key: 'coreAge',
+      title: 'Core Age',
+    },
+    {
+      key: 'equipmentAge',
+      title: 'Equipment Age',
+    },
+    {
+      key: 'replace',
+      title: 'Replace/Upgrade',
+    },
+    {
+      key: 'lastInstall',
+      title: 'Last Install',
+    }]);
+  public dataSource: string;
+  public roomDetailImages: string = JSON.stringify([
+    {
+      src: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
+      caption: '',
+      thumb: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
+    }, {
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv',
+      caption: '',
+      thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv',
+    }, {
+      src: 'http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg',
+      caption: '',
+      thumb: 'http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg',
+    }, {
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
+      caption: '',
+      thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
+    }, {
+      src: 'http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg',
+      caption: '',
+      thumb: 'http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg',
+    }, {
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3',
+      caption: '',
+      thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3',
+    }, {
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
+      caption: '',
+      thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
+    }, {
+      src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI',
+      caption: '',
+      thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI',
+    }, {
+      src: 'https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg',
+      caption: '',
+      thumb: 'https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg',
+    }, {
+      src: 'https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg',
+      caption: '',
+      thumb: 'https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg',
+    }, {
+      src: 'https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg',
+      caption: '',
+      thumb: 'https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg',
+    }, {
+      src: 'https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg',
+      caption: '',
+      thumb: 'https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg',
+    }, {
+      src: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
+      caption: '',
+      thumb: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
+    }
   ]);
   public form: FormGroup;
   public roomId: number = null;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
     private formBuilder: FormBuilder,
-    private lightbox: Lightbox
 
 
   ) { }
@@ -163,8 +180,7 @@ export class SystemsComponent implements OnInit {
     this.systServ.getBuildingRooms(id)
       .subscribe((data: Rooms) => {
         this.dataRooms = data.rooms;
-        this.dataSource = new MatTableDataSource(this.dataRooms);
-        this.dataSource.sort = this.sort;
+        this.dataSource = JSON.stringify(this.dataRooms);
         this.globalVars.spinner = false;
       }, error => {
         console.log(error);
@@ -204,8 +220,6 @@ export class SystemsComponent implements OnInit {
             notes: [data.notes],
           });
 
-          console.log(this.form.controls);
-
           this.globalVars.spinner = false;
           this.roomModalShown = true;
         }, error => {
@@ -213,6 +227,10 @@ export class SystemsComponent implements OnInit {
           console.log(error);
         });
     }
+  }
+
+  expand(roomId) {
+    window.open(window.location.origin + '/home/room-detail/' + roomId);
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Lightbox } from 'ngx-lightbox';
+import { DragScrollComponent } from 'ngx-drag-scroll';
 
 @Component({
   selector: 'app-carousel-component',
@@ -8,8 +9,8 @@ import { Lightbox } from 'ngx-lightbox';
 })
 export class CarouselComponent implements OnInit {
   @Input() roomDetailImages: string;
+  @ViewChild('carousel', {read: DragScrollComponent}) ds: DragScrollComponent;
 
-  public mainPictureIndex: number = 0;
   public images: Array<{src: string, caption: string, thumb: string}> = [];
 
 
@@ -20,26 +21,13 @@ export class CarouselComponent implements OnInit {
   }
   ngOnInit() {
     this.images = JSON.parse(this.roomDetailImages);
-
   }
-
-
-
-
   previousSlideRoom() {
-    if (this.mainPictureIndex !== 0) {
-      --this.mainPictureIndex;
-    } else {
-      this.mainPictureIndex =  this.images.length - 1;
-    }
+    this.ds.moveLeft();
 
   }
   nextSlideRoom() {
-    if (this.mainPictureIndex < this.images.length - 1) {
-      ++this.mainPictureIndex;
-    } else {
-      this.mainPictureIndex = 0;
-    }
+    this.ds.moveRight();
 
   }
 

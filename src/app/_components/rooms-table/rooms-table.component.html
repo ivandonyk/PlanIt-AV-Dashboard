@@ -1,30 +1,14 @@
-<table mat-table  [dataSource]="dataSource" matSort class="mat-elevation-z8 rooms-table">
+<table mat-table  [dataSource]="data" matSort class="mat-elevation-z8 rooms-table">
   <ng-container matColumnDef="colorCode">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-    <td (click)="open(true, element.roomId)" mat-cell *matCellDef="let element">
+    <td (click)="open(element.roomId)" mat-cell *matCellDef="let element">
       <mat-icon mat-list-icon [ngStyle]="{'color': element.colorCode}">fiber_manual_record</mat-icon>
     </td>
   </ng-container>
-  <ng-container matColumnDef="roomName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
-    <td (click)="open(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.roomName}} </td>
+  <ng-container *ngFor="let column of columns" matColumnDef="{{column.key}}">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>
+    <td (click)="open(element.roomId)" mat-cell *matCellDef="let element"> {{element[column.key]}} </td>
   </ng-container>
-  <ng-container matColumnDef="coreAge">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Core Age </th>
-    <td (click)="open(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.coreAge}} </td>
-  </ng-container>
-  <ng-container matColumnDef="equipmentAge">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Equipment Age </th>
-    <td (click)="open(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.equipmentAge}} </td>
-  </ng-container>
-  <ng-container matColumnDef="replace">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Replace/Upgrade </th>
-    <td (click)="open(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.replace}} </td>
-  </ng-container>
-  <ng-container matColumnDef="lastInstall">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Install </th>
-    <td (click)="open(true, element.roomId)" mat-cell *matCellDef="let element"> {{element.lastInstall}} </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-header-row *matHeaderRowDef="columnsHeader"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsHeader;"></tr>
 </table>
