@@ -1,5 +1,13 @@
-.logo-header{
-  height: 50px;
-  margin-top: 5px;
-  width: auto;
+.toolbar-custom{
+  background: #111;
+
+  .logo-header{
+    height: 50px;
+    margin-top: 5px;
+    width: auto;
+  }
+
+  button.mat-button{
+    color: #fff;
+  }
 }
