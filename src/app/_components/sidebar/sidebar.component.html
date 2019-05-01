@@ -1,56 +1,25 @@
 <mat-sidenav-container class="example-container">
-
     <mat-sidenav opened mode="side" color="warn">
-
     <mat-list>
-
-
       <mat-list-item>
-        <a routerLink="/home/dashboard">
-          <button mat-raised-button color="transparent" >  My Plan It</button>
+        <a  class="menu-option"  [ngClass]="{'active' : currentRoute == '/home/dashboard'  }" routerLink="/home/dashboard">
+            My Plan It
         </a>
       </mat-list-item>
-
-
       <mat-list-item >
-        <!-- <a [routerLink]="[{ outlets: { 'sidebarRoute': ['building'] } }]"><button mat-raised-button color="accent" > -->
-        <!--<button mat-raised-button color="accent" >-->
-        <!--Buildings-->
-        <!--</button>-->
-        <a routerLink="/home/systems">
-          <button mat-raised-button color="transparent" >  Systems</button>
+        <a  class="menu-option" [ngClass]="{'active' : currentRoute == '/home/systems'  }" routerLink="/home/systems">
+            Systems
         </a>
-
       </mat-list-item>
-
       <mat-list-item>
-
-        <a routerLink="/home/project-planning">
-          <button mat-raised-button color="transparent" >  Project Planning</button>
+        <a  class="menu-option" [ngClass]="{'active' : currentRoute == '/home/project-planning'  }" routerLink="/home/project-planning">
+          Project Planning
         </a>
-
-        <!--<button mat-raised-button color="accent">-->
-        <!--Rooms-->
-        <!--</button>-->
       </mat-list-item>
-
-
-    <!--<mat-list-item>-->
-      <!--<a [routerLink]="[{ outlets: { 'sidebarRoute': ['building'] } }]"><button mat-raised-button color="accent" > Building </button>-->
-        <!--&lt;!&ndash;<button mat-raised-button color="accent" >&ndash;&gt;-->
-          <!--&lt;!&ndash;Buildings&ndash;&gt;-->
-        <!--&lt;!&ndash;</button>&ndash;&gt;-->
-      <!--</a>-->
-    <!--</mat-list-item>-->
-
     </mat-list>
     </mat-sidenav>
     <mat-sidenav-content>
       <mat-progress-bar [color]="'warn'" *ngIf="globalVars.spinner" mode="indeterminate"></mat-progress-bar>
-
       <router-outlet  ></router-outlet>
-     <!--<app-master-list></app-master-list>-->
     </mat-sidenav-content>
-
-
 </mat-sidenav-container>

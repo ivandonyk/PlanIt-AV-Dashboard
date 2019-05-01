@@ -14,3 +14,26 @@
   z-index: 1;
 }
 
+.menu-option{
+  text-decoration: none;
+  position: relative;
+  padding: 10px;
+  width: 100%;
+  color: #000;
+  &.active{
+    background: rgba(0,0,0,0.1);
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 100%;
+      //left: -9px;
+      left: 0px;
+      top:0;
+      border-left:3px solid #2e980d;
+    }
+  }
+
+
+}
