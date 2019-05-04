@@ -13,60 +13,36 @@ import { Lightbox } from 'ngx-lightbox';
   styleUrls: ['./roomdetail.component.scss']
 })
 export class RoomdetailComponent implements OnInit {
-  public roomDetailImages: string = JSON.stringify([{
-    src: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
-    caption: '',
-    thumb: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv',
-  }, {
-    src: 'http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg',
-    caption: '',
-    thumb: 'http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-  }, {
-    src: 'http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg',
-    caption: '',
-    thumb: 'http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-  }, {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI',
-    caption: '',
-    thumb: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI',
-  }, {
-    src: 'https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg',
-  }, {
-    src: 'https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg',
-  }, {
-    src: 'https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg',
-  }, {
-    src: 'https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg',
-  }, {
-    src: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
-    caption: '',
-    thumb: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
-  }
+  public roomDetailImages: string = JSON.stringify([
+    {
+      path: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv',
+    }, {
+      path: 'http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
+    }, {
+      path: 'http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI',
+    }, {
+      path: 'https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg',
+    }, {
+      path: 'https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg',
+    }, {
+      path: 'https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg',
+    }, {
+      path: 'https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg',
+    }, {
+      path: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
+    }
   ]);
+
   public form: FormGroup;
   public roomModalShownEdit: Boolean = false;
   public roomId: number | string = window.location.pathname.split('/')[3];

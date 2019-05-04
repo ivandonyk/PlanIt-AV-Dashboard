@@ -55,4 +55,42 @@ export interface RoomDetails {
   tier: number;
 }
 
+export interface Equipment {
+  building: string;
+  category: string;
+  colorCode: string;
+  description: string;
+  equipmentClass: string;
+  installDate: string;
+  lifecycle: string;
+  manualIcon: boolean;
+  manufacturer: string;
+  modelNumber: string;
+  photoIcon: boolean;
+  room: string;
+}
+
+export interface EquipmentDetail {
+  room: string;
+  altLocation: string;
+  manufacturer: string;
+  modelNumber: string;
+  description: string;
+  equipmentClass: string;
+  category: string;
+  installDate: string;
+  lifecycle: string;
+  replacementDate: string;
+  integrator: string;
+  manufactureWarranty: string;
+  warrantyExpiration: string;
+  extWarrantyProvider: string;
+  extWarrantyExpiration: any;
+  serialNum: string;
+  macAddress: string;
+  ipAddress: string;
+  port: string;
+  countryManufacturer: string;
+  manuals: string;
+}
 

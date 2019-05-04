@@ -1,66 +1,25 @@
-.header{
-
-  .slider{
-    margin: 20px 50px;
-    display: flex;
-    align-items: safe;
-    justify-content: flex-start;
-    position: relative;
-
-    .slide{
-      background: #fff;
-      padding: 10px;
-      box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-      border-radius: 4px;
-      width: 33%;
-      margin-left: 20px;
-      min-height: 200px;
-
-
-      &.active{
-        border-bottom: 2px solid #ff4081;
-      }
-
-      .mat-icon{
-        width: 10px;
-        height: 10px;
-        font-size: 10px;
-      }
-
-      &:nth-child(1){
-        margin-left: 0;
-      }
-    }
-
-
-   button{
-     position: absolute;
-     top: calc(50% - 20px);
-   }
-  .previousSlide{
-      left: -50px
-    }
-  .nextSlide{
-      right: -50px
-    }
-  }
-
-
-}
 
 .room-modal{
   //min-height: 600px;
-  width: 80%;
-  margin: 40px auto;
+  //width: 80%;
+  //margin: 40px auto;
+  //background: #fff;
+  //display: block;
+  //border-radius: 4px;
+  //z-index: 10;
+  //position: fixed;
+  //top:40px;
+  //left: 15%;
+  //box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
+  //color: rgba(0,0,0,.87);
+
+
+  padding: 20px;
   background: #fff;
   display: block;
-  border-radius: 4px;
-  z-index: 10;
-  position: fixed;
-  top:40px;
-  left: 15%;
-  box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
   color: rgba(0,0,0,.87);
+
+
 
 
   .header{
@@ -74,7 +33,6 @@
     padding:0 20px;
 
     .actions{
-      min-width: 230px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -86,9 +44,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        //padding-left: 20px;
-        padding-left: 14px;
-        padding-right: 13px;
+        padding-left: 20px;
         cursor: pointer;
         user-select: none;
       }
@@ -163,7 +119,7 @@
       color: #fff;
 
       &:hover{
-      background: rgba(0,0,0, .8);
+        background: rgba(0,0,0, .8);
       }
     }
 
@@ -178,7 +134,7 @@
       color: #fff;
 
       &:hover{
-      background: rgba(0,0,0, .8);
+        background: rgba(0,0,0, .8);
       }
     }
 
@@ -190,9 +146,30 @@
     font-weight: bold;
     font-size: 12px;
     padding:15px 5px;
+    border-bottom: 1px #ddd solid;
     span{
       font-weight: normal;
 
+    }
+
+
+    &.column{
+      justify-content: flex-start;
+      div{
+        margin: 0 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  .manuals{
+    padding:15px 5px;
+
+    .title-manual{
+      font-weight: bold;
+      font-size: 12px;
     }
   }
 
@@ -213,31 +190,4 @@
   }
 }
 
-.room-modal-overlay {
-  content: '';
-  position: fixed;
-  top:0;
-  left:0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,.32);
-}
 
-.rooms-table-cont{
-  margin: 15px 20px;
-
-
-  table{
-    width: 100%;
-    border-radius: 4px;
-    overflow: hidden;
-
-    tr{
-      cursor: pointer;
-
-      &.mat-row:hover{
-        background: #f3f3f3;
-      }
-    }
-  }
-}

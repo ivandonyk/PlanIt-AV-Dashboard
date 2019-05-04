@@ -8,6 +8,7 @@ import { SystemsComponent } from './_pages/systems/systems.component';
 import { ProjectPlanningComponent } from './_pages/project-planning/project-planning.component';
 import { AuthGuard } from './_guards/auth.guard';
 import {RoomdetailComponent} from './_pages/roomdetail/roomdetail.component';
+import {EquipmentdetailComponent} from './_pages/equipmentdetail/equipmentdetail.component';
 
 
 const appRoutes: Routes = [
@@ -42,6 +43,11 @@ const appRoutes: Routes = [
       {
         path: 'room-detail/:id',
         component: RoomdetailComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'equipment-detail/:id',
+        component: EquipmentdetailComponent,
         canActivate: [AuthGuard],
       }
     ]

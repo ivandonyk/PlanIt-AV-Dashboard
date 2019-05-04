@@ -9,20 +9,52 @@
   position: relative;
 
 
-  drag-scroll{
-    height: 250px;
-    width: 100%;
+  .slide-main{
+    width: 250px;
+    height: 247px;
+    padding: 3px;
+    overflow: hidden;
+    min-width: 250px;
+    div{
+      height: 100%;
+      width: 100%;
+      background-position: center;
+      background-size: cover;
+    }
   }
 
-  .slide-c{
-    background-position: center;
-    background-size: cover;
+
+  .scroller{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    //justify-content: space-evenly;
     height: 250px;
-    width: 250px;
-    background-repeat: no-repeat;
-    margin: 5px;
-    cursor: pointer;
+
+
+
+
+    .slide{
+
+      width: 126px;
+      height: 121.5px;
+      background: #fff;
+      padding: 2px 5px;
+      overflow: hidden;
+
+      div{
+        height: 100%;
+        width: 100%;
+        background-position: center;
+        background-size: cover;
+      }
+    }
   }
+
+
+
+
+
 
   .previousSlide{
     position: absolute;

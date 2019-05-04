@@ -1,0 +1,286 @@
+<div class="room-modal" *ngIf="data">
+  <div class="header">
+    <div class="title">
+      {{data.room}}
+    </div>
+    <div class="actions">
+      <div class="header-btn" *ngIf="!isEdit" (click)="isEdit = true">
+        Edit
+      </div>
+      <div class="header-btn" *ngIf="isEdit" (click)="isEdit = false">
+        Save / Cancel
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!isEdit" class="subheader">
+    <div>
+            <span>
+              Class:
+            </span>
+      {{data.equipmentClass}}
+    </div>
+    <div>
+            <span>
+              Category:
+            </span>
+      {{data.category}}
+    </div>
+
+    <div>
+            <span>
+              Installed:
+            </span>
+      {{data.installDate}}
+    </div>
+    <div>
+            <span>
+              Lifecycle:
+            </span>
+      {{data.lifecycle}}
+    </div>
+
+    <div>
+            <span>
+              Replacement Due:
+            </span>
+      {{data.replacementDate}}
+    </div>
+
+    <div>
+            <span>
+              Integrator:
+            </span>
+      {{data.integrator}}
+    </div>
+
+
+  </div>
+  <div *ngIf="!isEdit" class="subheader">
+    <div>
+
+      Description: <span>{{data.description}}</span>
+    </div>
+
+
+  </div>
+  <div *ngIf="!isEdit" class="subheader column">
+    <div>
+      Manufacture Warranty:
+
+      <span>
+        {{data.manufactureWarranty}}
+      </span>
+    </div>
+
+    <div>
+      Manufacture Warranty Expiration:
+
+      <span *ngIf="data.warrantyExpiration">
+        {{data.warrantyExpiration}}
+      </span>
+      <span *ngIf="!data.warrantyExpiration">
+        N/A
+      </span>
+    </div>
+
+    <div>
+      Extended Warranty / Service Contract:
+
+      <span *ngIf="data.extWarrantyProvider">
+      Provider: {{data.extWarrantyProvider}}
+      </span>
+      <span *ngIf="!data.extWarrantyProvider">
+      Provider:  N/A
+      </span>
+    </div>
+
+    <div>
+      Extended Warranty / Service Contract:
+
+      <span *ngIf="data.extWarrantyExpiration">
+       Expiration: {{data.extWarrantyExpiration}}
+      </span>
+      <span *ngIf="!data.extWarrantyExpiration">
+        Expiration: N/A
+      </span>
+    </div>
+
+
+
+
+
+
+
+  </div>
+  <div *ngIf="!isEdit" class="subheader column">
+    <div>
+      Serial №:
+
+      <span>
+        {{data.serialNum}}
+      </span>
+    </div>
+
+    <div>
+      MAC Address:
+
+      <span>
+        {{data.macAddress}}
+      </span>
+    </div>
+
+    <div>
+      IP Address:
+
+      <span>
+        {{data.ipAddress}}
+      </span>
+    </div>
+
+    <div>
+      Port:
+
+      <span>
+        {{data.port}}
+      </span>
+    </div>
+
+    <div>
+      Country of Manufacture:
+
+      <span>
+        {{data.countryManufacturer}}
+      </span>
+    </div>
+  </div>
+  <div *ngIf="!isEdit" class="manuals">
+    <span class="title-manual">
+      Manuals:
+    </span>
+    {{data.manuals}}
+  </div>
+  <div *ngIf="isEdit && data" class="room-modal-edit">
+    <form [formGroup]="form">
+      <mat-form-field >
+        <mat-label>
+          Room
+        </mat-label>
+        <input matInput  formControlName="room"  placeholder="Room">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          alt Location
+        </mat-label>
+        <input matInput  formControlName="altLocation"  placeholder="alt Location">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Manufacturer
+        </mat-label>
+        <input matInput  formControlName="manufacturer"  placeholder="Manufacturer">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Model Number
+        </mat-label>
+        <input matInput  formControlName="modelNumber"  placeholder="Model Number">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Description
+        </mat-label>
+        <input matInput  formControlName="description"  placeholder="Description">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Equipment Class
+        </mat-label>
+        <input matInput  formControlName="equipmentClass"  placeholder="Equipment Class">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Category
+        </mat-label>
+        <input matInput  formControlName="category"  placeholder="Category">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Install Date
+        </mat-label>
+        <input matInput  formControlName="installDate"  placeholder="Install Date">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Lifecycle
+        </mat-label>
+        <input matInput  formControlName="lifecycle"  placeholder="Lifecycle">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Replacement Date
+        </mat-label>
+        <input matInput  formControlName="replacementDate"  placeholder="Replacement Date">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Integrator
+        </mat-label>
+        <input matInput  formControlName="integrator"  placeholder="Integrator">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Manufacture Warranty
+        </mat-label>
+        <input matInput  formControlName="manufactureWarranty"  placeholder="Manufacture Warranty">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Warranty Expiration
+        </mat-label>
+        <input matInput  formControlName="warrantyExpiration"  placeholder="Warranty Expiration">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          ext Warranty Provider
+        </mat-label>
+        <input matInput  formControlName="extWarrantyProvider"  placeholder="ext Warranty Provider">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          ext Warranty Expiration
+        </mat-label>
+        <input matInput  formControlName="extWarrantyExpiration"  placeholder="ext Warranty Expiration">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Serial Number
+        </mat-label>
+        <input matInput  formControlName="serialNum"  placeholder="Serial Num">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Mac Address
+        </mat-label>
+        <input matInput  formControlName="macAddress"  placeholder="Mac Address">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          IP Address
+        </mat-label>
+        <input matInput  formControlName="ipAddress"  placeholder="IP Address">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Port
+        </mat-label>
+        <input matInput  formControlName="port"  placeholder="Port">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Country Manufacturer
+        </mat-label>
+        <input matInput  formControlName="countryManufacturer"  placeholder="Country Manufacturer">
+      </mat-form-field>
+    </form>
+  </div>
+</div>

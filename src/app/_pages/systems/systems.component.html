@@ -1,9 +1,8 @@
 <div class="header">
-  <mat-tab-group [color]="'accent'">
+  <mat-tab-group [color]="'accent'" (selectedIndexChange)="changedTub($event)">
     <mat-tab label="Building">
       <div class="slider">
         <div class="slide" [ngClass]="{'active': currentBuilding == item.buildingId}" (click)="openBuildingDetail(item.buildingId)" *ngFor="let item of currentSlides.slides">
-
           <mat-list>
             <h3 mat-subheader>Building {{item.buildingId}}</h3>
             <mat-list-item *ngIf="item.coreEquipment">
@@ -50,7 +49,6 @@
           </div>
         </div>
         <app-carousel-component *ngIf="!roomModalShownEdit" roomDetailImages="{{roomDetailImages}}"></app-carousel-component>
-
         <div *ngIf="!roomModalShownEdit"  class="subheader">
           <div>
             <span>
@@ -111,9 +109,6 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
           </mat-expansion-panel>
-
-
-
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -121,7 +116,6 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
           </mat-expansion-panel>
-
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -129,11 +123,14 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
           </mat-expansion-panel>
-
-
-
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Update Design Description
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
         </mat-accordion>
-
         <div *ngIf="roomModalShownEdit" class="room-modal-edit">
           <form [formGroup]="form">
             <mat-form-field >
@@ -253,8 +250,25 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="Rooms"> Rooms </mat-tab>
-    <mat-tab label="Equipment"> Equipment </mat-tab>
+    <mat-tab label="Rooms"></mat-tab>
+    <mat-tab label="Equipment">
+      <div class="rooms-table-cont" [ngStyle]="{'display': equipmentsString ? 'block': 'none'}">
+        <app-room-table-component
+                                  *ngIf="equipmentsString"
+                                  (clickRow)="opemEquipmentDetailed(true, $event)"
+                                  dataSource="{{equipmentsString}}"
+                                  displayedColumns="{{displayedColumnsEquipments}}"
+        ></app-room-table-component>
+      </div>
+
+      <app-equipment-modal
+        *ngIf="equipmentId"
+        equipmentId="{{equipmentId}}"
+        (close)="equipmentId = null"
+      >
+      </app-equipment-modal>
+    </mat-tab>
+
   </mat-tab-group>
 </div>
 

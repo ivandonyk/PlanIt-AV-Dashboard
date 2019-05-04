@@ -1,3 +1,17 @@
-<p>
-  project-planning works!
-</p>
+<div class="project-planning" *ngIf="single.length > 0">
+  <ngx-charts-bar-vertical
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="single"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [roundEdges]="roundEdges"
+    (select)="onSelect($event)">
+  </ngx-charts-bar-vertical>
+</div>

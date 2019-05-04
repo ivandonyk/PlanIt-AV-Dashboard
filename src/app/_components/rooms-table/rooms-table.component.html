@@ -5,6 +5,7 @@
       <mat-icon mat-list-icon [ngStyle]="{'color': element.colorCode}">fiber_manual_record</mat-icon>
     </td>
   </ng-container>
+
   <ng-container *ngFor="let column of columns" matColumnDef="{{column.key}}">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>
     <td (click)="open(element.roomId)" mat-cell *matCellDef="let element"> {{element[column.key]}} </td>

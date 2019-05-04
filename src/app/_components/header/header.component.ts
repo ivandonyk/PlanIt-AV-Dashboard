@@ -13,36 +13,24 @@ export class HeaderComponent implements OnInit {
 
   constructor(public dialog: MatDialog) {
   }
-
-
   openBuildingDialog(): void {
     this.dialog.open(AddBuildingComponent, {
       width: '75%',
       height: '100%',
     });
-
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
-
   }
-
-
   openRoomDialog(): void {
     this.dialog.open(AddRoomComponent, {
       width: '75%',
       height: '100%',
     });
   }
-
   openEquipmentDialog(): void {
     this.dialog.open(AddEquipmentComponent, {
       width: '75%',
       height: '100%',
     });
   }
-
   ngOnInit() {
   }
 

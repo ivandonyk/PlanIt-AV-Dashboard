@@ -22,7 +22,8 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { fakeBackendProvider } from './_helpers/fake-backend';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { LightboxModule } from 'ngx-lightbox';
-
+import {CrystalGalleryModule} from 'ngx-crystal-gallery';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // import { FlexLayoutModule} from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -57,6 +58,8 @@ import { ProjectPlanningComponent } from './_pages/project-planning/project-plan
 import { RoomdetailComponent } from './_pages/roomdetail/roomdetail.component';
 import { CarouselComponent } from './_components/carousel/carousel.component';
 import { RoomsTableComponent } from './_components/rooms-table/rooms-table.component';
+import { EquipmentModalComponent } from './_components/equipment-modal/equipment-modal.component';
+import { EquipmentdetailComponent } from './_pages/equipmentdetail/equipmentdetail.component';
 
 @NgModule({
   declarations: [
@@ -75,8 +78,10 @@ import { RoomsTableComponent } from './_components/rooms-table/rooms-table.compo
     SystemsComponent,
     ProjectPlanningComponent,
     RoomdetailComponent,
+    EquipmentdetailComponent,
     CarouselComponent,
-    RoomsTableComponent
+    RoomsTableComponent,
+    EquipmentModalComponent
   ],
   entryComponents: [
     AddBuildingComponent,
@@ -113,9 +118,10 @@ import { RoomsTableComponent } from './_components/rooms-table/rooms-table.compo
     MatProgressBarModule,
     NgxDropzoneModule,
     LightboxModule,
+    CrystalGalleryModule,
     DragScrollModule,
-    RouterModule.forRoot([])
-
+    RouterModule.forRoot([]),
+    NgxChartsModule
   ],
   providers: [
     HttpErrorHandler,

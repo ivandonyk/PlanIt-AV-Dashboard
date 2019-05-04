@@ -1,35 +1,19 @@
 <mat-toolbar class="toolbar-custom">
-
   <span>
     <img class="logo-header" src="../../../assets/PlanItAvLogo.jpg" alt="">
   </span>
-
-  <span>
-    <button mat-button>
-        <mat-icon>menu</mat-icon>
-    </button>
-
-
-  </span>
-
-
   <span class="example-spacer"></span>
-
-
-  <button  mat-button  [matMenuTriggerFor]="menu"><mat-icon class="material-icons">add_circle_outline</mat-icon></button>
-
-  <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="openBuildingDialog()"> Add Building </button>
-  <button mat-menu-item (click)="openRoomDialog()">Add Room</button>
-  <button mat-menu-item (click)="openEquipmentDialog()">Add Equipment</button>
-  <button mat-menu-item>Clone Room</button>
-  </mat-menu>
-
-  <button  mat-button> <mat-icon class="example-icon">search</mat-icon></button>
-  <button  mat-button> <mat-icon class="material-icons">notifications_none</mat-icon></button>
-
+  <div class="right-menu">
+    <button  mat-button  [matMenuTriggerFor]="menu"><mat-icon class="material-icons">add_circle_outline</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openBuildingDialog()"> Add Building </button>
+      <button mat-menu-item (click)="openRoomDialog()">Add Room</button>
+      <button mat-menu-item (click)="openEquipmentDialog()">Add Equipment</button>
+      <button mat-menu-item>Clone Room</button>
+    </mat-menu>
+    <button  mat-button> <mat-icon class="example-icon">search</mat-icon></button>
+    <button  mat-button> <mat-icon class="material-icons">notifications_none</mat-icon></button>
     <button  mat-button><mat-icon class="example-icon">settings</mat-icon></button>
-
-  <button mat-button><mat-icon class="material-icons">help_outline</mat-icon></button>
-
+    <button mat-button><mat-icon class="material-icons">help_outline</mat-icon></button>
+  </div>
 </mat-toolbar>

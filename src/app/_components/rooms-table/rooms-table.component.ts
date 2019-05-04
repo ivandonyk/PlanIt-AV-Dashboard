@@ -16,7 +16,7 @@ export class RoomsTableComponent implements OnInit {
 
   public roomId: number = null;
   public data: any;
-  public columns: Array<{key: string, title: string}> ;
+  public columns: Array<{key: string, title: string}>;
   public columnsHeader: Array<string> = ['colorCode'];
 
   constructor() {
@@ -28,6 +28,7 @@ export class RoomsTableComponent implements OnInit {
     this.columns.forEach((item) => {
       this.columnsHeader.push(item.key);
     });
+    console.log(this);
   }
 
   open(id: number) {
