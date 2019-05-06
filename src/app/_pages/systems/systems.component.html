@@ -31,14 +31,17 @@
       <div class="room-modal" *ngIf="roomModalShown">
         <div class="header">
           <div class="title">
-            Building A - Room One (Alternative location)
+            {{roomDetailData.roomName}}
           </div>
           <div class="actions">
             <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
               Edit
             </div>
             <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
-              Save / Cancel
+              Save
+            </div>
+            <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
+              Cancel
             </div>
             <div class="header-btn" (click)="expand(roomId)">
               Expand
@@ -54,36 +57,43 @@
             <span>
               Core Age
             </span>
-            X to X
+            {{roomDetailData.coreAge}}
           </div>
 
           <div>
             <span>
               Equipment Age
             </span>
-            X to X
+            {{roomDetailData.equipmentAge}}
           </div>
 
 
           <div>
             <span>
+              Lifecycle
+            </span>
+            {{roomDetailData.lifecycle}}
+          </div>
+
+          <div>
+            <span>
               Replace/Upgrade
             </span>
-            XXXX
+            {{roomDetailData.replaceUpg}}
           </div>
 
           <div>
             <span>
               Last Install
             </span>
-            XXXX
+            {{roomDetailData.lastInstallDate}}
           </div>
 
           <div>
             <span>
               Integrator
             </span>
-            Bob's AV & Dry Cleaning
+            {{roomDetailData.integrator}}
           </div>
 
         </div>

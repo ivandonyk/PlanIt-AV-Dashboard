@@ -15,6 +15,7 @@ import * as moment from 'moment';
 export class SystemsComponent implements OnInit {
   public dataSlides: any = [];
   public dataRooms: Array<Room> = [];
+  public roomDetailData: RoomDetails;
   public currentBuilding: Number | String;
   public currentSlides: Slides = {
     index: 0,
@@ -211,6 +212,7 @@ export class SystemsComponent implements OnInit {
       this.systServ.getRoomDetails(id)
         .subscribe((data: RoomDetails) => {
           console.log(data);
+          this.roomDetailData = data;
           this.form = this.formBuilder.group({
             roomName: [data.roomName],
             tier: [data.tier],

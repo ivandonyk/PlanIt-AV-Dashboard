@@ -1,4 +1,7 @@
 <div class="project-planning" *ngIf="single.length > 0">
+  <h3>
+    Client Company AV Capital Project Plan 2020 - 2024
+  </h3>
   <ngx-charts-bar-vertical
     [view]="view"
     [scheme]="colorScheme"
@@ -14,4 +17,32 @@
     [roundEdges]="roundEdges"
     (select)="onSelect($event)">
   </ngx-charts-bar-vertical>
+
+
+
+  <mat-accordion class="accordion">
+
+
+
+
+    <mat-expansion-panel *ngFor="let panel of ProjPlanSum" (click)="getProjPlanDetail(1)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{panel.year}}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{panel.projects}} &nbsp;&nbsp;&nbsp;&nbsp; ${{panel.amount}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+
+
+
+
+
+
+  </mat-accordion>
+
+
+
 </div>

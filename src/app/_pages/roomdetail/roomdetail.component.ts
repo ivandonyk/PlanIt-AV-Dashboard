@@ -45,6 +45,7 @@ export class RoomdetailComponent implements OnInit {
 
   public form: FormGroup;
   public roomModalShownEdit: Boolean = false;
+  public roomDetailData: RoomDetails;
   public roomId: number | string = window.location.pathname.split('/')[3];
   public mainPictureIndex: number = 0;
   constructor(
@@ -62,6 +63,7 @@ export class RoomdetailComponent implements OnInit {
       this.systServ.getRoomDetails(id)
         .subscribe((data: RoomDetails) => {
           console.log(data);
+          this.roomDetailData = data;
 
           this.form = this.formBuilder.group({
             roomName: [data.roomName],

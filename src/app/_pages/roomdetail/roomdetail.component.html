@@ -1,58 +1,70 @@
 <div class="room-detail-page">
   <div class="header">
     <div class="title">
-      Building A - Room One (Alternative location)
+      {{roomDetailData.roomName}}
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
-        Edit
+        <span>
+          Edit
+        </span>
       </div>
       <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
-        Save / Cancel
+        <span>
+          Save
+        </span>
+      </div>
+      <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
+        <span>
+          Cancel
+        </span>
       </div>
     </div>
   </div>
-
   <app-carousel-component *ngIf="!roomModalShownEdit" roomDetailImages="{{roomDetailImages}}"></app-carousel-component>
-
-
   <div *ngIf="!roomModalShownEdit"  class="subheader">
     <div>
             <span>
               Core Age
             </span>
-      X to X
+      {{roomDetailData.coreAge}}
     </div>
 
     <div>
             <span>
               Equipment Age
             </span>
-      X to X
+      {{roomDetailData.equipmentAge}}
     </div>
 
 
     <div>
             <span>
+              Lifecycle
+            </span>
+      {{roomDetailData.lifecycle}}
+    </div>
+
+    <div>
+            <span>
               Replace/Upgrade
             </span>
-      XXXX
+      {{roomDetailData.replaceUpg}}
     </div>
 
     <div>
             <span>
               Last Install
             </span>
-      XXXX
+      {{roomDetailData.lastInstallDate}}
     </div>
 
     <div>
             <span>
               Integrator
             </span>
-      Bob's AV & Dry Cleaning
+      {{roomDetailData.integrator}}
     </div>
-
   </div>
   <mat-accordion  *ngIf="!roomModalShownEdit" >
     <mat-expansion-panel>
@@ -200,6 +212,5 @@
     <ngx-dropzone
       [label]="'Drop your image here'"
     ></ngx-dropzone>
-
   </div>
 </div>

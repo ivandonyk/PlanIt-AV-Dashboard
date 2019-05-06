@@ -10,4 +10,19 @@ export interface ProjectPlanList {
 }
 
 
+export interface ProjPlanDetail {
+  building: string;
+  room: string;
+  type: string;
+  tier: number;
+  coreAge: string;
+  equipmentAge: string;
+  projectedCost: number;
+}
+
+export interface ProjPlanDetailObj {
+  projectPlanDetailList: ProjPlanDetail[];
+}
+
+
 

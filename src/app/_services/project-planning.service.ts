@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment} from '../../environments/environment';
 import {UserData} from '../_models/userdata.model';
-import { ProjectPlanList } from '../_models/project-plannings.model';
+import { ProjectPlanList, ProjPlanDetailObj } from '../_models/project-plannings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,15 @@ export class ProjectPlanningService {
 
 
     return this.httpClient.get<ProjectPlanList>(environment.baseUrl + '/getProjPlanSum', {
+      params: params
+    });
+  }
+
+  getProjPlanDetail(id): Observable<ProjPlanDetailObj> {
+    const params = new HttpParams().set('buildingId', String(id));
+
+
+    return this.httpClient.get<ProjPlanDetailObj>(environment.baseUrl + '/getProjPlanDetail', {
       params: params
     });
   }
