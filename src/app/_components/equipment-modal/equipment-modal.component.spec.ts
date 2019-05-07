@@ -16,7 +16,7 @@ describe('RoomsTableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RoomsTableComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges();j
   });
 
   it('should create', () => {

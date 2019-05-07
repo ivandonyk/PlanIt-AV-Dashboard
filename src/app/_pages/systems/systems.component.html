@@ -67,6 +67,12 @@
             {{roomDetailData.equipmentAge}}
           </div>
 
+          <div>
+            <span>
+              Last Install
+            </span>
+            {{roomDetailData.lastInstallDate}}
+          </div>
 
           <div>
             <span>
@@ -81,14 +87,6 @@
             </span>
             {{roomDetailData.replaceUpg}}
           </div>
-
-          <div>
-            <span>
-              Last Install
-            </span>
-            {{roomDetailData.lastInstallDate}}
-          </div>
-
           <div>
             <span>
               Integrator
@@ -133,13 +131,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
           </mat-expansion-panel>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Update Design Description
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
+
         </mat-accordion>
         <div *ngIf="roomModalShownEdit" class="room-modal-edit">
           <form [formGroup]="form">

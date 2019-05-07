@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProjectPlanningService } from '../../_services/project-planning.service';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { ProjectPlanList, ProjectPlan, ProjPlanDetailObj } from '../../_models/project-plannings.model';
+import {MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-project-planning',
@@ -22,6 +23,9 @@ export class ProjectPlanningComponent {
    public colorScheme = {
     domain: ['#fa0006']
   };
+  public tableData: any;
+  public columnsHeader: Array<string> = ['building', 'room', 'type', 'tier', 'coreAge', 'equipmentAge', 'projectedCost' ];
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private projectPlanningServ: ProjectPlanningService,
@@ -57,21 +61,18 @@ export class ProjectPlanningComponent {
 
   }
   getProjPlanDetail(id) {
+    this.tableData = [];
     this.globalVars.spinner = true;
-
     this.projectPlanningServ.getProjPlanDetail(id)
       .subscribe((data: ProjPlanDetailObj) => {
-        console.log(data);
+        this.tableData = new MatTableDataSource(data.projectPlanDetailList);
+        this.tableData.sort = this.sort;
         this.globalVars.spinner = false;
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-
       });
-
   }
-
-
 }
 
 
