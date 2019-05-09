@@ -21,10 +21,10 @@ export class ProjectPlanningService {
     });
   }
 
-  getProjPlanDetail(id): Observable<ProjPlanDetailObj> {
-    const params = new HttpParams().set('buildingId', String(id));
-
-
+  getProjPlanDetail(year): Observable<ProjPlanDetailObj> {
+    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const params = new HttpParams().set('businessId', String(userData.businessId));
+    params.set('year', String(year));
     return this.httpClient.get<ProjPlanDetailObj>(environment.baseUrl + '/getProjPlanDetail', {
       params: params
     });

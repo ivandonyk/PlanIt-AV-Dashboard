@@ -41,6 +41,10 @@ export class SystemsComponent implements OnInit {
       title: 'Last Install',
     },
     {
+      key: 'lifecycle',
+      title: 'Lifecycle',
+    },
+    {
       key: 'replace',
       title: 'Replace/Upgrade',
     }]);

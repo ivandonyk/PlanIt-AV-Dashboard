@@ -19,7 +19,7 @@
   </ngx-charts-bar-vertical>
   <mat-accordion class="accordion">
     <mat-expansion-panel *ngFor="let panel of ProjPlanSum" >
-      <mat-expansion-panel-header (click)="getProjPlanDetail(1)">
+      <mat-expansion-panel-header (click)="getProjPlanDetail(panel.year)">
         <mat-panel-title>
           {{panel.year}}
         </mat-panel-title>

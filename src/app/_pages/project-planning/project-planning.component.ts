@@ -42,7 +42,6 @@ export class ProjectPlanningComponent {
   getProjPlanSum() {
     this.projectPlanningServ.getProjPlanSum()
       .subscribe((data: ProjectPlanList) => {
-        console.log(data);
         this.ProjPlanSum = data.projectPlanList;
         data.projectPlanList.forEach((item) => {
           this.single.push({
@@ -60,11 +59,13 @@ export class ProjectPlanningComponent {
       });
 
   }
-  getProjPlanDetail(id) {
+  getProjPlanDetail(year) {
     this.tableData = [];
     this.globalVars.spinner = true;
-    this.projectPlanningServ.getProjPlanDetail(id)
+    this.projectPlanningServ.getProjPlanDetail(year)
       .subscribe((data: ProjPlanDetailObj) => {
+        console.log(data);
+
         this.tableData = new MatTableDataSource(data.projectPlanDetailList);
         this.tableData.sort = this.sort;
         this.globalVars.spinner = false;
