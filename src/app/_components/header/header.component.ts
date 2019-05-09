@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {AddBuildingComponent} from './add-building/add-building.component';
-import {AddRoomComponent} from './add-room/add-room.component';
-import {AddEquipmentComponent} from './add-equipment/add-equipment.component';
+import {AddBuildingComponent} from '../add-building/add-building.component';
+import {AddRoomComponent} from '../add-room/add-room.component';
+import {AddEquipmentComponent} from '../add-equipment/add-equipment.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { ReferComponent } from './refer/refer.component';
+import { ReferComponent } from '../refer/refer.component';
 
 @Component({
   selector: 'app-header',

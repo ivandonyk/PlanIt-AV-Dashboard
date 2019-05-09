@@ -46,13 +46,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { BuildingComponent } from './_pages/building/building.component';
 import { LoginComponent } from './_pages/login/login.component';
 import { HomeComponent } from './_pages/home/home.component';
-import { AddBuildingComponent } from './_components/header/add-building/add-building.component';
+import { AddBuildingComponent } from './_components/add-building/add-building.component';
 import { HttpErrorHandler } from './_services/http-error-handler.service';
 import { MessageService} from './_services/message.service';
 import { ErrorPageComponent } from './_pages/error-page/error-page.component';
-import { AddRoomComponent } from './_components/header/add-room/add-room.component';
+import { AddRoomComponent } from './_components/add-room/add-room.component';
 import { DashboardComponent } from './_pages/dashboard/dashboard.component';
-import { AddEquipmentComponent } from './_components/header/add-equipment/add-equipment.component';
+import { AddEquipmentComponent } from './_components/add-equipment/add-equipment.component';
 import { SystemsComponent } from './_pages/systems/systems.component';
 import { ProjectPlanningComponent } from './_pages/project-planning/project-planning.component';
 import { RoomdetailComponent } from './_pages/roomdetail/roomdetail.component';
@@ -60,7 +60,7 @@ import { CarouselComponent } from './_components/carousel/carousel.component';
 import { RoomsTableComponent } from './_components/rooms-table/rooms-table.component';
 import { EquipmentModalComponent } from './_components/equipment-modal/equipment-modal.component';
 import { EquipmentdetailComponent } from './_pages/equipmentdetail/equipmentdetail.component';
-import { ReferComponent } from './_components/header/refer/refer.component';
+import { ReferComponent } from './_components/refer/refer.component';
 
 @NgModule({
   declarations: [
