@@ -61,6 +61,13 @@ export interface RoomDetails {
   tier: number;
 }
 
+
+
+
+
+
+
+
 export interface Equipment {
   building: string;
   category: string;

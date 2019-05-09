@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
+import {SystemsService} from '../../_services/systems.service';
+import {GlobalVarsHelper} from '../../_helpers/global-vars';
 
 @Component({
   selector: 'app-add-room',
@@ -8,107 +10,88 @@ import {MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
   styleUrls: ['./add-room.component.css']
 })
 export class AddRoomComponent implements OnInit {
-
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<AddRoomComponent>,
-              private snackbar: MatSnackBar) { }
-
-  ngOnInit() {
-
-  }
-
-  // @ts-ignore
-  private addRoomForm = this.fb.group({
+  public addRoomForm = this.fb.group({
     buildingName: new FormControl(''),
     roomName: new FormControl('', [Validators.required, Validators.maxLength(80)]),
     tier: new FormControl(''),
+    coreAge: new FormControl(''),
     floor: new FormControl(''),
     dateOfLastRemodel: new FormControl(''),
     integrator: new FormControl(''),
     roomType: new FormControl(''),
-    //Add line here...new tab Details
     seatingCapacity: new FormControl(''),
     seatingType: new FormControl(''),
     dimensions: new FormControl('' ),
-    //unit of measure
     ceilingHeight : new FormControl(''),
     ceilingType : new FormControl(''),
-    //TODO - phone number formatter...
+    lastInstallDate : new FormControl(''),
     origAvInstallDate : new FormControl(''),
-    origAvSysCost : new FormControl(''),
+    lifecycle : new FormControl(''),
+    origAvSystemCost : new FormControl(''),
     origAvContractor: new FormControl(''),
-    avLastUpdDate: new FormControl(''),
-    avLastUpdCost: new FormControl(''),
-    lastAvUpdContractor: new FormControl(''),
-    nextAvUpdate: new FormControl(''),
-    nextAvUpdEstCost: new FormControl(''),
+    avLastUpdateDate: new FormControl(''),
+    avLastUpdateCost: new FormControl(''),
+    lastAvContractor: new FormControl(''),
+    nextAvUpdateDt: new FormControl(''),
+    nextAvUpdCost: new FormControl(''),
     notes: new FormControl(''),
-    //upload photos - future
+    equipmentAge: new FormControl(''),
+    replaceUpg: new FormControl(''),
   });
-
-  //TODO - grab this from DB, make it business account specific
-  //TODO - for their own defined types..
-  roomType: string[] = [
+  public roomType: string[] = [
     'Conference Room', 'Classroom', 'Boardroom', 'Huddle Room',
     'Conference Center', 'Lobby', 'Hallway',
   ];
-
-  tiers: string[] = [
+  public tiers: string[] = [
     '1', '2', '3', '4', '5'
   ];
-
-  buildings: string[] = [
+  public buildings: string[] = [
     'Orange Building', 'Building 1', 'Secret Building', 'Square Building', 'UFO Building'
 
-  ]
-
-  //TODO - grab this from DB, make it business account specific
-  //TODO - for their own defined types..
-  seatingTypes: string[] = [
+  ];
+  public seatingTypes: string[] = [
     'Conference', 'Table', 'Fixed Classroom', 'Flexible', 'Theater'
   ];
-
-  ceilingTypes: string[] = [
+  public ceilingTypes: string[] = [
     'Drywall', 'Drop', 'Open', 'Bar-joist', 'Combination'
   ];
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<AddRoomComponent>,
+    private snackbar: MatSnackBar,
+    private systServ: SystemsService,
+    public globalVars: GlobalVarsHelper,
+  ) { }
+
+  ngOnInit() {
+
+  }
 
   revert() {
     this.addRoomForm.reset();
   }
 
   onSubmit() {
-    // TODO : use eventemitter with form value
-    console.log(this.addRoomForm.value);
-
-    //TODO - add service for Room...
-    // const addBuildingApiModel = new AddBuildingApiModel();
-    // const result: AddBuildingFormModel = Object.assign({}, this.addRoomForm.value);
-    // console.log('Result is: [' + result + ']');
-    // addBuildingApiModel.addBuildingFormModel = Object.assign({}, result);
-    // addBuildingApiModel.businessAccountId = '1'; // TODO - get from login..
-    // addBuildingApiModel.userName = 'dale.roach@planitav.com'; // TODO - get from login..store in session storage
-
-    // console.log('Addbuilding api model is: [' + addBuildingApiModel + ']');
-
-    // this.addRoomForm.addBuilding(addBuildingApiModel);
-
-    this.dialogRef.close();
-
-    this.snackbar.open('Room Added', '', {
-        duration: 1500,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      }
-    );
-
-
+    this.globalVars.spinner = true;
+    this.systServ.addRoom(this.addRoomForm.value)
+      .subscribe(data => {
+        console.log(data);
+        this.globalVars.spinner = false;
+        this.dialogRef.close();
+        this.snackbar.open('Room Added', '', {
+            duration: 1500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
+      }, error => {
+        this.globalVars.spinner = false;
+        console.log(error);
+      });
   }
 
   cancel() {
-    // TODO : use eventemitter with form value
-    console.log('In Cancel...Doh!');
     this.dialogRef.close();
-
-
   }
 
   get roomName() {
@@ -120,7 +103,6 @@ export class AddRoomComponent implements OnInit {
   }
 
   getRoomNameErrorMessage() {
-
     return this.roomName.hasError('required') ? 'Room Name is required' : '';
   }
 

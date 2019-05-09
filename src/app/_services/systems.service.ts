@@ -53,6 +53,39 @@ export class SystemsService {
     });
   }
 
+  addRoom(roomObj: RoomDetails): Observable<RoomDetails> {
+    const room: RoomDetails = {
+      avLastUpdateCost: Number(roomObj.avLastUpdateCost),
+      avLastUpdateDate: roomObj.avLastUpdateDate,
+      ceilingHeight: Number(roomObj.ceilingHeight),
+      ceilingType: String(roomObj.ceilingType),
+      coreAge: String(roomObj.coreAge),
+      dateOfLastRemodel: String(roomObj.dateOfLastRemodel),
+      dimensions: String(roomObj.dimensions),
+      equipmentAge: String(roomObj.equipmentAge),
+      floor: Number(roomObj.floor),
+      images: roomObj.images,
+      integrator: String(roomObj.integrator),
+      lastAvContractor: String(roomObj.lastAvContractor),
+      lastInstallDate: String(roomObj.lastInstallDate),
+      lifecycle: Number(roomObj.lifecycle),
+      nextAvUpdCost: Number(roomObj.nextAvUpdCost),
+      nextAvUpdateDt: String(roomObj.nextAvUpdateDt),
+      notes: String(roomObj.notes),
+      origAvContractor: String(roomObj.origAvContractor),
+      origAvInstallDate: String(roomObj.origAvInstallDate),
+      origAvSystemCost: Number(roomObj.origAvSystemCost),
+      replaceUpg: String(roomObj.replaceUpg),
+      roomName: String(roomObj.roomName),
+      seatingCapacity: Number(roomObj.seatingCapacity),
+      seatingType: String(roomObj.seatingType),
+      tier: Number(roomObj.tier)
+    };
+    return this.httpClient.post<RoomDetails>(environment.baseUrl + '/addRoom', room);
+  }
+
+
+
 
 
 }
