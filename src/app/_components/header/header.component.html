@@ -19,7 +19,7 @@
       <button mat-menu-item>Manage Users</button>
       <button mat-menu-item>Import data</button>
       <button mat-menu-item>Feedback</button>
-      <button mat-menu-item>Refer A Friend</button>
+      <button mat-menu-item (click)="openReferDialog()">Refer A Friend</button>
       <button mat-menu-item>Privacy </button>
     </mat-menu>
     <button mat-button [matMenuTriggerFor]="help"><mat-icon class="material-icons">help_outline</mat-icon></button>

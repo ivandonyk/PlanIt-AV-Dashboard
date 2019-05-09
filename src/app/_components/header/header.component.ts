@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from '@angular/material';
 import {AddBuildingComponent} from './add-building/add-building.component';
 import {AddRoomComponent} from './add-room/add-room.component';
 import {AddEquipmentComponent} from './add-equipment/add-equipment.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { ReferComponent } from './refer/refer.component';
 
 @Component({
   selector: 'app-header',
@@ -30,6 +31,9 @@ export class HeaderComponent implements OnInit {
       width: '75%',
       height: '100%',
     });
+  }
+  openReferDialog(): void {
+    this.dialog.open(ReferComponent);
   }
   ngOnInit() {
   }

@@ -60,6 +60,7 @@ import { CarouselComponent } from './_components/carousel/carousel.component';
 import { RoomsTableComponent } from './_components/rooms-table/rooms-table.component';
 import { EquipmentModalComponent } from './_components/equipment-modal/equipment-modal.component';
 import { EquipmentdetailComponent } from './_pages/equipmentdetail/equipmentdetail.component';
+import { ReferComponent } from './_components/header/refer/refer.component';
 
 @NgModule({
   declarations: [
@@ -81,12 +82,14 @@ import { EquipmentdetailComponent } from './_pages/equipmentdetail/equipmentdeta
     EquipmentdetailComponent,
     CarouselComponent,
     RoomsTableComponent,
-    EquipmentModalComponent
+    EquipmentModalComponent,
+    ReferComponent
   ],
   entryComponents: [
     AddBuildingComponent,
     AddRoomComponent,
     AddEquipmentComponent,
+    ReferComponent
   ],
   imports: [
     BrowserModule,
