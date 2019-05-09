@@ -4,11 +4,9 @@ export interface ProjectPlan {
   amount: number;
 }
 
-
 export interface ProjectPlanList {
   projectPlanList: ProjectPlan[];
 }
-
 
 export interface ProjPlanDetail {
   building: string;

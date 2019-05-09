@@ -11,31 +11,6 @@ export class AddEquipmentComponent implements OnInit {
 
   private addEquipmentForm = this.fb.group({
     rooms: new FormControl(''),
-    manufacturer: new FormControl('', [Validators.required]),
-    modelPartNbr: new FormControl(''),
-    class: new FormControl(''),
-    category: new FormControl(''),
-    lifecycle: new FormControl(''),
-    dateInstalled: new FormControl(''),
-    //TODO - put non-required fields below...
-    // //Add line here...new tab Details
-    // seatingCapacity: new FormControl(''),
-    // seatingType: new FormControl(''),
-    // dimensions: new FormControl('' ),
-    // //unit of measure
-    // ceilingHeight : new FormControl(''),
-    // ceilingType : new FormControl(''),
-    // //TODO - phone number formatter...
-    // origAvInstallDate : new FormControl(''),
-    // origAvSysCost : new FormControl(''),
-    // origAvContractor: new FormControl(''),
-    // avLastUpdDate: new FormControl(''),
-    // avLastUpdCost: new FormControl(''),
-    // lastAvUpdContractor: new FormControl(''),
-    // nextAvUpdate: new FormControl(''),
-    // nextAvUpdEstCost: new FormControl(''),
-    // notes: new FormControl(''),
-    //upload photos - future
   });
 
   classes: string[] = [
