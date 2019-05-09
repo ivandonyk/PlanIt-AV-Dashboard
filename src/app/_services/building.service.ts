@@ -14,8 +14,6 @@ export class BuildingService {
   }
 
   getBuildings(): Observable<Building[]> {
-
     return this.httpClient.get<Building[]>(environment.baseUrl + '/getBuildings', {});
-
-    }
+  }
 }

@@ -9,20 +9,42 @@ import {MatDialogRef, MatSnackBar} from '@angular/material';
 })
 export class AddEquipmentComponent implements OnInit {
 
-  private addEquipmentForm = this.fb.group({
+  public addEquipmentForm = this.fb.group({
     rooms: new FormControl(''),
+    alternateLocation: new FormControl(''),
+    countryOfManufacture: new FormControl(''),
+    dateInstalled: new FormControl(''),
+    description: new FormControl(''),
+    equipmentCategory: new FormControl(''),
+    equipmentClass: new FormControl(''),
+    equipmentId: new FormControl(''),
+    extWarrantyStartDate: new FormControl(''),
+    extendedWarranty: new FormControl(''),
+    extendedWarrantyProvider: new FormControl(''),
+    integrator: new FormControl(''),
+    ipAddress: new FormControl(''),
+    lifeCycle: new FormControl(''),
+    macAddress: new FormControl(''),
+    manufactureWarranty: new FormControl(''),
+    manufacturer: new FormControl(''),
+    modelNumber: new FormControl(''),
+    port: new FormControl(''),
+    replacementDate: new FormControl(''),
+    roomId: new FormControl(''),
+    serialNumber: new FormControl(''),
+    userName: new FormControl(''),
+    warrantyExpirationDate: new FormControl(''),
+    warrantyStartDate: new FormControl(''),
   });
 
   classes: string[] = [
     'Core', 'Peripheral', 'Furniture',
   ];
 
-  // TODO - grab from database...
   roomList: string [] = [
     'Roach BoardRoom', 'Green Hallway', 'Huddle Room', 'Executive BoardRoom',
   ];
 
- //TODO - keep a library of these..make sure they can type them in??
   categories: string[] = [
     'Video', 'Audio', 'Monitor',
   ];
@@ -42,42 +64,12 @@ export class AddEquipmentComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO : use eventemitter with form value
     console.log(this.addEquipmentForm.value);
-
-    //TODO - add service for Room...
-    // const addBuildingApiModel = new AddBuildingApiModel();
-    // const result: AddBuildingFormModel = Object.assign({}, this.addRoomForm.value);
-    // console.log('Result is: [' + result + ']');
-    // addBuildingApiModel.addBuildingFormModel = Object.assign({}, result);
-    // addBuildingApiModel.businessAccountId = '1'; // TODO - get from login..
-    // addBuildingApiModel.userName = 'dale.roach@planitav.com'; // TODO - get from login..store in session storage
-
-    // console.log('Addbuilding api model is: [' + addBuildingApiModel + ']');
-
-    // this.addRoomForm.addBuilding(addBuildingApiModel);
-
-    this.dialogRef.close();
-
-    this.snackbar.open('Equipment Added', '', {
-        duration: 1500,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      }
-    );
-
-
   }
 
   cancel() {
     // TODO : use eventemitter with form value
     console.log('In Cancel...Doh!');
     this.dialogRef.close();
-
-
   }
-
-
-
-
 }

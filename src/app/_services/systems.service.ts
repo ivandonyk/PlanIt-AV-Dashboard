@@ -14,13 +14,10 @@ export class SystemsService {
   getBuildings(): Observable<Buildings> {
     const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
     const params = new HttpParams().set('businessId', String(userData.businessId));
-
-
     return this.httpClient.get<Buildings>(environment.baseUrl + '/getBuildings', {
       params: params
     });
   }
-
 
   getRoomDetails(id?: number | string): Observable<RoomDetails> {
     const params = new HttpParams().set('roomId', String(id));
@@ -52,7 +49,6 @@ export class SystemsService {
       params: params
     });
   }
-
   addRoom(roomObj: RoomDetails): Observable<RoomDetails> {
     const room: RoomDetails = {
       avLastUpdateCost: Number(roomObj.avLastUpdateCost),
@@ -83,9 +79,4 @@ export class SystemsService {
     };
     return this.httpClient.post<RoomDetails>(environment.baseUrl + '/addRoom', room);
   }
-
-
-
-
-
 }

@@ -6,7 +6,7 @@ import {MatSort, MatTableDataSource } from '@angular/material';
 import {RoomDetails} from '../../_models/systems.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
-import {SystemsService} from "../../_services/systems.service";
+import {SystemsService} from '../../_services/systems.service';
 
 @Component({
   selector: 'app-project-planning',
@@ -114,12 +114,6 @@ export class ProjectPlanningComponent {
         this.globalVars.spinner = false;
       });
   }
-
-
-
-
-
-
   opemRoomDetailed(status?: boolean, id?: number) {
     if (!status) {
       this.roomModalShown = false;
@@ -166,9 +160,6 @@ export class ProjectPlanningComponent {
   expand(roomId) {
     window.open(window.location.origin + '/home/room-detail/' + roomId);
   }
-
-
-
 
 
 }
