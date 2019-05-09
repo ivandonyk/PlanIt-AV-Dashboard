@@ -18,6 +18,7 @@ export interface ProjPlanDetail {
   coreAge: string;
   equipmentAge: string;
   projectedCost: number;
+  roomId: number;
 }
 
 export interface ProjPlanDetailObj {

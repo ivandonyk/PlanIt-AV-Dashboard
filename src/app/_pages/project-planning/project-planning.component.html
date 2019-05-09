@@ -30,35 +30,265 @@
       <table mat-table *ngIf="tableData"  [dataSource]="tableData" matSort class="mat-elevation-z8 project-planning-table">
         <ng-container  matColumnDef="building">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Building </th>
-          <td  mat-cell *matCellDef="let element"> {{element.building}} </td>
+          <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.building}} </td>
         </ng-container>
         <ng-container  matColumnDef="room">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
-          <td  mat-cell *matCellDef="let element"> {{element.room}} </td>
+          <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.room}} </td>
         </ng-container>
         <ng-container  matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-          <td  mat-cell *matCellDef="let element"> {{element.type}} </td>
+          <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.type}} </td>
         </ng-container>
         <ng-container  matColumnDef="tier">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Tier </th>
-          <td  mat-cell *matCellDef="let element"> {{element.tier}} </td>
+          <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.tier}} </td>
         </ng-container>
         <ng-container  matColumnDef="coreAge">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Core Age </th>
-          <td  mat-cell *matCellDef="let element"> {{element.coreAge}} </td>
+          <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.coreAge}} </td>
         </ng-container>
         <ng-container  matColumnDef="equipmentAge">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Equipment Age </th>
-          <td  mat-cell *matCellDef="let element"> {{element.equipmentAge}} </td>
+          <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.equipmentAge}} </td>
         </ng-container>
         <ng-container  matColumnDef="projectedCost">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Projected Cost </th>
-          <td  mat-cell *matCellDef="let element"> ${{element.projectedCost}} </td>
+          <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> ${{element.projectedCost}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="columnsHeader"></tr>
         <tr mat-row *matRowDef="let row; columns: columnsHeader;"></tr>
       </table>
     </mat-expansion-panel>
   </mat-accordion>
+</div>
+<div class="room-modal-overlay" (click)="opemRoomDetailed(false)" *ngIf="roomModalShown"></div>
+<div class="room-modal" *ngIf="roomModalShown">
+  <div class="header">
+    <div class="title">
+      {{roomDetailData.roomName}}
+    </div>
+    <div class="actions">
+      <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
+        Edit
+      </div>
+      <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
+        Save
+      </div>
+      <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
+        Cancel
+      </div>
+      <div class="header-btn" (click)="expand(roomId)">
+        Expand
+      </div>
+      <div (click)="opemRoomDetailed(false)" class="header-btn">
+        X Close
+      </div>
+    </div>
+  </div>
+  <app-carousel-component *ngIf="!roomModalShownEdit" roomDetailImages="{{roomDetailImages}}"></app-carousel-component>
+  <div *ngIf="!roomModalShownEdit"  class="subheader">
+    <div>
+            <span>
+              Core Age
+            </span>
+      {{roomDetailData.coreAge}}
+    </div>
+
+    <div>
+            <span>
+              Equipment Age
+            </span>
+      {{roomDetailData.equipmentAge}}
+    </div>
+
+    <div>
+            <span>
+              Last Install
+            </span>
+      {{roomDetailData.lastInstallDate}}
+    </div>
+
+    <div>
+            <span>
+              Lifecycle
+            </span>
+      {{roomDetailData.lifecycle}}
+    </div>
+
+    <div>
+            <span>
+              Replace/Upgrade
+            </span>
+      {{roomDetailData.replaceUpg}}
+    </div>
+    <div>
+            <span>
+              Integrator
+            </span>
+      {{roomDetailData.integrator}}
+    </div>
+
+  </div>
+  <mat-accordion  *ngIf="!roomModalShownEdit" >
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Design Documents
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Core Equipment
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Other Equipment
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          History
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Update Project Description
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+  <div *ngIf="roomModalShownEdit" class="room-modal-edit">
+    <form [formGroup]="form">
+      <mat-form-field >
+        <mat-label>
+          Room Name
+        </mat-label>
+        <input matInput  formControlName="roomName"  placeholder="Room Name">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Tier
+        </mat-label>
+        <input matInput  formControlName="tier"  type="number" placeholder="Tier">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Floor
+        </mat-label>
+        <input matInput  formControlName="floor"  type="number" placeholder="Floor">
+      </mat-form-field>
+      <mat-form-field >
+        <input matInput  formControlName="dateOfLastRemodel"  [matDatepicker]="dateOfLastRemodel" placeholder="Date Of Last Remodel">
+        <mat-datepicker-toggle matSuffix [for]="dateOfLastRemodel"></mat-datepicker-toggle>
+        <mat-datepicker #dateOfLastRemodel></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Integrator
+        </mat-label>
+        <input matInput  formControlName="integrator"  placeholder="Integrator">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Seating Type
+        </mat-label>
+        <input matInput  formControlName="seatingType"  placeholder="Seating Type">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Seating Capacity
+        </mat-label>
+        <input matInput  formControlName="seatingCapacity"  type="number" placeholder="Seating Capacity">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Dimensions
+        </mat-label>
+        <input matInput  formControlName="dimensions"  type="text" placeholder="Dimensions">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Ceiling Height
+        </mat-label>
+        <input matInput  formControlName="ceilingHeight"  type="number" placeholder="Ceiling Height">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Ceiling Type
+        </mat-label>
+        <input matInput  formControlName="ceilingType"  type="text" placeholder="Ceiling Type">
+      </mat-form-field>
+      <mat-form-field >
+        <input matInput  formControlName="origAvInstallDate"  [matDatepicker]="origAvInstallDate" placeholder="Orig Av Install Date">
+        <mat-datepicker-toggle matSuffix [for]="origAvInstallDate"></mat-datepicker-toggle>
+        <mat-datepicker #origAvInstallDate></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Orig Av System Cost
+        </mat-label>
+        <input matInput  formControlName="origAvSystemCost"  type="number" placeholder="Orig Av System Cost">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Orig Av Contractor
+        </mat-label>
+        <input matInput  formControlName="origAvContractor"  type="text" placeholder="Orig Av Contractor">
+      </mat-form-field>
+      <mat-form-field >
+        <input matInput  formControlName="avLastUpdateDate"  [matDatepicker]="avLastUpdateDate" placeholder="av Last Update Date">
+        <mat-datepicker-toggle matSuffix [for]="avLastUpdateDate"></mat-datepicker-toggle>
+        <mat-datepicker #avLastUpdateDate></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Av Last Update Cost
+        </mat-label>
+        <input matInput  formControlName="avLastUpdateCost"  type="number" placeholder="Av Last Update Cost">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Last Av Contractor
+        </mat-label>
+        <input matInput type="text" formControlName="lastAvContractor" placeholder="Last Av Contractor">
+      </mat-form-field>
+      <mat-form-field >
+        <input matInput  formControlName="nextAvUpdateDt"  [matDatepicker]="nextAvUpdateDt" placeholder="Next Av Update Dt">
+        <mat-datepicker-toggle matSuffix [for]="nextAvUpdateDt"></mat-datepicker-toggle>
+        <mat-datepicker #nextAvUpdateDt></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Next Av Update Cost
+        </mat-label>
+        <input matInput  formControlName="nextAvUpdCost"  type="text" placeholder="Next Av Update Cost">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Notes
+        </mat-label>
+        <input matInput  formControlName="notes"  type="text" placeholder="Notes">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Lifecycle
+        </mat-label>
+        <input matInput  formControlName="lifecycle"  type="text" placeholder="Lifecycle">
+      </mat-form-field>
+    </form>
+    <ngx-dropzone
+      [label]="'Drop your image here'"
+    ></ngx-dropzone>
+  </div>
 </div>

@@ -3,6 +3,10 @@ import { ProjectPlanningService } from '../../_services/project-planning.service
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { ProjectPlanList, ProjectPlan, ProjPlanDetailObj } from '../../_models/project-plannings.model';
 import {MatSort, MatTableDataSource } from '@angular/material';
+import {RoomDetails} from '../../_models/systems.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
+import {SystemsService} from "../../_services/systems.service";
 
 @Component({
   selector: 'app-project-planning',
@@ -10,26 +14,62 @@ import {MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./project-planning.component.scss']
 })
 export class ProjectPlanningComponent {
-   public single: Array<{name: string, value: number}> = [];
-   public ProjPlanSum: ProjectPlan[];
-   public view: Array<number> = [400, 300];
-   public showXAxis = true;
-   public showYAxis = true;
-   public gradient = false;
-   public roundEdges = false;
-   public showLegend = false;
-   public showXAxisLabel = true;
-   public showYAxisLabel = true;
-   public colorScheme = {
+  public single: Array<{name: string, value: number}> = [];
+  public ProjPlanSum: ProjectPlan[];
+  public view: Array<number> = [400, 300];
+  public showXAxis = true;
+  public showYAxis = true;
+  public gradient = false;
+  public roundEdges = false;
+  public showLegend = false;
+  public showXAxisLabel = true;
+  public showYAxisLabel = true;
+  public roomId: number = null;
+  public colorScheme = {
     domain: ['#fa0006']
-  };
+   };
+  public roomDetailImages: string = JSON.stringify([
+    {
+      path: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv',
+    }, {
+      path: 'http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
+    }, {
+      path: 'http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
+    }, {
+      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI',
+    }, {
+      path: 'https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg',
+    }, {
+      path: 'https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg',
+    }, {
+      path: 'https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg',
+    }, {
+      path: 'https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg',
+    }, {
+      path: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
+    }
+  ]);
+  public roomDetailData: RoomDetails;
+  public roomModalShown: Boolean = false;
+  public roomModalShownEdit: Boolean = false;
   public tableData: any;
+  public form: FormGroup;
   public columnsHeader: Array<string> = ['building', 'room', 'type', 'tier', 'coreAge', 'equipmentAge', 'projectedCost' ];
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private projectPlanningServ: ProjectPlanningService,
     public globalVars: GlobalVarsHelper,
+    private formBuilder: FormBuilder,
+    private systServ: SystemsService,
 
   ) {
     this.globalVars.spinner = true;
@@ -74,6 +114,63 @@ export class ProjectPlanningComponent {
         this.globalVars.spinner = false;
       });
   }
+
+
+
+
+
+
+  opemRoomDetailed(status?: boolean, id?: number) {
+    if (!status) {
+      this.roomModalShown = false;
+      this.roomId = null;
+    } else {
+      this.roomId = id;
+      this.globalVars.spinner = true;
+      this.systServ.getRoomDetails(id)
+        .subscribe((data: RoomDetails) => {
+          console.log(data);
+          this.roomDetailData = data;
+          this.form = this.formBuilder.group({
+            roomName: [data.roomName],
+            tier: [data.tier],
+            floor: [data.floor],
+            dateOfLastRemodel: [moment(data.dateOfLastRemodel).toISOString()],
+            integrator: [data.integrator],
+            seatingType: [data.seatingType],
+            seatingCapacity: [data.seatingCapacity],
+            dimensions: [data.dimensions],
+            ceilingHeight: [data.ceilingHeight],
+            ceilingType: [data.ceilingType],
+            origAvInstallDate: [moment(data.origAvInstallDate).toISOString()],
+            origAvSystemCost: [data.origAvSystemCost],
+            origAvContractor: [data.origAvContractor],
+            avLastUpdateDate: [moment(data.avLastUpdateDate).toISOString()],
+            avLastUpdateCost: [data.avLastUpdateCost],
+            lastAvContractor: [data.lastAvContractor],
+            nextAvUpdateDt: [moment(data.nextAvUpdateDt).toISOString()],
+            nextAvUpdCost: [data.nextAvUpdCost],
+            notes: [data.notes],
+            lifecycle: [data.lifecycle],
+          });
+          this.globalVars.spinner = false;
+          this.roomModalShown = true;
+
+        }, error => {
+          this.globalVars.spinner = false;
+          console.log(error);
+        });
+    }
+  }
+
+  expand(roomId) {
+    window.open(window.location.origin + '/home/room-detail/' + roomId);
+  }
+
+
+
+
+
 }
 
 
