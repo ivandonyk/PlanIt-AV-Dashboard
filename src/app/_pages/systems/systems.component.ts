@@ -37,12 +37,12 @@ export class SystemsComponent implements OnInit {
       title: 'Equipment Age',
     },
     {
-      key: 'replace',
-      title: 'Replace/Upgrade',
-    },
-    {
       key: 'lastInstall',
       title: 'Last Install',
+    },
+    {
+      key: 'replace',
+      title: 'Replace/Upgrade',
     }]);
   public dataSource: string;
   public roomDetailImages: string = JSON.stringify([
@@ -146,6 +146,7 @@ export class SystemsComponent implements OnInit {
       nextAvUpdateDt: [''],
       nextAvUpdCost: [''],
       notes: [''],
+      lifecycle: [''],
     });
     this.globalVars.spinner = true;
 
@@ -233,6 +234,7 @@ export class SystemsComponent implements OnInit {
             nextAvUpdateDt: [moment(data.nextAvUpdateDt).toISOString()],
             nextAvUpdCost: [data.nextAvUpdCost],
             notes: [data.notes],
+            lifecycle: [data.lifecycle],
           });
           this.globalVars.spinner = false;
           this.roomModalShown = true;

@@ -85,6 +85,8 @@ export class RoomdetailComponent implements OnInit {
             nextAvUpdateDt: [moment(data.nextAvUpdateDt).toISOString()],
             nextAvUpdCost: [data.nextAvUpdCost],
             notes: [data.notes],
+            lifecycle: [data.lifecycle],
+
           });
 
 
