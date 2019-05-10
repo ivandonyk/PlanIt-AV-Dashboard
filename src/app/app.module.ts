@@ -61,6 +61,7 @@ import { RoomsTableComponent } from './_components/rooms-table/rooms-table.compo
 import { EquipmentModalComponent } from './_components/equipment-modal/equipment-modal.component';
 import { EquipmentdetailComponent } from './_pages/equipmentdetail/equipmentdetail.component';
 import { ReferComponent } from './_components/refer/refer.component';
+import { AddNoteComponent } from './_components/add-note/add-note.component';
 
 @NgModule({
   declarations: [
@@ -83,13 +84,15 @@ import { ReferComponent } from './_components/refer/refer.component';
     CarouselComponent,
     RoomsTableComponent,
     EquipmentModalComponent,
-    ReferComponent
+    ReferComponent,
+    AddNoteComponent
   ],
   entryComponents: [
     AddBuildingComponent,
     AddRoomComponent,
     AddEquipmentComponent,
-    ReferComponent
+    ReferComponent,
+    AddNoteComponent
   ],
   imports: [
     BrowserModule,

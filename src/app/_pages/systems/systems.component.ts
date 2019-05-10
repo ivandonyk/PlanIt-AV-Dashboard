@@ -3,6 +3,8 @@ import {Slides, RoomDetails, Room, Buildings, Rooms, Equipment} from '../../_mod
 import { SystemsService } from '../../_services/systems.service';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {AddNoteComponent} from '../../_components/add-note/add-note.component';
 import * as moment from 'moment';
 
 
@@ -127,6 +129,7 @@ export class SystemsComponent implements OnInit {
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
     private formBuilder: FormBuilder,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -280,4 +283,14 @@ export class SystemsComponent implements OnInit {
   opemEquipmentDetailed( id?: number) {
     this.equipmentId = 1;
   }
+  openDialogAddNote(): void {
+    const dialogRef = this.dialog.open(AddNoteComponent, {
+      data: {notes: this.roomDetailData.notes}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
 }

@@ -66,7 +66,7 @@
 <div class="room-modal" *ngIf="roomModalShown">
   <div class="header">
     <div class="title">
-      {{roomDetailData.roomName}}
+      Building Name - {{roomDetailData.roomName}}
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
@@ -230,49 +230,49 @@
         <input matInput  formControlName="ceilingType"  type="text" placeholder="Ceiling Type">
       </mat-form-field>
       <mat-form-field >
-        <input matInput  formControlName="origAvInstallDate"  [matDatepicker]="origAvInstallDate" placeholder="Orig Av Install Date">
+        <input matInput  formControlName="origAvInstallDate"  [matDatepicker]="origAvInstallDate" placeholder="Orig AV Install Date">
         <mat-datepicker-toggle matSuffix [for]="origAvInstallDate"></mat-datepicker-toggle>
         <mat-datepicker #origAvInstallDate></mat-datepicker>
       </mat-form-field>
       <mat-form-field >
         <mat-label>
-          Orig Av System Cost
+          Orig AV System Cost
         </mat-label>
-        <input matInput  formControlName="origAvSystemCost"  type="number" placeholder="Orig Av System Cost">
+        <input matInput  formControlName="origAvSystemCost"  type="number" placeholder="Orig AV System Cost">
       </mat-form-field>
       <mat-form-field >
         <mat-label>
-          Orig Av Contractor
+          Orig AV Contractor
         </mat-label>
-        <input matInput  formControlName="origAvContractor"  type="text" placeholder="Orig Av Contractor">
+        <input matInput  formControlName="origAvContractor"  type="text" placeholder="Orig AV Contractor">
       </mat-form-field>
       <mat-form-field >
-        <input matInput  formControlName="avLastUpdateDate"  [matDatepicker]="avLastUpdateDate" placeholder="av Last Update Date">
+        <input matInput  formControlName="avLastUpdateDate"  [matDatepicker]="avLastUpdateDate" placeholder="AV Last Update Date">
         <mat-datepicker-toggle matSuffix [for]="avLastUpdateDate"></mat-datepicker-toggle>
         <mat-datepicker #avLastUpdateDate></mat-datepicker>
       </mat-form-field>
       <mat-form-field >
         <mat-label>
-          Av Last Update Cost
+          AV Last Update Cost
         </mat-label>
-        <input matInput  formControlName="avLastUpdateCost"  type="number" placeholder="Av Last Update Cost">
+        <input matInput  formControlName="avLastUpdateCost"  type="number" placeholder="AV Last Update Cost">
       </mat-form-field>
       <mat-form-field >
         <mat-label>
-          Last Av Contractor
+          Last AV Contractor
         </mat-label>
-        <input matInput type="text" formControlName="lastAvContractor" placeholder="Last Av Contractor">
+        <input matInput type="text" formControlName="lastAvContractor" placeholder="Last AV Contractor">
       </mat-form-field>
       <mat-form-field >
-        <input matInput  formControlName="nextAvUpdateDt"  [matDatepicker]="nextAvUpdateDt" placeholder="Next Av Update Dt">
+        <input matInput  formControlName="nextAvUpdateDt"  [matDatepicker]="nextAvUpdateDt" placeholder="Next AV Update Dt">
         <mat-datepicker-toggle matSuffix [for]="nextAvUpdateDt"></mat-datepicker-toggle>
         <mat-datepicker #nextAvUpdateDt></mat-datepicker>
       </mat-form-field>
       <mat-form-field >
         <mat-label>
-          Next Av Update Cost
+          Next AV Update Cost
         </mat-label>
-        <input matInput  formControlName="nextAvUpdCost"  type="text" placeholder="Next Av Update Cost">
+        <input matInput  formControlName="nextAvUpdCost"  type="text" placeholder="Next AV Update Cost">
       </mat-form-field>
       <mat-form-field >
         <mat-label>
@@ -282,9 +282,9 @@
       </mat-form-field>
       <mat-form-field >
         <mat-label>
-          Lifecycle
+          Lifecycle (years)
         </mat-label>
-        <input matInput  formControlName="lifecycle"  type="text" placeholder="Lifecycle">
+        <input matInput  formControlName="lifecycle"  type="text" placeholder="Lifecycle (years)">
       </mat-form-field>
     </form>
     <ngx-dropzone
