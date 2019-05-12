@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment} from '../../environments/environment';
-import {Rooms, RoomDetails, Buildings, Equipment, EquipmentDetail} from '../_models/systems.model';
-import {UserData} from '../_models/userdata.model';
+import { Rooms, RoomDetails, Buildings, Equipment, RoomDTO, EquipmentDetail } from '../_models/systems.model';
+import { EquipmentDetailAdd } from '../_models/equipment.model';
+import { UserData } from '../_models/userdata.model';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class SystemsService {
   constructor(private httpClient: HttpClient) { }
 
@@ -21,8 +23,6 @@ export class SystemsService {
 
   getRoomDetails(id?: number | string): Observable<RoomDetails> {
     const params = new HttpParams().set('roomId', String(id));
-
-
     return this.httpClient.get<RoomDetails>(environment.baseUrl + '/getRoomDetail', {
       params: params
     });
@@ -49,6 +49,7 @@ export class SystemsService {
       params: params
     });
   }
+
   addRoom(roomObj: RoomDetails): Observable<RoomDetails> {
     const room: RoomDetails = {
       avLastUpdateCost: Number(roomObj.avLastUpdateCost),
@@ -78,5 +79,19 @@ export class SystemsService {
       tier: Number(roomObj.tier)
     };
     return this.httpClient.post<RoomDetails>(environment.baseUrl + '/addRoom', room);
+  }
+
+  addEquipment(equipment: EquipmentDetailAdd): Observable<EquipmentDetailAdd> {
+    return this.httpClient.post<EquipmentDetailAdd>(environment.baseUrl + '/addRoom', equipment);
+  }
+  updateRoom(roomObj: RoomDTO): Observable<RoomDTO> {
+    return this.httpClient.post<RoomDTO>(environment.baseUrl + '/updRoom', roomObj);
+  }
+  uploadImage(file): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file.file, file.file.name);
+    formData.append('roomId', file.roomId);
+    formData.append('description', file.description);
+    return this.httpClient.post<any>(environment.baseUrl + '/uploadImage', formData);
   }
 }

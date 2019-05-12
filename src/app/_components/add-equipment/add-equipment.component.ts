@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatDialogRef, MatSnackBar} from '@angular/material';
+import {GlobalVarsHelper} from '../../_helpers/global-vars';
+import {SystemsService} from '../../_services/systems.service';
+import {EquipmentDetailAdd} from '../../_models/equipment.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-equipment',
@@ -12,45 +16,35 @@ export class AddEquipmentComponent implements OnInit {
   public addEquipmentForm = this.fb.group({
     rooms: new FormControl(''),
     alternateLocation: new FormControl(''),
-    countryOfManufacture: new FormControl(''),
-    dateInstalled: new FormControl(''),
+    manufacturer: new FormControl(''),
+    modelNumber: new FormControl(''),
     description: new FormControl(''),
-    equipmentCategory: new FormControl(''),
     equipmentClass: new FormControl(''),
-    equipmentId: new FormControl(''),
+    equipmentCategory: new FormControl(''),
+    lifecycle: new FormControl(''),
+    countryOfManufacture: new FormControl(''),
+    serialNumber: new FormControl(''),
+    macAddress: new FormControl(''),
+    ipAddress: new FormControl(''),
+    port: new FormControl(''),
+    dateInstalled: new FormControl(''),
+    manufactureWarranty: new FormControl(''),
+    warrantyStartDate: new FormControl(''),
     extWarrantyStartDate: new FormControl(''),
     extendedWarranty: new FormControl(''),
     extendedWarrantyProvider: new FormControl(''),
-    integrator: new FormControl(''),
-    ipAddress: new FormControl(''),
-    lifeCycle: new FormControl(''),
-    macAddress: new FormControl(''),
-    manufactureWarranty: new FormControl(''),
-    manufacturer: new FormControl(''),
-    modelNumber: new FormControl(''),
-    port: new FormControl(''),
-    replacementDate: new FormControl(''),
-    roomId: new FormControl(''),
-    serialNumber: new FormControl(''),
-    userName: new FormControl(''),
-    warrantyExpirationDate: new FormControl(''),
-    warrantyStartDate: new FormControl(''),
   });
-
-  classes: string[] = [
-    'Core', 'Peripheral', 'Furniture',
-  ];
 
   roomList: string [] = [
     'Roach BoardRoom', 'Green Hallway', 'Huddle Room', 'Executive BoardRoom',
   ];
-
-  categories: string[] = [
-    'Video', 'Audio', 'Monitor',
-  ];
-
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<AddEquipmentComponent>,
-              private snackbar: MatSnackBar) { }
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<AddEquipmentComponent>,
+    private snackbar: MatSnackBar,
+    public globalVars: GlobalVarsHelper,
+    public systServ: SystemsService,
+  ) { }
 
   ngOnInit() {
   }
@@ -65,11 +59,46 @@ export class AddEquipmentComponent implements OnInit {
 
   onSubmit() {
     console.log(this.addEquipmentForm.value);
+    const equipment: EquipmentDetailAdd = {
+      alternateLocation: String(this.addEquipmentForm.value.alternateLocation),
+      countryOfManufacture: String(this.addEquipmentForm.value.countryOfManufacture),
+      dateInstalled: moment(this.addEquipmentForm.value.dateInstalled).toISOString(),
+      description: String(this.addEquipmentForm.value.description),
+      equipmentCategory: String(this.addEquipmentForm.value.equipmentCategory),
+      equipmentClass: String(this.addEquipmentForm.value.equipmentClass),
+      extWarrantyStartDate: moment(this.addEquipmentForm.value.extWarrantyStartDate).toISOString(),
+      extendedWarranty: Number(this.addEquipmentForm.value.extendedWarranty),
+      extendedWarrantyProvider: String(this.addEquipmentForm.value.extendedWarrantyProvider),
+      ipAddress: String(this.addEquipmentForm.value.ipAddress),
+      lifeCycle: moment(this.addEquipmentForm.value.lifeCycle).toISOString(),
+      macAddress: String(this.addEquipmentForm.value.macAddress),
+      manufactureWarranty: Number(this.addEquipmentForm.value.manufactureWarranty),
+      manufacturer: String(this.addEquipmentForm.value.manufacturer),
+      modelNumber: String(this.addEquipmentForm.value.modelNumber),
+      port: String(this.addEquipmentForm.value.port),
+      replacementDate: moment(this.addEquipmentForm.value.replacementDate).toISOString(),
+      serialNumber: String(this.addEquipmentForm.value.serialNumber),
+      warrantyExpirationDate: moment(this.addEquipmentForm.value.warrantyExpirationDate).toISOString(),
+      warrantyStartDate: moment(this.addEquipmentForm.value.warrantyStartDate).toISOString(),
+    };
+    this.globalVars.spinner = true;
+    this.systServ.addEquipment(equipment)
+      .subscribe(data => {
+        console.log(data);
+        this.globalVars.spinner = false;
+        this.dialogRef.close();
+        this.snackbar.open('Equipment Added', '', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+          }
+        );
+      }, error => {
+        this.globalVars.spinner = false;
+        console.log(error);
+      });
   }
-
   cancel() {
-    // TODO : use eventemitter with form value
-    console.log('In Cancel...Doh!');
     this.dialogRef.close();
   }
 }

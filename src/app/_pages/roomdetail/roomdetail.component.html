@@ -1,4 +1,4 @@
-<div class="room-detail-page">
+<div class="room-detail-page" *ngIf="roomDetailData">
   <div class="header">
     <div class="title">
       Building Name - {{roomDetailData.roomName}}
@@ -9,12 +9,12 @@
           Edit
         </span>
       </div>
-      <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
+      <div class="header-btn" *ngIf="roomModalShownEdit" (click)="updateRoom();">
         <span>
           Save
         </span>
       </div>
-      <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
+      <div class="header-btn" *ngIf="roomModalShownEdit" (click)=" confirmCancel();">
         <span>
           Cancel
         </span>
@@ -126,11 +126,18 @@
         <mat-datepicker-toggle matSuffix [for]="dateOfLastRemodel"></mat-datepicker-toggle>
         <mat-datepicker #dateOfLastRemodel></mat-datepicker>
       </mat-form-field>
+
       <mat-form-field >
         <mat-label>
           Contractor
         </mat-label>
         <input matInput  formControlName="integrator"  placeholder="Contractor">
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>
+          Core Age
+        </mat-label>
+        <input matInput  formControlName="coreAge"  placeholder="Core Age">
       </mat-form-field>
       <mat-form-field >
         <mat-label>
@@ -207,21 +214,27 @@
         </mat-label>
         <input matInput  formControlName="nextAvUpdCost"  type="text" placeholder="Next AV Update Cost">
       </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Notes
-        </mat-label>
-        <input matInput  formControlName="notes"  type="text" placeholder="Notes">
-      </mat-form-field>
-      <mat-form-field >
+      <mat-form-field>
         <mat-label>
           Lifecycle (years)
         </mat-label>
         <input matInput  formControlName="lifecycle"  type="text" placeholder="Lifecycle (years)">
       </mat-form-field>
     </form>
-    <ngx-dropzone
-      [label]="'Drop your image here'"
-    ></ngx-dropzone>
+
+    <div class="btns-cont">
+      <button mat-raised-button (click)="openDialogAddNote()" color="primary">
+        Add Note
+      </button>
+      <button mat-raised-button (click)="openDialogAddPhoto()" color="primary">
+        Upload Photo
+      </button>
+      <button mat-raised-button (click)="openDialogUploadDocument()" color="primary">
+        Upload Document
+      </button>
+      <button mat-raised-button color="primary">
+        Add/Edit Update Project Description
+      </button>
+    </div>
   </div>
 </div>

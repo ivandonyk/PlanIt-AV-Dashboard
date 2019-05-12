@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {Slides, RoomDetails, Room, Buildings, Rooms, Equipment} from '../../_models/systems.model';
+import { Slides, RoomDetails, Room, Buildings, Rooms, Equipment, RoomDTO } from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {AddNoteComponent} from '../../_components/add-note/add-note.component';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { AddNoteComponent } from '../../_components/add-note/add-note.component';
+import { AddPhotosComponent } from '../../_components/upload-photos/upload-photos.component';
+import { UploadDocumentComponent } from '../../_components/upload-document/upload-document.component';
 import * as moment from 'moment';
+import { ConfirmModalComponent } from '../../_components/confirm-modal/confirm-modal.component';
 
 
 @Component({
@@ -129,7 +132,8 @@ export class SystemsComponent implements OnInit {
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
     private formBuilder: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -141,6 +145,7 @@ export class SystemsComponent implements OnInit {
       integrator: [''],
       seatingType: [''],
       seatingCapacity: [''],
+      coreAge: [''],
       dimensions: [''],
       ceilingHeight: [''],
       ceilingType: [''],
@@ -154,6 +159,7 @@ export class SystemsComponent implements OnInit {
       nextAvUpdCost: [''],
       notes: [''],
       lifecycle: [''],
+      roomType: [''],
     });
     this.globalVars.spinner = true;
 
@@ -173,7 +179,9 @@ export class SystemsComponent implements OnInit {
 
       });
   }
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.value;
+  }
   previousSlide() {
     if ((this.currentSlides.index - 3) >= 0) {
       this.currentSlides['slides'].unshift(this.dataSlides[this.currentSlides.index - 3]);
@@ -231,6 +239,7 @@ export class SystemsComponent implements OnInit {
             seatingCapacity: [data.seatingCapacity],
             dimensions: [data.dimensions],
             ceilingHeight: [data.ceilingHeight],
+            coreAge: [data.coreAge],
             ceilingType: [data.ceilingType],
             origAvInstallDate: [moment(data.origAvInstallDate).toISOString()],
             origAvSystemCost: [data.origAvSystemCost],
@@ -242,6 +251,7 @@ export class SystemsComponent implements OnInit {
             nextAvUpdCost: [data.nextAvUpdCost],
             notes: [data.notes],
             lifecycle: [data.lifecycle],
+            roomType: '',
           });
           this.globalVars.spinner = false;
           this.roomModalShown = true;
@@ -252,9 +262,8 @@ export class SystemsComponent implements OnInit {
         });
     }
   }
-
   expand(roomId) {
-    window.open(window.location.origin + '/home/room-detail/' + roomId);
+    window.open(window.location.origin + '/home/room-detail/' + this.currentBuilding + '/' + roomId);
   }
   getEquipmentsRoom(id) {
     this.globalVars.spinner = true;
@@ -285,12 +294,82 @@ export class SystemsComponent implements OnInit {
   }
   openDialogAddNote(): void {
     const dialogRef = this.dialog.open(AddNoteComponent, {
-      data: {notes: this.roomDetailData.notes}
+      data: {
+        form: this.f,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       // this.animal = result;
     });
   }
+  openDialogAddPhoto(): void {
+    const dialogRef = this.dialog.open(AddPhotosComponent, {
+      data: {
+        form: this.f,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
+    });
+  }
+  openDialogUploadDocument(): void {
+    const dialogRef = this.dialog.open(UploadDocumentComponent, {
+      data: {
+        form: this.f,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
+    });
+  }
+  updateRoom() {
+    this.globalVars.spinner = true;
+    const room: RoomDTO = {
+      avLastUpdateCost: Number(this.f.avLastUpdateCost),
+      avLastUpdateDate: moment(this.f.avLastUpdateDate).toISOString(),
+      ceilingHeight: Number(this.f.ceilingHeight),
+      ceilingType: String(this.f.ceilingType),
+      dateOfLastRemodel: moment(this.f.dateOfLastRemodel).toISOString(),
+      dimensions: String(this.f.dimensions),
+      floor: Number(this.f.floor),
+      integrator: String(this.f.integrator),
+      lastAvContractor: String(this.f.lastAvContractor),
+      lifecycle: Number(this.f.lifecycle),
+      nextAvUpdCost: Number(this.f.nextAvUpdCost),
+      nextAvUpdateDt: moment(this.f.nextAvUpdateDt).toISOString(),
+      notes: String(this.f.notes),
+      origAvContractor: String(this.f.origAvContractor),
+      origAvInstallDate: moment(this.f.origAvInstallDate).toISOString(),
+      origAvSystemCost: Number(this.f.origAvSystemCost),
+      roomName: String(this.f.roomName),
+      seatingCapacity: Number(this.f.seatingCapacity),
+      seatingType: String(this.f.seatingType),
+      tier: Number(this.f.tier),
+      buildingId: Number(this.currentBuilding),
+      roomId: Number(this.roomId),
+      roomType: String(this.f.roomType),
+    };
 
+    this.systServ.updateRoom(room)
+      .subscribe( data => {
+        this.snackbar.open('Room Saved', '', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+          }
+        );
+        this.globalVars.spinner = false;
+        this.roomModalShownEdit = false;
+      }, error => {
+        this.globalVars.spinner = false;
+        console.log(error);
+      });
+  }
+  confirmCancel(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      this.roomModalShownEdit = false;
+    });
+  }
 }

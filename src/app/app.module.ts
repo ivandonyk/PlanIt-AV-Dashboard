@@ -62,6 +62,9 @@ import { EquipmentModalComponent } from './_components/equipment-modal/equipment
 import { EquipmentdetailComponent } from './_pages/equipmentdetail/equipmentdetail.component';
 import { ReferComponent } from './_components/refer/refer.component';
 import { AddNoteComponent } from './_components/add-note/add-note.component';
+import { AddPhotosComponent } from './_components/upload-photos/upload-photos.component';
+import { UploadDocumentComponent } from './_components/upload-document/upload-document.component';
+import { ConfirmModalComponent } from './_components/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -85,14 +88,20 @@ import { AddNoteComponent } from './_components/add-note/add-note.component';
     RoomsTableComponent,
     EquipmentModalComponent,
     ReferComponent,
-    AddNoteComponent
+    AddNoteComponent,
+    AddPhotosComponent,
+    UploadDocumentComponent,
+    ConfirmModalComponent
   ],
   entryComponents: [
     AddBuildingComponent,
     AddRoomComponent,
     AddEquipmentComponent,
     ReferComponent,
-    AddNoteComponent
+    AddNoteComponent,
+    AddPhotosComponent,
+    UploadDocumentComponent,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,

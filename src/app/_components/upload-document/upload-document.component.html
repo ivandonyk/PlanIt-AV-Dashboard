@@ -1,0 +1,35 @@
+<div class="container">
+  <h1 mat-dialog-title>Add Images</h1>
+  <div mat-dialog-content>
+    <ngx-dropzone
+      class="custom-dropzone"
+      (filesAdded)="onFilesAdded($event)"
+      [showPreviews]="false"
+      [label]="'Drop your documents here (or click)'"
+      [preserveFiles]="false"
+      style="
+              padding: 20px;
+              height: 250px;
+              background: #4e4e4e;
+              color: #fff;
+              border: 5px dashed rgb(189, 189, 189);
+              border-radius: 5px;
+              font-size: 20px;
+                  ">
+    </ngx-dropzone>
+
+    <div class="fields-cont">
+      <mat-form-field  *ngFor="let item of fields; let i = index" [attr.data-index]="i">
+        <mat-label>
+          Description for document № {{i+1}} ({{item.name}})
+        </mat-label>
+        <input matInput (blur)="setData(i, $event)" placeholder="Description for document № {{i+1}} ({{item.name}}) ">
+      </mat-form-field>
+    </div>
+  </div>
+  <br/>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="onSubmit()" >Add</button>
+    <button mat-raised-button color="primary" (click)="cancel()" >Cancel</button>
+  </div>
+</div>

@@ -7,6 +7,75 @@
           <mat-option *ngFor="let room of roomList" [value]="room">{{room}}</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Alternate Location" formControlName="alternateLocation">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Manufacturer" formControlName="manufacturer">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Model/Part Number" formControlName="modelNumber">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Description" formControlName="description">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-select matInput placeholder="Class" formControlName="equipmentClass">
+          <mat-option [value]="'Core'">Core</mat-option>
+          <mat-option [value]="'Peripheral'">Peripheral</mat-option>
+          <mat-option [value]="'Furniture'">Furniture</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-select matInput placeholder="Category" formControlName="equipmentCategory">
+          <mat-option [value]="'video'">Video</mat-option>
+          <mat-option [value]="'audio'">Audio</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="form-element-small">
+        <input matInput [matDatepicker]="datePicker3" placeholder="Lifecycle" formControlName="lifecycle">
+        <mat-datepicker-toggle matSuffix [for]="datePicker3"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker3></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Country of Manufacture" formControlName="countryOfManufacture">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Serial #" formControlName="serialNumber">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="MAC Address" formControlName="macAddress">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="IP Address" formControlName="ipAddress">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Port" formControlName="port">
+      </mat-form-field>
+      <mat-form-field class="form-element-small">
+        <input matInput [matDatepicker]="datePicker1" placeholder="Date installed" formControlName="dateInstalled">
+        <mat-datepicker-toggle matSuffix [for]="datePicker1"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker1></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Manufacture Warranty" type="number" formControlName="manufactureWarranty">
+      </mat-form-field>
+      <mat-form-field class="form-element-small">
+        <input matInput [matDatepicker]="datePicker2" placeholder="Warranty start date" formControlName="warrantyStartDate">
+        <mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker2></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="form-element-small">
+        <input matInput [matDatepicker]="datePicker4" placeholder="Extended Warranty/Service Contract Start Date" formControlName="extWarrantyStartDate">
+        <mat-datepicker-toggle matSuffix [for]="datePicker4"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker4></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Extended Warranty/Service Contract" type="number" formControlName="extendedWarranty">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Extended Warranty/Service Contract Provider" formControlName="extendedWarrantyProvider">
+      </mat-form-field>
     </form>
   </div>
   <br/>

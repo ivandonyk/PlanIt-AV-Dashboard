@@ -37,10 +37,10 @@
             <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
               Edit
             </div>
-            <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
+            <div class="header-btn" *ngIf="roomModalShownEdit" (click)="updateRoom();">
               Save
             </div>
-            <div class="header-btn" *ngIf="roomModalShownEdit" (click)="roomModalShownEdit = false">
+            <div class="header-btn" *ngIf="roomModalShownEdit" (click)="confirmCancel();">
               Cancel
             </div>
             <div class="header-btn" (click)="expand(roomId)">
@@ -157,11 +157,18 @@
               <mat-datepicker-toggle matSuffix [for]="dateOfLastRemodel"></mat-datepicker-toggle>
               <mat-datepicker #dateOfLastRemodel></mat-datepicker>
             </mat-form-field>
+
             <mat-form-field >
               <mat-label>
                 Contractor
               </mat-label>
               <input matInput  formControlName="integrator"  placeholder="Contractor">
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>
+                Core Age
+              </mat-label>
+              <input matInput  formControlName="coreAge"  placeholder="Core Age">
             </mat-form-field>
             <mat-form-field >
               <mat-label>
@@ -250,19 +257,16 @@
             <button mat-raised-button (click)="openDialogAddNote()" color="primary">
               Add Note
             </button>
-            <button mat-raised-button color="primary">
+            <button mat-raised-button (click)="openDialogAddPhoto()" color="primary">
               Upload Photo
             </button>
-            <button mat-raised-button color="primary">
+            <button mat-raised-button (click)="openDialogUploadDocument()" color="primary">
               Upload Document
             </button>
             <button mat-raised-button color="primary">
               Add/Edit Update Project Description
             </button>
           </div>
-          <ngx-dropzone
-            [label]="'Drop your image here'"
-          ></ngx-dropzone>
         </div>
       </div>
     </mat-tab>
