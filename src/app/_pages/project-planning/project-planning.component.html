@@ -2,21 +2,23 @@
   <h3>
     Client Company AV Capital Project Plan 2020 - 2024
   </h3>
-  <ngx-charts-bar-vertical
-    [view]="view"
-    [scheme]="colorScheme"
-    [results]="single"
-    [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [roundEdges]="roundEdges"
-    (select)="onSelect($event)">
-  </ngx-charts-bar-vertical>
+  <div class="chart">
+    <ngx-charts-bar-vertical
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="single"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [roundEdges]="roundEdges"
+      (select)="onSelect($event)">
+    </ngx-charts-bar-vertical>
+  </div>
   <mat-accordion class="accordion">
     <mat-expansion-panel *ngFor="let panel of ProjPlanSum" >
       <mat-expansion-panel-header (click)="getProjPlanDetail(panel.year)">

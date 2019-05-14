@@ -4,6 +4,7 @@ import {AddRoomComponent} from '../add-room/add-room.component';
 import {AddEquipmentComponent} from '../add-equipment/add-equipment.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ReferComponent } from '../refer/refer.component';
+import {CloneRoomComponent} from "../clone-room/clone-room.component";
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,12 @@ export class HeaderComponent implements OnInit {
   }
   openEquipmentDialog(): void {
     this.dialog.open(AddEquipmentComponent, {
+      width: '75%',
+      height: '100%',
+    });
+  }
+  openCloneRoomDialog(): void {
+    this.dialog.open(CloneRoomComponent, {
       width: '75%',
       height: '100%',
     });

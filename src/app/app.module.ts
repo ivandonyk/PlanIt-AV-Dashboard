@@ -51,6 +51,7 @@ import { HttpErrorHandler } from './_services/http-error-handler.service';
 import { MessageService} from './_services/message.service';
 import { ErrorPageComponent } from './_pages/error-page/error-page.component';
 import { AddRoomComponent } from './_components/add-room/add-room.component';
+import { CloneRoomComponent } from './_components/clone-room/clone-room.component';
 import { DashboardComponent } from './_pages/dashboard/dashboard.component';
 import { AddEquipmentComponent } from './_components/add-equipment/add-equipment.component';
 import { SystemsComponent } from './_pages/systems/systems.component';
@@ -78,6 +79,7 @@ import { ConfirmModalComponent } from './_components/confirm-modal/confirm-modal
     AddBuildingComponent,
     ErrorPageComponent,
     AddRoomComponent,
+    CloneRoomComponent,
     DashboardComponent,
     AddEquipmentComponent,
     SystemsComponent,
@@ -96,6 +98,7 @@ import { ConfirmModalComponent } from './_components/confirm-modal/confirm-modal
   entryComponents: [
     AddBuildingComponent,
     AddRoomComponent,
+    CloneRoomComponent,
     AddEquipmentComponent,
     ReferComponent,
     AddNoteComponent,
