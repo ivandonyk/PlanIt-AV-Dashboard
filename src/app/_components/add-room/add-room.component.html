@@ -4,7 +4,7 @@
     <form [formGroup]="addRoomForm" (ngSubmit)="onSubmit()" class="form">
       <mat-form-field class="form-element">
         <mat-select matInput placeholder="Building Name" formControlName="buildingName">
-          <mat-option *ngFor="let building of buildings" [value]="building">{{building}}</mat-option>
+          <mat-option *ngFor="let building of buildings" [value]="building.id">{{building.buildingName}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="form-element">

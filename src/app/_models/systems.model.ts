@@ -33,6 +33,11 @@ export interface Buildings {
   };
 }
 
+export interface BuildingsIds {
+  buildingName: string;
+  id: number;
+}
+
 export interface RoomDetails {
   avLastUpdateCost: number;
   avLastUpdateDate: string;

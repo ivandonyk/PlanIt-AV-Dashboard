@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
+import {MatDialog, MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {Room} from '../../_models/systems.model';
+import {UploadDocumentComponent} from '../upload-document/upload-document.component';
 
 @Component({
   selector: 'app-add-room',
@@ -63,6 +64,7 @@ export class CloneRoomComponent implements OnInit {
     private snackbar: MatSnackBar,
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -100,17 +102,10 @@ export class CloneRoomComponent implements OnInit {
     this.systServ.getRoomDetails(event)
       .subscribe(data => {
       this.addRoomForm = this.fb.group({
-          roomName: [data.roomName],
           tier: [data.tier],
           coreAge: [data.coreAge],
           floor: [data.floor],
-          dateOfLastRemodel: [data.dateOfLastRemodel],
           integrator: [data.integrator],
-          seatingCapacity: [data.seatingCapacity],
-          seatingType: [data.seatingType],
-          dimensions: [data.dimensions],
-          ceilingHeight : [data.ceilingHeight ],
-          ceilingType : [data.ceilingType ],
           lastInstallDate : [data.lastInstallDate ],
           origAvInstallDate : [data.origAvInstallDate ],
           lifecycle : [data.lifecycle ],
@@ -128,6 +123,16 @@ export class CloneRoomComponent implements OnInit {
       }, error => {
         console.log(error);
       });
+  }
+
+  openDialogUploadDocument(): void {
+    const dialogRef = this.dialog.open(UploadDocumentComponent, {
+      data: {
+        form: this.addRoomForm.value,
+        roomId: '',
+        buildingId: '',
+      }
+    });
   }
 
 

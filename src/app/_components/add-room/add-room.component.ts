@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
+import {BuildingsIds} from "../../_models/systems.model";
 
 @Component({
   selector: 'app-add-room',
@@ -45,10 +46,8 @@ export class AddRoomComponent implements OnInit {
   public tiers: string[] = [
     '1', '2', '3', '4', '5'
   ];
-  public buildings: string[] = [
-    'Orange Building', 'Building 1', 'Secret Building', 'Square Building', 'UFO Building'
+  public buildings: BuildingsIds[] = [];
 
-  ];
   public seatingTypes: string[] = [
     'Conference', 'Table', 'Fixed Classroom', 'Flexible', 'Theater'
   ];
@@ -64,6 +63,13 @@ export class AddRoomComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.systServ.getBuildingIds()
+      .subscribe(data => {
+        console.log(data);
+        this.buildings = data;
+      }, error => {
+        console.log(error);
+      });
 
   }
 
