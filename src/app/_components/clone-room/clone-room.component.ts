@@ -14,7 +14,7 @@ import {UploadDocumentComponent} from '../upload-document/upload-document.compon
 export class CloneRoomComponent implements OnInit {
   public addRoomForm = this.fb.group({
     roomChooseName: new FormControl(''),
-    roomName: new FormControl('', [Validators.required, Validators.maxLength(80)]),
+    roomName: new FormControl(''),
     tier: new FormControl(''),
     coreAge: new FormControl(''),
     floor: new FormControl(''),
@@ -102,38 +102,34 @@ export class CloneRoomComponent implements OnInit {
     this.systServ.getRoomDetails(event)
       .subscribe(data => {
       this.addRoomForm = this.fb.group({
+          roomName: new FormControl(''),
           tier: [data.tier],
-          coreAge: [data.coreAge],
           floor: [data.floor],
-          integrator: [data.integrator],
-          lastInstallDate : [data.lastInstallDate ],
-          origAvInstallDate : [data.origAvInstallDate ],
-          lifecycle : [data.lifecycle ],
-          origAvSystemCost : [data.origAvSystemCost ],
-          origAvContractor: [data.origAvContractor],
-          avLastUpdateDate: [data.avLastUpdateDate],
-          avLastUpdateCost: [data.avLastUpdateCost],
-          lastAvContractor: [data.lastAvContractor],
-          nextAvUpdateDt: [data.nextAvUpdateDt],
-          nextAvUpdCost: [data.nextAvUpdCost],
-          notes: [data.notes],
-          equipmentAge: [data.equipmentAge],
-          replaceUpg: [data.replaceUpg],
-        });
+          roomType: new FormControl(''),
+          coreAge: new FormControl(''),
+          integrator: new FormControl(''),
+          lastInstallDate : new FormControl(''),
+          origAvInstallDate : new FormControl(''),
+          lifecycle : new FormControl(''),
+          origAvSystemCost : new FormControl(''),
+          origAvContractor: new FormControl(''),
+          avLastUpdateDate: new FormControl(''),
+          avLastUpdateCost: new FormControl(''),
+          lastAvContractor: new FormControl(''),
+          nextAvUpdateDt: new FormControl(''),
+          nextAvUpdCost: new FormControl(''),
+          notes: new FormControl(''),
+          equipmentAge: new FormControl(''),
+          replaceUpg: new FormControl(''),
+          dateOfLastRemodel: new FormControl(''),
+          seatingCapacity: new FormControl(''),
+          seatingType: new FormControl(''),
+          dimensions: new FormControl('' ),
+          ceilingHeight : new FormControl(''),
+          ceilingType : new FormControl(''),
+      });
       }, error => {
         console.log(error);
       });
   }
-
-  openDialogUploadDocument(): void {
-    const dialogRef = this.dialog.open(UploadDocumentComponent, {
-      data: {
-        form: this.addRoomForm.value,
-        roomId: '',
-        buildingId: '',
-      }
-    });
-  }
-
-
 }
