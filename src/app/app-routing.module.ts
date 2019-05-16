@@ -17,6 +17,11 @@ const appRoutes: Routes = [
     component: LoginComponent
   },
   {
+    path: '',
+    redirectTo: 'home/dashboard',
+    pathMatch: 'full'
+  },
+  {
     path: 'error',
     component : ErrorPageComponent
   },
