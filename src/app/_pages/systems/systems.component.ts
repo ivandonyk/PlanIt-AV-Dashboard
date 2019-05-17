@@ -292,6 +292,15 @@ export class SystemsComponent implements OnInit {
   opemEquipmentDetailed( id?: number) {
     this.equipmentId = 1;
   }
+  openDialogAddPhoto(): void {
+    const dialogRef = this.dialog.open(AddPhotosComponent, {
+      data: {
+        form: this.f,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
+    });
+  }
   openDialogAddNote(): void {
     const dialogRef = this.dialog.open(AddNoteComponent, {
       data: {
@@ -303,15 +312,6 @@ export class SystemsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       // this.animal = result;
-    });
-  }
-  openDialogAddPhoto(): void {
-    const dialogRef = this.dialog.open(AddPhotosComponent, {
-      data: {
-        form: this.f,
-        roomId: this.roomId,
-        buildingId: this.currentBuilding,
-      }
     });
   }
   openDialogUploadDocument(): void {

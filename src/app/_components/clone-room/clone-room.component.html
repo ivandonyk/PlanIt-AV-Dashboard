@@ -15,10 +15,9 @@
       <mat-option *ngFor="let roomType of roomType" [value]="roomType">{{roomType}}</mat-option>
       </mat-select>
       </mat-form-field>
+
       <mat-form-field class="form-horizontal">
-        <mat-select matInput placeholder="Tier" formControlName="tier">
-        <mat-option *ngFor="let tier of tiers" [value]="tier">{{tier}}</mat-option>
-        </mat-select>
+        <input matInput placeholder="Tier" formControlName="tier">
       </mat-form-field>
       <mat-form-field class="form-horizontal">
         <input matInput placeholder="Floor" formControlName="floor">
@@ -105,6 +104,17 @@
         <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
       </mat-form-field>
     </form>
+    <div class="btns-cont">
+      <button mat-raised-button (click)="openDialogAddNote()" color="primary">
+        Add Note
+      </button>
+      <button mat-raised-button (click)="openDialogAddPhoto()" color="primary">
+        Upload Photo
+      </button>
+      <button mat-raised-button (click)="openDialogUploadDocument()" color="primary">
+        Upload Document
+      </button>
+    </div>
   </div>
 <br/>
   <div mat-dialog-actions>

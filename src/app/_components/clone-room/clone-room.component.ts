@@ -5,11 +5,13 @@ import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {Room} from '../../_models/systems.model';
 import {UploadDocumentComponent} from '../upload-document/upload-document.component';
+import {AddPhotosComponent} from "../upload-photos/upload-photos.component";
+import {AddNoteComponent} from "../add-note/add-note.component";
 
 @Component({
   selector: 'app-add-room',
   templateUrl: './clone-room.component.html',
-  styleUrls: ['./clone-room.component.css']
+  styleUrls: ['./clone-room.component.scss']
 })
 export class CloneRoomComponent implements OnInit {
   public addRoomForm = this.fb.group({
@@ -80,7 +82,27 @@ export class CloneRoomComponent implements OnInit {
     this.addRoomForm.reset();
   }
 
-  onSubmit() {}
+
+  onSubmit() {
+    console.log(this)
+    this.globalVars.spinner = true;
+    this.systServ.addRoom(this.addRoomForm.value)
+      .subscribe(data => {
+        console.log(data);
+        this.globalVars.spinner = false;
+        this.dialogRef.close();
+        this.snackbar.open('Room Added', '', {
+            duration: 1500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
+      }, error => {
+        this.globalVars.spinner = false;
+        console.log(error);
+      });
+  }
+
 
   cancel() {
     this.dialogRef.close();
@@ -121,7 +143,7 @@ export class CloneRoomComponent implements OnInit {
           notes: new FormControl(''),
           equipmentAge: new FormControl(''),
           replaceUpg: new FormControl(''),
-          dateOfLastRemodel: new FormControl(''),
+          dateOfLastRemodel: [''],
           seatingCapacity: new FormControl(''),
           seatingType: new FormControl(''),
           dimensions: new FormControl('' ),
@@ -132,4 +154,44 @@ export class CloneRoomComponent implements OnInit {
         console.log(error);
       });
   }
+
+
+
+  openDialogAddPhoto(): void {
+    console.log(this)
+    const dialogRef = this.dialog.open(AddPhotosComponent, {
+      data: {
+        form: this.addRoomForm.value,
+        roomId: '',
+        buildingId: '',
+      }
+    });
+  }
+
+  openDialogAddNote(): void {
+    const dialogRef = this.dialog.open(AddNoteComponent, {
+      data: {
+        form: this.addRoomForm.value,
+        roomId: '',
+        buildingId: '',
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+  openDialogUploadDocument(): void {
+    const dialogRef = this.dialog.open(UploadDocumentComponent, {
+      data: {
+        form: this.addRoomForm.value,
+        roomId: '',
+        buildingId: '',
+      }
+    });
+  }
+
+
+
+
 }
