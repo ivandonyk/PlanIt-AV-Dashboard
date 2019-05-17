@@ -21,12 +21,20 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    console.log(localStorage.getItem('currentUser'))
+    if (localStorage.getItem('currentUser') !== null) {
+      this.router.navigate(['/home/dashboard']);
+    } else {
+      this.authService.logout();
+
+    }
+
     this.loginForm = this.fb.group({
       userName : new FormControl(''),
       password : new FormControl(''),
 
     });
-    this.authService.logout();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
