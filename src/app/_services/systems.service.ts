@@ -5,6 +5,7 @@ import { environment} from '../../environments/environment';
 import { Rooms, RoomDetails, Buildings, Equipment, RoomDTO, EquipmentDetail, BuildingsIds } from '../_models/systems.model';
 import { EquipmentDetailAdd } from '../_models/equipment.model';
 import { UserData } from '../_models/userdata.model';
+import {AddBuildingFormModel} from "../_models/addBuildingFormModel";
 
 @Injectable({
   providedIn: 'root'
@@ -102,4 +103,11 @@ export class SystemsService {
     formData.append('description', file.description);
     return this.httpClient.post<any>(environment.baseUrl + '/uploadImage', formData);
   }
+
+
+  addBuilding(object: AddBuildingFormModel): Observable<AddBuildingFormModel> {
+    return this.httpClient.post<AddBuildingFormModel>(environment.baseUrl + '/addBuilding', object);
+  }
+
+
 }

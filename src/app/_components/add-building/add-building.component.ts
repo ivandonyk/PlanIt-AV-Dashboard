@@ -1,24 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {MatDialogRef, MatSnackBar} from '@angular/material';
-import {HandleError} from '../../_services/http-error-handler.service';
-import {AddBuildingService} from './add-building.service';
-import {AddBuildingFormModel} from '../../_models/addBuildingFormModel';
-import {AddBuildingApiModel} from '../../_models/addBuildingApiModel';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators} from '@angular/forms';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { HandleError } from '../../_services/http-error-handler.service';
+import { UserData } from '../../_models/userdata.model';
+import { SystemsService } from '../../_services/systems.service';
 
 
 @Component({
   selector: 'app-add-building',
   templateUrl: './add-building.component.html',
-  providers: [AddBuildingService],
-  styleUrls: ['./add-building.component.css']
+  styleUrls: ['./add-building.component.scss']
 })
-//TODO - Make this the edit form as well..
 export class AddBuildingComponent implements OnInit {
 
   private handleError: HandleError;
 
-  private addBuildingForm = this.fb.group({
+  public addBuildingForm = this.fb.group({
     buildingName: new FormControl('', [Validators.required, Validators.maxLength(80)]),
     address1: new FormControl('', [Validators.required, Validators.maxLength(80)]),
     address2: new FormControl('', Validators.maxLength(80)),
@@ -28,16 +25,14 @@ export class AddBuildingComponent implements OnInit {
     nbrOfFloors: new FormControl(''),
     dateConstructed: new FormControl(''),
     dateLastRemodel: new FormControl(''),
-    note: new FormControl('' ),
+    notes: new FormControl('' ),
     contactFirstName : new FormControl(''),
     contactLastName : new FormControl(''),
-    //TODO - phone number formatter...
     contactPhoneNbr : new FormControl(''),
     contactEmail : new FormControl('', [Validators.email])
 
   });
 
-  //TODO - may want to make this an external constant..
   states: string[] = [
     'AK', 'AL', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE',
     'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY',
@@ -48,8 +43,12 @@ export class AddBuildingComponent implements OnInit {
   ];
 
 
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<AddBuildingComponent>,
-              private snackbar: MatSnackBar, private addBuldingService: AddBuildingService, ) {
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<AddBuildingComponent>,
+    private snackbar: MatSnackBar,
+    private systService: SystemsService,
+    ) {
   }
 
   ngOnInit() {
@@ -61,38 +60,41 @@ export class AddBuildingComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO : use eventemitter with form value
     console.log(this.addBuildingForm.value);
+    let addBuildingApiModel;
+    addBuildingApiModel = this.addBuildingForm.value;
+    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
 
-    const addBuildingApiModel = new AddBuildingApiModel();
-    const result: AddBuildingFormModel = Object.assign({}, this.addBuildingForm.value);
-    console.log('Result is: [' + result + ']');
-    addBuildingApiModel.addBuildingFormModel = Object.assign({}, result);
-    addBuildingApiModel.businessAccountId = '1'; // TODO - get from login..
-    addBuildingApiModel.userName = 'dale.roach@planitav.com'; // TODO - get from login..store in session storage
 
-    console.log('Addbuilding api model is: [' + addBuildingApiModel + ']');
+    addBuildingApiModel['businessAccountId'] = userData.businessId;
+    addBuildingApiModel['userName'] = userData.userName;
 
-    this.addBuldingService.addBuilding(addBuildingApiModel);
 
-    this.dialogRef.close();
-
-    this.snackbar.open('Building Added', '', {
-        duration: 1500,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      }
-    );
-
+    console.log(addBuildingApiModel);
+    this.systService.addBuilding(addBuildingApiModel)
+      .subscribe(data => {
+        console.log(data);
+        this.snackbar.open('Building Added', '', {
+            duration: 1500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
+        this.dialogRef.close();
+      }, error => {
+        this.snackbar.open(error.message, '', {
+            duration: 3500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
+        console.log(error);
+      });
 
   }
 
   cancel() {
-    // TODO : use eventemitter with form value
-    console.log('In Cancel...Doh!');
     this.dialogRef.close();
-
-
   }
 
   getAddress1ErrorMessage() {

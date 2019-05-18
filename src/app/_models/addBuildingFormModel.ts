@@ -1,8 +1,4 @@
-// Used for the Add building form.
- import {FormControl} from '@angular/forms';
-
 export class AddBuildingFormModel {
-
   buildingName: string = '';
   address1: string = '';
   address2: string = '';
