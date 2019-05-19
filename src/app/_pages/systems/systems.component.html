@@ -13,7 +13,7 @@
               </mat-icon>
               <h4 mat-line>{{item.coreEquipment}}</h4>
             </mat-list-item>
-            <mat-list-item *ngIf="item.roomsToReplace">
+            <mat-list-item *ngIf="item.roomsToReplace.length > 0">
               <mat-icon mat-list-icon>fiber_manual_record
               </mat-icon>
               <h5 mat-line [ngStyle]="{'display': room.roomName ? 'dispaly' : 'none'}" *ngFor="let room of item.roomsToReplace">{{room.roomName}}</h5>

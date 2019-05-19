@@ -154,8 +154,4 @@ export class AddBuildingComponent implements OnInit {
   get dateLastRemodel() {
     return this.addBuildingForm.get('dateConstructed');
   }
-
-
-
-
 }

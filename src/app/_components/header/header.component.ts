@@ -4,7 +4,7 @@ import {AddRoomComponent} from '../add-room/add-room.component';
 import {AddEquipmentComponent} from '../add-equipment/add-equipment.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ReferComponent } from '../refer/refer.component';
-import {CloneRoomComponent} from "../clone-room/clone-room.component";
+import {CloneRoomComponent} from '../clone-room/clone-room.component';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +12,7 @@ import {CloneRoomComponent} from "../clone-room/clone-room.component";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  public currentPage: number;
 
   constructor(public dialog: MatDialog) {
   }
