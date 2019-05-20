@@ -5,6 +5,7 @@ import {AddEquipmentComponent} from '../add-equipment/add-equipment.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ReferComponent } from '../refer/refer.component';
 import {CloneRoomComponent} from '../clone-room/clone-room.component';
+import {AuthenticationService} from '../../_services/authentication.service'
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,10 @@ import {CloneRoomComponent} from '../clone-room/clone-room.component';
 export class HeaderComponent implements OnInit {
   public currentPage: number;
 
-  constructor(public dialog: MatDialog) {
+  constructor(
+    public dialog: MatDialog,
+    public authServ: AuthenticationService
+  ) {
   }
   openBuildingDialog(): void {
     this.dialog.open(AddBuildingComponent, {
@@ -46,4 +50,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  logout() {
+    this.authServ.logout();
+    window.location.href = window.location.origin + '/login';
+  }
 }

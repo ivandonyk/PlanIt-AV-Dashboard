@@ -21,6 +21,7 @@
       <button mat-menu-item>Feedback</button>
       <button mat-menu-item (click)="openReferDialog()">Refer A Friend</button>
       <button mat-menu-item>Privacy </button>
+      <button mat-menu-item (click)="logout()">Logout </button>
     </mat-menu>
     <button (menuOpened)="currentPage = 5" (menuClosed)="currentPage = 0" mat-button [ngClass]="{'active': currentPage === 5}" [matMenuTriggerFor]="help"><mat-icon class="material-icons">help_outline</mat-icon></button>
     <mat-menu #help="matMenu">
