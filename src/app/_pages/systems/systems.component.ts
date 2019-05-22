@@ -53,6 +53,7 @@ export class SystemsComponent implements OnInit {
       key: 'replace',
       title: 'Replace/Upgrade',
     }]);
+  public dataRoomSource: string;
   public dataSource: string;
   public roomDetailImages: string = JSON.stringify([
     {
@@ -163,6 +164,8 @@ export class SystemsComponent implements OnInit {
     });
     this.globalVars.spinner = true;
 
+    this.getRoooms();
+    this.getAllEquipments();
     this.systServ.getBuildings()
       .subscribe((data: Buildings) => {
       this.dataSlides = data.systemBuilding.buildings;
@@ -206,12 +209,35 @@ export class SystemsComponent implements OnInit {
     }
   }
   openBuildingDetail(id: number | string) {
+    this.dataSource = '';
     this.globalVars.spinner = true;
     this.currentBuilding = id;
     this.systServ.getBuildingRooms(id)
       .subscribe((data: Rooms) => {
         this.dataRooms = data.rooms;
         this.dataSource = JSON.stringify(this.dataRooms);
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+  getRoooms() {
+    this.globalVars.spinner = true;
+    this.systServ.getRoooms()
+      .subscribe((data: Rooms) => {
+        this.dataRoomSource = JSON.stringify(data.rooms);
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+  getAllEquipments() {
+    this.globalVars.spinner = true;
+    this.systServ.getAllEquipments()
+      .subscribe((data: Equipment[]) => {
+        this.equipmentsString = JSON.stringify(data);
         this.globalVars.spinner = false;
       }, error => {
         console.log(error);
@@ -273,7 +299,7 @@ export class SystemsComponent implements OnInit {
         this.equipments.push(data[0]);
 
         if (this.dataRooms.length === this.equipments.length){
-          this.equipmentsString = JSON.stringify(this.equipments);
+          // this.equipmentsString = JSON.stringify(this.equipments);
         }
         this.globalVars.spinner = false;
       }, error => {

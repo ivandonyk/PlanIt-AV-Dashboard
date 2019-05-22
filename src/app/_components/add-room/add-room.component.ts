@@ -12,7 +12,7 @@ import {BuildingsIds} from "../../_models/systems.model";
 })
 export class AddRoomComponent implements OnInit {
   public addRoomForm = this.fb.group({
-    buildingName: new FormControl(''),
+    buildingId: new FormControl(''),
     roomName: new FormControl('', [Validators.required, Validators.maxLength(80)]),
     tier: new FormControl(''),
     coreAge: new FormControl(''),

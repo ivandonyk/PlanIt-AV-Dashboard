@@ -2,10 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment} from '../../environments/environment';
-import { Rooms, RoomDetails, Buildings, Equipment, RoomDTO, EquipmentDetail, BuildingsIds } from '../_models/systems.model';
+import {
+  Rooms, RoomDetails, Buildings, Equipment, RoomDTO, EquipmentDetail, BuildingsIds,
+  Room
+} from '../_models/systems.model';
 import { EquipmentDetailAdd } from '../_models/equipment.model';
 import { UserData } from '../_models/userdata.model';
-import {AddBuildingFormModel} from "../_models/addBuildingFormModel";
+import {AddBuildingFormModel} from '../_models/addBuildingFormModel';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -59,27 +63,46 @@ export class SystemsService {
     });
   }
 
+  getRoooms(id?: number | string): Observable<Rooms> {
+    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const params = new HttpParams().set('businessId', String(userData.businessId));
+
+    return this.httpClient.get<Rooms>(environment.baseUrl + '/getRoomsByBus', {
+      params: params
+    });
+  }
+
+
+  getAllEquipments(id?: number | string): Observable<Equipment[]> {
+    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const params = new HttpParams().set('businessId', String(userData.businessId));
+
+    return this.httpClient.get<Equipment[]>(environment.baseUrl + '/getEquipmentByBus', {
+      params: params
+    });
+  }
+
   addRoom(roomObj: RoomDetails): Observable<RoomDetails> {
     const room: RoomDetails = {
       avLastUpdateCost: Number(roomObj.avLastUpdateCost),
-      avLastUpdateDate: roomObj.avLastUpdateDate,
+      avLastUpdateDate: moment(roomObj.avLastUpdateDate).toISOString(),
       ceilingHeight: Number(roomObj.ceilingHeight),
       ceilingType: String(roomObj.ceilingType),
       coreAge: String(roomObj.coreAge),
-      dateOfLastRemodel: String(roomObj.dateOfLastRemodel),
+      dateOfLastRemodel: moment(roomObj.dateOfLastRemodel).toISOString(),
       dimensions: String(roomObj.dimensions),
       equipmentAge: String(roomObj.equipmentAge),
       floor: Number(roomObj.floor),
       images: roomObj.images,
       integrator: String(roomObj.integrator),
       lastAvContractor: String(roomObj.lastAvContractor),
-      lastInstallDate: String(roomObj.lastInstallDate),
+      lastInstallDate: moment(roomObj.lastInstallDate).toISOString(),
       lifecycle: Number(roomObj.lifecycle),
       nextAvUpdCost: Number(roomObj.nextAvUpdCost),
-      nextAvUpdateDt: String(roomObj.nextAvUpdateDt),
+      nextAvUpdateDt: moment(roomObj.nextAvUpdateDt).toISOString(),
       notes: String(roomObj.notes),
       origAvContractor: String(roomObj.origAvContractor),
-      origAvInstallDate: String(roomObj.origAvInstallDate),
+      origAvInstallDate: moment(roomObj.origAvInstallDate).toISOString(),
       origAvSystemCost: Number(roomObj.origAvSystemCost),
       replaceUpg: String(roomObj.replaceUpg),
       roomName: String(roomObj.roomName),
