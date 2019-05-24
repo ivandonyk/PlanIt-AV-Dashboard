@@ -130,6 +130,7 @@ export class SystemsComponent implements OnInit {
   public equipmentId: number;
   public documents: any;
   public projectDesc: any;
+  public roomHist: any;
 
   constructor(
     private systServ: SystemsService,
@@ -283,6 +284,7 @@ export class SystemsComponent implements OnInit {
           });
           this.getDocuments(this.roomId);
           this.getProjectDesc(this.roomId);
+          this.getRoomHist(this.roomId);
           this.globalVars.spinner = false;
           this.roomModalShown = true;
 
@@ -402,8 +404,6 @@ export class SystemsComponent implements OnInit {
       this.roomModalShownEdit = false;
     });
   }
-
-
   getDocuments(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getDocuments(roomId)
@@ -421,6 +421,19 @@ export class SystemsComponent implements OnInit {
     this.systServ.getProjectDesc(roomId)
       .subscribe((data) => {
         this.projectDesc = data['projectDescriptionList'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+
+
+  getRoomHist(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getRoomHist(roomId)
+      .subscribe((data) => {
+        this.roomHist = data['historyList'];
         this.globalVars.spinner = false;
       }, error => {
         console.log(error);

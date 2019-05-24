@@ -84,6 +84,7 @@ export class SystemsService {
 
   addRoom(roomObj: RoomDetails): Observable<RoomDetails> {
     const room: RoomDetails = {
+      buildingId: Number(roomObj.buildingId),
       avLastUpdateCost: Number(roomObj.avLastUpdateCost),
       avLastUpdateDate: moment(roomObj.avLastUpdateDate).toISOString(),
       ceilingHeight: Number(roomObj.ceilingHeight),
@@ -126,18 +127,9 @@ export class SystemsService {
     formData.append('description', file.description);
     return this.httpClient.post<any>(environment.baseUrl + '/uploadImage', formData);
   }
-
-
   addBuilding(object: AddBuildingFormModel): Observable<AddBuildingFormModel> {
     return this.httpClient.post<AddBuildingFormModel>(environment.baseUrl + '/addBuilding', object);
   }
-
-
-
-
-
-
-
 
   getDocuments(id?: number | string) {
     const params = new HttpParams().set('roomId', String(id));
@@ -153,7 +145,10 @@ export class SystemsService {
     });
   }
 
-
-
-
+  getRoomHist(id?: number | string) {
+    const params = new HttpParams().set('roomId', String(id));
+    return this.httpClient.get(environment.baseUrl + '/getRoomHist', {
+      params: params
+    });
+  }
 }

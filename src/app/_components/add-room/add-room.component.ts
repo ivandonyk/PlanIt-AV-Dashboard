@@ -111,8 +111,4 @@ export class AddRoomComponent implements OnInit {
   getRoomNameErrorMessage() {
     return this.roomName.hasError('required') ? 'Room Name is required' : '';
   }
-
-
-
-
 }

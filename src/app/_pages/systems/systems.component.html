@@ -138,7 +138,6 @@
           Design Documents
         </mat-panel-title>
       </mat-expansion-panel-header>
-
       <mat-list>
         <mat-list-item *ngFor="let item of documents">
           <a href="{{item.filePath}}">
@@ -146,7 +145,6 @@
           </a>
         </mat-list-item>
       </mat-list>
-
     </mat-expansion-panel>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -168,6 +166,12 @@
           History
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <mat-list>
+        <mat-list-item *ngFor="let item of roomHist">
+          <h4 mat-line>{{item.noteDate}}</h4>
+          <p mat-line> {{item.noteText }} </p>
+        </mat-list-item>
+      </mat-list>
     </mat-expansion-panel>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -180,9 +184,7 @@
             {{item.projDesc}}
         </mat-list-item>
       </mat-list>
-
     </mat-expansion-panel>
-
   </mat-accordion>
   <div *ngIf="roomModalShownEdit" class="room-modal-edit">
     <form [formGroup]="form">

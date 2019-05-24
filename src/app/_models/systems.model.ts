@@ -40,6 +40,7 @@ export interface BuildingsIds {
 
 export interface RoomDetails {
   avLastUpdateCost: number;
+  buildingId?: number;
   avLastUpdateDate: string;
   ceilingHeight: number;
   ceilingType: string;
