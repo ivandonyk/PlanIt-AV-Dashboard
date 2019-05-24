@@ -133,4 +133,27 @@ export class SystemsService {
   }
 
 
+
+
+
+
+
+
+  getDocuments(id?: number | string) {
+    const params = new HttpParams().set('roomId', String(id));
+    return this.httpClient.get(environment.baseUrl + '/getDocuments', {
+      params: params
+    });
+  }
+
+  getProjectDesc(id?: number | string) {
+    const params = new HttpParams().set('roomId', String(id));
+    return this.httpClient.get(environment.baseUrl + '/getProjDesc', {
+      params: params
+    });
+  }
+
+
+
+
 }

@@ -138,6 +138,15 @@
           Design Documents
         </mat-panel-title>
       </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item *ngFor="let item of documents">
+          <a href="{{item.filePath}}">
+            {{item.documentName}}
+          </a>
+        </mat-list-item>
+      </mat-list>
+
     </mat-expansion-panel>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -166,14 +175,12 @@
           Update Project Description
         </mat-panel-title>
       </mat-expansion-panel-header>
-      Large Collaboration Conference Room Standard Design
-      The system includes:
-      • Two 65-inch displays
-      • Wireless presentation system
-      • Video conferencing kit
-      • Sound bar speaker
-      • Occupancy sensor
-      • 8-port switch
+      <mat-list>
+        <mat-list-item *ngFor="let item of projectDesc">
+            {{item.projDesc}}
+        </mat-list-item>
+      </mat-list>
+
     </mat-expansion-panel>
 
   </mat-accordion>

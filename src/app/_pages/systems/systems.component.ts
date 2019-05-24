@@ -128,6 +128,8 @@ export class SystemsComponent implements OnInit {
 
     ]);
   public equipmentId: number;
+  public documents: any;
+  public projectDesc: any;
 
   constructor(
     private systServ: SystemsService,
@@ -279,6 +281,8 @@ export class SystemsComponent implements OnInit {
             lifecycle: [data.lifecycle],
             roomType: '',
           });
+          this.getDocuments(this.roomId);
+          this.getProjectDesc(this.roomId);
           this.globalVars.spinner = false;
           this.roomModalShown = true;
 
@@ -398,4 +402,32 @@ export class SystemsComponent implements OnInit {
       this.roomModalShownEdit = false;
     });
   }
+
+
+  getDocuments(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getDocuments(roomId)
+      .subscribe((data) => {
+        this.documents = data['documents'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+
+  getProjectDesc(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getProjectDesc(roomId)
+      .subscribe((data) => {
+        this.projectDesc = data['projectDescriptionList'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+
+
+
 }
