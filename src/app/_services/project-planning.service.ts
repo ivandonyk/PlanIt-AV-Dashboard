@@ -20,12 +20,9 @@ export class ProjectPlanningService {
   }
 
   getProjPlanDetail(year): Observable<ProjPlanDetailObj> {
+    console.log(year);
     const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
-    const params = new HttpParams().set('businessId', String(userData.businessId));
-    params.set('year', String(year));
-    return this.httpClient.get<ProjPlanDetailObj>(environment.baseUrl + '/getProjPlanDetail', {
-      params: params
-    });
+    return this.httpClient.get<ProjPlanDetailObj>(environment.baseUrl + '/getProjPlanDetail?businessId=' + String(userData.businessId) + '&year=' + year);
   }
 
 }

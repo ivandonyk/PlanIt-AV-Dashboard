@@ -105,21 +105,21 @@
       </mat-form-field>
     </form>
     <div class="btns-cont">
-      <button mat-raised-button (click)="openDialogAddNote()" color="primary">
+      <button mat-raised-button class="red-btn" (click)="openDialogAddNote()" color="primary">
         Add Note
       </button>
-      <button mat-raised-button (click)="openDialogAddPhoto()" color="primary">
+      <button mat-raised-button class="red-btn" (click)="openDialogAddPhoto()" color="primary">
         Upload Photo
       </button>
-      <button mat-raised-button (click)="openDialogUploadDocument()" color="primary">
+      <button mat-raised-button class="red-btn" (click)="openDialogUploadDocument()" color="primary">
         Upload Document
       </button>
     </div>
   </div>
 <br/>
   <div mat-dialog-actions>
-    <button mat-raised-button color="primary" (click)="onSubmit()" >Clone</button>
-    <button mat-raised-button color="primary" (click)="revert()">Reset</button>
-    <button mat-raised-button color="primary" (click)="cancel()" >Cancel</button>
+    <button mat-raised-button color="primary" class="red-btn" class="red-btn" (click)="onSubmit()" >Clone</button>
+    <button mat-raised-button color="primary" class="red-btn" class="red-btn" (click)="revert()">Reset</button>
+    <button mat-raised-button color="primary" class="red-btn" class="red-btn" (click)="cancel()" >Cancel</button>
   </div>
 </div>
