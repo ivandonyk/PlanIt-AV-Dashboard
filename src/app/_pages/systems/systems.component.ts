@@ -321,8 +321,9 @@ export class SystemsComponent implements OnInit {
       });
     }
   }
-  opemEquipmentDetailed( id?: number) {
-    this.equipmentId = 1;
+  opemEquipmentDetailed(status, id?: number) {
+    console.log(id)
+    this.equipmentId = id;
   }
   openDialogAddPhoto(): void {
     const dialogRef = this.dialog.open(AddPhotosComponent, {

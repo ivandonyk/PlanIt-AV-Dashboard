@@ -1,14 +1,14 @@
 <table mat-table  [dataSource]="data" matSort class="mat-elevation-z8 rooms-table">
   <ng-container matColumnDef="colorCode">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-    <td (click)="open(element.roomId)" mat-cell *matCellDef="let element">
+    <td (click)="open(element.roomId ? element.roomId : element.equipmentId)" mat-cell *matCellDef="let element">
       <mat-icon mat-list-icon [ngStyle]="{'color': element.colorCode}">fiber_manual_record</mat-icon>
     </td>
   </ng-container>
 
   <ng-container *ngFor="let column of columns" matColumnDef="{{column.key}}">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title}} </th>
-    <td (click)="open(element.roomId)" mat-cell *matCellDef="let element"> {{element[column.key]}} </td>
+    <td (click)="open(element.roomId ? element.roomId : element.equipmentId)" mat-cell *matCellDef="let element"> {{element[column.key]}} </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="columnsHeader"></tr>
   <tr mat-row *matRowDef="let row; columns: columnsHeader;"></tr>

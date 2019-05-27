@@ -91,11 +91,13 @@ export class ProjectPlanningComponent {
       .subscribe((data: ProjectPlanList) => {
         this.ProjPlanSum = data.projectPlanList;
         data.projectPlanList.forEach((item) => {
-          this.single.push({
-            name: item.year,
-            value: item.amount
-          });
-          Object.assign(this, this.single);
+          if(item.year != null){
+            this.single.push({
+              name: item.year,
+              value: item.amount
+            });
+            Object.assign(this, this.single);
+          }
 
         });
         this.globalVars.spinner = false;
