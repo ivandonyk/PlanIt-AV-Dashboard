@@ -47,7 +47,6 @@ export class AddRoomComponent implements OnInit {
     '1', '2', '3', '4', '5'
   ];
   public buildings: BuildingsIds[] = [];
-
   public seatingTypes: string[] = [
     'Conference', 'Table', 'Fixed Classroom', 'Flexible', 'Theater'
   ];
@@ -70,7 +69,6 @@ export class AddRoomComponent implements OnInit {
       }, error => {
         console.log(error);
       });
-
   }
 
   revert() {
