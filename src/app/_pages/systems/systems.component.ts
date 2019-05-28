@@ -83,6 +83,15 @@ export class SystemsComponent implements OnInit {
     {
       path: 'http://rgho.st/7JlZ7r5JL/image.png',
     },
+    {
+      path: 'http://rgho.st/7BpkM8Ts7/image.png',
+    },
+    {
+      path: 'http://rgho.st/7yjj7y9Td/image.png',
+    },
+    {
+      path: 'http://rgho.st/74mmXys6l/image.png',
+    },
   ]);
   public form: FormGroup;
   public roomId: number = null;
