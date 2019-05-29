@@ -7,16 +7,16 @@
 
         <div class="slide" [ngClass]="{'active': currentBuilding == item.buildingId}" (click)="openBuildingDetail(item.buildingId)" *ngFor="let item of currentSlides.slides">
           <mat-list>
-            <h3 mat-subheader>Building {{item.buildingId}}</h3>
-            <mat-list-item *ngIf="item.coreEquipment">
-              <mat-icon mat-list-icon>fiber_manual_record
-              </mat-icon>
-              <h4 mat-line>{{item.coreEquipment}}</h4>
-            </mat-list-item>
+            <h3 mat-subheader>{{item.buildingName}}</h3>
             <mat-list-item *ngIf="item.roomsToReplace.length > 0">
               <mat-icon mat-list-icon>fiber_manual_record
               </mat-icon>
               <h5 mat-line [ngStyle]="{'display': room.roomName ? 'dispaly' : 'none'}" *ngFor="let room of item.roomsToReplace">{{room.roomName}}</h5>
+            </mat-list-item>
+            <mat-list-item *ngIf="item.coreEquipment">
+              <mat-icon mat-list-icon>fiber_manual_record
+              </mat-icon>
+              <h4 mat-line>{{item.coreEquipment}}</h4>
             </mat-list-item>
           </mat-list>
 
