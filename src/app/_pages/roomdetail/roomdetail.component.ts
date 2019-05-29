@@ -110,8 +110,6 @@ export class RoomdetailComponent implements OnInit {
             coreAge: [data.coreAge],
 
           });
-
-
           this.globalVars.spinner = false;
         }, error => {
           this.globalVars.spinner = false;
