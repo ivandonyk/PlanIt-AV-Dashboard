@@ -35,32 +35,41 @@ export class ProjectPlanningComponent {
    };
   public roomDetailImages: string = JSON.stringify([
     {
-      path: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg',
-    }, {
-      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sDD_qoA8zJjQVOhDVWfjrJqowwJkfCC1v4ZPG8ZIPkLuW3gv',
-    }, {
-      path: 'http://www.letsgodigital.org/images/producten/3376/pictures/canon-eos-sample-photo.jpg',
-    }, {
-      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-    }, {
-      path: 'http://eastmainstream.com/mmc/amintalati/wp-content/uploads/2018/02/Nikon-1-V3-sample-photo.jpg',
-    }, {
-      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVVov4yj9BfRY0sxaEvC0NjnYsfMiF-opuwGUSQAcOUzbrXxn3',
-    }, {
-      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSPlVZcqH4_LUpjyWsDxRZXG9SqUBBgRHHXFnlKvSd51agTsPR',
-    }, {
-      path: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsyO85yZAkJjTAikilDYHh9BW6W1ptYzf_HgT26fXi-KsCkVjI',
-    }, {
-      path: 'https://i.ytimg.com/vi/DeXVlumJ2uQ/maxresdefault.jpg',
-    }, {
-      path: 'https://i.ytimg.com/vi/6_Wq1_bTcX8/maxresdefault.jpg',
-    }, {
-      path: 'https://i.ytimg.com/vi/QrBOEVIW_zM/maxresdefault.jpg',
-    }, {
-      path: 'https://i.ytimg.com/vi/RFywGWm8JV8/maxresdefault.jpg',
-    }, {
-      path: 'https://i.ytimg.com/vi/wfVQRWNYVTo/maxresdefault.jpg',
-    }
+      path: 'http://rgho.st/7grz5TWyD/image.png',
+    },
+    {
+      path: 'http://rgho.st/8nyCMrhll/image.png',
+    },
+    {
+      path: 'http://rgho.st/8jbyWsDQb/image.png',
+    },
+    {
+      path: 'http://rgho.st/8ytmtzhWC/image.png',
+    },
+    {
+      path: 'http://rgho.st/7k8wxbH7Q/image.png',
+    },
+    {
+      path: 'http://rgho.st/6mjjRhxVY/image.png',
+    },
+    {
+      path: 'http://rgho.st/7k8wxbH7Q/image.png',
+    },
+    {
+      path: 'http://rgho.st/7bb8yYqJl/image.png',
+    },
+    {
+      path: 'http://rgho.st/7JlZ7r5JL/image.png',
+    },
+    {
+      path: 'http://rgho.st/7BpkM8Ts7/image.png',
+    },
+    {
+      path: 'http://rgho.st/7yjj7y9Td/image.png',
+    },
+    {
+      path: 'http://rgho.st/74mmXys6l/image.png',
+    },
   ]);
   public roomDetailData: RoomDetails;
   public roomModalShown: Boolean = false;
@@ -91,7 +100,7 @@ export class ProjectPlanningComponent {
       .subscribe((data: ProjectPlanList) => {
         this.ProjPlanSum = data.projectPlanList;
         data.projectPlanList.forEach((item) => {
-          if(item.year != null){
+          if(item.year != null) {
             this.single.push({
               name: item.year,
               value: item.amount
@@ -160,6 +169,8 @@ export class ProjectPlanningComponent {
             nextAvUpdCost: [data.nextAvUpdCost],
             notes: [data.notes],
             lifecycle: [data.lifecycle],
+            coreAge: [''],
+
           });
           this.globalVars.spinner = false;
           this.roomModalShown = true;
@@ -237,6 +248,7 @@ export class ProjectPlanningComponent {
       buildingId: Number(this.currentBuilding),
       roomId: Number(this.roomId),
       roomType: String(this.f.roomType),
+      coreAge: Number(this.f.coreAge),
     };
 
     this.systServ.updateRoom(room)

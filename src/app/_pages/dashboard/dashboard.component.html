@@ -11,13 +11,13 @@
     <mat-list>
       <h3 mat-subheader>Systems Overview</h3>
       <mat-list-item *ngIf="dashboardData.systems.nbrBuildings">
-        <h4 mat-line>{{dashboardData.systems.nbrBuildings}} Buildings</h4>
+        <h4 mat-line>{{dashboardData.systems.nbrBuildings}} - Buildings</h4>
       </mat-list-item>
       <mat-list-item *ngIf="dashboardData.systems.nbrRooms">
-        <h4 mat-line>{{dashboardData.systems.nbrRooms}} Rooms</h4>
+        <h4 mat-line>{{dashboardData.systems.nbrRooms}} - Rooms</h4>
       </mat-list-item>
       <mat-list-item *ngIf="dashboardData.systems.nbrEquipment">
-        <h4 mat-line>{{dashboardData.systems.nbrEquipment}} Pieces of Equipment</h4>
+        <h4 mat-line>{{dashboardData.systems.nbrEquipment}} - Pieces of Equipment</h4>
       </mat-list-item>
     </mat-list>
   </div>
@@ -25,13 +25,13 @@
     <mat-list>
       <h3 mat-subheader>Lifecycle</h3>
       <mat-list-item>
-        <h4 mat-line>Equipment Age Range</h4>
+        <h4 mat-line>Core Equipment Age</h4>
         <span mat-line>{{dashboardData.lifecycle.coreEquipmentAge}}</span>
       </mat-list-item>
       <mat-list-item>
-        <h4 mat-line>Rooms to Upgrade</h4>
+        <h4 mat-line>AV Projects</h4>
         <span mat-line *ngFor="let item of dashboardData.lifecycle.roomsToUpgrade">
-          {{item.nbrRoomsUpg}} {{item.year}}
+          {{item.nbrRoomsUpg}} - {{item.year}}
         </span>
       </mat-list-item>
     </mat-list>

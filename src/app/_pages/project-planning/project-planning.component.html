@@ -23,11 +23,8 @@
     <mat-expansion-panel *ngFor="let panel of ProjPlanSum" >
       <mat-expansion-panel-header (click)="getProjPlanDetail(panel.year)">
         <mat-panel-title>
-          {{panel.year}}
+          {{panel.year ? panel.year : 'N/A'}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{panel.projects}} &nbsp;&nbsp;&nbsp;&nbsp; ${{panel.amount}}
         </mat-panel-title>
-        <mat-panel-description>
-          {{panel.projects}} &nbsp;&nbsp;&nbsp;&nbsp; ${{panel.amount}}
-        </mat-panel-description>
       </mat-expansion-panel-header>
       <table mat-table *ngIf="tableData"  [dataSource]="tableData" matSort class="mat-elevation-z8 project-planning-table">
         <ng-container  matColumnDef="building">
@@ -126,11 +123,10 @@
     </div>
     <div>
             <span>
-              Integrator
+              Contractor
             </span>
       {{roomDetailData.integrator}}
     </div>
-
   </div>
   <mat-accordion  *ngIf="!roomModalShownEdit" >
     <mat-expansion-panel>
@@ -139,6 +135,13 @@
           Design Documents
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <mat-list>
+        <mat-list-item *ngFor="let item of documents">
+          <a href="{{item.filePath}}">
+            {{item.documentName}}
+          </a>
+        </mat-list-item>
+      </mat-list>
     </mat-expansion-panel>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -160,6 +163,12 @@
           History
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <mat-list>
+        <mat-list-item *ngFor="let item of roomHist">
+          <h4 mat-line>{{item.noteDate}}</h4>
+          <p mat-line> {{item.noteText }} </p>
+        </mat-list-item>
+      </mat-list>
     </mat-expansion-panel>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -167,8 +176,12 @@
           Update Project Description
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <mat-list>
+        <mat-list-item *ngFor="let item of projectDesc">
+          {{item.projDesc}}
+        </mat-list-item>
+      </mat-list>
     </mat-expansion-panel>
-
   </mat-accordion>
   <div *ngIf="roomModalShownEdit" class="room-modal-edit">
     <form [formGroup]="form">
@@ -195,7 +208,6 @@
         <mat-datepicker-toggle matSuffix [for]="dateOfLastRemodel"></mat-datepicker-toggle>
         <mat-datepicker #dateOfLastRemodel></mat-datepicker>
       </mat-form-field>
-
       <mat-form-field >
         <mat-label>
           Contractor
@@ -292,13 +304,13 @@
     </form>
 
     <div class="btns-cont">
-      <button mat-raised-button class="red-btn" (click)="openDialogAddNote()" color="primary">
+      <button mat-raised-button  class="red-btn" (click)="openDialogAddNote()" color="primary">
         Add Note
       </button>
-      <button mat-raised-button class="red-btn" (click)="openDialogAddPhoto()" color="primary">
+      <button mat-raised-button  class="red-btn" (click)="openDialogAddPhoto()" color="primary">
         Upload Photo
       </button>
-      <button mat-raised-button class="red-btn" (click)="openDialogUploadDocument()" color="primary">
+      <button mat-raised-button  class="red-btn" (click)="openDialogUploadDocument()" color="primary">
         Upload Document
       </button>
       <button mat-raised-button class="red-btn" color="primary">
@@ -307,3 +319,4 @@
     </div>
   </div>
 </div>
+

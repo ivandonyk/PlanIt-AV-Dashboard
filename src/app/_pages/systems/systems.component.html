@@ -9,13 +9,9 @@
           <mat-list>
             <h3 mat-subheader>{{item.buildingName}}</h3>
             <mat-list-item *ngIf="item.roomsToReplace.length > 0">
-              <mat-icon mat-list-icon>fiber_manual_record
-              </mat-icon>
               <h5 mat-line [ngStyle]="{'display': room.roomName ? 'dispaly' : 'none'}" *ngFor="let room of item.roomsToReplace">{{room.roomName}}</h5>
             </mat-list-item>
             <mat-list-item *ngIf="item.coreEquipment">
-              <mat-icon mat-list-icon>fiber_manual_record
-              </mat-icon>
               <h4 mat-line>{{item.coreEquipment}}</h4>
             </mat-list-item>
           </mat-list>
@@ -32,18 +28,11 @@
       <div class="rooms-table-cont" [ngStyle]="{'display': dataSource ? 'block': 'none'}">
         <app-room-table-component *ngIf="dataSource" (clickRow)="opemRoomDetailed(true, $event)"  dataSource="{{dataSource}}" displayedColumns="{{displayedColumns}}"></app-room-table-component>
       </div>
-
     </mat-tab>
     <mat-tab label="Rooms">
-
-
-
       <div class="rooms-table-cont" [ngStyle]="{'display': dataRoomSource ? 'block': 'none'}">
         <app-room-table-component *ngIf="dataRoomSource" (clickRow)="opemRoomDetailed(true, $event)"  dataSource="{{dataRoomSource}}" displayedColumns="{{displayedColumns}}"></app-room-table-component>
       </div>
-
-
-
     </mat-tab>
     <mat-tab label="Equipment">
       <div class="rooms-table-cont" [ngStyle]="{'display': equipmentsString ? 'block': 'none'}">
@@ -62,8 +51,6 @@
     </mat-tab>
   </mat-tab-group>
 </div>
-
-
 <div class="room-modal-overlay" (click)="opemRoomDetailed(false)" *ngIf="roomModalShown"></div>
 <div class="room-modal" *ngIf="roomModalShown">
   <div class="header">
@@ -211,7 +198,6 @@
         <mat-datepicker-toggle matSuffix [for]="dateOfLastRemodel"></mat-datepicker-toggle>
         <mat-datepicker #dateOfLastRemodel></mat-datepicker>
       </mat-form-field>
-
       <mat-form-field >
         <mat-label>
           Contractor

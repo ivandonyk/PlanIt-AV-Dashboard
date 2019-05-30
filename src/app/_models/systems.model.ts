@@ -93,6 +93,7 @@ export interface RoomDTO {
   tier?: number;
   updProjDesc?: string;
   userName?: string;
+  coreAge?: string | number;
 }
 
 
