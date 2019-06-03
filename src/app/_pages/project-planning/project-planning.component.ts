@@ -11,6 +11,7 @@ import {AddNoteComponent} from "../../_components/add-note/add-note.component";
 import {AddPhotosComponent} from "../../_components/upload-photos/upload-photos.component";
 import {UploadDocumentComponent} from "../../_components/upload-document/upload-document.component";
 import {ConfirmModalComponent} from "../../_components/confirm-modal/confirm-modal.component";
+import {PrintDialogComponent} from "../../_components/print-dialog/print-dialog.component";
 
 @Component({
   selector: 'app-project-planning',
@@ -78,6 +79,7 @@ export class ProjectPlanningComponent {
   public form: FormGroup;
   public columnsHeader: Array<string> = ['building', 'room', 'type', 'tier', 'coreAge', 'equipmentAge', 'projectedCost' ];
   @ViewChild(MatSort) sort: MatSort;
+  public ProjPlanSumData: any;
 
   constructor(
     private projectPlanningServ: ProjectPlanningService,
@@ -90,6 +92,9 @@ export class ProjectPlanningComponent {
   ) {
     this.globalVars.spinner = true;
     this.getProjPlanSum();
+    setInterval(() => {
+      // this.getProjPlanSum();
+    }, 15000);
   }
 
   onSelect(event) {
@@ -99,6 +104,7 @@ export class ProjectPlanningComponent {
     this.projectPlanningServ.getProjPlanSum()
       .subscribe((data: ProjectPlanList) => {
         this.ProjPlanSum = data.projectPlanList;
+        this.ProjPlanSumData = data;
         data.projectPlanList.forEach((item) => {
           if(item.year != null) {
             this.single.push({
@@ -132,11 +138,9 @@ export class ProjectPlanningComponent {
         this.globalVars.spinner = false;
       });
   }
-
   get f() {
     return this.form.value;
   }
-
   opemRoomDetailed(status?: boolean, id?: number) {
     if (!status) {
       this.roomModalShown = false;
@@ -181,16 +185,9 @@ export class ProjectPlanningComponent {
     }
 
   }
-
   expand(roomId) {
     window.open(window.location.origin + '/home/room-detail/' + this.currentBuilding + '/' + roomId);
   }
-
-
-
-
-
-
   openDialogAddNote(): void {
     const dialogRef = this.dialog.open(AddNoteComponent, {
       data: {
@@ -270,6 +267,17 @@ export class ProjectPlanningComponent {
     const dialogRef = this.dialog.open(ConfirmModalComponent);
     dialogRef.afterClosed().subscribe(result => {
       this.roomModalShownEdit = false;
+    });
+  }
+
+
+  openDialogPrint(): void {
+    const dialogRef = this.dialog.open(PrintDialogComponent, {
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
     });
   }
 }

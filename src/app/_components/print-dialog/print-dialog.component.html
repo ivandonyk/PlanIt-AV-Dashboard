@@ -1,0 +1,65 @@
+<div class="container">
+  <h1 mat-dialog-title>Capital Project Plan Print/Export</h1>
+  <div mat-dialog-content>
+
+
+    <form [formGroup]="printForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="half-fields">
+        <mat-form-field class="form-element-half">
+          <mat-select placeholder="Year" (selectionChange)="yearChanged()" formControlName="year">
+            <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-element-half">
+          <mat-select placeholder="To" (selectionChange)="yearChanged()" formControlName="to">
+            <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <h4>
+        Include:
+      </h4>
+      <mat-checkbox class="example-margin" formControlName="barChart">
+        Bar Chart
+      </mat-checkbox>
+    </form>
+
+    <br>
+
+
+
+    <div class="example-container mat-elevation-z8" >
+      <table *ngIf="selectedYears.length > 0" mat-table [dataSource]="selectedYears">
+
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="one">
+          <th mat-header-cell *matHeaderCellDef> List of Projects </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox class="example-margin" ></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="two">
+          <th mat-header-cell *matHeaderCellDef> Project Descriptions </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox class="example-margin" ></mat-checkbox>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+  </div>
+<br/>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" class="red-btn" (click)="onSubmit()" >Add</button>
+    <button mat-raised-button color="primary" class="red-btn" (click)="cancel()" >Cancel</button>
+  </div>
+</div>

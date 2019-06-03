@@ -35,9 +35,7 @@ export class AddEquipmentComponent implements OnInit {
     extendedWarrantyProvider: new FormControl(''),
   });
 
-  roomList: string [] = [
-    'Roach BoardRoom', 'Green Hallway', 'Huddle Room', 'Executive BoardRoom',
-  ];
+  roomList:any;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEquipmentComponent>,
@@ -47,6 +45,15 @@ export class AddEquipmentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getRooms();
+  }
+  getRooms() {
+    this.systServ.getRoomIds()
+      .subscribe((data) => {
+        this.roomList = data;
+      }, error2 => {
+        console.log(error2);
+      });
   }
 
   get manufacturer() {

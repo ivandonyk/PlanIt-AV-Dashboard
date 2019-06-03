@@ -8,12 +8,23 @@
         <div class="slide" [ngClass]="{'active': currentBuilding == item.buildingId}" (click)="openBuildingDetail(item.buildingId)" *ngFor="let item of currentSlides.slides">
           <mat-list>
             <h3 mat-subheader>{{item.buildingName}}</h3>
-            <mat-list-item *ngIf="item.roomsToReplace.length > 0">
-              <h5 mat-line [ngStyle]="{'display': room.roomName ? 'dispaly' : 'none'}" *ngFor="let room of item.roomsToReplace">{{room.roomName}}</h5>
-            </mat-list-item>
+
+
             <mat-list-item *ngIf="item.coreEquipment">
-              <h4 mat-line>{{item.coreEquipment}}</h4>
+              <h4 mat-line>
+                Core Equipment Age <br>
+                {{item.coreEquipment}}
+              </h4>
             </mat-list-item>
+
+
+            <h4 mat-subheader *ngIf="item.roomsToReplace.length > 0" style="font-size: 15px !important;">YYYY AV Projects</h4>
+
+
+            <mat-list-item *ngIf="item.roomsToReplace.length > 0">
+              <h5 mat-line [ngStyle]="{'display': room.roomName ? 'block' : 'none'}" *ngFor="let room of item.roomsToReplace">{{room.roomName}}</h5>
+            </mat-list-item>
+
           </mat-list>
 
 

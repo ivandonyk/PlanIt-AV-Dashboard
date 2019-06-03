@@ -81,6 +81,14 @@ export class SystemsService {
       params: params
     });
   }
+  getRoomIds(id?: number | string): Observable<Equipment[]> {
+    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const params = new HttpParams().set('businessId', String(userData.businessId));
+
+    return this.httpClient.get<Equipment[]>(environment.baseUrl + '/getRoomIds', {
+      params: params
+    });
+  }
 
   addRoom(roomObj: RoomDetails): Observable<RoomDetails> {
     const room: RoomDetails = {

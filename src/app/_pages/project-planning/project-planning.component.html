@@ -1,6 +1,6 @@
 <div class="project-planning" *ngIf="single.length > 0">
   <h3>
-    Client Company AV Capital Project Plan 2020 - 2024
+    Client Company AV Capital Project Plan {{ProjPlanSumData.startYear}} - {{ProjPlanSumData.endYear}}
   </h3>
   <div class="chart">
     <ngx-charts-bar-vertical
@@ -18,6 +18,8 @@
       [roundEdges]="roundEdges"
       (select)="onSelect($event)">
     </ngx-charts-bar-vertical>
+    <mat-icon aria-hidden="false" (click)="openDialogPrint()" class="print-icon" aria-label="Example home icon">print</mat-icon>
+
   </div>
   <mat-accordion class="accordion">
     <mat-expansion-panel *ngFor="let panel of ProjPlanSum" >

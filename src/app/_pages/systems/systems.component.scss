@@ -16,6 +16,9 @@
       margin-left: 20px;
       min-height: 140px;
 
+      h3.mat-subheader{
+        color: #f00;
+      }
 
       &.active{
         border-bottom: 2px solid #ff4081;
