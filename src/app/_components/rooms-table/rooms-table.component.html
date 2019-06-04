@@ -2,7 +2,7 @@
   <ng-container matColumnDef="colorCode">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
     <td (click)="open(element.roomId ? element.roomId : element.equipmentId)" mat-cell *matCellDef="let element">
-      <mat-icon mat-list-icon [ngStyle]="{'color': element.colorCode}">fiber_manual_record</mat-icon>
+      <mat-icon mat-list-icon *ngIf="element.colorCode" [ngStyle]="{'color': element.colorCode}">fiber_manual_record</mat-icon>
     </td>
   </ng-container>
 
