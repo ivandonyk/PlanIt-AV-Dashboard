@@ -18,7 +18,7 @@
             </mat-list-item>
 
 
-            <h4 mat-subheader *ngIf="item.roomsToReplace.length > 0" style="font-size: 15px !important;">YYYY AV Projects</h4>
+            <h4 mat-subheader  style="font-size: 15px !important;">YYYY AV Projects</h4>
 
 
             <mat-list-item *ngIf="item.roomsToReplace.length > 0">
@@ -29,10 +29,10 @@
 
 
         </div>
-        <button *ngIf="dataSlides.length > 3" (click)="previousSlide()" mat-icon-button class="previousSlide">
+        <button *ngIf="dataSlides.length > 4" (click)="previousSlide()" mat-icon-button class="previousSlide">
           <mat-icon >arrow_back_ios</mat-icon>
         </button>
-        <button *ngIf="dataSlides.length > 3" (click)="nextSlide()" mat-icon-button class="nextSlide">
+        <button *ngIf="dataSlides.length > 4" (click)="nextSlide()" mat-icon-button class="nextSlide">
           <mat-icon >arrow_forward_ios</mat-icon>
         </button>
       </div>

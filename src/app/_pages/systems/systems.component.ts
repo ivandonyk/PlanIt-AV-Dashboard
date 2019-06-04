@@ -182,8 +182,8 @@ export class SystemsComponent implements OnInit {
       .subscribe((data: Buildings) => {
       this.dataSlides = data.systemBuilding.buildings;
         this.dataSlides.forEach((item, index) => {
-          this.currentSlides['index'] = 2;
-          if (index <= 2) {
+          this.currentSlides['index'] = 3;
+          if (index <= 3) {
             this.currentSlides['slides'].push(item);
           }
         });

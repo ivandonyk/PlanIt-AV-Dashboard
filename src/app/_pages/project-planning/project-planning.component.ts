@@ -93,7 +93,8 @@ export class ProjectPlanningComponent {
     this.globalVars.spinner = true;
     this.getProjPlanSum();
     setInterval(() => {
-      // this.getProjPlanSum();
+      this.getProjPlanSum();
+
     }, 15000);
   }
 
@@ -106,12 +107,18 @@ export class ProjectPlanningComponent {
         this.ProjPlanSum = data.projectPlanList;
         this.ProjPlanSumData = data;
         data.projectPlanList.forEach((item) => {
-          if(item.year != null) {
+          if (item.year != null) {
             this.single.push({
               name: item.year,
               value: item.amount
             });
             Object.assign(this, this.single);
+            setTimeout(() => {
+              const textArr = document.querySelectorAll('ngx-charts-bar-vertical text');
+              for (let i = 0; i < textArr.length; i++) {
+                textArr[i].innerHTML = textArr[i].innerHTML.replace(/[^0-9]/g, '')
+              }
+            }, 200);
           }
 
         });

@@ -123,7 +123,7 @@ export class SystemsService {
   }
 
   addEquipment(equipment: EquipmentDetailAdd): Observable<EquipmentDetailAdd> {
-    return this.httpClient.post<EquipmentDetailAdd>(environment.baseUrl + '/addRoom', equipment);
+    return this.httpClient.post<EquipmentDetailAdd>(environment.baseUrl + '/addEquipment', equipment);
   }
   updateRoom(roomObj: RoomDTO): Observable<RoomDTO> {
     return this.httpClient.post<RoomDTO>(environment.baseUrl + '/updRoom', roomObj);
