@@ -67,7 +67,7 @@
 <div class="room-modal" *ngIf="roomModalShown">
   <div class="header">
     <div class="title">
-      Building Name - {{roomDetailData.roomName}}
+      Building Name - {{roomDetailData.roomName}} / Floor #{{roomDetailData.floor}} / Tier #{{roomDetailData.tier}}
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
@@ -130,11 +130,71 @@
       {{roomDetailData.integrator}}
     </div>
   </div>
+  <div *ngIf="!roomModalShownEdit"  class="subheader">
+    <div>
+            <span>
+              Room Type
+            </span>
+      <!--{{roomDetailData.roomT}}-->
+    </div>
+    <div>
+            <span>
+              Seating Type
+            </span>
+      {{roomDetailData.seatingType}}
+    </div>
+    <div>
+            <span>
+              Seating Capacity
+            </span>
+      {{roomDetailData.seatingCapacity}}
+    </div>
+  </div>
+  <div *ngIf="!roomModalShownEdit"  class="subheader">
+    <div>
+      <span>
+        Dimensions
+      </span>
+      {{roomDetailData.dimensions}}
+    </div>
+    <div>
+      <span>
+        Ceiling Height
+      </span>
+      {{roomDetailData.ceilingHeight}}
+    </div>
+    <div>
+      <span>
+        Ceiling Type
+      </span>
+      {{roomDetailData.ceilingType}}
+    </div>
+    <div>
+      <span>
+        Last Remodel
+      </span>
+      {{roomDetailData.dateOfLastRemodel}}
+    </div>
+  </div>
+  <div *ngIf="!roomModalShownEdit"  class="subheader">
+    <div>
+      <span>
+        Last AV Cost
+      </span>
+      {{roomDetailData.avLastUpdateCost}}
+    </div>
+    <div>
+      <span>
+        Last AV Contractor
+      </span>
+      {{roomDetailData.lastAvContractor}}
+    </div>
+  </div>
   <mat-accordion  *ngIf="!roomModalShownEdit" >
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Design Documents
+          Documents
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-list>
@@ -148,14 +208,7 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Core Equipment
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-    </mat-expansion-panel>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Other Equipment
+          Equipment
         </mat-panel-title>
       </mat-expansion-panel-header>
     </mat-expansion-panel>
@@ -252,23 +305,23 @@
         </mat-label>
         <input matInput  formControlName="ceilingType"  type="text" placeholder="Ceiling Type">
       </mat-form-field>
-      <mat-form-field >
-        <input matInput  formControlName="origAvInstallDate"  [matDatepicker]="origAvInstallDate" placeholder="Orig AV Install Date">
-        <mat-datepicker-toggle matSuffix [for]="origAvInstallDate"></mat-datepicker-toggle>
-        <mat-datepicker #origAvInstallDate></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Orig AV System Cost
-        </mat-label>
-        <input matInput  formControlName="origAvSystemCost"  type="number" placeholder="Orig AV System Cost">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Orig AV Contractor
-        </mat-label>
-        <input matInput  formControlName="origAvContractor"  type="text" placeholder="Orig AV Contractor">
-      </mat-form-field>
+      <!--<mat-form-field >-->
+        <!--<input matInput  formControlName="origAvInstallDate"  [matDatepicker]="origAvInstallDate" placeholder="Orig AV Install Date">-->
+        <!--<mat-datepicker-toggle matSuffix [for]="origAvInstallDate"></mat-datepicker-toggle>-->
+        <!--<mat-datepicker #origAvInstallDate></mat-datepicker>-->
+      <!--</mat-form-field>-->
+      <!--<mat-form-field >-->
+        <!--<mat-label>-->
+          <!--Orig AV System Cost-->
+        <!--</mat-label>-->
+        <!--<input matInput  formControlName="origAvSystemCost"  type="number" placeholder="Orig AV System Cost">-->
+      <!--</mat-form-field>-->
+      <!--<mat-form-field >-->
+        <!--<mat-label>-->
+          <!--Orig AV Contractor-->
+        <!--</mat-label>-->
+        <!--<input matInput  formControlName="origAvContractor"  type="text" placeholder="Orig AV Contractor">-->
+      <!--</mat-form-field>-->
       <mat-form-field >
         <input matInput  formControlName="avLastUpdateDate"  [matDatepicker]="avLastUpdateDate" placeholder="AV Last Update Date">
         <mat-datepicker-toggle matSuffix [for]="avLastUpdateDate"></mat-datepicker-toggle>
@@ -286,11 +339,11 @@
         </mat-label>
         <input matInput type="text" formControlName="lastAvContractor" placeholder="Last AV Contractor">
       </mat-form-field>
-      <mat-form-field >
-        <input matInput  formControlName="nextAvUpdateDt"  [matDatepicker]="nextAvUpdateDt" placeholder="Next AV Update Dt">
-        <mat-datepicker-toggle matSuffix [for]="nextAvUpdateDt"></mat-datepicker-toggle>
-        <mat-datepicker #nextAvUpdateDt></mat-datepicker>
-      </mat-form-field>
+      <!--<mat-form-field >-->
+        <!--<input matInput  formControlName="nextAvUpdateDt"  [matDatepicker]="nextAvUpdateDt" placeholder="Next AV Update Dt">-->
+        <!--<mat-datepicker-toggle matSuffix [for]="nextAvUpdateDt"></mat-datepicker-toggle>-->
+        <!--<mat-datepicker #nextAvUpdateDt></mat-datepicker>-->
+      <!--</mat-form-field>-->
       <mat-form-field >
         <mat-label>
           Next AV Update Cost

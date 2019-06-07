@@ -20,6 +20,12 @@
         color: #f00;
       }
 
+      span{
+        margin-left: 25px;
+        margin-top: 7px;
+      }
+
+
       &.active{
         border-bottom: 2px solid #ff4081;
       }

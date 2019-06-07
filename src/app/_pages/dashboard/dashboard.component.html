@@ -25,13 +25,13 @@
     <mat-list>
       <h3 mat-subheader>Lifecycle</h3>
       <mat-list-item>
-        <h4 mat-line>Core Equipment Age</h4>
+        <h4 mat-line>Equipment Age</h4>
         <span mat-line>{{dashboardData.lifecycle.coreEquipmentAge}}</span>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item style="    margin-top: -15px;">
         <h4 mat-line>AV Projects</h4>
         <span mat-line *ngFor="let item of dashboardData.lifecycle.roomsToUpgrade">
-          {{item.nbrRoomsUpg}} - {{item.year}}
+          {{item.nbrRoomsUpg}} - # {{item.year}}
         </span>
       </mat-list-item>
     </mat-list>

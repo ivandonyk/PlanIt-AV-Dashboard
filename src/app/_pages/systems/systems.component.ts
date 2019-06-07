@@ -30,6 +30,10 @@ export class SystemsComponent implements OnInit {
   public roomModalShownEdit: Boolean = false;
   public displayedColumns: string = JSON.stringify([
     {
+      key: 'buildingName',
+      title: 'Building',
+    },
+    {
       key: 'roomName',
       title: 'Room',
     },
