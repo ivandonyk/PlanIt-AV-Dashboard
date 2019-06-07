@@ -77,4 +77,14 @@ export class EquipmentModalComponent implements OnInit {
     this.close.emit(true);
   }
 
+
+
+  updateRoom(){
+
+  }
+  confirmCancel(){
+
+  }
+
+
 }

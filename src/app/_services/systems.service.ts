@@ -128,6 +128,12 @@ export class SystemsService {
   updateRoom(roomObj: RoomDTO): Observable<RoomDTO> {
     return this.httpClient.post<RoomDTO>(environment.baseUrl + '/updRoom', roomObj);
   }
+  addProjDesc(data): Observable<RoomDTO> {
+    return this.httpClient.post<RoomDTO>(environment.baseUrl + '/addProjDesc', data);
+  }
+  addNote(data): Observable<RoomDTO> {
+    return this.httpClient.post<RoomDTO>(environment.baseUrl + '/addNote', data);
+  }
   uploadImage(file): Observable<any> {
     const formData = new FormData();
     formData.append('file', file.file, file.file.name);

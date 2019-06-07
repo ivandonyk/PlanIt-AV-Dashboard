@@ -8,8 +8,11 @@
       <div class="header-btn" *ngIf="!isEdit" (click)="isEdit = true">
         Edit
       </div>
-      <div class="header-btn" *ngIf="isEdit" (click)="isEdit = false">
-        Save / Cancel
+      <div class="header-btn" *ngIf="isEdit" (click)="updateRoom(); isEdit = false">
+        Save
+      </div>
+      <div class="header-btn" *ngIf="isEdit" (click)="confirmCancel(); isEdit = false">
+        Cancel
       </div>
       <div class="header-btn" (click)="expand()">
         Expand
@@ -18,6 +21,8 @@
         X Close
       </div>
     </div>
+
+
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
@@ -153,7 +158,7 @@
         <mat-label>
           Lifecycle
         </mat-label>
-        <input matInput  formControlName="lifecycle"  placeholder="Lifecycle">
+        <input matInput type="number"  formControlName="lifecycle"  placeholder="Lifecycle">
       </mat-form-field>
       <mat-form-field >
         <mat-label>

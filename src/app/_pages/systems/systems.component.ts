@@ -9,6 +9,7 @@ import { AddPhotosComponent } from '../../_components/upload-photos/upload-photo
 import { UploadDocumentComponent } from '../../_components/upload-document/upload-document.component';
 import * as moment from 'moment';
 import { ConfirmModalComponent } from '../../_components/confirm-modal/confirm-modal.component';
+import {AddProjectDescComponent} from "../../_components/add-project-desc/add-project-desc.component";
 
 
 @Component({
@@ -349,19 +350,6 @@ export class SystemsComponent implements OnInit {
       }
     });
   }
-  openDialogAddNote(): void {
-    const dialogRef = this.dialog.open(AddNoteComponent, {
-      data: {
-        form: this.f,
-        roomId: this.roomId,
-        buildingId: this.currentBuilding,
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // this.animal = result;
-    });
-  }
   openDialogUploadDocument(): void {
     const dialogRef = this.dialog.open(UploadDocumentComponent, {
       data: {
@@ -454,6 +442,32 @@ export class SystemsComponent implements OnInit {
       });
   }
 
+  openDialogAddNote(): void {
+    const dialogRef = this.dialog.open(AddNoteComponent, {
+      data: {
+        form: this.f,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
 
+  openDialogAddProjectDesc() {
+    const dialogRef = this.dialog.open(AddProjectDescComponent, {
+      data: {
+        projectDesc: this.projectDesc,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
 
 }

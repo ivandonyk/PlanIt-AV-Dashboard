@@ -1,52 +1,49 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef, MatSnackBar, MatTableModule, MAT_DIALOG_DATA} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {RoomDTO} from '../../_models/systems.model';
 
 @Component({
-  selector: 'app-add-note',
-  templateUrl: './add-note.component.html',
-  styleUrls: ['./add-note.component.scss']
+  selector: 'app-add-project-desc',
+  templateUrl: './add-project-desc.component.html',
+  styleUrls: ['./add-project-desc.component.scss']
 })
-export class AddNoteComponent implements OnInit {
-  public form = this.fb.group({
-    notes: new FormControl(this.data.form.notes),
-  });
+export class AddProjectDescComponent implements OnInit {
+
+  public form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AddNoteComponent>,
+    public dialogRef: MatDialogRef<AddProjectDescComponent>,
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
     private snackbar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: {form: RoomDTO, roomId: number | string, buildingId: number | string}
+    @Inject(MAT_DIALOG_DATA) public data: {projectDesc: any, roomId: number | string, buildingId: number | string}
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = this.fb.group({
+      notes: this.data.projectDesc[0].projDesc,
+    });
+    console.log(this)
+  }
 
   onSubmit() {
     this.globalVars.spinner = true;
 
-    // const room: RoomDTO = {
-    //   notes: String(this.form.value.notes),
-    // };
-
-    const username = JSON.parse(window.localStorage.getItem('currentUser'))
-
-
     const room = {
-      buildingId: this.data.buildingId,
-      noteText: this.form.value.notes,
-      roomId: this.data.roomId,
-      userName: username.userName,
-    }
+      'projDesc': this.form.value.notes,
+      'projDescId': this.data.projectDesc[0].projDescId,
+      'roomId': this.data.projectDesc[0].roomId,
+      'userName': this.data.projectDesc[0].userName,
+    };
 
 
-    this.systServ.addNote(room)
+    this.systServ.addProjDesc(room)
       .subscribe( data => {
-        this.snackbar.open('Note Changed', '', {
+        this.snackbar.open('Saved', '', {
             duration: 1500,
             verticalPosition: 'bottom',
             horizontalPosition: 'right',

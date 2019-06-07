@@ -209,7 +209,7 @@
         </mat-list-item>
       </mat-list>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="getSpecifiedEquipment()">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Equipment
@@ -242,41 +242,8 @@
       </mat-list>
     </mat-expansion-panel>
   </mat-accordion>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <div *ngIf="roomModalShownEdit" class="room-modal-edit">
     <form [formGroup]="form">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <mat-form-field >
         <mat-label>
           Room Name
@@ -369,33 +336,8 @@
         <mat-label>
           Lifecycle (years)
         </mat-label>
-        <input matInput  formControlName="lifecycle"  type="text" placeholder="Lifecycle (years)">
+        <input matInput  formControlName="lifecycle"  type="number" placeholder="Lifecycle (years)">
       </mat-form-field>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </form>
 
     <div class="btns-cont">
@@ -408,32 +350,11 @@
       <button mat-raised-button  class="red-btn" (click)="openDialogUploadDocument()" color="primary">
         Upload Document
       </button>
-      <button mat-raised-button class="red-btn" color="primary">
+      <button mat-raised-button class="red-btn" (click)="openDialogAddProjectDesc()" color="primary">
         Add/Edit Update Project Description
       </button>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 
 
