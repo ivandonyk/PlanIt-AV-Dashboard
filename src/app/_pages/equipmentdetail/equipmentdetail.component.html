@@ -4,11 +4,14 @@
       {{data.room}}
     </div>
     <div class="actions">
-      <div class="header-btn" *ngIf="!isEdit" (click)="isEdit = true">
+      <div class="header-btn"  *ngIf="!isEdit" (click)="isEdit = true">
         Edit
       </div>
-      <div class="header-btn" *ngIf="isEdit" (click)="isEdit = false">
-        Save / Cancel
+      <div class="header-btn" style=" padding-right: 20px; " *ngIf="isEdit" (click)="updateRoom(); isEdit = false">
+        Save
+      </div>
+      <div class="header-btn" *ngIf="isEdit" (click)="confirmCancel(); isEdit = false">
+        Cancel
       </div>
     </div>
   </div>

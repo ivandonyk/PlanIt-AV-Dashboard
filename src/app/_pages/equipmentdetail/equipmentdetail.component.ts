@@ -68,4 +68,12 @@ export class EquipmentdetailComponent implements OnInit {
   }
 
 
+  updateRoom(){
+
+  }
+  confirmCancel(){
+
+  }
+
+
 }
