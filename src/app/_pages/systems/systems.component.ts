@@ -196,7 +196,6 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-
       });
   }
   get f() {
@@ -261,6 +260,47 @@ export class SystemsComponent implements OnInit {
         this.globalVars.spinner = false;
       });
   }
+  getRoomDet() {
+    this.systServ.getRoomDetails(this.roomId)
+      .subscribe((data: RoomDetails) => {
+        console.log(data);
+        this.roomDetailData = data;
+        this.form = this.formBuilder.group({
+          roomName: [data.roomName],
+          tier: [data.tier],
+          floor: [data.floor],
+          dateOfLastRemodel: [moment(data.dateOfLastRemodel).toISOString()],
+          integrator: [data.integrator],
+          seatingType: [data.seatingType],
+          seatingCapacity: [data.seatingCapacity],
+          dimensions: [data.dimensions],
+          ceilingHeight: [data.ceilingHeight],
+          coreAge: [data.coreAge],
+          ceilingType: [data.ceilingType],
+          origAvInstallDate: [moment(data.origAvInstallDate).toISOString()],
+          origAvSystemCost: [data.origAvSystemCost],
+          origAvContractor: [data.origAvContractor],
+          avLastUpdateDate: [moment(data.avLastUpdateDate).toISOString()],
+          avLastUpdateCost: [data.avLastUpdateCost],
+          lastAvContractor: [data.lastAvContractor],
+          nextAvUpdateDt: [moment(data.nextAvUpdateDt).toISOString()],
+          nextAvUpdCost: [data.nextAvUpdCost],
+          notes: [data.notes],
+          lifecycle: [data.lifecycle],
+          roomType: [data.roomType],
+        });
+        this.getDocuments(this.roomId);
+        this.getProjectDesc(this.roomId);
+        this.getRoomHist(this.roomId);
+        this.globalVars.spinner = false;
+        this.roomModalShown = true;
+        this.roomModalShownEdit = false;
+
+      }, error => {
+        this.globalVars.spinner = false;
+        console.log(error);
+      });
+  }
   opemRoomDetailed(status?: boolean, id?: number) {
     if (!status) {
       this.roomModalShown = false;
@@ -269,45 +309,7 @@ export class SystemsComponent implements OnInit {
     } else {
       this.roomId = id;
       this.globalVars.spinner = true;
-      this.systServ.getRoomDetails(id)
-        .subscribe((data: RoomDetails) => {
-          console.log(data);
-          this.roomDetailData = data;
-          this.form = this.formBuilder.group({
-            roomName: [data.roomName],
-            tier: [data.tier],
-            floor: [data.floor],
-            dateOfLastRemodel: [moment(data.dateOfLastRemodel).toISOString()],
-            integrator: [data.integrator],
-            seatingType: [data.seatingType],
-            seatingCapacity: [data.seatingCapacity],
-            dimensions: [data.dimensions],
-            ceilingHeight: [data.ceilingHeight],
-            coreAge: [data.coreAge],
-            ceilingType: [data.ceilingType],
-            origAvInstallDate: [moment(data.origAvInstallDate).toISOString()],
-            origAvSystemCost: [data.origAvSystemCost],
-            origAvContractor: [data.origAvContractor],
-            avLastUpdateDate: [moment(data.avLastUpdateDate).toISOString()],
-            avLastUpdateCost: [data.avLastUpdateCost],
-            lastAvContractor: [data.lastAvContractor],
-            nextAvUpdateDt: [moment(data.nextAvUpdateDt).toISOString()],
-            nextAvUpdCost: [data.nextAvUpdCost],
-            notes: [data.notes],
-            lifecycle: [data.lifecycle],
-            roomType: '',
-          });
-          this.getDocuments(this.roomId);
-          this.getProjectDesc(this.roomId);
-          this.getRoomHist(this.roomId);
-          this.globalVars.spinner = false;
-          this.roomModalShown = true;
-          this.roomModalShownEdit = false;
-
-        }, error => {
-          this.globalVars.spinner = false;
-          console.log(error);
-        });
+      this.getRoomDet();
     }
   }
   expand(roomId) {
@@ -395,8 +397,9 @@ export class SystemsComponent implements OnInit {
             horizontalPosition: 'right',
           }
         );
-        this.globalVars.spinner = false;
         this.roomModalShownEdit = false;
+        this.getRoomDet();
+        this.globalVars.spinner = false;
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
@@ -441,7 +444,6 @@ export class SystemsComponent implements OnInit {
         this.globalVars.spinner = false;
       });
   }
-
   openDialogAddNote(): void {
     const dialogRef = this.dialog.open(AddNoteComponent, {
       data: {
@@ -455,7 +457,6 @@ export class SystemsComponent implements OnInit {
       // this.animal = result;
     });
   }
-
   openDialogAddProjectDesc() {
     const dialogRef = this.dialog.open(AddProjectDescComponent, {
       data: {

@@ -47,6 +47,7 @@ export interface RoomDetails {
   coreAge: string;
   dateOfLastRemodel: string;
   dimensions: string;
+  roomType?: string;
   equipmentAge: string;
   floor: number;
   images?: Array<string>;

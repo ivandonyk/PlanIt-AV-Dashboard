@@ -208,9 +208,10 @@
 
     form {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      align-items: center;
+      //flex-wrap: wrap;
+      //justify-content: space-evenly;
+      //align-items: center;
+      flex-direction: column;
 
       mat-form-field{
         width: 190px;
@@ -249,5 +250,27 @@
         background: #f3f3f3;
       }
     }
+  }
+}
+.margindv{
+  margin-top: 7px !important;
+}
+
+.fields-group{
+  display: flex;
+  //flex-wrap: wrap;
+  justify-content: space-between;
+
+  &[data-grid="3"] mat-form-field{
+    width: 32.3333% !important;
+  }
+  &[data-grid="4"] mat-form-field{
+    width: 24% !important;
+  }
+  &[data-grid="5"] mat-form-field{
+    width: 19% !important;
+  }
+  &[data-grid="1"] mat-form-field{
+    width: 90% !important;
   }
 }

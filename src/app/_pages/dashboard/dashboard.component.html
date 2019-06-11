@@ -29,9 +29,9 @@
         <span mat-line>{{dashboardData.lifecycle.coreEquipmentAge}}</span>
       </mat-list-item>
       <mat-list-item style="    margin-top: -15px;">
-        <h4 mat-line>AV Projects</h4>
+        <h4 mat-line># AV Projects</h4>
         <span mat-line *ngFor="let item of dashboardData.lifecycle.roomsToUpgrade">
-          {{item.nbrRoomsUpg}} - # {{item.year}}
+          {{item.nbrRoomsUpg}}&nbsp;-&nbsp;{{item.year}}
         </span>
       </mat-list-item>
     </mat-list>

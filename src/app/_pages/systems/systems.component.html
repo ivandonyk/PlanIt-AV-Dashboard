@@ -8,28 +8,18 @@
         <div class="slide" [ngClass]="{'active': currentBuilding == item.buildingId}" (click)="openBuildingDetail(item.buildingId)" *ngFor="let item of currentSlides.slides">
           <mat-list>
             <h3 mat-subheader>{{item.buildingName}}</h3>
-
-
             <mat-list-item *ngIf="item.coreEquipment">
               <h4 mat-line>
-                Equipment Age
+                Core Equipment Age
               </h4>
               <span mat-line>
                 {{item.coreEquipment}}
               </span>
-
-            </mat-list-item>
-
-
-            <h4 mat-subheader  style="font-size: 15px !important;">YYYY AV Projects</h4>
-
-
-            <mat-list-item *ngIf="item.roomsToReplace.length > 0">
-              <h5 mat-line [ngStyle]="{'display': room.roomName ? 'block' : 'none'}" *ngFor="let room of item.roomsToReplace">
+              <h4 mat-line class="margindv" >{{item.fiscalYear}} AV Projects</h4>
+              <span mat-line  [ngStyle]="{'display': room.roomName ? 'block' : 'none'}" *ngFor="let room of item.roomsToReplace">
                 {{room.roomName}}
-              </h5>
+              </span>
             </mat-list-item>
-
           </mat-list>
 
 
@@ -128,10 +118,10 @@
       {{roomDetailData.replaceUpg}}
     </div>
     <div>
-            <span>
-              Contractor
-            </span>
-      {{roomDetailData.integrator}}
+      <span>
+        Last AV Contractor
+      </span>
+      {{roomDetailData.lastAvContractor}}
     </div>
   </div>
   <div *ngIf="!roomModalShownEdit"  class="subheader">
@@ -139,7 +129,7 @@
             <span>
               Room Type
             </span>
-      <!--{{roomDetailData.roomT}}-->
+      {{roomDetailData.roomType}}
     </div>
     <div>
             <span>
@@ -187,11 +177,17 @@
       </span>
       {{roomDetailData.avLastUpdateCost}}
     </div>
+    <!--<div>-->
+      <!--<span>-->
+        <!--Last AV Contractor-->
+      <!--</span>-->
+      <!--{{roomDetailData.lastAvContractor}}-->
+    <!--</div>-->
     <div>
-      <span>
-        Last AV Contractor
-      </span>
-      {{roomDetailData.lastAvContractor}}
+            <span>
+              Contractor
+            </span>
+      {{roomDetailData.integrator}}
     </div>
   </div>
   <mat-accordion  *ngIf="!roomModalShownEdit" >
@@ -244,103 +240,114 @@
   </mat-accordion>
   <div *ngIf="roomModalShownEdit" class="room-modal-edit">
     <form [formGroup]="form">
+      <div class="fields-group" data-grid="3">
+        <mat-form-field >
+          <mat-label>
+            Room Name
+          </mat-label>
+          <input matInput  formControlName="roomName"  placeholder="Room Name">
+        </mat-form-field>
+        <mat-form-field >
+          <mat-label>
+            Floor
+          </mat-label>
+          <input matInput  formControlName="floor"  type="number" placeholder="Floor">
+        </mat-form-field>
+        <mat-form-field >
+          <mat-label>
+            Tier
+          </mat-label>
+          <input matInput  formControlName="tier"  type="number" placeholder="Tier">
+        </mat-form-field>
+      </div>
+      <div class="fields-group" data-grid="4">
+        <mat-form-field >
+          <input matInput  formControlName="avLastUpdateDate"  [matDatepicker]="avLastUpdateDate" placeholder="Last AV Install">
+          <mat-datepicker-toggle matSuffix [for]="avLastUpdateDate"></mat-datepicker-toggle>
+          <mat-datepicker #avLastUpdateDate></mat-datepicker>
+        </mat-form-field>
 
-      <mat-form-field >
-        <mat-label>
-          Room Name
-        </mat-label>
-        <input matInput  formControlName="roomName"  placeholder="Room Name">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Tier
-        </mat-label>
-        <input matInput  formControlName="tier"  type="number" placeholder="Tier">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Floor
-        </mat-label>
-        <input matInput  formControlName="floor"  type="number" placeholder="Floor">
-      </mat-form-field>
-      <mat-form-field >
-        <input matInput  formControlName="dateOfLastRemodel"  [matDatepicker]="dateOfLastRemodel" placeholder="Date Of Last Remodel">
-        <mat-datepicker-toggle matSuffix [for]="dateOfLastRemodel"></mat-datepicker-toggle>
-        <mat-datepicker #dateOfLastRemodel></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Contractor
-        </mat-label>
-        <input matInput  formControlName="integrator"  placeholder="Contractor">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Core Age
-        </mat-label>
-        <input matInput  formControlName="coreAge"  placeholder="Core Age">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Seating Type
-        </mat-label>
-        <input matInput  formControlName="seatingType"  placeholder="Seating Type">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Seating Capacity
-        </mat-label>
-        <input matInput  formControlName="seatingCapacity"  type="number" placeholder="Seating Capacity">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Dimensions
-        </mat-label>
-        <input matInput  formControlName="dimensions"  type="text" placeholder="Dimensions">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Ceiling Height
-        </mat-label>
-        <input matInput  formControlName="ceilingHeight"  type="number" placeholder="Ceiling Height">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Ceiling Type
-        </mat-label>
-        <input matInput  formControlName="ceilingType"  type="text" placeholder="Ceiling Type">
-      </mat-form-field>
-      <mat-form-field >
-        <input matInput  formControlName="avLastUpdateDate"  [matDatepicker]="avLastUpdateDate" placeholder="AV Last Update Date">
-        <mat-datepicker-toggle matSuffix [for]="avLastUpdateDate"></mat-datepicker-toggle>
-        <mat-datepicker #avLastUpdateDate></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          AV Last Update Cost
-        </mat-label>
-        <input matInput  formControlName="avLastUpdateCost"  type="number" placeholder="AV Last Update Cost">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Last AV Contractor
-        </mat-label>
-        <input matInput type="text" formControlName="lastAvContractor" placeholder="Last AV Contractor">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Next AV Update Cost
-        </mat-label>
-        <input matInput  formControlName="nextAvUpdCost"  type="text" placeholder="Next AV Update Cost">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>
-          Lifecycle (years)
-        </mat-label>
-        <input matInput  formControlName="lifecycle"  type="number" placeholder="Lifecycle (years)">
-      </mat-form-field>
+        <mat-form-field>
+          <mat-label>
+            Lifecycle (years)
+          </mat-label>
+          <input matInput  formControlName="lifecycle"  type="number" placeholder="Lifecycle (years)">
+        </mat-form-field>
+
+        <mat-form-field >
+          <mat-label>
+            Estimated Update Cost
+          </mat-label>
+          <input matInput type="text" formControlName="nextAvUpdCost" placeholder="Estimated Update Cost">
+        </mat-form-field>
+
+        <mat-form-field >
+          <mat-label>
+            Last AV Contractor
+          </mat-label>
+          <input matInput type="text" formControlName="lastAvContractor" placeholder="Last AV Contractor">
+        </mat-form-field>
+      </div>
+      <div class="fields-group" data-grid="3">
+        <mat-form-field >
+          <mat-label>
+            Room Type
+          </mat-label>
+          <input matInput type="text" formControlName="roomType" placeholder="Room Type">
+        </mat-form-field>
+        <mat-form-field >
+          <mat-label>
+            Seating Type
+          </mat-label>
+          <input matInput  formControlName="seatingType"  placeholder="Seating Type">
+        </mat-form-field>
+        <mat-form-field >
+          <mat-label>
+            Seating Capacity
+          </mat-label>
+          <input matInput  formControlName="seatingCapacity"  type="number" placeholder="Seating Capacity">
+        </mat-form-field>
+      </div>
+      <div class="fields-group" data-grid="5">
+        <mat-form-field >
+          <mat-label>
+            Dimensions
+          </mat-label>
+          <input matInput  formControlName="dimensions"  type="text" placeholder="Dimensions">
+        </mat-form-field>
+        <mat-form-field >
+          <mat-label>
+            Ceiling Height
+          </mat-label>
+          <input matInput  formControlName="ceilingHeight"  type="number" placeholder="Ceiling Height">
+        </mat-form-field>
+        <mat-form-field >
+          <mat-label>
+            Ceiling Type
+          </mat-label>
+          <input matInput  formControlName="ceilingType"  type="text" placeholder="Ceiling Type">
+        </mat-form-field>
+        <mat-form-field >
+          <input matInput  formControlName="dateOfLastRemodel"  [matDatepicker]="dateOfLastRemodel" placeholder="Date Of Last Remodel">
+          <mat-datepicker-toggle matSuffix [for]="dateOfLastRemodel"></mat-datepicker-toggle>
+          <mat-datepicker #dateOfLastRemodel></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field >
+          <mat-label>
+            Contractor
+          </mat-label>
+          <input matInput  formControlName="integrator"  placeholder="Contractor">
+        </mat-form-field>
+      </div>
+      <div class="fields-group" data-grid="1">
+        <mat-form-field >
+          <mat-label>
+            Last AV Cost
+          </mat-label>
+          <input matInput  formControlName="avLastUpdateCost"  type="number" placeholder="AV Last Update Cost">
+        </mat-form-field>
+      </div>
     </form>
-
     <div class="btns-cont">
       <button mat-raised-button  class="red-btn" (click)="openDialogAddNote()" color="primary">
         Add Note

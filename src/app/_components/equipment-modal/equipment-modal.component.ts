@@ -79,10 +79,11 @@ export class EquipmentModalComponent implements OnInit {
 
 
 
-  updateRoom(){
+  updateRoom() {
 
   }
-  confirmCancel(){
+
+  confirmCancel() {
 
   }
 
