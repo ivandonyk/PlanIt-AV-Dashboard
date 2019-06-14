@@ -15,6 +15,8 @@ export interface EquipmentDetailAdd {
   manufacturer: string;
   modelNumber: string;
   port: string;
+  rooms?: string;
+  roomId?: string;
   replacementDate: string;
   serialNumber: string;
   warrantyExpirationDate: string;

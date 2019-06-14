@@ -67,6 +67,7 @@ export class AddEquipmentComponent implements OnInit {
   onSubmit() {
     console.log(this.addEquipmentForm.value);
     const equipment: EquipmentDetailAdd = {
+      roomId: String(this.addEquipmentForm.value.rooms),
       alternateLocation: String(this.addEquipmentForm.value.alternateLocation),
       countryOfManufacture: String(this.addEquipmentForm.value.countryOfManufacture),
       dateInstalled: moment(this.addEquipmentForm.value.dateInstalled).toISOString(),
