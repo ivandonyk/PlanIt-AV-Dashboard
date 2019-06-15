@@ -132,14 +132,31 @@
 
     form {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      align-items: center;
+      flex-direction: column;
 
       mat-form-field{
 
-        width: 190px;
+        //width: 190px;
       }
+      .fields-group{
+        display: flex;
+        //flex-wrap: wrap;
+        justify-content: space-between;
+
+        &[data-grid="3"] mat-form-field{
+          width: 32.3333% !important;
+        }
+        &[data-grid="4"] mat-form-field{
+          width: 24% !important;
+        }
+        &[data-grid="5"] mat-form-field{
+          width: 19% !important;
+        }
+        &[data-grid="1"] mat-form-field{
+          width: 90% !important;
+        }
+      }
+
     }
   }
 }

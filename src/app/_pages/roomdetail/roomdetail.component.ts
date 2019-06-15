@@ -10,6 +10,7 @@ import { ConfirmModalComponent } from '../../_components/confirm-modal/confirm-m
 import {AddPhotosComponent} from "../../_components/upload-photos/upload-photos.component";
 import {AddNoteComponent} from "../../_components/add-note/add-note.component";
 import {UploadDocumentComponent} from "../../_components/upload-document/upload-document.component";
+import {AddProjectDescComponent} from "../../_components/add-project-desc/add-project-desc.component";
 
 
 @Component({
@@ -62,6 +63,11 @@ export class RoomdetailComponent implements OnInit {
   public roomDetailData: RoomDetails;
   public roomId: number | string = window.location.pathname.split('/')[4];
   public buildingId: number | string = window.location.pathname.split('/')[3];
+  public documents: any;
+  public projectDesc: any;
+  public roomHist: any;
+  public currentBuilding: Number | String = window.location.pathname.split('/')[3];
+
   constructor(
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
@@ -74,9 +80,23 @@ export class RoomdetailComponent implements OnInit {
 
   ngOnInit() {
     this.opemRoomDetailed(this.roomId);
+    this.getDocuments(this.roomId);
+    this.getProjectDesc(this.roomId);
+    this.getRoomHist(this.roomId);
   }
   get f() {
     return this.form.value;
+  }
+  getRoomHist(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getRoomHist(roomId)
+      .subscribe((data) => {
+        this.roomHist = data['historyList'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
   }
 
   opemRoomDetailed( id?: number | string) {
@@ -96,6 +116,7 @@ export class RoomdetailComponent implements OnInit {
             seatingCapacity: [data.seatingCapacity],
             dimensions: [data.dimensions],
             ceilingHeight: [data.ceilingHeight],
+            coreAge: [data.coreAge],
             ceilingType: [data.ceilingType],
             origAvInstallDate: [moment(data.origAvInstallDate).toISOString()],
             origAvSystemCost: [data.origAvSystemCost],
@@ -107,7 +128,7 @@ export class RoomdetailComponent implements OnInit {
             nextAvUpdCost: [data.nextAvUpdCost],
             notes: [data.notes],
             lifecycle: [data.lifecycle],
-            coreAge: [data.coreAge],
+            roomType: [data.roomType],
 
           });
           this.globalVars.spinner = false;
@@ -116,6 +137,18 @@ export class RoomdetailComponent implements OnInit {
           console.log(error);
         });
   }
+  getDocuments(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getDocuments(roomId)
+      .subscribe((data) => {
+        this.documents = data['documents'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+
 
   updateRoom() {
     this.globalVars.spinner = true;
@@ -153,6 +186,10 @@ export class RoomdetailComponent implements OnInit {
             horizontalPosition: 'right',
           }
         );
+        this.opemRoomDetailed(this.roomId);
+        this.getDocuments(this.roomId);
+        this.getProjectDesc(this.roomId);
+        this.getRoomHist(this.roomId);
         this.globalVars.spinner = false;
         this.roomModalShownEdit = false;
       }, error => {
@@ -164,6 +201,10 @@ export class RoomdetailComponent implements OnInit {
   confirmCancel(): void {
     const dialogRef = this.dialog.open(ConfirmModalComponent);
     dialogRef.afterClosed().subscribe(result => {
+      this.opemRoomDetailed(this.roomId);
+      this.getDocuments(this.roomId);
+      this.getProjectDesc(this.roomId);
+      this.getRoomHist(this.roomId);
       this.roomModalShownEdit = false;
     });
   }
@@ -196,6 +237,32 @@ export class RoomdetailComponent implements OnInit {
         buildingId: this.buildingId,
       }
     });
+  }
+  openDialogAddProjectDesc() {
+    const dialogRef = this.dialog.open(AddProjectDescComponent, {
+      data: {
+        projectDesc: this.projectDesc,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
+
+  getProjectDesc(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getProjectDesc(roomId)
+      .subscribe((data) => {
+        this.projectDesc = data['projectDescriptionList'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
   }
 
 
