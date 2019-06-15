@@ -66,6 +66,9 @@ export class AddEquipmentComponent implements OnInit {
 
   onSubmit() {
     console.log(this.addEquipmentForm.value);
+    let userData = window.localStorage.getItem('currentUser')
+    userData = JSON.parse(userData);
+    console.log(userData)
     const equipment: EquipmentDetailAdd = {
       roomId: String(this.addEquipmentForm.value.rooms),
       alternateLocation: String(this.addEquipmentForm.value.alternateLocation),
@@ -78,7 +81,7 @@ export class AddEquipmentComponent implements OnInit {
       extendedWarranty: Number(this.addEquipmentForm.value.extendedWarranty),
       extendedWarrantyProvider: String(this.addEquipmentForm.value.extendedWarrantyProvider),
       ipAddress: String(this.addEquipmentForm.value.ipAddress),
-      lifeCycle: moment(this.addEquipmentForm.value.lifeCycle).toISOString(),
+      lifecycle: Number(this.addEquipmentForm.value.lifecycle),
       macAddress: String(this.addEquipmentForm.value.macAddress),
       manufactureWarranty: Number(this.addEquipmentForm.value.manufactureWarranty),
       manufacturer: String(this.addEquipmentForm.value.manufacturer),
@@ -88,6 +91,7 @@ export class AddEquipmentComponent implements OnInit {
       serialNumber: String(this.addEquipmentForm.value.serialNumber),
       warrantyExpirationDate: moment(this.addEquipmentForm.value.warrantyExpirationDate).toISOString(),
       warrantyStartDate: moment(this.addEquipmentForm.value.warrantyStartDate).toISOString(),
+      userName: String(userData['userName']),
     };
     this.globalVars.spinner = true;
     this.systServ.addEquipment(equipment)

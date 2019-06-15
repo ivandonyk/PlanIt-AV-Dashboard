@@ -9,7 +9,8 @@ export interface EquipmentDetailAdd {
   extendedWarranty: number;
   extendedWarrantyProvider: string;
   ipAddress: string;
-  lifeCycle: string;
+  lifeCycle?: string;
+  lifecycle?: string | number;
   macAddress: string;
   manufactureWarranty: number;
   manufacturer: string;
@@ -21,4 +22,5 @@ export interface EquipmentDetailAdd {
   serialNumber: string;
   warrantyExpirationDate: string;
   warrantyStartDate: string;
+  userName?: string;
 }
