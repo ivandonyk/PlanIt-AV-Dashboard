@@ -92,10 +92,10 @@ export class ProjectPlanningComponent {
   ) {
     this.globalVars.spinner = true;
     this.getProjPlanSum();
-    setInterval(() => {
-      this.getProjPlanSum();
-
-    }, 15000);
+    // setInterval(() => {
+    //   this.getProjPlanSum();
+    //
+    // }, 15000);
   }
 
   onSelect(event) {

@@ -292,6 +292,7 @@ export class SystemsComponent implements OnInit {
         this.getDocuments(this.roomId);
         this.getProjectDesc(this.roomId);
         this.getRoomHist(this.roomId);
+        this.getEquipment(this.roomId);
         this.globalVars.spinner = false;
         this.roomModalShown = true;
         this.roomModalShownEdit = false;
@@ -470,5 +471,19 @@ export class SystemsComponent implements OnInit {
       // this.animal = result;
     });
   }
+
+
+  getEquipment(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getEquipments(roomId)
+      .subscribe((data) => {
+        // this.projectDesc = data['projectDescriptionList'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+
 
 }

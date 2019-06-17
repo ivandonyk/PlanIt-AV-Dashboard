@@ -135,10 +135,13 @@ export class SystemsService {
     return this.httpClient.post<RoomDTO>(environment.baseUrl + '/addNote', data);
   }
   uploadImage(file): Observable<any> {
+    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+
     const formData = new FormData();
     formData.append('file', file.file, file.file.name);
     formData.append('roomId', file.roomId);
     formData.append('description', file.description);
+    formData.append('userName', userData.userName);
     return this.httpClient.post<any>(environment.baseUrl + '/uploadImage', formData);
   }
   addBuilding(object: AddBuildingFormModel): Observable<AddBuildingFormModel> {
