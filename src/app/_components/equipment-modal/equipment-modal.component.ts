@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { EquipmentDetail } from '../../_models/systems.model';
+import {EquipmentDetail, EquipmentDetailUpdate} from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import {MatSnackBar} from "@angular/material";
+import * as moment from 'moment';
 
 
 @Component({
@@ -24,13 +26,13 @@ export class EquipmentModalComponent implements OnInit {
     private systServ: SystemsService,
     private globalVars: GlobalVarsHelper,
     private formBuilder: FormBuilder,
+    private snackbar: MatSnackBar
 
   ) {
 
   }
 
   ngOnInit() {
-    this.globalVars.spinner = true;
     this.getEquipmentDetail();
   }
 
@@ -38,7 +40,14 @@ export class EquipmentModalComponent implements OnInit {
     window.open(window.location.origin + '/home/equipment-detail/' + this.equipmentId);
   }
 
+  get f() {
+    return this.form.value;
+  }
+
+
   getEquipmentDetail() {
+    this.globalVars.spinner = true;
+
     this.systServ.getEquipmentDetail(this.equipmentId)
       .subscribe((data: EquipmentDetail) => {
       this.data = data;
@@ -50,7 +59,7 @@ export class EquipmentModalComponent implements OnInit {
           description: [this.data.description],
           equipmentClass: [this.data.equipmentClass],
           category: [this.data.category],
-          installDate: [this.data.installDate],
+          installDate: [moment(this.data.installDate).toISOString()],
           lifecycle: [this.data.lifecycle],
           replacementDate: [this.data.replacementDate],
           integrator: [this.data.integrator],
@@ -71,15 +80,55 @@ export class EquipmentModalComponent implements OnInit {
         console.log(error);
         this.globalVars.spinner = false;
       });
-
   }
   closeModal() {
     this.close.emit(true);
   }
-
-
-
   updateRoom() {
+    const username = JSON.parse(window.localStorage.getItem('currentUser'))
+
+    this.globalVars.spinner = true;
+    const equipmentDetail: EquipmentDetailUpdate = {
+      alternateLocation: String(this.f.altLocation),
+      countryOfManufacture: String(this.f.countryManufacturer),
+      dateInstalled: moment(this.f.installDate).toISOString(),
+      description: String(this.f.description),
+      equipmentCategory: String(this.f.category),
+      equipmentClass: String(this.f.equipmentClass),
+      equipmentId: Number(this.equipmentId),
+      extendedWarrantyProvider: String(this.f.extWarrantyProvider),
+      integrator: String(this.f.integrator),
+      ipAddress: String(this.f.ipAddress),
+      lifecycle: Number(this.f.lifecycle),
+      macAddress: String(this.f.macAddress),
+      manufactureWarranty: Number(this.f.manufactureWarranty),
+      manufacturer: String(this.f.manufacturer),
+      modelNumber: String(this.f.modelNumber),
+      port: String(this.f.port),
+      replacementDate: moment(this.f.replacementDate).toISOString(),
+      // roomId: 0,
+      serialNumber: String(this.f.serialNum),
+      userName: username.userName,
+      warrantyExpirationDate: moment(this.f.warrantyExpiration).toISOString(),
+    };
+
+    this.systServ.updEquipment(equipmentDetail)
+      .subscribe( data => {
+        this.snackbar.open('Room Saved', '', {
+            duration: 1500,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+          }
+        );
+        this.isEdit = false;
+        this.getEquipmentDetail();
+        this.globalVars.spinner = false;
+      }, error => {
+        this.globalVars.spinner = false;
+        console.log(error);
+      });
+
+
 
   }
 

@@ -148,24 +148,41 @@
         </mat-label>
         <input matInput  formControlName="category"  placeholder="Category">
       </mat-form-field>
+      <!--<mat-form-field >-->
+        <!--<mat-label>-->
+          <!--Install Date-->
+        <!--</mat-label>-->
+        <!--<input matInput  formControlName="installDate"  placeholder="Install Date">-->
+      <!--</mat-form-field>-->
+
+
       <mat-form-field >
-        <mat-label>
-          Install Date
-        </mat-label>
-        <input matInput  formControlName="installDate"  placeholder="Install Date">
+        <input matInput  formControlName="installDate"  [matDatepicker]="installDate" placeholder="Install Date">
+        <mat-datepicker-toggle  matSuffix [for]="installDate"></mat-datepicker-toggle>
+        <mat-datepicker md-mode="month" #installDate></mat-datepicker>
       </mat-form-field>
+
       <mat-form-field >
         <mat-label>
           Lifecycle
         </mat-label>
         <input matInput type="number"  formControlName="lifecycle"  placeholder="Lifecycle">
       </mat-form-field>
+      <!--<mat-form-field >-->
+        <!--<mat-label>-->
+          <!--Replacement Date-->
+        <!--</mat-label>-->
+        <!--<input matInput  formControlName="replacementDate"  placeholder="Replacement Date">-->
+      <!--</mat-form-field>-->
+
+
+
       <mat-form-field >
-        <mat-label>
-          Replacement Date
-        </mat-label>
-        <input matInput  formControlName="replacementDate"  placeholder="Replacement Date">
+        <input matInput  formControlName="replacementDate"  [matDatepicker]="replacementDate" placeholder="Replacement Date">
+        <mat-datepicker-toggle  matSuffix [for]="replacementDate"></mat-datepicker-toggle>
+        <mat-datepicker #replacementDate></mat-datepicker>
       </mat-form-field>
+
       <mat-form-field >
         <mat-label>
           Integrator
@@ -227,5 +244,6 @@
         <input matInput  formControlName="countryManufacturer"  placeholder="Country Manufacturer">
       </mat-form-field>
     </form>
+
   </div>
 </div>

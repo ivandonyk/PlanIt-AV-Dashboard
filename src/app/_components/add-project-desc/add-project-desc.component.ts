@@ -25,22 +25,24 @@ export class AddProjectDescComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      notes: this.data.projectDesc[0].projDesc,
+      notes: (this.data.projectDesc && this.data.projectDesc[0]) ? this.data.projectDesc[0].projDesc : '',
     });
-    console.log(this)
+    console.log(this);
   }
 
   onSubmit() {
     this.globalVars.spinner = true;
+    const username = JSON.parse(window.localStorage.getItem('currentUser'))
 
     const room = {
       'projDesc': this.form.value.notes,
-      'projDescId': this.data.projectDesc[0].projDescId,
-      'roomId': this.data.projectDesc[0].roomId,
-      'userName': this.data.projectDesc[0].userName,
+      'roomId': this.data.roomId,
+      'userName': username.userName,
     };
 
-
+    if (this.data.projectDesc && this.data.projectDesc[0]) {
+      room['projDescId'] = this.data.projectDesc[0].projDescId;
+    }
     this.systServ.addProjDesc(room)
       .subscribe( data => {
         this.snackbar.open('Saved', '', {

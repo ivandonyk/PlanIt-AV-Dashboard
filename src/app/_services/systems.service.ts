@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment} from '../../environments/environment';
 import {
   Rooms, RoomDetails, Buildings, Equipment, RoomDTO, EquipmentDetail, BuildingsIds,
-  Room
+  Room, EquipmentDetailUpdate
 } from '../_models/systems.model';
 import { EquipmentDetailAdd } from '../_models/equipment.model';
 import { UserData } from '../_models/userdata.model';
@@ -128,8 +128,11 @@ export class SystemsService {
   updateRoom(roomObj: RoomDTO): Observable<RoomDTO> {
     return this.httpClient.post<RoomDTO>(environment.baseUrl + '/updRoom', roomObj);
   }
-  addProjDesc(data): Observable<RoomDTO> {
-    return this.httpClient.post<RoomDTO>(environment.baseUrl + '/addProjDesc', data);
+  updEquipment(roomObj: EquipmentDetailUpdate): Observable<EquipmentDetailUpdate> {
+    return this.httpClient.post<EquipmentDetailUpdate>(environment.baseUrl + '/updEquipment', roomObj);
+  }
+  addProjDesc(data) {
+    return this.httpClient.post(environment.baseUrl + '/addProjDesc', data);
   }
   addNote(data): Observable<RoomDTO> {
     return this.httpClient.post<RoomDTO>(environment.baseUrl + '/addNote', data);

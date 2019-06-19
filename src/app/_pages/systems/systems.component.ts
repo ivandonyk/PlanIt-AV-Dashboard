@@ -9,7 +9,7 @@ import { AddPhotosComponent } from '../../_components/upload-photos/upload-photo
 import { UploadDocumentComponent } from '../../_components/upload-document/upload-document.component';
 import * as moment from 'moment';
 import { ConfirmModalComponent } from '../../_components/confirm-modal/confirm-modal.component';
-import {AddProjectDescComponent} from "../../_components/add-project-desc/add-project-desc.component";
+import {AddProjectDescComponent} from '../../_components/add-project-desc/add-project-desc.component';
 
 
 @Component({
