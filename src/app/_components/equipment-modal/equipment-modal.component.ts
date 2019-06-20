@@ -15,6 +15,7 @@ import * as moment from 'moment';
 
 export class EquipmentModalComponent implements OnInit {
   @Input() equipmentId: string;
+  @Input() roomId: string;
   @Output() close = new EventEmitter<boolean>();
 
   public data: EquipmentDetail;

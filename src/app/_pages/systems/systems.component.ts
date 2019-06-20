@@ -20,6 +20,7 @@ import {AddProjectDescComponent} from '../../_components/add-project-desc/add-pr
 
 export class SystemsComponent implements OnInit {
   public dataSlides: any = [];
+  public equipmentsLocal: string = '0';
   public dataRooms: Array<Room> = [];
   public roomDetailData: RoomDetails;
   public currentBuilding: Number | String;
@@ -138,6 +139,37 @@ export class SystemsComponent implements OnInit {
     {
       key: 'room',
       title: 'Room',
+    }
+
+    ]);
+  public displayedLocalColumnsEquipments: string = JSON.stringify([
+    {
+      key: 'manufacturer',
+      title: 'Manufacturer',
+    },
+    {
+      key: 'modelNumber',
+      title: 'Model/Part',
+    },
+    {
+      key: 'description',
+      title: 'Description',
+    },
+    {
+      key: 'equipmentClass',
+      title: 'Class',
+    },
+    {
+      key: 'category',
+      title: 'Category',
+    },
+    {
+      key: 'lifecycle',
+      title: 'Lifecycle',
+    },
+    {
+      key: 'installDate',
+      title: 'Install Date',
     }
 
     ]);
@@ -289,6 +321,8 @@ export class SystemsComponent implements OnInit {
           lifecycle: [data.lifecycle],
           roomType: [data.roomType],
         });
+        this.equipmentsLocal = '0';
+
         this.getDocuments(this.roomId);
         this.getProjectDesc(this.roomId);
         this.getRoomHist(this.roomId);
@@ -328,7 +362,7 @@ export class SystemsComponent implements OnInit {
         }
         this.globalVars.spinner = false;
       }, error => {
-      console.log(error);
+        console.log(error);
         this.globalVars.spinner = false;
       });
   }
@@ -477,7 +511,14 @@ export class SystemsComponent implements OnInit {
     this.globalVars.spinner = true;
     this.systServ.getEquipments(roomId)
       .subscribe((data) => {
-        // this.projectDesc = data['projectDescriptionList'];
+
+        if (data.length > 0) {
+          this.equipmentsLocal = JSON.stringify(data);
+        } else {
+          this.equipmentsLocal = '0';
+
+        }
+
         this.globalVars.spinner = false;
       }, error => {
         console.log(error);

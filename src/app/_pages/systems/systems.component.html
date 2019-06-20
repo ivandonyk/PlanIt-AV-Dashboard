@@ -61,7 +61,7 @@
 <div class="room-modal" *ngIf="roomModalShown">
   <div class="header">
     <div class="title">
-      Building Name - {{roomDetailData.roomName}} / Floor #{{roomDetailData.floor}} / Tier #{{roomDetailData.tier}}
+      {{roomDetailData.roomName}} / Floor #{{roomDetailData.floor}} / Tier #{{roomDetailData.tier}}
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
@@ -211,6 +211,12 @@
           Equipment
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <app-room-table-component
+        *ngIf="equipmentsLocal != '0'"
+        dataSource="{{equipmentsLocal}}"
+        displayedColumns="{{displayedLocalColumnsEquipments}}"
+      ></app-room-table-component>
+
     </mat-expansion-panel>
     <mat-expansion-panel>
       <mat-expansion-panel-header>

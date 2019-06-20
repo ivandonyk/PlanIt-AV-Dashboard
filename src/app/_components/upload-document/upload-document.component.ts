@@ -35,7 +35,7 @@ export class UploadDocumentComponent implements OnInit {
     const self = this;
     this.globalVars.spinner = true;
     this.fields.forEach( (item, index) => {
-      this.systServ.uploadImage(item)
+      this.systServ.uploadDoc(item)
         .subscribe(data => {
           if (index === this.fields.length) {
             this.snackbar.open('Images Uploaded', '', {

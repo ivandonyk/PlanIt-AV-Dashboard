@@ -36,6 +36,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSortModule } from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DragScrollModule } from 'ngx-drag-scroll';
+import { FileUploadModule } from 'ng2-file-upload';
+
 
 // components
 import { AppComponent } from './app.component';
@@ -136,6 +138,7 @@ import {AddProjectDescComponent} from "./_components/add-project-desc/add-projec
     MatDatepickerModule,
     MatMomentDateModule,
     MatTableModule,
+    FileUploadModule,
     MatGridListModule,
     MatTabsModule,
     MatSortModule,

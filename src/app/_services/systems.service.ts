@@ -41,9 +41,9 @@ export class SystemsService {
     });
   }
 
-  getEquipments(id?: number | string): Observable<Equipment> {
+  getEquipments(id?: number | string) {
     const params = new HttpParams().set('roomId', String(id));
-    return this.httpClient.get<Equipment>(environment.baseUrl + '/getEquipment', {
+    return this.httpClient.get(environment.baseUrl + '/getEquipment', {
       params: params
     });
   }
@@ -140,12 +140,26 @@ export class SystemsService {
   uploadImage(file): Observable<any> {
     const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
 
+    console.log(file);
+
     const formData = new FormData();
-    formData.append('file', file.file, file.file.name);
+    formData.append('files', file.file, file.file.name);
     formData.append('roomId', file.roomId);
     formData.append('description', file.description);
     formData.append('userName', userData.userName);
     return this.httpClient.post<any>(environment.baseUrl + '/uploadImage', formData);
+  }
+  uploadDoc(file): Observable<any> {
+    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+
+    console.log(file);
+
+    const formData = new FormData();
+    formData.append('files', file.file, file.file.name);
+    formData.append('roomId', file.roomId);
+    formData.append('description', file.description);
+    formData.append('userName', userData.userName);
+    return this.httpClient.post<any>(environment.baseUrl + '/uploadDoc', formData);
   }
   addBuilding(object: AddBuildingFormModel): Observable<AddBuildingFormModel> {
     return this.httpClient.post<AddBuildingFormModel>(environment.baseUrl + '/addBuilding', object);
