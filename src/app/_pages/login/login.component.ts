@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    if (localStorage.getItem('currentUser') !== null) {
+    if (sessionStorage.getItem('currentUser') !== null) {
       this.router.navigate(['/home/dashboard']);
     } else {
       this.authService.logout();
@@ -47,8 +47,13 @@ export class LoginComponent implements OnInit {
       .subscribe(user => {
 
         if (user && user.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
 
+
+          const expirationDate = new Date(new Date().getTime() + (60000 * 1));
+          const duration = expirationDate.toISOString();
+          //JSON.stringify({value: duration})
+          window.sessionStorage.setItem('expire', duration);
+          window.sessionStorage.setItem('currentUser', JSON.stringify(user));
           if (this.returnUrl !== '/') {
             this.router.navigate([this.returnUrl]);
           } else {
@@ -63,5 +68,15 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm);
 
   }
+
+
+
+  // sessionSet(expirationInMin = 1) {
+  //   const expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin));
+  //   const duration = expirationDate.toISOString();
+  //   window.sessionStorage.setItem('expire', JSON.stringify(duration));
+  // }
+  //
+
 
 }

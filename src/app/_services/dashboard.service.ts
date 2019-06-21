@@ -15,7 +15,7 @@ export class DashboardService {
   constructor(private httpClient: HttpClient) { }
 
   getDashboardData(): Observable<Dashboard> {
-    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
     const params = new HttpParams().set('businessId', String(userData.businessId));
     return this.httpClient.get<Dashboard>(environment.baseUrl + '/dashboard', {
       params: params

@@ -20,6 +20,7 @@ export class EquipmentModalComponent implements OnInit {
 
   public data: EquipmentDetail;
   public isEdit: Boolean = false;
+  public roomIdC: number;
   public form: FormGroup;
 
 
@@ -86,7 +87,7 @@ export class EquipmentModalComponent implements OnInit {
     this.close.emit(true);
   }
   updateRoom() {
-    const username = JSON.parse(window.localStorage.getItem('currentUser'))
+    const username = JSON.parse(window.sessionStorage.getItem('currentUser'))
 
     this.globalVars.spinner = true;
     const equipmentDetail: EquipmentDetailUpdate = {
@@ -107,7 +108,7 @@ export class EquipmentModalComponent implements OnInit {
       modelNumber: String(this.f.modelNumber),
       port: String(this.f.port),
       replacementDate: moment(this.f.replacementDate).toISOString(),
-      // roomId: 0,
+      roomId: this.data.roomId,
       serialNumber: String(this.f.serialNum),
       userName: username.userName,
       warrantyExpirationDate: moment(this.f.warrantyExpiration).toISOString(),

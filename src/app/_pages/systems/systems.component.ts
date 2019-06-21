@@ -514,7 +514,7 @@ export class SystemsComponent implements OnInit {
         equipmentId: number;
         manualIcon: boolean;
         photoIcon: boolean;
-        colorCode: any;
+        colorCode: any;l
         manufacturer: string;
         modelNumber: string;
         description: string;

@@ -122,6 +122,7 @@ export interface Equipment {
 export interface EquipmentDetail {
   room: string;
   altLocation: string;
+  roomId: any;
   manufacturer: string;
   modelNumber: string;
   description: string;
@@ -163,7 +164,7 @@ export interface EquipmentDetailUpdate {
   modelNumber: string;
   port: string;
   replacementDate: string;
-  roomId?: number;
+  roomId?: any;
   serialNumber: string;
   userName: string;
   warrantyExpirationDate: string;

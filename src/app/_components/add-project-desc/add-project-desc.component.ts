@@ -32,7 +32,7 @@ export class AddProjectDescComponent implements OnInit {
 
   onSubmit() {
     this.globalVars.spinner = true;
-    const username = JSON.parse(window.localStorage.getItem('currentUser'))
+    const username = JSON.parse(window.sessionStorage.getItem('currentUser'))
 
     const room = {
       'projDesc': this.form.value.notes,

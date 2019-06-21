@@ -66,7 +66,7 @@ export class AddEquipmentComponent implements OnInit {
 
   onSubmit() {
     console.log(this.addEquipmentForm.value);
-    let userData = window.localStorage.getItem('currentUser')
+    let userData = window.sessionStorage.getItem('currentUser')
     userData = JSON.parse(userData);
     console.log(userData)
     const equipment: EquipmentDetailAdd = {

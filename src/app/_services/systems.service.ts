@@ -19,7 +19,7 @@ export class SystemsService {
   constructor(private httpClient: HttpClient) { }
 
   getBuildings(): Observable<Buildings> {
-    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
     const params = new HttpParams().set('businessId', String(userData.businessId));
     return this.httpClient.get<Buildings>(environment.baseUrl + '/getBuildings', {
       params: params
@@ -27,7 +27,7 @@ export class SystemsService {
   }
 
   getBuildingIds(): Observable<BuildingsIds[]> {
-    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
     const params = new HttpParams().set('businessAcctId', String(userData.businessId));
     return this.httpClient.get<BuildingsIds[]>(environment.baseUrl + '/getBuildingIds', {
       params: params
@@ -64,7 +64,7 @@ export class SystemsService {
   }
 
   getRoooms(id?: number | string): Observable<Rooms> {
-    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
     const params = new HttpParams().set('businessId', String(userData.businessId));
 
     return this.httpClient.get<Rooms>(environment.baseUrl + '/getRoomsByBus', {
@@ -74,7 +74,7 @@ export class SystemsService {
 
 
   getAllEquipments(id?: number | string): Observable<Equipment[]> {
-    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
     const params = new HttpParams().set('businessId', String(userData.businessId));
 
     return this.httpClient.get<Equipment[]>(environment.baseUrl + '/getEquipmentByBus', {
@@ -82,7 +82,7 @@ export class SystemsService {
     });
   }
   getRoomIds(id?: number | string): Observable<Equipment[]> {
-    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
     const params = new HttpParams().set('businessId', String(userData.businessId));
 
     return this.httpClient.get<Equipment[]>(environment.baseUrl + '/getRoomIds', {
@@ -138,7 +138,7 @@ export class SystemsService {
     return this.httpClient.post<RoomDTO>(environment.baseUrl + '/addNote', data);
   }
   uploadImage(file): Observable<any> {
-    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
 
     console.log(file);
 
@@ -150,7 +150,7 @@ export class SystemsService {
     return this.httpClient.post<any>(environment.baseUrl + '/uploadImage', formData);
   }
   uploadDoc(file): Observable<any> {
-    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
 
     console.log(file);
 

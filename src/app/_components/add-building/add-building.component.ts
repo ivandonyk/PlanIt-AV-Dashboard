@@ -63,7 +63,7 @@ export class AddBuildingComponent implements OnInit {
     console.log(this.addBuildingForm.value);
     let addBuildingApiModel;
     addBuildingApiModel = this.addBuildingForm.value;
-    const userData: UserData = JSON.parse(localStorage.getItem('currentUser'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
 
 
     addBuildingApiModel['businessAccountId'] = userData.businessId;

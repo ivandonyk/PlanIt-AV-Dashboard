@@ -33,7 +33,7 @@ export class AddNoteComponent implements OnInit {
     //   notes: String(this.form.value.notes),
     // };
 
-    const username = JSON.parse(window.localStorage.getItem('currentUser'))
+    const username = JSON.parse(window.sessionStorage.getItem('currentUser'))
 
 
     const room = {
