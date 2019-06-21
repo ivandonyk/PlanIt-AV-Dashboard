@@ -510,7 +510,21 @@ export class SystemsComponent implements OnInit {
   getEquipment(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getEquipments(roomId)
-      .subscribe((data) => {
+      .subscribe((data: Array<{
+        equipmentId: number;
+        manualIcon: boolean;
+        photoIcon: boolean;
+        colorCode: any;
+        manufacturer: string;
+        modelNumber: string;
+        description: string;
+        equipmentClass: string;
+        category: string;
+        lifecycle: string | number;
+        installDate: string;
+        building: string;
+        room: string;
+      }>) => {
 
         if (data.length > 0) {
           this.equipmentsLocal = JSON.stringify(data);
