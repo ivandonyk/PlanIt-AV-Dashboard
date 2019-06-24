@@ -65,7 +65,7 @@
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
-        Edit
+        <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
       </div>
       <div class="header-btn" *ngIf="roomModalShownEdit" (click)="updateRoom();">
         <mat-icon aria-hidden="false" aria-label="Save">save</mat-icon>

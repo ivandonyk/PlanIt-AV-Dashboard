@@ -6,7 +6,7 @@
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!isEdit" (click)="isEdit = true">
-        Edit
+        <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
       </div>
       <div class="header-btn" *ngIf="isEdit" (click)="updateRoom(); isEdit = false">
         <mat-icon aria-hidden="false" aria-label="Save">save</mat-icon>

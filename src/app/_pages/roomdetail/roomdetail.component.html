@@ -7,7 +7,7 @@
     <div class="actions">
       <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
         <span>
-          Edit
+          <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
         </span>
       </div>
       <div class="header-btn" *ngIf="roomModalShownEdit" (click)="updateRoom();">
