@@ -49,9 +49,8 @@ export class LoginComponent implements OnInit {
         if (user && user.token) {
 
 
-          const expirationDate = new Date(new Date().getTime() + (60000 * 1));
+          const expirationDate = new Date(new Date().getTime() + (60000 * 20));
           const duration = expirationDate.toISOString();
-          //JSON.stringify({value: duration})
           window.sessionStorage.setItem('expire', duration);
           window.sessionStorage.setItem('currentUser', JSON.stringify(user));
           if (this.returnUrl !== '/') {

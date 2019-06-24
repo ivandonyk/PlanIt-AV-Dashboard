@@ -9,7 +9,7 @@
         Edit
       </div>
       <div class="header-btn" *ngIf="isEdit" (click)="updateRoom(); isEdit = false">
-        Save
+        <mat-icon aria-hidden="false" aria-label="Save">save</mat-icon>
       </div>
       <div class="header-btn" *ngIf="isEdit" (click)="confirmCancel(); isEdit = false">
         Cancel
