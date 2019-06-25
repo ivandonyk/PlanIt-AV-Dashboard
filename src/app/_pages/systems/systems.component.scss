@@ -15,6 +15,15 @@
       width: 22%;
       margin-left: 20px;
       min-height: 140px;
+      position: relative;
+
+
+      .plus-icon{
+        position: absolute;
+        font-size: 24px !important;
+        top: 4px;
+        right: 18px;
+      }
 
       h3.mat-subheader{
         color: #f00;
@@ -146,13 +155,15 @@
         background: #fff;
         padding: 2px 5px;
         overflow: hidden;
-
+        position: relative;
         div{
           height: 100%;
           width: 100%;
           background-position: center;
           background-size: cover;
         }
+
+
       }
     }
 

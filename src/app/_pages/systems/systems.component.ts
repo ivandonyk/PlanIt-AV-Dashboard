@@ -10,6 +10,7 @@ import { UploadDocumentComponent } from '../../_components/upload-document/uploa
 import * as moment from 'moment';
 import { ConfirmModalComponent } from '../../_components/confirm-modal/confirm-modal.component';
 import {AddProjectDescComponent} from '../../_components/add-project-desc/add-project-desc.component';
+import {AddRoomComponent} from "../../_components/add-room/add-room.component";
 
 
 @Component({
@@ -541,4 +542,14 @@ export class SystemsComponent implements OnInit {
   }
 
 
+
+  addRoom(id) {
+    this.dialog.open(AddRoomComponent, {
+      width: '75%',
+      height: '100%',
+      data: {
+        buildingId: id
+      }
+    });
+  }
 }

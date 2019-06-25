@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {BuildingsIds} from "../../_models/systems.model";
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+
+export interface DialogData {
+  buildingId: any;
+}
 
 @Component({
   selector: 'app-add-room',
@@ -11,8 +17,11 @@ import {BuildingsIds} from "../../_models/systems.model";
   styleUrls: ['./add-room.component.css']
 })
 export class AddRoomComponent implements OnInit {
-  public addRoomForm = this.fb.group({
-    buildingId: new FormControl(''),
+
+
+
+public addRoomForm = this.fb.group({
+    buildingId: this.data ? this.data.buildingId : new FormControl(''),
     roomName: new FormControl('', [Validators.required, Validators.maxLength(80)]),
     tier: new FormControl(''),
     coreAge: new FormControl(''),
@@ -39,7 +48,8 @@ export class AddRoomComponent implements OnInit {
     equipmentAge: new FormControl(''),
     replaceUpg: new FormControl(''),
   });
-  public roomType: string[] = [
+
+public roomType: string[] = [
     'Conference Room', 'Classroom', 'Boardroom', 'Huddle Room',
     'Conference Center', 'Lobby', 'Hallway',
   ];
@@ -53,13 +63,15 @@ export class AddRoomComponent implements OnInit {
   public ceilingTypes: string[] = [
     'Drywall', 'Drop', 'Open', 'Bar-joist', 'Combination'
   ];
+
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AddRoomComponent>,
     private snackbar: MatSnackBar,
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
-  ) { }
+    public dialogRef: MatDialogRef<AddRoomComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    ) { }
 
   ngOnInit() {
     this.systServ.getBuildingIds()
