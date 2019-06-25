@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SidebarRoutesModule} from './sidebar-routes.module';
+import {MediaMatcher} from '@angular/cdk/layout';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { Router, NavigationEnd } from '@angular/router';
 @Component({
@@ -9,10 +10,14 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
   public currentRoute: string;
+  public mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
   constructor(
     public globalVars: GlobalVarsHelper,
-    public router: Router
+    public router: Router,
+    public changeDetectorRef: ChangeDetectorRef,
+    public media: MediaMatcher
   ) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -20,6 +25,11 @@ export class SidebarComponent implements OnInit {
         this.sessionGet('expire');
       }
     });
+
+
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
 
   }
 

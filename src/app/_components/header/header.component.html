@@ -1,7 +1,13 @@
 <mat-toolbar class="toolbar-custom">
+
   <span>
     <img class="logo-header" src="../../../assets/PlanItAvLogo.jpg" alt="">
   </span>
+
+  <!--<button  mat-button  (click)="drawer.toggle()">-->
+    <!--<mat-icon aria-hidden="false" aria-label="Menu">menu</mat-icon>-->
+  <!--</button>-->
+
   <span class="example-spacer"></span>
   <div class="right-menu">
     <button  mat-button  (menuOpened)="currentPage = 1" (menuClosed)="currentPage = 0" [ngClass]="{'active': currentPage === 1}" [matMenuTriggerFor]="menu"><mat-icon class="material-icons">add_circle_outline</mat-icon></button>

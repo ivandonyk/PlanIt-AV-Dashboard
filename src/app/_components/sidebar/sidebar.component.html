@@ -1,5 +1,5 @@
 <mat-sidenav-container class="example-container">
-    <mat-sidenav opened mode="side" color="warn">
+    <mat-sidenav #snav  opened [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [mode]="mobileQuery.matches ? 'over' : 'side'" color="warn">
     <mat-list>
       <mat-list-item>
         <a  class="menu-option"  [ngClass]="{'active' : currentRoute == '/home/dashboard'  }" routerLink="/home/dashboard">
