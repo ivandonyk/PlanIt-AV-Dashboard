@@ -11,3 +11,9 @@ table{
     }
   }
 }
+
+@media screen and (max-width:768px){
+  .table-container{
+    overflow-y: auto;
+  }
+}

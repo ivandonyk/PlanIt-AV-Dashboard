@@ -45,3 +45,18 @@
   display: flex;
   justify-content:space-around;
 }
+
+
+
+@media screen and (max-width:768px) {
+  .btns-cont {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+
+    & > button {
+      margin-top: 5px;
+    }
+  }
+
+}

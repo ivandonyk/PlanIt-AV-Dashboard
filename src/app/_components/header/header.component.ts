@@ -22,28 +22,16 @@ export class HeaderComponent implements OnInit {
   ) {
   }
   openBuildingDialog(): void {
-    this.dialog.open(AddBuildingComponent, {
-      width: '75%',
-      height: '100%',
-    });
+    this.dialog.open(AddBuildingComponent);
   }
   openRoomDialog(): void {
-    this.dialog.open(AddRoomComponent, {
-      width: '75%',
-      height: '100%',
-    });
+    this.dialog.open(AddRoomComponent);
   }
   openEquipmentDialog(): void {
-    this.dialog.open(AddEquipmentComponent, {
-      width: '75%',
-      height: '100%',
-    });
+    this.dialog.open(AddEquipmentComponent);
   }
   openCloneRoomDialog(): void {
-    this.dialog.open(CloneRoomComponent, {
-      width: '75%',
-      height: '100%',
-    });
+    this.dialog.open(CloneRoomComponent);
   }
   openContactUsDialog(): void {
     this.dialog.open(ContactUsComponent);
