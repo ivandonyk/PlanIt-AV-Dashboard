@@ -3,7 +3,7 @@
   <mat-sidenav #snav  opened (openedChange)="IsMenuOpen = !IsMenuOpen" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [mode]="mobileQuery.matches ? 'over' : 'side'" color="warn">
     <mat-list>
       <mat-list-item>
-        <a  class="menu-option"  [ngClass]="{'active' : currentRoute == '/home/dashboard'  }" routerLink="/home/dashboard">
+        <a class="menu-option"  [ngClass]="{'active' : currentRoute == '/home/dashboard'  }" routerLink="/home/dashboard">
             My PlanIt
         </a>
       </mat-list-item>
@@ -13,8 +13,8 @@
         </a>
       </mat-list-item>
       <mat-list-item>
-        <a  class="menu-option" [ngClass]="{'active' : currentRoute == '/home/project-planning'  }" routerLink="/home/project-planning">
-          Project Planningh
+        <a class="menu-option" [ngClass]="{'active' : currentRoute == '/home/project-planning'  }" routerLink="/home/project-planning">
+          Project Planning
         </a>
       </mat-list-item>
     </mat-list>
