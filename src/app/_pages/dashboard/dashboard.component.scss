@@ -50,3 +50,17 @@
 }
 
 
+@media screen and (max-width:768px) {
+  .container{
+    width: calc(100% - 60px) !important;
+  }
+  .card{
+    width: calc(100% - 100px) !important;
+    margin-left: 30px !important;
+    margin-top: 20px;
+  }
+  .container-slides
+  {
+    flex-direction: column;
+  }
+}

@@ -2,9 +2,6 @@
   <mat-tab-group [color]="'accent'" (selectedIndexChange)="changedTub($event)">
     <mat-tab label="Buildings">
       <div class="slider">
-
-
-
         <div class="slide" [ngClass]="{'active': currentBuilding == item.buildingId}" (click)="openBuildingDetail(item.buildingId)" *ngFor="let item of currentSlides.slides">
           <mat-list>
             <h3 mat-subheader>{{item.buildingName}}</h3>
@@ -62,7 +59,7 @@
 <div class="room-modal" *ngIf="roomModalShown">
   <div class="header">
     <div class="title">
-      {{roomDetailData.roomName}} / Floor #{{roomDetailData.floor}} / Tier #{{roomDetailData.tier}}
+      Building name - {{roomDetailData.roomName}} / Floor {{roomDetailData.floor}} / Tier {{roomDetailData.tier}}
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">

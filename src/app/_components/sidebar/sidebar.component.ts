@@ -10,6 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
   public currentRoute: string;
+  public IsMenuOpen: boolean;
   public mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 

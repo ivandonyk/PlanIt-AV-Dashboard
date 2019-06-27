@@ -70,6 +70,7 @@ import { UploadDocumentComponent } from './_components/upload-document/upload-do
 import { ConfirmModalComponent } from './_components/confirm-modal/confirm-modal.component';
 import {PrintDialogComponent} from './_components/print-dialog/print-dialog.component';
 import {AddProjectDescComponent} from "./_components/add-project-desc/add-project-desc.component";
+import {ContactUsComponent} from "./_components/contact-us/contact-us.component";
 
 @NgModule({
   declarations: [
@@ -100,7 +101,7 @@ import {AddProjectDescComponent} from "./_components/add-project-desc/add-projec
     ConfirmModalComponent,
     PrintDialogComponent,
     AddProjectDescComponent,
-
+    ContactUsComponent,
   ],
   entryComponents: [
     AddBuildingComponent,
@@ -113,7 +114,9 @@ import {AddProjectDescComponent} from "./_components/add-project-desc/add-projec
     UploadDocumentComponent,
     ConfirmModalComponent,
     PrintDialogComponent,
-    AddProjectDescComponent
+    AddProjectDescComponent,
+    ContactUsComponent,
+
   ],
   imports: [
     BrowserModule,

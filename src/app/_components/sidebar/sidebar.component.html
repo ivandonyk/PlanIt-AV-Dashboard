@@ -1,5 +1,6 @@
+
 <mat-sidenav-container class="example-container">
-    <mat-sidenav #snav  opened [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [mode]="mobileQuery.matches ? 'over' : 'side'" color="warn">
+  <mat-sidenav #snav  opened (openedChange)="IsMenuOpen = !IsMenuOpen" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [mode]="mobileQuery.matches ? 'over' : 'side'" color="warn">
     <mat-list>
       <mat-list-item>
         <a  class="menu-option"  [ngClass]="{'active' : currentRoute == '/home/dashboard'  }" routerLink="/home/dashboard">
@@ -7,13 +8,13 @@
         </a>
       </mat-list-item>
       <mat-list-item >
-        <a  class="menu-option" [ngClass]="{'active' : currentRoute == '/home/systems'  }" routerLink="/home/systems">
+        <a class="menu-option" [ngClass]="{'active' : currentRoute == '/home/systems'  }" routerLink="/home/systems">
             Systems
         </a>
       </mat-list-item>
       <mat-list-item>
         <a  class="menu-option" [ngClass]="{'active' : currentRoute == '/home/project-planning'  }" routerLink="/home/project-planning">
-          Project Planning
+          Project Planningh
         </a>
       </mat-list-item>
     </mat-list>
@@ -23,3 +24,7 @@
       <router-outlet  ></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
+<button *ngIf="!IsMenuOpen"  mat-button class="menubtn" (click)="snav.toggle()">
+  <mat-icon aria-hidden="false" aria-label="Menu">menu</mat-icon>
+</button>
+

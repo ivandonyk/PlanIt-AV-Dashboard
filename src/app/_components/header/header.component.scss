@@ -22,3 +22,15 @@
     border-bottom:3px solid #f00;
   }
 }
+
+
+
+
+@media screen and (max-width:768px) {
+  button.mat-button{
+    color: #fff;
+    min-width: 40px;
+    padding: 0 10px;
+  }
+
+}

@@ -21,6 +21,7 @@
       .plus-icon{
         position: absolute;
         font-size: 24px !important;
+        cursor: pointer;
         top: 4px;
         right: 18px;
       }
@@ -206,13 +207,19 @@
   .subheader{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    //justify-content: space-between;
     font-weight: bold;
     font-size: 12px;
     padding:15px 5px;
-    span{
-      font-weight: normal;
 
+    >div {
+      margin-left: 20px;
+      min-width: 100px;
+      display: flex;
+      flex-direction: column;
+      span{
+        font-weight: normal;
+      }
     }
   }
 
@@ -285,5 +292,66 @@
   }
   &[data-grid="1"] mat-form-field{
     width: 90% !important;
+  }
+}
+
+
+@media screen and (max-width:768px) {
+  .header{
+    .slider{
+      .slide{
+        width: 100%;
+      }
+    }
+  }
+
+  .room-modal{
+    width: 100%;
+    left:0;
+    right:0;
+
+
+    .subheader{
+      display: flex;
+      align-items: center;
+      //justify-content: space-between;
+      font-weight: bold;
+      font-size: 12px;
+      padding:15px 5px;
+      flex-wrap: wrap;
+      >div {
+        margin-left: 0px;
+        min-width: 100px;
+        display: flex;
+        flex-direction: column;
+        padding: 15px 0;
+        span{
+          font-weight: normal;
+        }
+      }
+    }
+
+    .room-modal-edit {
+
+      .fields-group {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+
+        mat-form-field{
+          width: 100% !important;
+        }
+      }
+
+      .btns-cont {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+
+        & > button {
+          margin-top: 5px;
+        }
+      }
+    }
   }
 }

@@ -21,7 +21,7 @@ import {PrintDialogComponent} from "../../_components/print-dialog/print-dialog.
 export class ProjectPlanningComponent {
   public single: Array<{name: string, value: number}> = [];
   public ProjPlanSum: ProjectPlan[];
-  public view: Array<number> = [400, 300];
+  public view: Array<number> = [300, 200];
   public showXAxis = true;
   public showYAxis = true;
   public gradient = false;

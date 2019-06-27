@@ -6,6 +6,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ReferComponent } from '../refer/refer.component';
 import {CloneRoomComponent} from '../clone-room/clone-room.component';
 import {AuthenticationService} from '../../_services/authentication.service'
+import {ContactUsComponent} from "../contact-us/contact-us.component";
 
 @Component({
   selector: 'app-header',
@@ -43,6 +44,9 @@ export class HeaderComponent implements OnInit {
       width: '75%',
       height: '100%',
     });
+  }
+  openContactUsDialog(): void {
+    this.dialog.open(ContactUsComponent);
   }
   openReferDialog(): void {
     this.dialog.open(ReferComponent);

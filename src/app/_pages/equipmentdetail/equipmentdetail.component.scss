@@ -142,14 +142,19 @@
   .subheader{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    //justify-content: space-between;
     font-weight: bold;
     font-size: 12px;
     padding:15px 5px;
-    border-bottom: 1px #ddd solid;
-    span{
-      font-weight: normal;
 
+    >div {
+      margin-left: 20px;
+      min-width: 100px;
+      display: flex;
+      flex-direction: column;
+      span{
+        font-weight: normal;
+      }
     }
 
 

@@ -4,9 +4,7 @@
     <img class="logo-header" src="../../../assets/PlanItAvLogo.jpg" alt="">
   </span>
 
-  <!--<button  mat-button  (click)="drawer.toggle()">-->
-    <!--<mat-icon aria-hidden="false" aria-label="Menu">menu</mat-icon>-->
-  <!--</button>-->
+
 
   <span class="example-spacer"></span>
   <div class="right-menu">
@@ -33,7 +31,7 @@
     <mat-menu #help="matMenu">
       <button mat-menu-item>Help</button>
       <button mat-menu-item>Report Issue</button>
-      <button mat-menu-item>Contact Us</button>
+      <button mat-menu-item (click)="openContactUsDialog()">Contact Us</button>
     </mat-menu>
   </div>
 </mat-toolbar>

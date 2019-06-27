@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Slides, RoomDetails, Room, Buildings, Rooms, Equipment, RoomDTO } from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
@@ -10,7 +10,8 @@ import { UploadDocumentComponent } from '../../_components/upload-document/uploa
 import * as moment from 'moment';
 import { ConfirmModalComponent } from '../../_components/confirm-modal/confirm-modal.component';
 import {AddProjectDescComponent} from '../../_components/add-project-desc/add-project-desc.component';
-import {AddRoomComponent} from "../../_components/add-room/add-room.component";
+import {AddRoomComponent} from '../../_components/add-room/add-room.component';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 
 @Component({
@@ -178,13 +179,17 @@ export class SystemsComponent implements OnInit {
   public documents: any;
   public projectDesc: any;
   public roomHist: any;
+  public mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
   constructor(
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    public changeDetectorRef: ChangeDetectorRef,
+    public media: MediaMatcher
   ) { }
 
   ngOnInit() {
@@ -214,14 +219,23 @@ export class SystemsComponent implements OnInit {
     });
     this.globalVars.spinner = true;
 
+    this.mobileQuery = this.media.matchMedia('(max-width: 768px)');
+    this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+
+
     this.getRoooms();
     this.getAllEquipments();
     this.systServ.getBuildings()
       .subscribe((data: Buildings) => {
       this.dataSlides = data.systemBuilding.buildings;
         this.dataSlides.forEach((item, index) => {
-          this.currentSlides['index'] = 3;
-          if (index <= 3) {
+          let totalSl = 3;
+          if(this.mobileQuery.matches){
+            totalSl = 0;
+          }
+          this.currentSlides['index'] = totalSl;
+          if (index <= totalSl) {
             this.currentSlides['slides'].push(item);
           }
         });
@@ -235,13 +249,17 @@ export class SystemsComponent implements OnInit {
     return this.form.value;
   }
   previousSlide() {
-    if ((this.currentSlides.index - 3) >= 0) {
-      this.currentSlides['slides'].unshift(this.dataSlides[this.currentSlides.index - 3]);
+    let totalSl = 3;
+    if(this.mobileQuery.matches) {
+      totalSl = 0;
+    }
+    if ((this.currentSlides.index - totalSl) >= 0) {
+      this.currentSlides['slides'].unshift(this.dataSlides[this.currentSlides.index - totalSl]);
       --this.currentSlides.index;
       this.currentSlides['slides'].pop();
     } else {
       this.currentSlides.index = this.dataSlides.length + 2;
-      this.currentSlides['slides'].unshift(this.dataSlides[this.currentSlides.index - 3]);
+      this.currentSlides['slides'].unshift(this.dataSlides[this.currentSlides.index - totalSl]);
       --this.currentSlides.index;
       this.currentSlides['slides'].pop();
     }
@@ -490,7 +508,6 @@ export class SystemsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
     });
   }
   openDialogAddProjectDesc() {
@@ -503,7 +520,6 @@ export class SystemsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
     });
   }
 
@@ -540,8 +556,6 @@ export class SystemsComponent implements OnInit {
         this.globalVars.spinner = false;
       });
   }
-
-
 
   addRoom(id) {
     this.dialog.open(AddRoomComponent, {
