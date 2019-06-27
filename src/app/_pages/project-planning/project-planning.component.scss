@@ -244,5 +244,13 @@ mat-panel-title{
       }
     }
   }
+  .btns-cont {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
 
+    & > button {
+      margin-top: 5px;
+    }
+  }
 }
