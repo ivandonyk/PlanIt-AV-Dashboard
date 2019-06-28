@@ -55,7 +55,8 @@ export class AddBuildingComponent implements OnInit {
 
   }
 
-  revert() {
+  revert(e) {
+    e.preventDefault();
     this.addBuildingForm.reset();
   }
 
@@ -69,8 +70,10 @@ export class AddBuildingComponent implements OnInit {
     addBuildingApiModel['businessAccountId'] = userData.businessId;
     addBuildingApiModel['userName'] = userData.userName;
 
+    console.log(this.addBuildingForm)
+    if (this.addBuildingForm.status === "VALID") {
 
-    console.log(addBuildingApiModel);
+
     this.systService.addBuilding(addBuildingApiModel)
       .subscribe(data => {
         console.log(data);
@@ -90,10 +93,12 @@ export class AddBuildingComponent implements OnInit {
         );
         console.log(error);
       });
+    }
 
   }
 
-  cancel() {
+  cancel(e) {
+    e.preventDefault();
     this.dialogRef.close();
   }
 

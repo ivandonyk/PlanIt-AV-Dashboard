@@ -2,6 +2,13 @@
   <h1 mat-dialog-title>Add Equipment</h1>
   <div mat-dialog-content>
     <form [formGroup]="addEquipmentForm" (ngSubmit)="onSubmit()" class="form">
+
+      <mat-form-field class="form-element">
+        <mat-select matInput (selectionChange)="buildingChanged()" placeholder="Building" formControlName="buildings">
+          <mat-option *ngFor="let build of buildingsArr" [value]="build.buildingId">{{build.buildingName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <mat-form-field class="form-element">
         <mat-select matInput placeholder="Room" formControlName="rooms">
           <mat-option *ngFor="let room of roomList" [value]="room.roomId">{{room.roomName}}</mat-option>

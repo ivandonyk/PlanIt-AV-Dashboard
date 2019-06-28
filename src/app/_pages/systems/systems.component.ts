@@ -12,6 +12,7 @@ import { ConfirmModalComponent } from '../../_components/confirm-modal/confirm-m
 import {AddProjectDescComponent} from '../../_components/add-project-desc/add-project-desc.component';
 import {AddRoomComponent} from '../../_components/add-room/add-room.component';
 import {MediaMatcher} from '@angular/cdk/layout';
+import {AddEquipmentComponent} from "../../_components/add-equipment/add-equipment.component";
 
 
 @Component({
@@ -559,10 +560,16 @@ export class SystemsComponent implements OnInit {
 
   addRoom(id) {
     this.dialog.open(AddRoomComponent, {
-      width: '75%',
-      height: '100%',
       data: {
         buildingId: id
+      }
+    });
+  }
+  addEquipment() {
+    this.dialog.open(AddEquipmentComponent, {
+      data: {
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
       }
     });
   }

@@ -1,10 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {MatDialogRef, MatSnackBar} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {SystemsService} from '../../_services/systems.service';
 import {EquipmentDetailAdd} from '../../_models/equipment.model';
 import * as moment from 'moment';
+import {Rooms} from "../../_models/systems.model";
+
+export interface DialogData {
+  roomId: any;
+  buildingId: any;
+}
+
 
 @Component({
   selector: 'app-add-equipment',
@@ -14,7 +21,8 @@ import * as moment from 'moment';
 export class AddEquipmentComponent implements OnInit {
 
   public addEquipmentForm = this.fb.group({
-    rooms: new FormControl(''),
+    buildings: this.data ? this.data.buildingId : new FormControl(''),
+    rooms: this.data ? this.data.roomId : new FormControl(''),
     alternateLocation: new FormControl(''),
     manufacturer: new FormControl(''),
     modelNumber: new FormControl(''),
@@ -35,16 +43,26 @@ export class AddEquipmentComponent implements OnInit {
     extendedWarrantyProvider: new FormControl(''),
   });
 
-  roomList:any;
+  roomList: any;
+  buildingsArr: any;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEquipmentComponent>,
     private snackbar: MatSnackBar,
     public globalVars: GlobalVarsHelper,
     public systServ: SystemsService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+
   ) { }
 
   ngOnInit() {
+    this.systServ.getBuildings()
+      .subscribe(data => {
+        this.buildingsArr = data.systemBuilding.buildings;
+        console.log(this.buildingsArr)
+      }, error => {
+        console.log(error);
+      });
     this.getRooms();
   }
   getRooms() {
@@ -53,6 +71,19 @@ export class AddEquipmentComponent implements OnInit {
         this.roomList = data;
       }, error2 => {
         console.log(error2);
+      });
+  }
+
+  buildingChanged() {
+    this.globalVars.spinner = true;
+
+    this.systServ.getBuildingRooms(this.addEquipmentForm.value.buildings)
+      .subscribe((data: Rooms) => {
+        this.roomList = data.rooms;
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
       });
   }
 
