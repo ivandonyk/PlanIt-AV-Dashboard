@@ -1,46 +1,29 @@
 <div class="container">
   <h1 mat-dialog-title>Add Equipment</h1>
   <div mat-dialog-content>
-
-
-
-
     <form [formGroup]="addEquipmentForm" (ngSubmit)="onSubmit()" class="form">
-
       <mat-form-field class="form-element">
         <mat-select matInput (selectionChange)="buildingChanged()" placeholder="Building" formControlName="buildings">
           <mat-option *ngFor="let build of buildingsArr" [value]="build.buildingId">{{build.buildingName}}</mat-option>
         </mat-select>
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <mat-select matInput placeholder="Room" formControlName="rooms">
           <mat-option *ngFor="let room of roomList" [value]="room.roomId">{{room.roomName}}</mat-option>
         </mat-select>
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput maxlength="50" placeholder="Alternate Location" formControlName="alternateLocation">
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput maxlength="100" required="true" placeholder="Manufacturer" type="number" formControlName="manufacturer">
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput placeholder="Model/Part Number" required="true" maxlength="100" type="number" formControlName="modelNumber">
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput placeholder="Description" maxlength="255" formControlName="description">
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <mat-select matInput  required="true" placeholder="Class" formControlName="equipmentClass">
           <mat-option [value]="'Core'">Core</mat-option>
@@ -48,85 +31,54 @@
           <mat-option [value]="'Furniture'">Furniture</mat-option>
         </mat-select>
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput placeholder="lifecycle" maxlength="11" type="number" formControlName="lifecycle">
       </mat-form-field>
-
-
       <mat-form-field class="form-horizontal">
         <input matInput [matDatepicker]="datePicker1" placeholder="Date installed" formControlName="dateInstalled">
         <mat-datepicker-toggle matSuffix [for]="datePicker1"></mat-datepicker-toggle>
         <mat-datepicker #datePicker1></mat-datepicker>
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <mat-select matInput placeholder="Category" formControlName="equipmentCategory">
           <mat-option [value]="'video'">Video</mat-option>
           <mat-option [value]="'audio'">Audio</mat-option>
         </mat-select>
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput placeholder="Country of Manufacture" maxlength="100" formControlName="countryOfManufacture">
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput placeholder="Serial #" maxlength="100" type="number" formControlName="serialNumber">
       </mat-form-field>
-
-
       <mat-form-field class="form-horizontal">
         <input matInput placeholder="MAC Address" maxlength="20" formControlName="macAddress">
       </mat-form-field>
-
-
       <mat-form-field class="form-horizontal">
         <input matInput placeholder="IP Address" maxlength="20" formControlName="ipAddress">
       </mat-form-field>
-
-
       <mat-form-field class="form-horizontal">
         <input matInput placeholder="Port" type="number" maxlength="10" formControlName="port">
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput placeholder="Manufacture Warranty" type="number" formControlName="manufactureWarranty">
       </mat-form-field>
-
-
       <mat-form-field class="form-element-small">
         <input matInput [matDatepicker]="datePicker2" placeholder="Warranty start date" formControlName="warrantyStartDate">
         <mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>
         <mat-datepicker #datePicker2></mat-datepicker>
       </mat-form-field>
-
-
       <mat-form-field class="form-element-small">
         <input matInput [matDatepicker]="datePicker4" placeholder="Extended Warranty/Service Contract Start Date" formControlName="extWarrantyStartDate">
         <mat-datepicker-toggle matSuffix [for]="datePicker4"></mat-datepicker-toggle>
         <mat-datepicker #datePicker4></mat-datepicker>
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput placeholder="Extended Warranty/Service Contract" maxlength="100" type="number" formControlName="extendedWarranty">
       </mat-form-field>
-
-
       <mat-form-field class="form-element">
         <input matInput placeholder="Extended Warranty/Service Contract Provider" maxlength="100" formControlName="extendedWarrantyProvider">
       </mat-form-field>
-
-
-
-
-
       <div mat-dialog-actions>
         <button mat-raised-button color="primary" type="submit" class="red-btn"  >+</button>
         <button mat-raised-button color="primary" class="red-btn" (click)="revert()">Reset</button>
