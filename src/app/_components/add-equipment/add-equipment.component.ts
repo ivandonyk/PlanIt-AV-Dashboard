@@ -59,7 +59,7 @@ export class AddEquipmentComponent implements OnInit {
     this.systServ.getBuildings()
       .subscribe(data => {
         this.buildingsArr = data.systemBuilding.buildings;
-        console.log(this.buildingsArr)
+        console.log(this.buildingsArr);
       }, error => {
         console.log(error);
       });
@@ -97,49 +97,54 @@ export class AddEquipmentComponent implements OnInit {
 
   onSubmit() {
     console.log(this.addEquipmentForm.value);
-    let userData = window.sessionStorage.getItem('currentUser')
+    let userData = window.sessionStorage.getItem('currentUser');
     userData = JSON.parse(userData);
     console.log(userData)
-    const equipment: EquipmentDetailAdd = {
-      roomId: String(this.addEquipmentForm.value.rooms),
-      alternateLocation: String(this.addEquipmentForm.value.alternateLocation),
-      countryOfManufacture: String(this.addEquipmentForm.value.countryOfManufacture),
-      dateInstalled: moment(this.addEquipmentForm.value.dateInstalled).toISOString(),
-      description: String(this.addEquipmentForm.value.description),
-      equipmentCategory: String(this.addEquipmentForm.value.equipmentCategory),
-      equipmentClass: String(this.addEquipmentForm.value.equipmentClass),
-      extWarrantyStartDate: moment(this.addEquipmentForm.value.extWarrantyStartDate).toISOString(),
-      extendedWarranty: Number(this.addEquipmentForm.value.extendedWarranty),
-      extendedWarrantyProvider: String(this.addEquipmentForm.value.extendedWarrantyProvider),
-      ipAddress: String(this.addEquipmentForm.value.ipAddress),
-      lifecycle: Number(this.addEquipmentForm.value.lifecycle),
-      macAddress: String(this.addEquipmentForm.value.macAddress),
-      manufactureWarranty: Number(this.addEquipmentForm.value.manufactureWarranty),
-      manufacturer: String(this.addEquipmentForm.value.manufacturer),
-      modelNumber: String(this.addEquipmentForm.value.modelNumber),
-      port: String(this.addEquipmentForm.value.port),
-      replacementDate: moment(this.addEquipmentForm.value.replacementDate).toISOString(),
-      serialNumber: String(this.addEquipmentForm.value.serialNumber),
-      warrantyExpirationDate: moment(this.addEquipmentForm.value.warrantyExpirationDate).toISOString(),
-      warrantyStartDate: moment(this.addEquipmentForm.value.warrantyStartDate).toISOString(),
-      userName: String(userData['userName']),
-    };
     this.globalVars.spinner = true;
-    this.systServ.addEquipment(equipment)
-      .subscribe(data => {
-        console.log(data);
-        this.globalVars.spinner = false;
-        this.dialogRef.close();
-        this.snackbar.open('Equipment Added', '', {
-            duration: 1500,
-            verticalPosition: 'bottom',
-            horizontalPosition: 'right',
-          }
-        );
-      }, error => {
-        this.globalVars.spinner = false;
-        console.log(error);
-      });
+
+    if (this.addEquipmentForm.status === 'VALID') {
+      const equipment: EquipmentDetailAdd = {
+        roomId: String(this.addEquipmentForm.value.rooms),
+        alternateLocation: String(this.addEquipmentForm.value.alternateLocation),
+        countryOfManufacture: String(this.addEquipmentForm.value.countryOfManufacture),
+        dateInstalled: moment(this.addEquipmentForm.value.dateInstalled).toISOString(),
+        description: String(this.addEquipmentForm.value.description),
+        equipmentCategory: String(this.addEquipmentForm.value.equipmentCategory),
+        equipmentClass: String(this.addEquipmentForm.value.equipmentClass),
+        extWarrantyStartDate: moment(this.addEquipmentForm.value.extWarrantyStartDate).toISOString(),
+        extendedWarranty: Number(this.addEquipmentForm.value.extendedWarranty),
+        extendedWarrantyProvider: String(this.addEquipmentForm.value.extendedWarrantyProvider),
+        ipAddress: String(this.addEquipmentForm.value.ipAddress),
+        lifecycle: Number(this.addEquipmentForm.value.lifecycle),
+        macAddress: String(this.addEquipmentForm.value.macAddress),
+        manufactureWarranty: Number(this.addEquipmentForm.value.manufactureWarranty),
+        manufacturer: String(this.addEquipmentForm.value.manufacturer),
+        modelNumber: String(this.addEquipmentForm.value.modelNumber),
+        port: String(this.addEquipmentForm.value.port),
+        replacementDate: moment(this.addEquipmentForm.value.replacementDate).toISOString(),
+        serialNumber: String(this.addEquipmentForm.value.serialNumber),
+        warrantyExpirationDate: moment(this.addEquipmentForm.value.warrantyExpirationDate).toISOString(),
+        warrantyStartDate: moment(this.addEquipmentForm.value.warrantyStartDate).toISOString(),
+        userName: String(userData['userName']),
+      };
+      this.systServ.addEquipment(equipment)
+        .subscribe(data => {
+          console.log(data);
+          this.globalVars.spinner = false;
+          this.dialogRef.close();
+          this.snackbar.open('Equipment Added', '', {
+              duration: 1500,
+              verticalPosition: 'bottom',
+              horizontalPosition: 'right',
+            }
+          );
+        }, error => {
+          this.globalVars.spinner = false;
+          console.log(error);
+        });
+    } else {
+      this.globalVars.spinner = false;
+    }
   }
   cancel() {
     this.dialogRef.close();
