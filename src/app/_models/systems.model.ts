@@ -45,6 +45,7 @@ export interface RoomDetails {
   ceilingHeight: number;
   ceilingType: string;
   coreAge: string;
+  buildingName?: string;
   dateOfLastRemodel: string;
   dimensions: string;
   roomType?: string;

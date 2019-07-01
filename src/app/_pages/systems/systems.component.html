@@ -59,7 +59,7 @@
 <div class="room-modal" *ngIf="roomModalShown">
   <div class="header">
     <div class="title">
-      Building name - {{roomDetailData.roomName}} / Floor {{roomDetailData.floor}} / Tier {{roomDetailData.tier}}
+      {{roomDetailData.buildingName}} - {{roomDetailData.roomName}} / Floor {{roomDetailData.floor}} / Tier {{roomDetailData.tier}}
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
