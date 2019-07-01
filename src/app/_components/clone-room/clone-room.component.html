@@ -103,23 +103,25 @@
         <textarea matInput #input maxlength="1000" placeholder="Note" formControlName="notes"></textarea>
         <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
       </mat-form-field>
+      <div class="btns-cont">
+        <button mat-raised-button class="red-btn" (click)="openDialogAddNote()" color="primary">
+          Add Note
+        </button>
+        <button mat-raised-button class="red-btn" (click)="openDialogAddPhoto()" color="primary">
+          Upload Photo
+        </button>
+        <button mat-raised-button class="red-btn" (click)="openDialogUploadDocument()" color="primary">
+          Upload Document
+        </button>
+      </div>
+      <div class="mat-dialog-actions">
+        <button mat-raised-button color="primary" class="red-btn" class="red-btn" type="submit" >Clone</button>
+        <button mat-raised-button color="primary" class="red-btn" class="red-btn" (click)="revert()">Reset</button>
+        <button mat-raised-button color="primary" class="red-btn" class="red-btn" (click)="cancel()" >Cancel</button>
+      </div>
     </form>
-    <div class="btns-cont">
-      <button mat-raised-button class="red-btn" (click)="openDialogAddNote()" color="primary">
-        Add Note
-      </button>
-      <button mat-raised-button class="red-btn" (click)="openDialogAddPhoto()" color="primary">
-        Upload Photo
-      </button>
-      <button mat-raised-button class="red-btn" (click)="openDialogUploadDocument()" color="primary">
-        Upload Document
-      </button>
-    </div>
+
   </div>
 <br/>
-  <div mat-dialog-actions>
-    <button mat-raised-button color="primary" class="red-btn" class="red-btn" (click)="onSubmit()" >Clone</button>
-    <button mat-raised-button color="primary" class="red-btn" class="red-btn" (click)="revert()">Reset</button>
-    <button mat-raised-button color="primary" class="red-btn" class="red-btn" (click)="cancel()" >Cancel</button>
-  </div>
+
 </div>

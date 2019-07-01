@@ -113,13 +113,13 @@
         <textarea matInput #input maxlength="1000" placeholder="Note" formControlName="notes"></textarea>
         <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
       </mat-form-field>
-
+      <div class="mat-dialog-actions">
+        <button mat-raised-button color="primary" type="submit"  class="red-btn"  >+</button>
+        <button mat-raised-button color="primary" class="red-btn" (click)="revert()">Reset</button>
+        <button mat-raised-button color="primary" class="red-btn"  (click)="cancel()" >Cancel</button>
+      </div>
     </form>
   </div>
 <br/>
-  <div mat-dialog-actions>
-    <button mat-raised-button color="primary"  class="red-btn" (click)="onSubmit()" >+</button>
-    <button mat-raised-button color="primary" class="red-btn" (click)="revert()">Reset</button>
-    <button mat-raised-button color="primary" class="red-btn"  (click)="cancel()" >Cancel</button>
-  </div>
+
 </div>
