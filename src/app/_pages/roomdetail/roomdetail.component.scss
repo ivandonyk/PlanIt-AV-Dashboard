@@ -166,6 +166,22 @@
     }
   }
 }
+.closeedit{
+  position: relative;
+
+  &:before{
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    background: #fff;
+    transform: rotate(-45deg);
+    left: 9px;
+    top: 0px;
+    border-right: 3px #000 solid;
+
+  }
+}
 
 
 

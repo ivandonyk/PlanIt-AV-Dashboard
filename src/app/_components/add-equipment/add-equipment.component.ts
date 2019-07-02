@@ -94,7 +94,6 @@ export class AddEquipmentComponent implements OnInit {
   revert() {
     this.addEquipmentForm.reset();
   }
-
   onSubmit() {
     console.log(this.addEquipmentForm.value);
     let userData = window.sessionStorage.getItem('currentUser');

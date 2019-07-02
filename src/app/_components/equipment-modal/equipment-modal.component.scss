@@ -240,65 +240,19 @@
   }
 }
 
+.closeedit{
+  position: relative;
 
+  &:before{
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    background: #fff;
+    transform: rotate(-45deg);
+    left: 9px;
+    top: 0px;
+    border-right: 3px #000 solid;
 
-
-//@media screen and (max-width:768px) {
-//  .header{
-//    .slider{
-//      .slide{
-//        width: 100%;
-//      }
-//    }
-//  }
-//
-//  .room-modal{
-//    width: 100%;
-//    left:0;
-//    right:0;
-//
-//
-//    .subheader{
-//      display: flex;
-//      align-items: center;
-//      //justify-content: space-between;
-//      font-weight: bold;
-//      font-size: 12px;
-//      padding:15px 5px;
-//      flex-wrap: wrap;
-//      >div {
-//        margin-left: 0px;
-//        min-width: 100px;
-//        display: flex;
-//        flex-direction: column;
-//        padding: 15px 0;
-//        span{
-//          font-weight: normal;
-//        }
-//      }
-//    }
-//
-//    .room-modal-edit {
-//
-//      .fields-group {
-//        display: flex;
-//        justify-content: space-between;
-//        flex-direction: column;
-//
-//        mat-form-field{
-//          width: 100% !important;
-//        }
-//      }
-//
-//      .btns-cont {
-//        display: flex;
-//        justify-content: space-around;
-//        flex-direction: column;
-//
-//        & > button {
-//          margin-top: 5px;
-//        }
-//      }
-//    }
-//  }
-//}
+  }
+}
