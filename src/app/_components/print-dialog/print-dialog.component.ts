@@ -3,8 +3,10 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatDialogRef, MatSnackBar, MatTableModule, MAT_DIALOG_DATA} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
-import {ProjectPlan, ProjectPlanList} from '../../_models/project-plannings.model';
+import {ProjectPlan, ProjectPlanList, ProjPlanDetail, ProjPlanDetailObj} from '../../_models/project-plannings.model';
 import {ProjectPlanningService} from '../../_services/project-planning.service';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-print-dialog',
@@ -74,6 +76,9 @@ export class PrintDialogComponent implements OnInit {
     2049,
     2050,
   ];
+  public customObj: any = {};
+  public customArr: any = [];
+
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<PrintDialogComponent>,
@@ -90,7 +95,7 @@ export class PrintDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    this.globalVars.spinner = true;
+    // this.globalVars.spinner = true;
   }
 
   cancel() {
@@ -108,7 +113,7 @@ export class PrintDialogComponent implements OnInit {
         }
       });
       setTimeout(() => {
-        this.selectedYears = data
+        this.selectedYears = data;
         console.log(data);
         console.log(this.selectedYears);
       }, 2000);
@@ -128,6 +133,17 @@ export class PrintDialogComponent implements OnInit {
     this.projectPlanningServ.getProjPlanSum()
       .subscribe((data: ProjectPlanList) => {
         this.ProjPlanSum = data.projectPlanList;
+        this.ProjPlanSum.forEach(item => {
+          this.customObj['el_' + item.year] = {
+            'proj': item,
+            'status': {
+              'list': null,
+              'desc': null,
+            },
+            'list': null,
+            'desc': null,
+          };
+        });
         this.globalVars.spinner = false;
       }, error => {
         console.log(error);
@@ -137,5 +153,93 @@ export class PrintDialogComponent implements OnInit {
 
   }
 
+  getProjPlanDetail(year, currentObj) {
+    this.projectPlanningServ.getProjPlanDetail(year)
+      .subscribe((data: ProjPlanDetailObj) => {
+          currentObj.list = this.bodyRows(data.projectPlanDetailList);
+      }, error => {
+        console.log(error);
+      });
+  }
+  // getProjectDesc(roomId, currentObj) {
+  //   this.systServ.getProjectDesc(roomId)
+  //     .subscribe((data) => {
+  //       currentObj.desc = data['projectDescriptionList'];
+  //     }, error => {
+  //       console.log(error);
+  //     });
+  // }
+
+  generateJson() {
+
+    Object.keys(this.customObj).forEach(item => {
+      const year = item.split('_')[1];
+      const elem = this.customObj['el_' + year];
+      if (elem.status.list) {
+        this.getProjPlanDetail(year, elem);
+      }
+      // if (elem.status.desc) {
+      //   if (elem.list) {
+      //     this.getProjectDesc(elem.list.roomId, elem);
+      //   } else {
+      //     this.getProjPlanDetail(year, elem);
+      //     this.getProjectDesc(elem.list.roomId, elem);
+      //   }
+      // }
+      this.customArr.push(elem);
+    });
+  }
+
+
+  bodyRows(arr) {
+    const body = [];
+    arr.forEach(item => {
+      body.push([
+                  String(item.building),
+                  String(item.room),
+                  String(item.type),
+                  String(item.tier),
+                  String(item.coreAge),
+                  String(item.equipmentAge),
+                  String(item.projectedCost)
+                ]);
+    });
+    return body;
+  }
+
+
+  downloadPdf() {
+    this.globalVars.spinner = true;
+    this.generateJson();
+
+    const doc = new jsPDF();
+    setTimeout(() => {
+      this.customArr.forEach((item, index) => {
+        let finalY = 0;
+        if (doc.previousAutoTable) {
+           finalY = doc.previousAutoTable.finalY;
+        };
+
+        doc.text(item.proj.year + ' ' + item.proj.projects +  ' $' + item.proj.amount, 14, finalY + 10);
+
+        if (item.status.list ) {
+          doc.autoTable({
+            startY: finalY + 15,
+            head: [['Building', 'Room', 'Type', 'Tier', 'Core Age', 'Equipment Age', 'Projected Cost']],
+            body: item.list
+          });
+        }
+      });
+    }, 2000);
+
+
+
+    console.log(this);
+
+    setTimeout(() => {
+      this.globalVars.spinner = false;
+      doc.save('Test.pdf');
+    }, 7000);
+  }
 
 }
