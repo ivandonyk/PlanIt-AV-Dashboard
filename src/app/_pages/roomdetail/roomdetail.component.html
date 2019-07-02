@@ -180,19 +180,19 @@
           <mat-label>
             Room Name
           </mat-label>
-          <input matInput  formControlName="roomName"  placeholder="Room Name">
+          <input matInput required="true" maxlength="255"  formControlName="roomName"  placeholder="Room Name">
         </mat-form-field>
         <mat-form-field >
           <mat-label>
             Floor
           </mat-label>
-          <input matInput  formControlName="floor"  type="number" placeholder="Floor">
+          <input matInput maxlength="3"  formControlName="floor"  type="number" placeholder="Floor">
         </mat-form-field>
         <mat-form-field >
           <mat-label>
             Tier
           </mat-label>
-          <input matInput  formControlName="tier"  type="number" placeholder="Tier">
+          <input matInput  maxlength="1" required="true" formControlName="tier"  type="number" placeholder="Tier">
         </mat-form-field>
       </div>
       <div class="fields-group" data-grid="4">
@@ -206,7 +206,7 @@
           <mat-label>
             Lifecycle (years)
           </mat-label>
-          <input matInput  formControlName="lifecycle"  type="number" placeholder="Lifecycle (years)">
+          <input matInput maxlength="11"  formControlName="lifecycle"  type="number" placeholder="Lifecycle (years)">
         </mat-form-field>
 
         <mat-form-field >
@@ -240,7 +240,7 @@
           <mat-label>
             Seating Capacity
           </mat-label>
-          <input matInput  formControlName="seatingCapacity"  type="number" placeholder="Seating Capacity">
+          <input matInput maxlength="11"  formControlName="seatingCapacity"  type="number" placeholder="Seating Capacity">
         </mat-form-field>
       </div>
       <div class="fields-group" data-grid="5">
@@ -248,13 +248,13 @@
           <mat-label>
             Dimensions
           </mat-label>
-          <input matInput  formControlName="dimensions"  type="text" placeholder="Dimensions">
+          <input matInput maxlength="50"  formControlName="dimensions"  type="text" placeholder="Dimensions">
         </mat-form-field>
         <mat-form-field >
           <mat-label>
             Ceiling Height
           </mat-label>
-          <input matInput  formControlName="ceilingHeight"  type="number" placeholder="Ceiling Height">
+          <input matInput maxlength="11"  formControlName="ceilingHeight"  type="number" placeholder="Ceiling Height">
         </mat-form-field>
         <mat-form-field >
           <mat-label>
@@ -283,7 +283,6 @@
         </mat-form-field>
       </div>
     </form>
-
     <div class="btns-cont">
       <button mat-raised-button class="red-btn" class="red-btn" (click)="openDialogAddNote()" color="primary">
         Add Note
