@@ -7,6 +7,9 @@ import {ProjectPlan, ProjectPlanList, ProjPlanDetail, ProjPlanDetailObj} from '.
 import {ProjectPlanningService} from '../../_services/project-planning.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
+import { Document, Paragraph, Packer, TextRun, ShadingType, BorderStyle } from 'docx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-print-dialog',
@@ -78,6 +81,8 @@ export class PrintDialogComponent implements OnInit {
   ];
   public customObj: any = {};
   public customArr: any = [];
+  public customYearArr: any = [];
+  public chart64: any;
 
   constructor(
     private fb: FormBuilder,
@@ -90,9 +95,36 @@ export class PrintDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getProjPlanSum();
+    const svg = document.querySelector('svg.ngx-charts');
+    const xml = new XMLSerializer().serializeToString(svg);
+    const svg64 = btoa(xml);
+    const b64start = 'data:image/png;base64,';
+    // this.chart64 = b64start + svg64;
+    this.chart64 = b64start + svg64;
 
+    console.log(this.chart64);
+    this.getProjPlanSum();
   }
+
+
+  // b64toFile(b64Data, filename, contentType) {
+  //   const sliceSize = 512;
+  //   const byteCharacters = atob(b64Data);
+  //   const byteArrays = [];
+  //
+  //   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+  //     const slice = byteCharacters.slice(offset, offset + sliceSize);
+  //     const byteNumbers = new Array(slice.length);
+  //
+  //     for (let i = 0; i < slice.length; i++) {
+  //       byteNumbers[i] = slice.charCodeAt(i);
+  //     }
+  //     const byteArray = new Uint8Array(byteNumbers);
+  //     byteArrays.push(byteArray);
+  //   }
+  //   const file = new File(byteArrays, filename, {type: contentType});
+  //   return file;
+  // }
 
   onSubmit() {
     // this.globalVars.spinner = true;
@@ -140,7 +172,7 @@ export class PrintDialogComponent implements OnInit {
               'list': null,
               'desc': null,
             },
-            'list': null,
+            'list': [],
             'desc': null,
           };
         });
@@ -156,27 +188,21 @@ export class PrintDialogComponent implements OnInit {
   getProjPlanDetail(year, currentObj) {
     this.projectPlanningServ.getProjPlanDetail(year)
       .subscribe((data: ProjPlanDetailObj) => {
+          // this.customYearObj['y_' + year] = data.projectPlanDetailList;
+          this.customYearArr.push(...data.projectPlanDetailList);
           currentObj.list = this.bodyRows(data.projectPlanDetailList);
       }, error => {
         console.log(error);
       });
   }
-  // getProjectDesc(roomId, currentObj) {
-  //   this.systServ.getProjectDesc(roomId)
-  //     .subscribe((data) => {
-  //       currentObj.desc = data['projectDescriptionList'];
-  //     }, error => {
-  //       console.log(error);
-  //     });
-  // }
 
-  generateJson() {
+  generateJson = async () => {
 
     Object.keys(this.customObj).forEach(item => {
       const year = item.split('_')[1];
       const elem = this.customObj['el_' + year];
       if (elem.status.list) {
-        this.getProjPlanDetail(year, elem);
+         this.getProjPlanDetail(year, elem);
       }
       // if (elem.status.desc) {
       //   if (elem.list) {
@@ -189,7 +215,6 @@ export class PrintDialogComponent implements OnInit {
       this.customArr.push(elem);
     });
   }
-
 
   bodyRows(arr) {
     const body = [];
@@ -207,22 +232,23 @@ export class PrintDialogComponent implements OnInit {
     return body;
   }
 
-
   downloadPdf() {
     this.globalVars.spinner = true;
     this.generateJson();
 
     const doc = new jsPDF();
+
     setTimeout(() => {
       this.customArr.forEach((item, index) => {
         let finalY = 0;
         if (doc.previousAutoTable) {
            finalY = doc.previousAutoTable.finalY;
-        };
+        }
 
-        doc.text(item.proj.year + ' ' + item.proj.projects +  ' $' + item.proj.amount, 14, finalY + 10);
 
         if (item.status.list ) {
+          doc.text(item.proj.year + ' ' + item.proj.projects +  ' $' + item.proj.amount, 14, finalY + 10);
+
           doc.autoTable({
             startY: finalY + 15,
             head: [['Building', 'Room', 'Type', 'Tier', 'Core Age', 'Equipment Age', 'Projected Cost']],
@@ -232,14 +258,92 @@ export class PrintDialogComponent implements OnInit {
       });
     }, 2000);
 
-
-
     console.log(this);
 
     setTimeout(() => {
       this.globalVars.spinner = false;
       doc.save('Test.pdf');
     }, 7000);
+  }
+
+  downloadExcel = async () => {
+    this.globalVars.spinner = true;
+
+    await this.generateJson();
+
+    setTimeout(() => {
+      const workBook = XLSX.utils.book_new();
+      const workSheet = XLSX.utils.json_to_sheet(this.customYearArr);
+      XLSX.utils.book_append_sheet(workBook, workSheet, 'data');
+      this.globalVars.spinner = false;
+      XLSX.writeFile(workBook, 'temp.xlsx');
+    }, 5000);
+  }
+
+  downloadDoc = async () => {
+    this.globalVars.spinner = true;
+
+    await this.generateJson();
+    const doc = new Document();
+
+
+    const headersMargin = {
+      top: 40,
+      bottom: 40,
+      left: 60,
+      right: 60,
+    };
+    console.log(this);
+
+
+    setTimeout(() => {
+      this.customArr.forEach((item, index) => {
+        doc.addParagraph(new Paragraph('').heading3());
+        doc.addParagraph(new Paragraph('').heading3());
+        doc.addParagraph(new Paragraph('').heading3());
+        doc.addParagraph(new Paragraph(item.proj.year + ' ' + item.proj.projects +  ' $' + item.proj.amount).heading1());
+        doc.addParagraph(new Paragraph('').heading3());
+
+
+        const table = doc.createTable({
+          rows: item.list.length > 0 ? item.list.length + 1 : 1,
+          columns: 7,
+          width: 200,
+        });
+
+        table.getCell(0, 0).addParagraph(new Paragraph('Building').heading1()).setMargins(headersMargin);
+        table.getCell(0, 1).addParagraph(new Paragraph('Room').heading1()).setMargins(headersMargin);
+        table.getCell(0, 2).addParagraph(new Paragraph('Type').heading1()).setMargins(headersMargin);
+        table.getCell(0, 3).addParagraph(new Paragraph('Tier').heading1()).setMargins(headersMargin);
+        table.getCell(0, 4).addParagraph(new Paragraph('Core Age').heading1()).setMargins(headersMargin);
+        table.getCell(0, 5).addParagraph(new Paragraph('Equipment Age').heading1()).setMargins(headersMargin);
+        table.getCell(0, 6).addParagraph(new Paragraph('Projected Cost').heading1()).setMargins(headersMargin);
+
+        if (item.list.length > 0) {
+          item.list.forEach( (itemD, indexD) => {
+            const pos = indexD + 1;
+            table.getCell(pos, 0).addParagraph(new Paragraph(String(itemD[0])));
+            table.getCell(pos, 1).addParagraph(new Paragraph(String(itemD[1])));
+            table.getCell(pos, 2).addParagraph(new Paragraph(String(itemD[2])));
+            table.getCell(pos, 3).addParagraph(new Paragraph(String(itemD[3])));
+            table.getCell(pos, 4).addParagraph(new Paragraph(String(itemD[4])));
+            table.getCell(pos, 5).addParagraph(new Paragraph(String(itemD[5])));
+            table.getCell(pos, 6).addParagraph(new Paragraph(String(itemD[6])));
+          });
+        }
+
+      });
+
+      const packer = new Packer();
+
+      packer.toBlob(doc).then(blob => {
+        saveAs(blob, "example1.docx");
+        console.log("Document created successfully");
+      });
+      this.globalVars.spinner = false;
+    }, 5000);
+
+
   }
 
 }
