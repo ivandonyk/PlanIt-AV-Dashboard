@@ -106,7 +106,6 @@ export class PrintDialogComponent implements OnInit {
     this.getProjPlanSum();
   }
 
-
   // b64toFile(b64Data, filename, contentType) {
   //   const sliceSize = 512;
   //   const byteCharacters = atob(b64Data);
@@ -337,7 +336,7 @@ export class PrintDialogComponent implements OnInit {
       const packer = new Packer();
 
       packer.toBlob(doc).then(blob => {
-        saveAs(blob, "example1.docx");
+        saveAs(blob, "doc.docx");
         console.log("Document created successfully");
       });
       this.globalVars.spinner = false;
