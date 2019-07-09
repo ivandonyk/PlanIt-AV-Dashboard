@@ -8,8 +8,18 @@ import {ProjectPlanningService} from '../../_services/project-planning.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
-import { Document, Paragraph, Packer, TextRun, ShadingType, BorderStyle } from 'docx';
+import { Document, Paragraph, Packer, TextRun, ShadingType, Media } from 'docx';
 import { saveAs } from 'file-saver';
+
+
+
+interface Window {
+  webkitURL?: any;
+  URL?: any;
+}
+
+declare let window: Window;
+
 
 @Component({
   selector: 'app-print-dialog',
@@ -83,6 +93,9 @@ export class PrintDialogComponent implements OnInit {
   public customArr: any = [];
   public customYearArr: any = [];
   public chart64: any;
+  public imgURI: any;
+  public img64: any;
+  public withChart: any;
 
   constructor(
     private fb: FormBuilder,
@@ -96,34 +109,75 @@ export class PrintDialogComponent implements OnInit {
 
   ngOnInit() {
     const svg = document.querySelector('svg.ngx-charts');
-    const xml = new XMLSerializer().serializeToString(svg);
-    const svg64 = btoa(xml);
-    const b64start = 'data:image/png;base64,';
+    // const xml = new XMLSerializer().serializeToString(svg);
+    // console.log(xml)
+    // const svg64 = btoa(xml);
+    // const b64start = 'data:image/png;base64,';
     // this.chart64 = b64start + svg64;
-    this.chart64 = b64start + svg64;
+    // this.chart64 = b64start + svg64;
 
-    console.log(this.chart64);
+
+    this.downloadSvg(svg, 'chart.png')
+
+    // console.log(this.chart64);
     this.getProjPlanSum();
   }
 
-  // b64toFile(b64Data, filename, contentType) {
-  //   const sliceSize = 512;
-  //   const byteCharacters = atob(b64Data);
-  //   const byteArrays = [];
-  //
-  //   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-  //     const slice = byteCharacters.slice(offset, offset + sliceSize);
-  //     const byteNumbers = new Array(slice.length);
-  //
-  //     for (let i = 0; i < slice.length; i++) {
-  //       byteNumbers[i] = slice.charCodeAt(i);
-  //     }
-  //     const byteArray = new Uint8Array(byteNumbers);
-  //     byteArrays.push(byteArray);
-  //   }
-  //   const file = new File(byteArrays, filename, {type: contentType});
-  //   return file;
-  // }
+   downloadSvg(svg, fileName) {
+    const $this = this;
+    const copy = svg.cloneNode(true);
+    this.copyStylesInline(copy, svg);
+    const canvas = document.createElement('canvas');
+    const bbox = svg.getBBox();
+    canvas.width = (bbox.width + 400);
+    canvas.height = (bbox.height + 400);
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, bbox.width, bbox.height );
+    const data = (new XMLSerializer()).serializeToString(copy);
+    const DOMURL = window.URL || window.webkitURL || window;
+    const img = new Image();
+    const svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+    const url = DOMURL.createObjectURL(svgBlob);
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0);
+      DOMURL.revokeObjectURL(url);
+      if (typeof navigator !== 'undefined' && navigator.msSaveOrOpenBlob) {
+        const blob = canvas.msToBlob();
+        $this.imgURI = blob;
+        console.log(blob)
+        navigator.msSaveOrOpenBlob(blob, fileName);
+      } else {
+        $this.imgURI = canvas.toDataURL('image/png');
+        $this.img64 = canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
+        console.log($this.imgURI )
+        // const imgURI = canvas
+        //   .toDataURL('image/png')
+        //   .replace('image/png', 'image/octet-stream');
+      }
+      document.removeChild(canvas);
+    };
+    img.src = url;
+  }
+   copyStylesInline(destinationNode, sourceNode) {
+    const containerElements = ['svg', 'g'];
+    for (let cd = 0; cd < destinationNode.childNodes.length; cd++) {
+      const child = destinationNode.childNodes[cd];
+      if (containerElements.indexOf(child.tagName) !== -1) {
+        this.copyStylesInline(child, sourceNode.childNodes[cd]);
+        continue;
+      }
+      const style = sourceNode.childNodes[cd].currentStyle ;
+      if (style === 'undefined' || style == null) {
+        continue;
+      }
+      for (let st = 0; st < style.length; st++){
+        child.style.setProperty(style[st], style.getPropertyValue(style[st]));
+      }
+    }
+  }
+
+
+
 
   onSubmit() {
     // this.globalVars.spinner = true;
@@ -196,7 +250,8 @@ export class PrintDialogComponent implements OnInit {
   }
 
   generateJson = async () => {
-
+    this.customArr = [];
+    this.customYearArr = [];
     Object.keys(this.customObj).forEach(item => {
       const year = item.split('_')[1];
       const elem = this.customObj['el_' + year];
@@ -236,16 +291,22 @@ export class PrintDialogComponent implements OnInit {
     this.generateJson();
 
     const doc = new jsPDF();
+    console.log(this.withChart)
+    if (this.withChart) {
+      doc.addImage(this.imgURI, 'PNG', 1, 2);
+    }
+
 
     setTimeout(() => {
       this.customArr.forEach((item, index) => {
-        let finalY = 0;
+        let finalY = this.withChart ? 50 : 0;
         if (doc.previousAutoTable) {
            finalY = doc.previousAutoTable.finalY;
         }
 
 
         if (item.status.list ) {
+
           doc.text(item.proj.year + ' ' + item.proj.projects +  ' $' + item.proj.amount, 14, finalY + 10);
 
           doc.autoTable({
@@ -277,7 +338,7 @@ export class PrintDialogComponent implements OnInit {
       this.globalVars.spinner = false;
       XLSX.writeFile(workBook, 'temp.xlsx');
     }, 5000);
-  }
+  };
 
   downloadDoc = async () => {
     this.globalVars.spinner = true;
@@ -295,6 +356,32 @@ export class PrintDialogComponent implements OnInit {
     console.log(this);
 
 
+    if (this.withChart) {
+      doc.createImage(this.imgURI, 900, 830, {
+        floating: {
+          horizontalPosition: {
+            offset: 0,
+          },
+          verticalPosition: {
+            offset: 0,
+          },
+          margins: {
+            top: 50,
+          },
+          allowOverlap: true,
+        },
+      });
+
+      doc.addParagraph(new Paragraph('').heading1());
+      doc.addParagraph(new Paragraph('').heading1());
+      doc.addParagraph(new Paragraph('').heading1());
+      doc.addParagraph(new Paragraph('').heading1());
+      doc.addParagraph(new Paragraph('').heading1());
+      doc.addParagraph(new Paragraph('').heading1());
+      doc.addParagraph(new Paragraph('').heading1());
+    }
+
+
     setTimeout(() => {
       this.customArr.forEach((item, index) => {
         doc.addParagraph(new Paragraph('').heading3());
@@ -303,9 +390,9 @@ export class PrintDialogComponent implements OnInit {
         doc.addParagraph(new Paragraph(item.proj.year + ' ' + item.proj.projects +  ' $' + item.proj.amount).heading1());
         doc.addParagraph(new Paragraph('').heading3());
 
-
+          console.log(item)
         const table = doc.createTable({
-          rows: item.list.length > 0 ? item.list.length + 1 : 1,
+          rows: 1 + item.list.length,
           columns: 7,
           width: 200,
         });
@@ -340,7 +427,7 @@ export class PrintDialogComponent implements OnInit {
         console.log("Document created successfully");
       });
       this.globalVars.spinner = false;
-    }, 5000);
+    }, 9000);
 
 
   }
