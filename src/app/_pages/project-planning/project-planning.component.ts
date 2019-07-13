@@ -31,6 +31,8 @@ export class ProjectPlanningComponent {
   public showYAxisLabel = true;
   public roomId: number = null;
   public currentBuilding: number = 1;
+  public yearsRange: object = {};
+
   public colorScheme = {
     domain: ['#fa0006']
    };
@@ -116,7 +118,7 @@ export class ProjectPlanningComponent {
             setTimeout(() => {
               const textArr = document.querySelectorAll('ngx-charts-bar-vertical text');
               for (let i = 0; i < textArr.length; i++) {
-                textArr[i].innerHTML = textArr[i].innerHTML.replace(/[^0-9]/g, '')
+                textArr[i].innerHTML = textArr[i].innerHTML.replace(/[^0-9]/g, '');
               }
             }, 200);
           }
@@ -280,7 +282,12 @@ export class ProjectPlanningComponent {
 
   openDialogPrint(): void {
     const dialogRef = this.dialog.open(PrintDialogComponent, {
-      data: {}
+      data: {
+        years: {
+          start: this.ProjPlanSumData.startYear,
+          end: this.ProjPlanSumData.endYear,
+        }
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

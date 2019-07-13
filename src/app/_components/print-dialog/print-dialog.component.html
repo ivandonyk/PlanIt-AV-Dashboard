@@ -12,7 +12,7 @@
         </mat-form-field>
         <mat-form-field class="form-element-half">
           <mat-select placeholder="To" (selectionChange)="yearChanged()" formControlName="to">
-            <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+            <mat-option *ngFor="let year of yearsEnd" [value]="year">{{year}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -20,15 +20,31 @@
         Include:
       </h4>
 
+      <div
+        *ngIf="true"
+        id="hiddenChart"
+      >
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="singleArr"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [roundEdges]="false">
+        </ngx-charts-bar-vertical>
+      </div>
+
       <mat-checkbox [(ngModel)]="withChart" class="example-margin" formControlName="barChart">
         Bar Chart
       </mat-checkbox>
     </form>
-
     <br>
-
-
-
     <div class="example-container mat-elevation-z8" >
       <table *ngIf="selectedYears.length > 0" mat-table [dataSource]="selectedYears">
         <ng-container matColumnDef="year">

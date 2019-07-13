@@ -8,7 +8,7 @@ import {ProjectPlanningService} from '../../_services/project-planning.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
-import { Document, Paragraph, Packer, TextRun, ShadingType, Media } from 'docx';
+import { Document, Paragraph, Packer, TextRun, ShadingType, Media, WidthType } from 'docx';
 import { saveAs } from 'file-saver';
 
 
@@ -32,63 +32,12 @@ export class PrintDialogComponent implements OnInit {
     to: new FormControl(''),
     barChart: new FormControl(''),
   });
+  public singleArr: Array<{name: string, value: number}> = [];
   public ProjPlanSum: ProjectPlan[];
   public selectedYears = [];
   public displayedColumns: Array<string> = ['year', 'one', 'two'];
-  public years: Array<number> = [
-    1999,
-    2000,
-    2001,
-    2002,
-    2003,
-    2004,
-    2005,
-    2006,
-    2007,
-    2008,
-    2009,
-    2010,
-    2011,
-    2012,
-    2013,
-    2014,
-    2015,
-    2016,
-    2017,
-    2018,
-    2019,
-    2020,
-    2021,
-    2022,
-    2023,
-    2024,
-    2025,
-    2026,
-    2027,
-    2028,
-    2029,
-    2030,
-    2031,
-    2032,
-    2033,
-    2034,
-    2035,
-    2036,
-    2037,
-    2038,
-    2039,
-    2040,
-    2041,
-    2042,
-    2043,
-    2044,
-    2045,
-    2046,
-    2047,
-    2048,
-    2049,
-    2050,
-  ];
+  public years: Array<number> = [];
+  public yearsEnd: Array<number> = [];
   public customObj: any = {};
   public customArr: any = [];
   public customYearArr: any = [];
@@ -96,6 +45,12 @@ export class PrintDialogComponent implements OnInit {
   public imgURI: any;
   public img64: any;
   public withChart: any;
+  public view: Array<number> = [300, 200];
+
+
+  public colorScheme = {
+    domain: ['#fa0006']
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -104,26 +59,24 @@ export class PrintDialogComponent implements OnInit {
     public globalVars: GlobalVarsHelper,
     private snackbar: MatSnackBar,
     private projectPlanningServ: ProjectPlanningService,
-    @Inject(MAT_DIALOG_DATA) public data: {}
+    @Inject(MAT_DIALOG_DATA) public data: {
+      years: {
+        start: number,
+        end: number,
+      }
+    }
   ) { }
 
   ngOnInit() {
-    const svg = document.querySelector('svg.ngx-charts');
-    // const xml = new XMLSerializer().serializeToString(svg);
-    // console.log(xml)
-    // const svg64 = btoa(xml);
-    // const b64start = 'data:image/png;base64,';
-    // this.chart64 = b64start + svg64;
-    // this.chart64 = b64start + svg64;
 
 
-    this.downloadSvg(svg, 'chart.png')
-
-    // console.log(this.chart64);
+    this.years = this.range(this.data.years.start, this.data.years.end);
+    this.yearsEnd = this.range(this.data.years.start, this.data.years.end);
     this.getProjPlanSum();
   }
 
-   downloadSvg(svg, fileName) {
+
+  downloadSvg(svg, fileName) {
     const $this = this;
     const copy = svg.cloneNode(true);
     this.copyStylesInline(copy, svg);
@@ -144,12 +97,10 @@ export class PrintDialogComponent implements OnInit {
       if (typeof navigator !== 'undefined' && navigator.msSaveOrOpenBlob) {
         const blob = canvas.msToBlob();
         $this.imgURI = blob;
-        console.log(blob)
         navigator.msSaveOrOpenBlob(blob, fileName);
       } else {
         $this.imgURI = canvas.toDataURL('image/png');
         $this.img64 = canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
-        console.log($this.imgURI )
         // const imgURI = canvas
         //   .toDataURL('image/png')
         //   .replace('image/png', 'image/octet-stream');
@@ -158,7 +109,8 @@ export class PrintDialogComponent implements OnInit {
     };
     img.src = url;
   }
-   copyStylesInline(destinationNode, sourceNode) {
+
+  copyStylesInline(destinationNode, sourceNode) {
     const containerElements = ['svg', 'g'];
     for (let cd = 0; cd < destinationNode.childNodes.length; cd++) {
       const child = destinationNode.childNodes[cd];
@@ -174,10 +126,7 @@ export class PrintDialogComponent implements OnInit {
         child.style.setProperty(style[st], style.getPropertyValue(style[st]));
       }
     }
-  }
-
-
-
+}
 
   onSubmit() {
     // this.globalVars.spinner = true;
@@ -187,11 +136,13 @@ export class PrintDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  yearChanged () {
+  yearChanged() {
     const data = [];
+    this.yearsEnd = this.range(this.printForm.value.year, this.data.years.end);
     const rangeArr = this.range(this.printForm.value.year, this.printForm.value.to);
     if (rangeArr) {
       rangeArr.forEach(item => {
+        console.log(this.ProjPlanSum)
         const result = this.ProjPlanSum.filter(yer => Number(yer.year) === Number(item));
         if (result.length > 0) {
           data.push(result[0]);
@@ -199,8 +150,6 @@ export class PrintDialogComponent implements OnInit {
       });
       setTimeout(() => {
         this.selectedYears = data;
-        console.log(data);
-        console.log(this.selectedYears);
       }, 2000);
     }
   }
@@ -249,14 +198,30 @@ export class PrintDialogComponent implements OnInit {
       });
   }
 
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
   generateJson = async () => {
     this.customArr = [];
     this.customYearArr = [];
+    this.singleArr = [];
     Object.keys(this.customObj).forEach(item => {
       const year = item.split('_')[1];
       const elem = this.customObj['el_' + year];
       if (elem.status.list) {
          this.getProjPlanDetail(year, elem);
+
+
+        const result = this.ProjPlanSum.filter(yer => Number(yer.year) === Number(year));
+        console.log(result)
+
+          this.singleArr.push({
+            name: result[0].year,
+            value: result[0].amount
+          });
+          Object.assign(this, this.singleArr);
+
       }
       // if (elem.status.desc) {
       //   if (elem.list) {
@@ -268,6 +233,13 @@ export class PrintDialogComponent implements OnInit {
       // }
       this.customArr.push(elem);
     });
+
+    setTimeout(() => {
+      const svg = document.querySelector('#hiddenChart svg.ngx-charts');
+      console.log(svg)
+      this.downloadSvg(svg, 'chart.png');
+    }, 1000)
+
   }
 
   bodyRows(arr) {
@@ -280,7 +252,7 @@ export class PrintDialogComponent implements OnInit {
                   String(item.tier),
                   String(item.coreAge),
                   String(item.equipmentAge),
-                  String(item.projectedCost)
+                  String('$' + this.numberWithCommas(String(item.projectedCost)))
                 ]);
     });
     return body;
@@ -288,31 +260,52 @@ export class PrintDialogComponent implements OnInit {
 
   downloadPdf() {
     this.globalVars.spinner = true;
+    this.customArr = [];
+
     this.generateJson();
 
     const doc = new jsPDF();
-    console.log(this.withChart)
-    if (this.withChart) {
-      doc.addImage(this.imgURI, 'PNG', 1, 2);
-    }
+
+    doc.text('Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '', 14 , 10).setFontSize(11);
+
+
+
+
 
 
     setTimeout(() => {
+      if (this.withChart) {
+
+        doc.addImage(this.imgURI, 'PNG', 10, 20);
+      }
+
+
       this.customArr.forEach((item, index) => {
-        let finalY = this.withChart ? 50 : 0;
+        let finalY = this.withChart ? 65 : 20;
         if (doc.previousAutoTable) {
            finalY = doc.previousAutoTable.finalY;
         }
 
 
         if (item.status.list ) {
-
-          doc.text(item.proj.year + ' ' + item.proj.projects +  ' $' + item.proj.amount, 14, finalY + 10);
+          doc.text(item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount), 10, finalY + 10).setFontSize(11);
 
           doc.autoTable({
             startY: finalY + 15,
             head: [['Building', 'Room', 'Type', 'Tier', 'Core Age', 'Equipment Age', 'Projected Cost']],
-            body: item.list
+            body: item.list,
+            headStyles:  {
+              fillColor: [255, 255, 255],
+              textColor: [130, 130, 130],
+              lineColor: [0, 0, 0],
+              lineWidth: 0.1,
+              fontStyle: 'normal4'
+
+            },
+            bodyStyles:  {
+              lineColor: [0, 0, 0],
+              lineWidth: 0.1,
+            }, // Cells in first column centered and green
           });
         }
       });
@@ -322,7 +315,7 @@ export class PrintDialogComponent implements OnInit {
 
     setTimeout(() => {
       this.globalVars.spinner = false;
-      doc.save('Test.pdf');
+      doc.save('Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.pdf');
     }, 7000);
   }
 
@@ -334,15 +327,15 @@ export class PrintDialogComponent implements OnInit {
     setTimeout(() => {
       const workBook = XLSX.utils.book_new();
       const workSheet = XLSX.utils.json_to_sheet(this.customYearArr);
-      XLSX.utils.book_append_sheet(workBook, workSheet, 'data');
+      XLSX.utils.book_append_sheet(workBook, workSheet, 'AV Porject Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to);
       this.globalVars.spinner = false;
-      XLSX.writeFile(workBook, 'temp.xlsx');
+      XLSX.writeFile(workBook, 'Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.xlsx');
     }, 5000);
   };
 
   downloadDoc = async () => {
     this.globalVars.spinner = true;
-
+    this.customArr = [];
     await this.generateJson();
     const doc = new Document();
 
@@ -355,67 +348,109 @@ export class PrintDialogComponent implements OnInit {
     };
     console.log(this);
 
+    doc.Styles.createParagraphStyle('title', 'title')
+      .size(40)
+      .font('Arial');
 
-    if (this.withChart) {
-      doc.createImage(this.imgURI, 900, 830, {
-        floating: {
-          horizontalPosition: {
-            offset: 0,
-          },
-          verticalPosition: {
-            offset: 0,
-          },
-          margins: {
-            top: 50,
-          },
-          allowOverlap: true,
-        },
-      });
-
-      doc.addParagraph(new Paragraph('').heading1());
-      doc.addParagraph(new Paragraph('').heading1());
-      doc.addParagraph(new Paragraph('').heading1());
-      doc.addParagraph(new Paragraph('').heading1());
-      doc.addParagraph(new Paragraph('').heading1());
-      doc.addParagraph(new Paragraph('').heading1());
-      doc.addParagraph(new Paragraph('').heading1());
-    }
+    doc.addParagraph(new Paragraph('Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to).title().style('title'));
 
 
+
+    doc.Styles.createParagraphStyle('Heading2', 'Heading')
+      .quickFormat()
+      .size(23)
+      .color('555555')
+      .font('Arial');
+
+    doc.Styles.createParagraphStyle('Heading3', 'Heading')
+      .quickFormat()
+      .size(30)
+      .color('000000')
+      .font('Arial');
+
+    doc.Styles.createParagraphStyle('Paragraph', 'Paragraph')
+      .quickFormat()
+      .size(30)
+      .color('000000')
+      .font('Arial');
+
+    doc.Styles.createParagraphStyle('cell', 'cell')
+      .quickFormat()
+      .size(23)
+      .color('000000')
+      .font('Arial');
+
+    const svg = document.querySelector('#hiddenChart svg.ngx-charts');
+    this.downloadSvg(svg, 'chart.png');
     setTimeout(() => {
-      this.customArr.forEach((item, index) => {
-        doc.addParagraph(new Paragraph('').heading3());
-        doc.addParagraph(new Paragraph('').heading3());
-        doc.addParagraph(new Paragraph('').heading3());
-        doc.addParagraph(new Paragraph(item.proj.year + ' ' + item.proj.projects +  ' $' + item.proj.amount).heading1());
-        doc.addParagraph(new Paragraph('').heading3());
-
-          console.log(item)
-        const table = doc.createTable({
-          rows: 1 + item.list.length,
-          columns: 7,
-          width: 200,
+      if (this.withChart) {
+        const svg = document.querySelector('#hiddenChart svg.ngx-charts');
+        this.downloadSvg(svg, 'chart.png');
+        doc.createImage(this.imgURI, 400, 350, {
+          floating: {
+            horizontalPosition: {
+              offset: 1014400,
+            },
+            verticalPosition: {
+              offset: 2014400,
+            },
+            margins: {
+              top: 150,
+              left: 200,
+            },
+            allowOverlap: true,
+          },
         });
 
-        table.getCell(0, 0).addParagraph(new Paragraph('Building').heading1()).setMargins(headersMargin);
-        table.getCell(0, 1).addParagraph(new Paragraph('Room').heading1()).setMargins(headersMargin);
-        table.getCell(0, 2).addParagraph(new Paragraph('Type').heading1()).setMargins(headersMargin);
-        table.getCell(0, 3).addParagraph(new Paragraph('Tier').heading1()).setMargins(headersMargin);
-        table.getCell(0, 4).addParagraph(new Paragraph('Core Age').heading1()).setMargins(headersMargin);
-        table.getCell(0, 5).addParagraph(new Paragraph('Equipment Age').heading1()).setMargins(headersMargin);
-        table.getCell(0, 6).addParagraph(new Paragraph('Projected Cost').heading1()).setMargins(headersMargin);
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+      }
+
+      this.customArr.forEach((item, index) => {
 
         if (item.list.length > 0) {
-          item.list.forEach( (itemD, indexD) => {
-            const pos = indexD + 1;
-            table.getCell(pos, 0).addParagraph(new Paragraph(String(itemD[0])));
-            table.getCell(pos, 1).addParagraph(new Paragraph(String(itemD[1])));
-            table.getCell(pos, 2).addParagraph(new Paragraph(String(itemD[2])));
-            table.getCell(pos, 3).addParagraph(new Paragraph(String(itemD[3])));
-            table.getCell(pos, 4).addParagraph(new Paragraph(String(itemD[4])));
-            table.getCell(pos, 5).addParagraph(new Paragraph(String(itemD[5])));
-            table.getCell(pos, 6).addParagraph(new Paragraph(String(itemD[6])));
+          doc.addParagraph(new Paragraph('').heading3());
+          doc.addParagraph(new Paragraph('').heading3());
+          doc.addParagraph(new Paragraph('').heading3());
+          doc.addParagraph(new Paragraph(item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount)).heading1().style('Heading3'));
+          doc.addParagraph(new Paragraph('').heading3());
+
+          const table = doc.createTable({
+            rows: 1 + item.list.length,
+            columns: 7,
+            width: 100,
+            widthUnitType: WidthType.PERCENTAGE,
           });
+
+
+          table.getCell(0, 0).addParagraph(new Paragraph('Building').heading1().style('Heading2')).setMargins(headersMargin);
+          table.getCell(0, 1).addParagraph(new Paragraph('Room').heading1().style('Heading2')).setMargins(headersMargin);
+          table.getCell(0, 2).addParagraph(new Paragraph('Type').heading1().style('Heading2')).setMargins(headersMargin);
+          table.getCell(0, 3).addParagraph(new Paragraph('Tier').heading1().style('Heading2')).setMargins(headersMargin);
+          table.getCell(0, 4).addParagraph(new Paragraph('Core Age').heading1().style('Heading2')).setMargins(headersMargin);
+          table.getCell(0, 5).addParagraph(new Paragraph('Equipment Age').heading1().style('Heading2')).setMargins(headersMargin);
+          table.getCell(0, 6).addParagraph(new Paragraph('Projected Cost').heading1().style('Heading2')).setMargins(headersMargin);
+
+          if (item.list.length > 0) {
+            item.list.forEach( (itemD, indexD) => {
+              const pos = indexD + 1;
+              table.getCell(pos, 0).addParagraph(new Paragraph(String(itemD[0])).style('cell'));
+              table.getCell(pos, 1).addParagraph(new Paragraph(String(itemD[1])).style('cell'));
+              table.getCell(pos, 2).addParagraph(new Paragraph(String(itemD[2])).style('cell'));
+              table.getCell(pos, 3).addParagraph(new Paragraph(String(itemD[3])).style('cell'));
+              table.getCell(pos, 4).addParagraph(new Paragraph(String(itemD[4])).style('cell'));
+              table.getCell(pos, 5).addParagraph(new Paragraph(String(itemD[5])).style('cell'));
+              table.getCell(pos, 6).addParagraph(new Paragraph(String(itemD[6])).style('cell'));
+            });
+          }
         }
 
       });
@@ -423,8 +458,7 @@ export class PrintDialogComponent implements OnInit {
       const packer = new Packer();
 
       packer.toBlob(doc).then(blob => {
-        saveAs(blob, "doc.docx");
-        console.log("Document created successfully");
+        saveAs(blob, 'Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.docx');
       });
       this.globalVars.spinner = false;
     }, 9000);

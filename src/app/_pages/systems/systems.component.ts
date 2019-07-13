@@ -377,7 +377,7 @@ export class SystemsComponent implements OnInit {
       .subscribe((data: Equipment) => {
         this.equipments.push(data[0]);
 
-        if (this.dataRooms.length === this.equipments.length){
+        if (this.dataRooms.length === this.equipments.length) {
           // this.equipmentsString = JSON.stringify(this.equipments);
         }
         this.globalVars.spinner = false;

@@ -43,9 +43,12 @@
 }
 .half-fields{
   display: flex;
-
 }
+
 table {
   height: 250px;
   width: 100%;
+}
+#hiddenChart{
+  display: none !important;
 }
