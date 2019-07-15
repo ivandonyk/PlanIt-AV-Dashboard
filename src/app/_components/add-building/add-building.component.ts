@@ -21,7 +21,7 @@ export class AddBuildingComponent implements OnInit {
     address2: new FormControl('', Validators.maxLength(80)),
     city: new FormControl('', [Validators.required, Validators.maxLength(100)]),
     state: new FormControl('', [Validators.required]),
-    zip: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$'), ]),
+    zip: new FormControl('', [Validators.required, Validators.maxLength(10)]),
     nbrOfFloors: new FormControl(''),
     dateConstructed: new FormControl(''),
     dateLastRemodel: new FormControl(''),

@@ -13,7 +13,7 @@
 
   .form {
     min-width: 150px;
-    max-width: 500px;
+    //max-width: 500px;
     width: 100%;
   }
 
@@ -24,4 +24,12 @@
 
   .button {
     width: 100%;
+  }
+
+  mat-toolbar{
+    background: #000;
+
+    span{
+      color: #fff;
+    }
   }
