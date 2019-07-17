@@ -50,7 +50,7 @@
       <app-equipment-modal
         *ngIf="equipmentId"
         equipmentId="{{equipmentId}}"
-        (close)="equipmentId = null">
+        (close)="updateEquipmen(); equipmentId = null">
       </app-equipment-modal>
     </mat-tab>
   </mat-tab-group>
@@ -85,41 +85,47 @@
             <span>
               Core Age
             </span>
-      {{roomDetailData.coreAge}}
+      {{roomDetailData.coreAge ? roomDetailData.coreAge : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
               Equipment Age
             </span>
-      {{roomDetailData.equipmentAge}}
+      {{roomDetailData.equipmentAge ? roomDetailData.equipmentAge : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
               Last Install
             </span>
-      {{roomDetailData.lastInstallDate}}
+      {{roomDetailData.lastInstallDate ? roomDetailData.lastInstallDate : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
               Lifecycle
             </span>
-      {{roomDetailData.lifecycle}}
+      {{roomDetailData.lifecycle ? roomDetailData.lifecycle : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
+              Estimated Update Cost
+            </span>
+      {{roomDetailData.nextAvUpdCost ? roomDetailData.nextAvUpdCost : ' &nbsp;'}}
+    </div>
+    <div>
+            <span>
               Replace/Upgrade
             </span>
-      {{roomDetailData.replaceUpg}}
+      {{roomDetailData.replaceUpg ? roomDetailData.replaceUpg : ' &nbsp;'}}
     </div>
     <div>
       <span>
         Last AV Contractor
       </span>
-      {{roomDetailData.lastAvContractor}}
+      {{roomDetailData.lastAvContractor ? roomDetailData.lastAvContractor : ' &nbsp;'}}
     </div>
   </div>
   <div *ngIf="!roomModalShownEdit"  class="subheader">
@@ -127,19 +133,19 @@
             <span>
               Room Type
             </span>
-      {{roomDetailData.roomType}}
+      {{roomDetailData.roomType ? roomDetailData.roomType : ' &nbsp;'}}
     </div>
     <div>
             <span>
               Seating Type
             </span>
-      {{roomDetailData.seatingType}}
+      {{roomDetailData.seatingType ? roomDetailData.seatingType : ' &nbsp;'}}
     </div>
     <div>
             <span>
               Seating Capacity
             </span>
-      {{roomDetailData.seatingCapacity}}
+      {{roomDetailData.seatingCapacity ? roomDetailData.seatingCapacity : ' &nbsp;'}}
     </div>
   </div>
   <div *ngIf="!roomModalShownEdit"  class="subheader">
@@ -147,25 +153,25 @@
       <span>
         Dimensions
       </span>
-      {{roomDetailData.dimensions}}
+      {{roomDetailData.dimensions ? roomDetailData.dimensions : ' &nbsp;'}}
     </div>
     <div>
       <span>
         Ceiling Height
       </span>
-      {{roomDetailData.ceilingHeight}}
+      {{roomDetailData.ceilingHeight ? roomDetailData.ceilingHeight : ' &nbsp;'}}
     </div>
     <div>
       <span>
         Ceiling Type
       </span>
-      {{roomDetailData.ceilingType}}
+      {{roomDetailData.ceilingType ? roomDetailData.ceilingType : ' &nbsp;'}}
     </div>
     <div>
       <span>
         Last Remodel
       </span>
-      {{roomDetailData.dateOfLastRemodel}}
+      {{roomDetailData.dateOfLastRemodel ? roomDetailData.dateOfLastRemodel : ' &nbsp;'}}
     </div>
   </div>
   <div *ngIf="!roomModalShownEdit"  class="subheader">
@@ -173,19 +179,13 @@
       <span>
         Last AV Cost
       </span>
-      {{roomDetailData.avLastUpdateCost}}
+      {{roomDetailData.avLastUpdateCost ? roomDetailData.avLastUpdateCost : ' &nbsp;'}}
     </div>
-    <!--<div>-->
-      <!--<span>-->
-        <!--Last AV Contractor-->
-      <!--</span>-->
-      <!--{{roomDetailData.lastAvContractor}}-->
-    <!--</div>-->
     <div>
-            <span>
-              Contractor
-            </span>
-      {{roomDetailData.integrator}}
+      <span>
+        Contractor
+      </span>
+      {{roomDetailData.integrator ? roomDetailData.integrator : ' &nbsp;'}}
     </div>
   </div>
   <mat-accordion  *ngIf="!roomModalShownEdit" >

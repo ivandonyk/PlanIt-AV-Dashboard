@@ -331,7 +331,7 @@ export class PrintDialogComponent implements OnInit {
       this.globalVars.spinner = false;
       XLSX.writeFile(workBook, 'Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.xlsx');
     }, 5000);
-  };
+  }
 
   downloadDoc = async () => {
     this.globalVars.spinner = true;

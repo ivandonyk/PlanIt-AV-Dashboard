@@ -302,6 +302,7 @@ export class SystemsComponent implements OnInit {
       });
   }
   getAllEquipments() {
+    this.equipmentsString = '';
     this.globalVars.spinner = true;
     this.systServ.getAllEquipments()
       .subscribe((data: Equipment[]) => {
@@ -573,4 +574,9 @@ export class SystemsComponent implements OnInit {
       }
     });
   }
+
+  updateEquipmen() {
+    this.getAllEquipments();
+  }
+
 }

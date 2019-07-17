@@ -5,6 +5,7 @@ export interface EquipmentDetailAdd {
   description: string;
   equipmentCategory: string;
   equipmentClass: string;
+  integrator?: string;
   extWarrantyStartDate: string;
   extendedWarranty: number;
   extendedWarrantyProvider: string;

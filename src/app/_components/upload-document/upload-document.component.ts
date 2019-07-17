@@ -37,8 +37,8 @@ export class UploadDocumentComponent implements OnInit {
     this.fields.forEach( (item, index) => {
       this.systServ.uploadDoc(item)
         .subscribe(data => {
-          if (index === this.fields.length) {
-            this.snackbar.open('Images Uploaded', '', {
+          alert(1)
+            this.snackbar.open('Document Saved', '', {
                 duration: 1500,
                 verticalPosition: 'bottom',
                 horizontalPosition: 'right',
@@ -46,13 +46,10 @@ export class UploadDocumentComponent implements OnInit {
             );
             this.globalVars.spinner = false;
             self.dialogRef.close();
-
-          }
         }, error => {
           console.log(error);
           if (error.status === 200) {
-            if (index === this.fields.length) {
-              this.snackbar.open('Images Uploaded', '', {
+              this.snackbar.open('Document Saved', '', {
                   duration: 1500,
                   verticalPosition: 'bottom',
                   horizontalPosition: 'right',
@@ -60,7 +57,6 @@ export class UploadDocumentComponent implements OnInit {
               );
               this.globalVars.spinner = false;
               self.dialogRef.close();
-            }
           }
           this.globalVars.spinner = false;
         });
