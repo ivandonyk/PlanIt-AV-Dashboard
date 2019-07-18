@@ -71,6 +71,7 @@ import { ConfirmModalComponent } from './_components/confirm-modal/confirm-modal
 import {PrintDialogComponent} from './_components/print-dialog/print-dialog.component';
 import {AddProjectDescComponent} from "./_components/add-project-desc/add-project-desc.component";
 import {ContactUsComponent} from "./_components/contact-us/contact-us.component";
+import {ProjectPlanningTableComponent} from "./_components/project-planning-table/project-planning-table.component";
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import {ContactUsComponent} from "./_components/contact-us/contact-us.component"
     EquipmentdetailComponent,
     CarouselComponent,
     RoomsTableComponent,
+    ProjectPlanningTableComponent,
     EquipmentModalComponent,
     ReferComponent,
     AddNoteComponent,

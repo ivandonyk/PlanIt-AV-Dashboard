@@ -28,39 +28,8 @@
           {{panel.year ? panel.year : 'N/A'}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{panel.projects}} &nbsp;&nbsp;&nbsp;&nbsp; ${{panel.amount}}
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="table-container">
-        <table mat-table *ngIf="tableData"  [dataSource]="tableData" matSort class="mat-elevation-z8 project-planning-table">
-          <ng-container  matColumnDef="building">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Building </th>
-            <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.building}} </td>
-          </ng-container>
-          <ng-container  matColumnDef="room">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
-            <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.room}} </td>
-          </ng-container>
-          <ng-container  matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-            <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.type}} </td>
-          </ng-container>
-          <ng-container  matColumnDef="tier">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tier </th>
-            <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.tier}} </td>
-          </ng-container>
-          <ng-container  matColumnDef="coreAge">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Core Age </th>
-            <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.coreAge}} </td>
-          </ng-container>
-          <ng-container  matColumnDef="equipmentAge">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Equipment Age </th>
-            <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> {{element.equipmentAge}} </td>
-          </ng-container>
-          <ng-container  matColumnDef="projectedCost">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Projected Cost </th>
-            <td  mat-cell (click)="opemRoomDetailed(true, element.roomId)" *matCellDef="let element"> ${{element.projectedCost}} </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="columnsHeader"></tr>
-          <tr mat-row *matRowDef="let row; columns: columnsHeader;"></tr>
-        </table>
+      <div class="table-container" >
+        <app-project-planning-table-component *ngIf="tableData['data_'+panel.year]" (clickRow)="opemRoomDetailed(true, $event)"  dataSource="{{tableData['data_'+panel.year]}}" displayedColumns="{{columnsHeader}}"></app-project-planning-table-component>
 
       </div>
     </mat-expansion-panel>

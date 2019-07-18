@@ -75,6 +75,9 @@ export class EquipmentModalComponent implements OnInit {
           port: [this.data.port],
           countryManufacturer: [this.data.countryManufacturer],
           manuals: [this.data.manuals],
+          manufactureWarrantyStart: [''],
+          warrantyLength: [''],
+          warrantyStart: [''],
         });
 
       this.globalVars.spinner = false;

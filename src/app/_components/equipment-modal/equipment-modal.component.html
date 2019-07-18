@@ -90,154 +90,199 @@
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      Manufacture Warranty: Length <span>{{data.manufactureWarranty}}</span>
+      Manufacture Warranty: Length <span>{{data.manufactureWarranty ? data.manufactureWarranty : '&nbsp;'}}</span>
     </div>
+    <div>
+      Manufacture Warranty: Start Date <span> {{'&nbsp;'}} </span>
+    </div>
+    <div>
+      Manufacture Warranty: Expiration <span> {{data.warrantyExpiration ? data.warrantyExpiration : '&nbsp;'}} </span>
+    </div>
+
   </div>
   <div *ngIf="!isEdit" class="subheader">
+    <div>
+      Extended Warranty/Service Contract: Length<span> {{'&nbsp;'}} </span>
+    </div>
+    <div>
+      Manufacture Warranty: Start Date<span> {{'&nbsp;'}} </span>
+    </div>
+    <div>
+      Manufacture Warranty: Expiration<span> {{data.extWarrantyExpiration ? data.extWarrantyExpiration : '&nbsp;'}} </span>
+    </div>
+
   </div>
+
+
+
   <div *ngIf="!isEdit" class="manuals">
     <span class="title-manual">Manuals:</span> {{data.manuals}}
   </div>
+
+
+
+
+
+
+
   <div *ngIf="isEdit && data" class="room-modal-edit">
+
+
     <form [formGroup]="form">
-      <mat-form-field >
-        <mat-label>
-          Room
-        </mat-label>
-        <input matInput  formControlName="room"  placeholder="Room">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          alt Location
-        </mat-label>
-        <input matInput  formControlName="altLocation"  placeholder="alt Location">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Manufacturer
-        </mat-label>
-        <input matInput  formControlName="manufacturer"  placeholder="Manufacturer">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Model Number
-        </mat-label>
-        <input matInput  formControlName="modelNumber"  placeholder="Model Number">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Description
-        </mat-label>
-        <input matInput  formControlName="description"  placeholder="Description">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Equipment Class
-        </mat-label>
-        <input matInput  formControlName="equipmentClass"  placeholder="Equipment Class">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Category
-        </mat-label>
-        <input matInput  formControlName="category"  placeholder="Category">
-      </mat-form-field>
-      <!--<mat-form-field >-->
-        <!--<mat-label>-->
-          <!--Install Date-->
-        <!--</mat-label>-->
-        <!--<input matInput  formControlName="installDate"  placeholder="Install Date">-->
-      <!--</mat-form-field>-->
+      <div class="fields-group">
+        <mat-form-field  class="form-element-small">
+          <mat-label>
+            Manufacturer
+          </mat-label>
+          <input matInput  formControlName="manufacturer"  placeholder="Manufacturer">
+        </mat-form-field>
+        <mat-form-field  class="form-element-small">
+          <mat-label>
+            Model Number
+          </mat-label>
+          <input matInput  formControlName="modelNumber"  placeholder="Model Number">
+        </mat-form-field>
+        <mat-form-field  class="form-element-small">
+          <mat-label>
+            Description
+          </mat-label>
+          <input matInput  formControlName="description"  placeholder="Description">
+        </mat-form-field>
+      </div>
+
+      <div class="fields-group">
+        <mat-form-field class="form-element-half">
+          <mat-label>
+            Equipment Class
+          </mat-label>
+          <input matInput  formControlName="equipmentClass"  placeholder="Equipment Class">
+        </mat-form-field>
+        <mat-form-field class="form-element-half">
+          <mat-label>
+            Category
+          </mat-label>
+          <input matInput  formControlName="category"  placeholder="Category">
+        </mat-form-field>
+      </div>
+      <br>
+
+      <div class="fields-group">
+        <mat-form-field class="form-element-small">
+          <input matInput  formControlName="installDate"  [matDatepicker]="installDate" placeholder="Install Date">
+          <mat-datepicker-toggle  matSuffix [for]="installDate"></mat-datepicker-toggle>
+          <mat-datepicker md-mode="month" #installDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-element-small">
+          <mat-label>
+            Lifecycle
+          </mat-label>
+          <input matInput type="number"  formControlName="lifecycle"  placeholder="Lifecycle">
+        </mat-form-field>
+        <mat-form-field class="form-element-small">
+          <mat-label>
+            Integrator
+          </mat-label>
+          <input matInput  formControlName="integrator"  placeholder="Integrator">
+        </mat-form-field>
+      </div>
+      <br>
+
+      <div class="fields-group">
+        <mat-form-field class="form-element-half">
+          <mat-label>
+            Country Manufacturer
+          </mat-label>
+          <input matInput  formControlName="countryManufacturer"  placeholder="Country Manufacturer">
+        </mat-form-field>
+        <mat-form-field class="form-element-half">
+          <mat-label>
+            Serial Number
+          </mat-label>
+          <input matInput  formControlName="serialNum"  placeholder="Serial Num">
+        </mat-form-field>
+      </div>
+      <br>
+
+      <div class="fields-group">
+        <mat-form-field class="form-element-small">
+          <mat-label>
+            Mac Address
+          </mat-label>
+          <input matInput  formControlName="macAddress"  placeholder="Mac Address">
+        </mat-form-field>
+        <mat-form-field class="form-element-small">
+          <mat-label>
+            IP Address
+          </mat-label>
+          <input matInput  formControlName="ipAddress"  placeholder="IP Address">
+        </mat-form-field>
+        <mat-form-field class="form-element-small">
+          <mat-label>
+            Port
+          </mat-label>
+          <input matInput  formControlName="port"  placeholder="Port">
+        </mat-form-field>
+      </div>
+      <br>
+
+      <div class="fields-group">
+        <mat-form-field class="form-element-small">
+          <mat-label>
+            Manufacture Warranty: Length
+          </mat-label>
+          <input matInput readonly formControlName="manufactureWarranty"  placeholder="Manufacture Warranty: Length">
+        </mat-form-field>
+
+        <mat-form-field class="form-element-small">
+          <input matInput readonly formControlName="manufactureWarrantyStart"  [matDatepicker]="manufactureWarrantyStart" placeholder="Manufacture Warranty: Start Date">
+          <mat-datepicker-toggle  matSuffix [for]="manufactureWarrantyStart"></mat-datepicker-toggle>
+          <mat-datepicker  #manufactureWarrantyStart></mat-datepicker>
+        </mat-form-field>
 
 
-      <mat-form-field >
-        <input matInput  formControlName="installDate"  [matDatepicker]="installDate" placeholder="Install Date">
-        <mat-datepicker-toggle  matSuffix [for]="installDate"></mat-datepicker-toggle>
-        <mat-datepicker md-mode="month" #installDate></mat-datepicker>
-      </mat-form-field>
+        <mat-form-field class="form-element-small">
+          <mat-label>
+            Manufacture Warranty: Expiration
+          </mat-label>
+          <input matInput readonly formControlName="warrantyExpiration"  placeholder="Manufacture Warranty: Expiration ">
+        </mat-form-field>
+      </div>
+      <br>
 
-      <mat-form-field >
-        <mat-label>
-          Lifecycle
-        </mat-label>
-        <input matInput type="number"  formControlName="lifecycle"  placeholder="Lifecycle">
-      </mat-form-field>
-      <!--<mat-form-field >-->
-        <!--<mat-label>-->
-          <!--Replacement Date-->
-        <!--</mat-label>-->
-        <!--<input matInput  formControlName="replacementDate"  placeholder="Replacement Date">-->
-      <!--</mat-form-field>-->
+      <div class="fields-group">
+        <mat-form-field class="form-element-small">
+          <mat-label>
+            Extended Warranty/Service Contract: Length
+          </mat-label>
+          <input matInput readonly formControlName="warrantyLength"  placeholder="Extended Warranty/Service Contract: Length">
+        </mat-form-field>
+
+        <mat-form-field class="form-element-small">
+          <input matInput readonly formControlName="warrantyStart"  [matDatepicker]="warrantyStart" placeholder="Extended Warranty/Service Contract: Start Date">
+          <mat-datepicker-toggle  matSuffix [for]="warrantyStart"></mat-datepicker-toggle>
+          <mat-datepicker  #warrantyStart></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field class="form-element-small">
+          <mat-label>
+            Extended Warranty/Service Contract: Expiration
+          </mat-label>
+          <input matInput readonly formControlName="extWarrantyExpiration"  placeholder="Extended Warranty/Service Contract: Expiration ">
+        </mat-form-field>
+      </div>
+      <br>
 
 
 
-      <mat-form-field >
-        <input matInput  formControlName="replacementDate"  [matDatepicker]="replacementDate" placeholder="Replacement Date">
-        <mat-datepicker-toggle  matSuffix [for]="replacementDate"></mat-datepicker-toggle>
-        <mat-datepicker #replacementDate></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field >
-        <mat-label>
-          Integrator
-        </mat-label>
-        <input matInput  formControlName="integrator"  placeholder="Integrator">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Manufacture Warranty
-        </mat-label>
-        <input matInput  formControlName="manufactureWarranty"  placeholder="Manufacture Warranty">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Warranty Expiration
-        </mat-label>
-        <input matInput  formControlName="warrantyExpiration"  placeholder="Warranty Expiration">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          ext Warranty Provider
-        </mat-label>
-        <input matInput  formControlName="extWarrantyProvider"  placeholder="ext Warranty Provider">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          ext Warranty Expiration
-        </mat-label>
-        <input matInput  formControlName="extWarrantyExpiration"  placeholder="ext Warranty Expiration">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Serial Number
-        </mat-label>
-        <input matInput  formControlName="serialNum"  placeholder="Serial Num">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Mac Address
-        </mat-label>
-        <input matInput  formControlName="macAddress"  placeholder="Mac Address">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          IP Address
-        </mat-label>
-        <input matInput  formControlName="ipAddress"  placeholder="IP Address">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Port
-        </mat-label>
-        <input matInput  formControlName="port"  placeholder="Port">
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>
-          Country Manufacturer
-        </mat-label>
-        <input matInput  formControlName="countryManufacturer"  placeholder="Country Manufacturer">
-      </mat-form-field>
     </form>
 
+
   </div>
+
+
+
+
+
+
 </div>

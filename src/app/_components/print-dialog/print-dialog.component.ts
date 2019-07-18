@@ -45,6 +45,7 @@ export class PrintDialogComponent implements OnInit {
   public imgURI: any;
   public img64: any;
   public withChart: any;
+  public textChart: any = [];
   public view: Array<number> = [300, 200];
 
 
@@ -177,6 +178,8 @@ export class PrintDialogComponent implements OnInit {
             'list': [],
             'desc': null,
           };
+
+
         });
         this.globalVars.spinner = false;
       }, error => {
@@ -220,6 +223,10 @@ export class PrintDialogComponent implements OnInit {
             name: result[0].year,
             value: result[0].amount
           });
+        this.textChart.push({
+          year: result[0].year,
+          amount: result[0].amount
+        });
           Object.assign(this, this.singleArr);
 
       }
@@ -327,6 +334,8 @@ export class PrintDialogComponent implements OnInit {
     setTimeout(() => {
       const workBook = XLSX.utils.book_new();
       const workSheet = XLSX.utils.json_to_sheet(this.customYearArr);
+      const chart = XLSX.utils.json_to_sheet(this.textChart);
+      XLSX.utils.book_append_sheet(workBook, chart, 'AV Projects Total by Year');
       XLSX.utils.book_append_sheet(workBook, workSheet, 'AV Porject Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to);
       this.globalVars.spinner = false;
       XLSX.writeFile(workBook, 'Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.xlsx');

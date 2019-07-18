@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProjectPlanningService } from '../../_services/project-planning.service';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { ProjectPlanList, ProjectPlan, ProjPlanDetailObj } from '../../_models/project-plannings.model';
-import {MatDialog, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {RoomDetails, RoomDTO} from '../../_models/systems.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import {SystemsService} from '../../_services/systems.service';
-import {AddNoteComponent} from "../../_components/add-note/add-note.component";
-import {AddPhotosComponent} from "../../_components/upload-photos/upload-photos.component";
-import {UploadDocumentComponent} from "../../_components/upload-document/upload-document.component";
-import {ConfirmModalComponent} from "../../_components/confirm-modal/confirm-modal.component";
-import {PrintDialogComponent} from "../../_components/print-dialog/print-dialog.component";
+import {AddNoteComponent} from '../../_components/add-note/add-note.component';
+import {AddPhotosComponent} from '../../_components/upload-photos/upload-photos.component';
+import {UploadDocumentComponent} from '../../_components/upload-document/upload-document.component';
+import {ConfirmModalComponent} from '../../_components/confirm-modal/confirm-modal.component';
+import {PrintDialogComponent} from '../../_components/print-dialog/print-dialog.component';
 
 @Component({
   selector: 'app-project-planning',
@@ -30,7 +30,7 @@ export class ProjectPlanningComponent {
   public showXAxisLabel = true;
   public showYAxisLabel = true;
   public roomId: number = null;
-  public currentBuilding: number = 1;
+  public currentBuilding: Number = 1;
   public yearsRange: object = {};
 
   public colorScheme = {
@@ -77,10 +77,38 @@ export class ProjectPlanningComponent {
   public roomDetailData: RoomDetails;
   public roomModalShown: Boolean = false;
   public roomModalShownEdit: Boolean = false;
-  public tableData: any;
+  public tableData: any = {};
   public form: FormGroup;
-  public columnsHeader: Array<string> = ['building', 'room', 'type', 'tier', 'coreAge', 'equipmentAge', 'projectedCost' ];
-  @ViewChild(MatSort) sort: MatSort;
+  public columnsHeader: string = JSON.stringify([
+    {
+      key: 'building',
+      title: 'Building'
+    },
+    {
+      key: 'room',
+      title: 'Room'
+    },
+    {
+      key: 'type',
+      title: 'Type'
+    },
+    {
+      key: 'tier',
+      title: 'Tier'
+    },
+    {
+      key: 'coreAge',
+      title: 'Core Age'
+    },
+    {
+      key: 'equipmentAge',
+      title: 'Equipment Age'
+    },
+    {
+      key: 'projectedCost',
+      title: 'Projected Cost'
+    },
+  ]);
   public ProjPlanSumData: any;
 
   constructor(
@@ -98,6 +126,7 @@ export class ProjectPlanningComponent {
     //   this.getProjPlanSum();
     //
     // }, 15000);
+
   }
 
   onSelect(event) {
@@ -133,14 +162,11 @@ export class ProjectPlanningComponent {
 
   }
   getProjPlanDetail(year) {
-    this.tableData = [];
+    // this.tableData = {};
     this.globalVars.spinner = true;
     this.projectPlanningServ.getProjPlanDetail(year)
       .subscribe((data: ProjPlanDetailObj) => {
-        console.log(data);
-
-        this.tableData = new MatTableDataSource(data.projectPlanDetailList);
-        this.tableData.sort = this.sort;
+        this.tableData['data_' + year] = JSON.stringify(data.projectPlanDetailList);
         this.globalVars.spinner = false;
       }, error => {
         console.log(error);
