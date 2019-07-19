@@ -98,7 +98,6 @@
     <div>
       Manufacture Warranty: Expiration <span> {{data.warrantyExpiration ? data.warrantyExpiration : '&nbsp;'}} </span>
     </div>
-
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
@@ -112,22 +111,10 @@
     </div>
 
   </div>
-
-
-
   <div *ngIf="!isEdit" class="manuals">
     <span class="title-manual">Manuals:</span> {{data.manuals}}
   </div>
-
-
-
-
-
-
-
   <div *ngIf="isEdit && data" class="room-modal-edit">
-
-
     <form [formGroup]="form">
       <div class="fields-group">
         <mat-form-field  class="form-element-small">
@@ -149,7 +136,6 @@
           <input matInput  formControlName="description"  placeholder="Description">
         </mat-form-field>
       </div>
-
       <div class="fields-group">
         <mat-form-field class="form-element-half">
           <mat-label>
@@ -165,7 +151,6 @@
         </mat-form-field>
       </div>
       <br>
-
       <div class="fields-group">
         <mat-form-field class="form-element-small">
           <input matInput  formControlName="installDate"  [matDatepicker]="installDate" placeholder="Install Date">
@@ -186,7 +171,6 @@
         </mat-form-field>
       </div>
       <br>
-
       <div class="fields-group">
         <mat-form-field class="form-element-half">
           <mat-label>
@@ -202,7 +186,6 @@
         </mat-form-field>
       </div>
       <br>
-
       <div class="fields-group">
         <mat-form-field class="form-element-small">
           <mat-label>
@@ -224,7 +207,6 @@
         </mat-form-field>
       </div>
       <br>
-
       <div class="fields-group">
         <mat-form-field class="form-element-small">
           <mat-label>
@@ -232,14 +214,11 @@
           </mat-label>
           <input matInput readonly formControlName="manufactureWarranty"  placeholder="Manufacture Warranty: Length">
         </mat-form-field>
-
         <mat-form-field class="form-element-small">
           <input matInput readonly formControlName="manufactureWarrantyStart"  [matDatepicker]="manufactureWarrantyStart" placeholder="Manufacture Warranty: Start Date">
           <mat-datepicker-toggle  matSuffix [for]="manufactureWarrantyStart"></mat-datepicker-toggle>
           <mat-datepicker  #manufactureWarrantyStart></mat-datepicker>
         </mat-form-field>
-
-
         <mat-form-field class="form-element-small">
           <mat-label>
             Manufacture Warranty: Expiration
@@ -248,7 +227,6 @@
         </mat-form-field>
       </div>
       <br>
-
       <div class="fields-group">
         <mat-form-field class="form-element-small">
           <mat-label>
@@ -256,14 +234,11 @@
           </mat-label>
           <input matInput readonly formControlName="warrantyLength"  placeholder="Extended Warranty/Service Contract: Length">
         </mat-form-field>
-
         <mat-form-field class="form-element-small">
           <input matInput readonly formControlName="warrantyStart"  [matDatepicker]="warrantyStart" placeholder="Extended Warranty/Service Contract: Start Date">
           <mat-datepicker-toggle  matSuffix [for]="warrantyStart"></mat-datepicker-toggle>
           <mat-datepicker  #warrantyStart></mat-datepicker>
         </mat-form-field>
-
-
         <mat-form-field class="form-element-small">
           <mat-label>
             Extended Warranty/Service Contract: Expiration
@@ -272,17 +247,6 @@
         </mat-form-field>
       </div>
       <br>
-
-
-
     </form>
-
-
   </div>
-
-
-
-
-
-
 </div>

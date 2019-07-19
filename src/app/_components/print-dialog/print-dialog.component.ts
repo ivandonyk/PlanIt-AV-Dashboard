@@ -245,7 +245,7 @@ export class PrintDialogComponent implements OnInit {
       const svg = document.querySelector('#hiddenChart svg.ngx-charts');
       console.log(svg)
       this.downloadSvg(svg, 'chart.png');
-    }, 1000)
+    }, 1000);
 
   }
 
