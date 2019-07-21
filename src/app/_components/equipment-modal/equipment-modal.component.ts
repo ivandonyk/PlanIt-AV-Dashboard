@@ -90,7 +90,7 @@ export class EquipmentModalComponent implements OnInit {
     this.close.emit(true);
   }
   updateRoom() {
-    const username = JSON.parse(window.sessionStorage.getItem('currentUser'))
+    const username = JSON.parse(window.sessionStorage.getItem('currentUser'));
 
     this.globalVars.spinner = true;
     const equipmentDetail: EquipmentDetailUpdate = {

@@ -19,6 +19,7 @@
             </mat-list-item>
           </mat-list>
           <mat-icon aria-hidden="false" (click)="addRoom(item.buildingId)" class="plus-icon" aria-label="Plus">add</mat-icon>
+          <mat-icon aria-hidden="false" (click)="editBuilding(item.buildingId)" class="edit-icon" aria-label="edit">edit</mat-icon>
 
 
         </div>
@@ -56,7 +57,7 @@
   </mat-tab-group>
 </div>
 <div class="room-modal-overlay" (click)="opemRoomDetailed(false)" *ngIf="roomModalShown"></div>
-<div class="room-modal" *ngIf="roomModalShown">
+<div class="room-modal" [ngClass]="roomModalShownEdit ? 'editmodal' : ' '" *ngIf="roomModalShown">
   <div class="header">
     <div class="title">
       {{roomDetailData.buildingName}} - {{roomDetailData.roomName}} / Floor {{roomDetailData.floor}} / Tier {{roomDetailData.tier}}

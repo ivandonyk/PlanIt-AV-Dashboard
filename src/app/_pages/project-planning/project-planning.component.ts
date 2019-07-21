@@ -12,6 +12,8 @@ import {AddPhotosComponent} from '../../_components/upload-photos/upload-photos.
 import {UploadDocumentComponent} from '../../_components/upload-document/upload-document.component';
 import {ConfirmModalComponent} from '../../_components/confirm-modal/confirm-modal.component';
 import {PrintDialogComponent} from '../../_components/print-dialog/print-dialog.component';
+import {AddProjectDescComponent} from "../../_components/add-project-desc/add-project-desc.component";
+import {AddEquipmentComponent} from "../../_components/add-equipment/add-equipment.component";
 
 @Component({
   selector: 'app-project-planning',
@@ -32,6 +34,41 @@ export class ProjectPlanningComponent {
   public roomId: number = null;
   public currentBuilding: Number = 1;
   public yearsRange: object = {};
+  public equipmentsLocal: string = '0';
+  public documents: any;
+  public projectDesc: any;
+  public roomHist: any;
+  public displayedLocalColumnsEquipments: string = JSON.stringify([
+    {
+      key: 'manufacturer',
+      title: 'Manufacturer',
+    },
+    {
+      key: 'modelNumber',
+      title: 'Model/Part',
+    },
+    {
+      key: 'description',
+      title: 'Description',
+    },
+    {
+      key: 'equipmentClass',
+      title: 'Class',
+    },
+    {
+      key: 'category',
+      title: 'Category',
+    },
+    {
+      key: 'lifecycle',
+      title: 'Lifecycle',
+    },
+    {
+      key: 'installDate',
+      title: 'Install Date',
+    }
+
+  ]);
 
   public colorScheme = {
     domain: ['#fa0006']
@@ -129,6 +166,20 @@ export class ProjectPlanningComponent {
 
   }
 
+  openDialogPrint(): void {
+    const dialogRef = this.dialog.open(PrintDialogComponent, {
+      data: {
+        years: {
+          start: this.ProjPlanSumData.startYear,
+          end: this.ProjPlanSumData.endYear,
+        }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
   onSelect(event) {
     console.log(event);
   }
@@ -197,6 +248,7 @@ export class ProjectPlanningComponent {
             seatingCapacity: [data.seatingCapacity],
             dimensions: [data.dimensions],
             ceilingHeight: [data.ceilingHeight],
+            coreAge: [data.coreAge],
             ceilingType: [data.ceilingType],
             origAvInstallDate: [moment(data.origAvInstallDate).toISOString()],
             origAvSystemCost: [data.origAvSystemCost],
@@ -208,11 +260,19 @@ export class ProjectPlanningComponent {
             nextAvUpdCost: [data.nextAvUpdCost],
             notes: [data.notes],
             lifecycle: [data.lifecycle],
-            coreAge: [''],
+            roomType: [data.roomType],
 
           });
+          this.equipmentsLocal = '0';
+
+          this.getDocuments(this.roomId);
+          this.getProjectDesc(this.roomId);
+          this.getRoomHist(this.roomId);
+          this.getEquipment(this.roomId);
           this.globalVars.spinner = false;
           this.roomModalShown = true;
+          this.roomModalShownEdit = false;
+
         }, error => {
           this.globalVars.spinner = false;
           console.log(error);
@@ -223,36 +283,91 @@ export class ProjectPlanningComponent {
   expand(roomId) {
     window.open(window.location.origin + '/home/room-detail/' + this.currentBuilding + '/' + roomId);
   }
-  openDialogAddNote(): void {
-    const dialogRef = this.dialog.open(AddNoteComponent, {
-      data: {
-        form: this.f,
-        roomId: this.roomId,
-        buildingId: this.currentBuilding,
-      }
-    });
+  confirmCancel(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // this.animal = result;
+      this.roomModalShownEdit = false;
     });
   }
-  openDialogAddPhoto(): void {
-    const dialogRef = this.dialog.open(AddPhotosComponent, {
-      data: {
-        form: this.f,
-        roomId: this.roomId,
-        buildingId: this.currentBuilding,
-      }
-    });
+
+
+
+
+  getEquipment(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getEquipments(roomId)
+      .subscribe((data: Array<{
+        equipmentId: number;
+        manualIcon: boolean;
+        photoIcon: boolean;
+        colorCode: any;
+        manufacturer: string;
+        modelNumber: string;
+        description: string;
+        equipmentClass: string;
+        category: string;
+        lifecycle: string | number;
+        installDate: string;
+        building: string;
+        room: string;
+      }>) => {
+
+        if (data.length > 0) {
+          this.equipmentsLocal = JSON.stringify(data);
+        } else {
+          this.equipmentsLocal = '0';
+
+        }
+
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
   }
-  openDialogUploadDocument(): void {
-    const dialogRef = this.dialog.open(UploadDocumentComponent, {
-      data: {
-        form: this.f,
-        roomId: this.roomId,
-        buildingId: this.currentBuilding,
-      }
-    });
+  getRoomDet() {
+    this.systServ.getRoomDetails(this.roomId)
+      .subscribe((data: RoomDetails) => {
+        console.log(data);
+        this.roomDetailData = data;
+        this.form = this.formBuilder.group({
+          roomName: [data.roomName],
+          tier: [data.tier],
+          floor: [data.floor],
+          dateOfLastRemodel: [moment(data.dateOfLastRemodel).toISOString()],
+          integrator: [data.integrator],
+          seatingType: [data.seatingType],
+          seatingCapacity: [data.seatingCapacity],
+          dimensions: [data.dimensions],
+          ceilingHeight: [data.ceilingHeight],
+          coreAge: [data.coreAge],
+          ceilingType: [data.ceilingType],
+          origAvInstallDate: [moment(data.origAvInstallDate).toISOString()],
+          origAvSystemCost: [data.origAvSystemCost],
+          origAvContractor: [data.origAvContractor],
+          avLastUpdateDate: [moment(data.avLastUpdateDate).toISOString()],
+          avLastUpdateCost: [data.avLastUpdateCost],
+          lastAvContractor: [data.lastAvContractor],
+          nextAvUpdateDt: [moment(data.nextAvUpdateDt).toISOString()],
+          nextAvUpdCost: [data.nextAvUpdCost],
+          notes: [data.notes],
+          lifecycle: [data.lifecycle],
+          roomType: [data.roomType],
+        });
+        this.equipmentsLocal = '0';
+
+        this.getDocuments(this.roomId);
+        this.getProjectDesc(this.roomId);
+        this.getRoomHist(this.roomId);
+        this.getEquipment(this.roomId);
+        this.globalVars.spinner = false;
+        this.roomModalShown = true;
+        this.roomModalShownEdit = false;
+
+      }, error => {
+        this.globalVars.spinner = false;
+        console.log(error);
+      });
   }
   updateRoom() {
     this.globalVars.spinner = true;
@@ -280,7 +395,6 @@ export class ProjectPlanningComponent {
       buildingId: Number(this.currentBuilding),
       roomId: Number(this.roomId),
       roomType: String(this.f.roomType),
-      coreAge: Number(this.f.coreAge),
     };
 
     this.systServ.updateRoom(room)
@@ -291,35 +405,86 @@ export class ProjectPlanningComponent {
             horizontalPosition: 'right',
           }
         );
-        this.globalVars.spinner = false;
         this.roomModalShownEdit = false;
+        this.getRoomDet();
+        this.globalVars.spinner = false;
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
       });
   }
-  confirmCancel(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      this.roomModalShownEdit = false;
+  getDocuments(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getDocuments(roomId)
+      .subscribe((data) => {
+        this.documents = data['documents'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+  getProjectDesc(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getProjectDesc(roomId)
+      .subscribe((data) => {
+        this.projectDesc = data['projectDescriptionList'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+  getRoomHist(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getRoomHist(roomId)
+      .subscribe((data) => {
+        this.roomHist = data['historyList'];
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+  openDialogAddPhoto(): void {
+    const dialogRef = this.dialog.open(AddPhotosComponent, {
+      data: {
+        form: this.f,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
     });
   }
-
-
-  openDialogPrint(): void {
-    const dialogRef = this.dialog.open(PrintDialogComponent, {
+  openDialogUploadDocument(): void {
+    const dialogRef = this.dialog.open(UploadDocumentComponent, {
       data: {
-        years: {
-          start: this.ProjPlanSumData.startYear,
-          end: this.ProjPlanSumData.endYear,
-        }
+        form: this.f,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
+    });
+  }
+  openDialogAddProjectDesc() {
+    const dialogRef = this.dialog.open(AddProjectDescComponent, {
+      data: {
+        projectDesc: this.projectDesc,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
     });
   }
+  addEquipment() {
+    this.dialog.open(AddEquipmentComponent, {
+      data: {
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
+    });
+  }
+
 }
 
 

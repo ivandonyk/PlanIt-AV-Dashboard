@@ -25,9 +25,17 @@
         top: 4px;
         right: 18px;
       }
+      .edit-icon{
+        position: absolute;
+        font-size: 24px !important;
+        cursor: pointer;
+        top: 4px;
+        right: 28px;
+      }
 
       h3.mat-subheader{
         color: #f00;
+        word-break: break-all;
       }
 
       span{
@@ -79,8 +87,12 @@
   left: 10%;
   box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
   color: rgba(0,0,0,.87);
-  bottom:0;
   overflow-y: auto;
+
+  &:not(.editmodal){
+    bottom:0;
+
+  }
 
   .header{
     height: 50px;
@@ -309,6 +321,10 @@
     width: 100%;
     left:0;
     right:0;
+    &.editmodal{
+      bottom:0;
+
+    }
 
 
     .subheader{

@@ -1,24 +1,17 @@
 <div class="room-detail-page" *ngIf="roomDetailData">
   <div class="header">
     <div class="title">
-      Building name - {{roomDetailData.roomName}} / Floor {{roomDetailData.floor}} / Tier {{roomDetailData.tier}}
-
+      {{roomDetailData.buildingName}} - {{roomDetailData.roomName}} / Floor {{roomDetailData.floor}} / Tier {{roomDetailData.tier}}
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!roomModalShownEdit" (click)="roomModalShownEdit = true">
-        <span>
-          <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
-        </span>
+        <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
       </div>
       <div class="header-btn" *ngIf="roomModalShownEdit" (click)="updateRoom();">
-        <span>
-          <mat-icon aria-hidden="false" aria-label="Save">save</mat-icon>
-        </span>
+        <mat-icon aria-hidden="false" aria-label="Save">save</mat-icon>
       </div>
-      <div class="header-btn" *ngIf="roomModalShownEdit" (click)=" confirmCancel();">
-        <span>
+      <div class="header-btn" *ngIf="roomModalShownEdit" (click)="confirmCancel();">
         <mat-icon aria-hidden="false" class="closeedit" aria-label="Edit">edit</mat-icon>
-        </span>
       </div>
     </div>
   </div>
@@ -28,41 +21,47 @@
             <span>
               Core Age
             </span>
-      {{roomDetailData.coreAge}}
+      {{roomDetailData.coreAge ? roomDetailData.coreAge : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
               Equipment Age
             </span>
-      {{roomDetailData.equipmentAge}}
+      {{roomDetailData.equipmentAge ? roomDetailData.equipmentAge : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
               Last Install
             </span>
-      {{roomDetailData.lastInstallDate}}
+      {{roomDetailData.lastInstallDate ? roomDetailData.lastInstallDate : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
               Lifecycle
             </span>
-      {{roomDetailData.lifecycle}}
+      {{roomDetailData.lifecycle ? roomDetailData.lifecycle : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
-              Replace/Upgrade
+              Estimated Update Cost
             </span>
-      {{roomDetailData.replaceUpg}}
+      {{roomDetailData.nextAvUpdCost ? roomDetailData.nextAvUpdCost : ' &nbsp;'}}
     </div>
     <div>
             <span>
-              Contractor
+              Replace/Upgrade
             </span>
-      {{roomDetailData.integrator}}
+      {{roomDetailData.replaceUpg ? roomDetailData.replaceUpg : ' &nbsp;'}}
+    </div>
+    <div>
+      <span>
+        Last AV Contractor
+      </span>
+      {{roomDetailData.lastAvContractor ? roomDetailData.lastAvContractor : ' &nbsp;'}}
     </div>
   </div>
   <div *ngIf="!roomModalShownEdit"  class="subheader">
@@ -70,13 +69,13 @@
             <span>
               Room Type
             </span>
-      <!--{{roomDetailData.roomT}}-->
+      {{roomDetailData.roomType ? roomDetailData.roomType : ' &nbsp;'}}
     </div>
     <div>
             <span>
               Seating Type
             </span>
-      {{roomDetailData.seatingType}}
+      {{roomDetailData.seatingType ? roomDetailData.seatingType : ' &nbsp;'}}
     </div>
     <div>
             <span>
@@ -90,25 +89,25 @@
       <span>
         Dimensions
       </span>
-      {{roomDetailData.dimensions}}
+      {{roomDetailData.dimensions ? roomDetailData.dimensions : ' &nbsp;'}}
     </div>
     <div>
       <span>
         Ceiling Height
       </span>
-      {{roomDetailData.ceilingHeight}}
+      {{roomDetailData.ceilingHeight ? roomDetailData.ceilingHeight : ' &nbsp;'}}
     </div>
     <div>
       <span>
         Ceiling Type
       </span>
-      {{roomDetailData.ceilingType}}
+      {{roomDetailData.ceilingType ? roomDetailData.ceilingType : ' &nbsp;'}}
     </div>
     <div>
       <span>
         Last Remodel
       </span>
-      {{roomDetailData.dateOfLastRemodel}}
+      {{roomDetailData.dateOfLastRemodel ? roomDetailData.dateOfLastRemodel : ' &nbsp;'}}
     </div>
   </div>
   <div *ngIf="!roomModalShownEdit"  class="subheader">
@@ -116,13 +115,13 @@
       <span>
         Last AV Cost
       </span>
-      {{roomDetailData.avLastUpdateCost}}
+      {{roomDetailData.avLastUpdateCost ? roomDetailData.avLastUpdateCost : ' &nbsp;'}}
     </div>
     <div>
       <span>
-        Last AV Contractor
+        Contractor
       </span>
-      {{roomDetailData.lastAvContractor}}
+      {{roomDetailData.integrator ? roomDetailData.integrator : ' &nbsp;'}}
     </div>
   </div>
   <mat-accordion  *ngIf="!roomModalShownEdit" >
@@ -140,12 +139,17 @@
         </mat-list-item>
       </mat-list>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="getSpecifiedEquipment()">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Equipment
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <app-room-table-component
+        *ngIf="equipmentsLocal != '0'"
+        dataSource="{{equipmentsLocal}}"
+        displayedColumns="{{displayedLocalColumnsEquipments}}"
+      ></app-room-table-component>
     </mat-expansion-panel>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -284,17 +288,20 @@
       </div>
     </form>
     <div class="btns-cont">
-      <button mat-raised-button class="red-btn" class="red-btn" (click)="openDialogAddNote()" color="primary">
+      <button mat-raised-button  class="red-btn" (click)="openDialogAddNote()" color="primary">
         Add Note
       </button>
-      <button mat-raised-button class="red-btn" class="red-btn" (click)="openDialogAddPhoto()" color="primary">
+      <button mat-raised-button  class="red-btn" (click)="openDialogAddPhoto()" color="primary">
         Upload Photo
       </button>
-      <button mat-raised-button class="red-btn" class="red-btn" (click)="openDialogUploadDocument()" color="primary">
+      <button mat-raised-button  class="red-btn" (click)="openDialogUploadDocument()" color="primary">
         Upload Document
       </button>
-      <button mat-raised-button class="red-btn" class="red-btn" color="primary" (click)="openDialogAddProjectDesc()">
+      <button mat-raised-button class="red-btn" (click)="openDialogAddProjectDesc()" color="primary">
         Add/Edit Update Project Description
+      </button>
+      <button mat-raised-button class="red-btn" (click)="addEquipment()" color="primary">
+        + Equipment
       </button>
     </div>
   </div>

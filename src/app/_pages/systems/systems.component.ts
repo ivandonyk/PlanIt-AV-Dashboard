@@ -13,6 +13,7 @@ import {AddProjectDescComponent} from '../../_components/add-project-desc/add-pr
 import {AddRoomComponent} from '../../_components/add-room/add-room.component';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {AddEquipmentComponent} from '../../_components/add-equipment/add-equipment.component';
+import {AddBuildingComponent} from "../../_components/add-building/add-building.component";
 
 
 @Component({
@@ -399,24 +400,100 @@ export class SystemsComponent implements OnInit {
     console.log(id);
     this.equipmentId = id;
   }
-  openDialogAddPhoto(): void {
-    const dialogRef = this.dialog.open(AddPhotosComponent, {
+
+
+  openDialogAddNote(): void {
+    const dialogRef = this.dialog.open(AddNoteComponent, {
       data: {
         form: this.f,
         roomId: this.roomId,
         buildingId: this.currentBuilding,
       }
     });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
-  openDialogUploadDocument(): void {
-    const dialogRef = this.dialog.open(UploadDocumentComponent, {
+  openDialogAddProjectDesc() {
+    const dialogRef = this.dialog.open(AddProjectDescComponent, {
       data: {
-        form: this.f,
+        projectDesc: this.projectDesc,
+        roomId: this.roomId,
+        buildingId: this.currentBuilding,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  getEquipment(roomId) {
+    this.globalVars.spinner = true;
+    this.systServ.getEquipments(roomId)
+      .subscribe((data: Array<{
+        equipmentId: number;
+        manualIcon: boolean;
+        photoIcon: boolean;
+        colorCode: any;l
+        manufacturer: string;
+        modelNumber: string;
+        description: string;
+        equipmentClass: string;
+        category: string;
+        lifecycle: string | number;
+        installDate: string;
+        building: string;
+        room: string;
+      }>) => {
+
+        if (data.length > 0) {
+          this.equipmentsLocal = JSON.stringify(data);
+        } else {
+          this.equipmentsLocal = '0';
+
+        }
+
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+
+
+  addRoom(id) {
+    this.dialog.open(AddRoomComponent, {
+      data: {
+        buildingId: id
+      }
+    });
+  }
+
+  editBuilding(id) {
+    this.dialog.open(AddBuildingComponent, {
+      data: {
+        buildingId: id
+      }
+    });
+  }
+
+
+
+  addEquipment() {
+    this.dialog.open(AddEquipmentComponent, {
+      data: {
         roomId: this.roomId,
         buildingId: this.currentBuilding,
       }
     });
   }
+
+  updateEquipmen() {
+    this.getAllEquipments();
+  }
+
+
+
+
   updateRoom() {
     this.globalVars.spinner = true;
     const room: RoomDTO = {
@@ -500,83 +577,23 @@ export class SystemsComponent implements OnInit {
         this.globalVars.spinner = false;
       });
   }
-  openDialogAddNote(): void {
-    const dialogRef = this.dialog.open(AddNoteComponent, {
+  openDialogAddPhoto(): void {
+    const dialogRef = this.dialog.open(AddPhotosComponent, {
       data: {
         form: this.f,
         roomId: this.roomId,
         buildingId: this.currentBuilding,
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
-  openDialogAddProjectDesc() {
-    const dialogRef = this.dialog.open(AddProjectDescComponent, {
+  openDialogUploadDocument(): void {
+    const dialogRef = this.dialog.open(UploadDocumentComponent, {
       data: {
-        projectDesc: this.projectDesc,
+        form: this.f,
         roomId: this.roomId,
         buildingId: this.currentBuilding,
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-
-  getEquipment(roomId) {
-    this.globalVars.spinner = true;
-    this.systServ.getEquipments(roomId)
-      .subscribe((data: Array<{
-        equipmentId: number;
-        manualIcon: boolean;
-        photoIcon: boolean;
-        colorCode: any;l
-        manufacturer: string;
-        modelNumber: string;
-        description: string;
-        equipmentClass: string;
-        category: string;
-        lifecycle: string | number;
-        installDate: string;
-        building: string;
-        room: string;
-      }>) => {
-
-        if (data.length > 0) {
-          this.equipmentsLocal = JSON.stringify(data);
-        } else {
-          this.equipmentsLocal = '0';
-
-        }
-
-        this.globalVars.spinner = false;
-      }, error => {
-        console.log(error);
-        this.globalVars.spinner = false;
-      });
-  }
-
-  addRoom(id) {
-    this.dialog.open(AddRoomComponent, {
-      data: {
-        buildingId: id
-      }
-    });
-  }
-  addEquipment() {
-    this.dialog.open(AddEquipmentComponent, {
-      data: {
-        roomId: this.roomId,
-        buildingId: this.currentBuilding,
-      }
-    });
-  }
-
-  updateEquipmen() {
-    this.getAllEquipments();
   }
 
 }

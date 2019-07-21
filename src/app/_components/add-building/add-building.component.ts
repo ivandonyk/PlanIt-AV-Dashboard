@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, Validators} from '@angular/forms';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { HandleError } from '../../_services/http-error-handler.service';
 import { UserData } from '../../_models/userdata.model';
 import { SystemsService } from '../../_services/systems.service';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+
+
+export interface DialogData {
+  buildingId: any;
+}
 
 
 @Component({
@@ -11,6 +18,8 @@ import { SystemsService } from '../../_services/systems.service';
   templateUrl: './add-building.component.html',
   styleUrls: ['./add-building.component.scss']
 })
+
+
 export class AddBuildingComponent implements OnInit {
 
   private handleError: HandleError;
@@ -48,11 +57,35 @@ export class AddBuildingComponent implements OnInit {
     public dialogRef: MatDialogRef<AddBuildingComponent>,
     private snackbar: MatSnackBar,
     private systService: SystemsService,
-    ) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+
+  ) {
   }
 
   ngOnInit() {
-
+    if(this.data.buildingId){
+      this.systService.getBuildingDetail(this.data.buildingId)
+        .subscribe(data => {
+          this.addBuildingForm = this.fb.group({
+            buildingName: new FormControl(data['buildingName'], [Validators.required, Validators.maxLength(80)]),
+            address1: new FormControl(data['address1'], [Validators.required, Validators.maxLength(80)]),
+            address2: new FormControl(data['address2'], Validators.maxLength(80)),
+            city: new FormControl(data['city'], [Validators.required, Validators.maxLength(100)]),
+            state: new FormControl(data['state'], [Validators.required]),
+            zip: new FormControl(data['zip'], [Validators.required, Validators.maxLength(10)]),
+            nbrOfFloors: new FormControl(data['nbrOfFloors']),
+            dateConstructed: new FormControl(data['dateConstructed']),
+            dateLastRemodel: new FormControl(data['dateLastRemodel']),
+            notes: new FormControl(data['notes'] ),
+            contactFirstName : new FormControl(data['contactFirstName ']),
+            contactLastName : new FormControl(data['contactLastName ']),
+            contactPhoneNbr : new FormControl(data['contactPhoneNbr ']),
+            contactEmail : new FormControl(data['contactEmail '], [Validators.email])
+          });
+        }, error => {
+          console.log();
+        });
+    }
   }
 
   revert(e) {
@@ -71,28 +104,44 @@ export class AddBuildingComponent implements OnInit {
     addBuildingApiModel['userName'] = userData.userName;
 
     console.log(this.addBuildingForm)
-    if (this.addBuildingForm.status === "VALID") {
+    if (this.addBuildingForm.status === 'VALID') {
 
 
-    this.systService.addBuilding(addBuildingApiModel)
-      .subscribe(data => {
-        console.log(data);
-        this.snackbar.open('Building Added', '', {
-            duration: 1500,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          }
-        );
-        this.dialogRef.close();
-      }, error => {
-        this.snackbar.open(error.message, '', {
-            duration: 3500,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          }
-        );
-        console.log(error);
-      });
+      if (this.data.buildingId){
+        this.systService.updBuilding(addBuildingApiModel)
+          .subscribe(data => {
+            console.log(data);
+            this.dialogRef.close();
+
+          }, error => {
+            this.snackbar.open(error.message, '', {
+                duration: 3500,
+                verticalPosition: 'top',
+                horizontalPosition: 'right',
+              }
+            );
+          });
+      } else {
+        this.systService.addBuilding(addBuildingApiModel)
+          .subscribe(data => {
+            console.log(data);
+            this.snackbar.open('Building Added', '', {
+                duration: 1500,
+                verticalPosition: 'top',
+                horizontalPosition: 'right',
+              }
+            );
+            this.dialogRef.close();
+          }, error => {
+            this.snackbar.open(error.message, '', {
+                duration: 3500,
+                verticalPosition: 'top',
+                horizontalPosition: 'right',
+              }
+            );
+            console.log(error);
+          });
+      }
     }
 
   }

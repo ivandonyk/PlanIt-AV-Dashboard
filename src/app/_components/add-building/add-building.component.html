@@ -2,7 +2,7 @@
   <h1 mat-dialog-title>Add Building</h1>
   <div mat-dialog-content>
     <form [formGroup]="addBuildingForm" (ngSubmit)="onSubmit()" class="form">
-<div>
+    <div>
       <mat-form-field class="form-element">
         <input matInput maxlength="80" placeholder="Building Name" required="true" formControlName="buildingName" id="buildingName">
         <mat-error *ngIf="buildingName.invalid && (buildingName.dirty || buildingName.touched)">
@@ -29,12 +29,12 @@
         <mat-error *ngIf="state.invalid && (state.dirty || state.touched)">State is required</mat-error>
       </mat-form-field>
       <mat-form-field >
-        <input matInput maxlength="10" type="number" required="true" placeholder="Zip" formControlName="zip" id="zip">
+        <input matInput maxlength="10"  required="true" placeholder="Zip" formControlName="zip" id="zip">
         <mat-error *ngIf="zip.invalid && (zip.dirty || zip.touched)">{{getZipErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
       <mat-form-field class="form-horizontal" >
-        <input matInput maxlength="3" type="number" placeholder="Number of Floors" formControlName="nbrOfFloors" id="nbrOfFloors">
+        <input matInput maxlength="3"  placeholder="Number of Floors" formControlName="nbrOfFloors" id="nbrOfFloors">
       </mat-form-field>
       <mat-form-field class="form-horizontal">
         <input matInput [matDatepicker]="datePicker1" placeholder="Date Constructed" formControlName="dateConstructed">
@@ -65,11 +65,11 @@
         <mat-error *ngIf="contactEmail.invalid && (contactEmail.dirty || contactEmail.touched)">Email Invalid</mat-error>
       </mat-form-field>
       <div mat-dialog-actions>
-        <button mat-raised-button type="submit" color="primary" class="red-btn">+</button>
-        <button mat-raised-button color="primary" class="red-btn" (click)="revert($event)">Reset</button>
-        <button mat-raised-button color="primary" class="red-btn" (click)="cancel($event)" >Cancel</button>
+        <button mat-raised-button type="submit" [disabled]="addBuildingForm.status !== 'VALID'" class="red-btn-bd">+</button>
+        <button mat-raised-button class="red-btn-bd" (click)="revert($event)">Reset</button>
+        <button mat-raised-button class="red-btn-bd" (click)="cancel($event)" >Cancel</button>
       </div>
-      </form>
+    </form>
 
 </div>
 </div>

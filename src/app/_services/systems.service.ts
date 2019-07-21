@@ -161,6 +161,29 @@ export class SystemsService {
     formData.append('userName', userData.userName);
     return this.httpClient.post<any>(environment.baseUrl + '/uploadDoc', formData);
   }
+  updBuilding(data): Observable<any> {
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
+    const formData = new FormData();
+    formData.append('buildingName', data.buildingName);
+    formData.append('address1', data.address1);
+    formData.append('address2', data.address2);
+    formData.append('city', data.city);
+    formData.append('state', data.state);
+    formData.append('zip', data.zip);
+    formData.append('nbrOfFloors', data.nbrOfFloors);
+    formData.append('dateConstructed', data.dateConstructed);
+    formData.append('dateLastRemodel', data.dateLastRemodel);
+    formData.append('notes', data.notes);
+    formData.append('contactFirstName', data.contactFirstName);
+    formData.append('contactLastName', data.contactLastName);
+    formData.append('contactPhoneNbr', data.contactPhoneNbr);
+    formData.append('contactEmail', data.contactEmail);
+    formData.append('buildingId', data.buildingId);
+    formData.append('userName', userData.userName);
+
+    return this.httpClient.post<any>(environment.baseUrl + '/updBuilding', formData);
+  }
+
   addBuilding(object: AddBuildingFormModel): Observable<AddBuildingFormModel> {
     return this.httpClient.post<AddBuildingFormModel>(environment.baseUrl + '/addBuilding', object);
   }
@@ -185,4 +208,14 @@ export class SystemsService {
       params: params
     });
   }
+
+  getBuildingDetail(id?: number | string) {
+    const params = new HttpParams().set('buildingId', String(id));
+    return this.httpClient.get(environment.baseUrl + '/getBuildingDetail', {
+      params: params
+    });
+  }
+
+
+
 }
