@@ -398,6 +398,7 @@ export class SystemsComponent implements OnInit {
   }
   opemEquipmentDetailed(status, id?: number) {
     console.log(id);
+    // this.roomModalShown = false;
     this.equipmentId = id;
   }
 
@@ -595,5 +596,14 @@ export class SystemsComponent implements OnInit {
       }
     });
   }
+
+
+
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+
+
 
 }

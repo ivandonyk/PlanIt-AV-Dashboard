@@ -7,6 +7,7 @@
       [view]="view"
       [scheme]="colorScheme"
       [results]="single"
+      [legendTitle]="asdasdassa"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
@@ -17,6 +18,14 @@
       [yAxisLabel]="yAxisLabel"
       [roundEdges]="roundEdges"
       (select)="onSelect($event)">
+
+
+      <ng-template #tooltipTemplate let-model="model">
+        <p>{{model.name}}</p>
+        <p>${{numberWithCommas(model.value)}}</p>
+      </ng-template>
+
+
     </ngx-charts-bar-vertical>
     <mat-icon aria-hidden="false" (click)="openDialogPrint()" class="print-icon" aria-label="Example home icon">print</mat-icon>
 

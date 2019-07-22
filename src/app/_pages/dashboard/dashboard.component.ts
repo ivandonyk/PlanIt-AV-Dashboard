@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
     support?: Support
   };
 
+  public businessName: String = '';
+  public logoPath: String = '';
 
   constructor(
     private dashServ: DashboardService,
@@ -29,6 +31,8 @@ export class DashboardComponent implements OnInit {
     this.dashServ.getDashboardData()
       .subscribe((data: Dashboard) => {
         console.log(data);
+        this.businessName = data.businessName;
+        this.logoPath = data.logoPath;
         this.dashboardData = data.dashboard;
         this.globalVars.spinner = false;
       }, error => {

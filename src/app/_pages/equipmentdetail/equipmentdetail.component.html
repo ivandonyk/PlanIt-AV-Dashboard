@@ -21,40 +21,40 @@
             <span>
               Class:
             </span>
-      {{data.equipmentClass}}
+      {{data.equipmentClass ? data.equipmentClass : ' &nbsp;'}}
     </div>
     <div>
             <span>
               Category:
             </span>
-      {{data.category}}
+      {{data.category ? data.category : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
               Installed:
             </span>
-      {{data.installDate}}
+      {{data.installDate ? data.installDate : ' &nbsp;'}}
     </div>
     <div>
             <span>
               Lifecycle:
             </span>
-      {{data.lifecycle}}
+      {{data.lifecycle ? data.lifecycle : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
               Replacement Due:
             </span>
-      {{data.replacementDate}}
+      {{data.replacementDate ? data.replacementDate : ' &nbsp;'}}
     </div>
 
     <div>
             <span>
               Integrator:
             </span>
-      {{data.integrator}}
+      {{data.integrator ? data.integrator : ' &nbsp;'}}
     </div>
 
 
@@ -62,7 +62,7 @@
   <div *ngIf="!isEdit" class="subheader">
     <div>
 
-      Description: <span>{{data.description}}</span>
+      Description: <span>{{data.description ? data.description : ' &nbsp;'}}</span>
     </div>
 
 
@@ -72,7 +72,7 @@
       Manufacture Warranty:
 
       <span>
-        {{data.manufactureWarranty}}
+        {{data.manufactureWarranty ? data.manufactureWarranty : ' &nbsp;'}}
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       Manufacture Warranty Expiration:
 
       <span *ngIf="data.warrantyExpiration">
-        {{data.warrantyExpiration}}
+        {{data.warrantyExpiration ? data.warrantyExpiration : ' &nbsp;'}}
       </span>
       <span *ngIf="!data.warrantyExpiration">
         N/A
@@ -91,7 +91,7 @@
       Extended Warranty / Service Contract:
 
       <span *ngIf="data.extWarrantyProvider">
-      Provider: {{data.extWarrantyProvider}}
+      Provider: {{data.extWarrantyProvider ? data.extWarrantyProvider : ' &nbsp;'}}
       </span>
       <span *ngIf="!data.extWarrantyProvider">
       Provider:  N/A
@@ -102,7 +102,7 @@
       Extended Warranty / Service Contract:
 
       <span *ngIf="data.extWarrantyExpiration">
-       Expiration: {{data.extWarrantyExpiration}}
+       Expiration: {{data.extWarrantyExpiration ? data.extWarrantyExpiration : ' &nbsp;'}}
       </span>
       <span *ngIf="!data.extWarrantyExpiration">
         Expiration: N/A
@@ -121,7 +121,7 @@
       Serial №:
 
       <span>
-        {{data.serialNum}}
+        {{data.serialNum ? data.serialNum : ' &nbsp;'}}
       </span>
     </div>
 
@@ -129,7 +129,7 @@
       MAC Address:
 
       <span>
-        {{data.macAddress}}
+        {{data.macAddress ? data.macAddress : ' &nbsp;'}}
       </span>
     </div>
 
@@ -137,7 +137,7 @@
       IP Address:
 
       <span>
-        {{data.ipAddress}}
+        {{data.ipAddress ? data.ipAddress : ' &nbsp;'}}
       </span>
     </div>
 
@@ -145,7 +145,7 @@
       Port:
 
       <span>
-        {{data.port}}
+        {{data.port ? data.port : ' &nbsp;'}}
       </span>
     </div>
 
@@ -153,7 +153,7 @@
       Country of Manufacture:
 
       <span>
-        {{data.countryManufacturer}}
+        {{data.countryManufacturer ? data.countryManufacturer : ' &nbsp;'}}
       </span>
     </div>
   </div>

@@ -28,4 +28,6 @@ export interface Dashboard {
     lifecycle?: Lifecycle;
     support?: Support;
   };
+  businessName: string;
+  logoPath: string;
 }

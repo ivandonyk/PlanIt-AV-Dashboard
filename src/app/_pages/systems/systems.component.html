@@ -48,11 +48,7 @@
             displayedColumns="{{displayedColumnsEquipments}}"
         ></app-room-table-component>
       </div>
-      <app-equipment-modal
-        *ngIf="equipmentId"
-        equipmentId="{{equipmentId}}"
-        (close)="updateEquipmen(); equipmentId = null">
-      </app-equipment-modal>
+
     </mat-tab>
   </mat-tab-group>
 </div>
@@ -212,6 +208,7 @@
       </mat-expansion-panel-header>
       <app-room-table-component
         *ngIf="equipmentsLocal != '0'"
+        (clickRow)="opemEquipmentDetailed(true, $event)"
         dataSource="{{equipmentsLocal}}"
         displayedColumns="{{displayedLocalColumnsEquipments}}"
       ></app-room-table-component>
@@ -372,6 +369,10 @@
   </div>
 </div>
 
-
+<app-equipment-modal
+  *ngIf="equipmentId"
+  equipmentId="{{equipmentId}}"
+  (close)="updateEquipmen(); equipmentId = null">
+</app-equipment-modal>
 
 

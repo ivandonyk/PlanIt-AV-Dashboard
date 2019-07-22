@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 mat-dialog-title>Add Building</h1>
+  <h1 mat-dialog-title>{{isEdit ? 'Edit Building' : 'Add Building'}}</h1>
   <div mat-dialog-content>
     <form [formGroup]="addBuildingForm" (ngSubmit)="onSubmit()" class="form">
     <div>
@@ -65,7 +65,9 @@
         <mat-error *ngIf="contactEmail.invalid && (contactEmail.dirty || contactEmail.touched)">Email Invalid</mat-error>
       </mat-form-field>
       <div mat-dialog-actions>
-        <button mat-raised-button type="submit" [disabled]="addBuildingForm.status !== 'VALID'" class="red-btn-bd">+</button>
+        <button mat-raised-button type="submit" [disabled]="addBuildingForm.status !== 'VALID'" class="red-btn-bd">
+          {{isEdit ? 'Update' : '+'}}
+        </button>
         <button mat-raised-button class="red-btn-bd" (click)="revert($event)">Reset</button>
         <button mat-raised-button class="red-btn-bd" (click)="cancel($event)" >Cancel</button>
       </div>

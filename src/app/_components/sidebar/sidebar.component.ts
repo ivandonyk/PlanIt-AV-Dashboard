@@ -37,8 +37,8 @@ export class SidebarComponent implements OnInit {
   sessionGet(key) {
     const stringValue = window.sessionStorage.getItem(key)
     if (stringValue !== null) {
-      const value = stringValue
-      const expirationDate = new Date(value)
+      const value = stringValue;
+      const expirationDate = new Date(value);
       if (expirationDate > new Date()) {
         return value;
       } else {
@@ -48,7 +48,7 @@ export class SidebarComponent implements OnInit {
 
       }
     }
-    return null
+    return null;
   }
 
 

@@ -42,6 +42,8 @@ export class AddBuildingComponent implements OnInit {
 
   });
 
+  public isEdit: boolean = false;
+
   states: string[] = [
     'AK', 'AL', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE',
     'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY',
@@ -63,7 +65,9 @@ export class AddBuildingComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.data.buildingId){
+    console.log(this.data)
+    if (this.data ) {
+      this.isEdit = true;
       this.systService.getBuildingDetail(this.data.buildingId)
         .subscribe(data => {
           this.addBuildingForm = this.fb.group({
@@ -85,6 +89,8 @@ export class AddBuildingComponent implements OnInit {
         }, error => {
           console.log();
         });
+    } else {
+      this.isEdit = false;
     }
   }
 
@@ -103,11 +109,10 @@ export class AddBuildingComponent implements OnInit {
     addBuildingApiModel['businessAccountId'] = userData.businessId;
     addBuildingApiModel['userName'] = userData.userName;
 
-    console.log(this.addBuildingForm)
     if (this.addBuildingForm.status === 'VALID') {
 
 
-      if (this.data.buildingId){
+      if (this.data.buildingId) {
         this.systService.updBuilding(addBuildingApiModel)
           .subscribe(data => {
             console.log(data);

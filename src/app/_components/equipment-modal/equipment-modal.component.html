@@ -29,19 +29,19 @@
         <span>
           Manufacturer:
         </span>
-      {{data.manufacturer}}
+      {{data.manufacturer ? data.manufacturer : ' &nbsp;'}}
     </div>
     <div>
         <span>
           Model/Part Number:
         </span>
-      {{data.modelNumber}}
+      {{data.modelNumber ? data.modelNumber : ' &nbsp;'}}
     </div>
     <div>
         <span>
           Description:
         </span>
-      {{data.description}}
+      {{data.description ? data.description : ' &nbsp;'}}
     </div>
   </div>
   <div *ngIf="!isEdit" class="subheader">
@@ -49,43 +49,43 @@
         <span>
           Class:
         </span>
-      {{data.equipmentClass}}
+      {{data.equipmentClass ? data.equipmentClass : ' &nbsp;'}}
     </div>
     <div>
       <span>Category:</span>
-      {{data.category}}
+      {{data.category ? data.category : ' &nbsp;'}}
     </div>
   </div>
   <div *ngIf="!isEdit" class="subheader">
 
     <div>
-      <span>Date Installed:</span> {{data.installDate}}
+      <span>Date Installed:</span> {{data.installDate ? data.installDate : ' &nbsp;'}}
     </div>
     <div>
-      <span>Lifecycle:</span> {{data.lifecycle}}
+      <span>Lifecycle:</span> {{data.lifecycle ? data.lifecycle : ' &nbsp;'}}
     </div>
     <div>
-      <span>Integrator:</span> {{data.integrator}}
+      <span>Integrator:</span> {{data.integrator ? data.integrator : ' &nbsp;'}}
     </div>
 
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      Country of Manufacture: <span>{{data.countryManufacturer}}</span>
+      Country of Manufacture: <span>{{data.countryManufacturer ? data.countryManufacturer : ' &nbsp;'}}</span>
     </div>
     <div>
-      Serial №: <span>{{data.serialNum}}</span>
+      Serial №: <span>{{data.serialNum ? data.serialNum : ' &nbsp;'}}</span>
     </div>
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      MAC Address: <span>{{data.macAddress}}</span>
+      MAC Address: <span>{{data.macAddress ? data.macAddress : ' &nbsp;'}}</span>
     </div>
     <div>
-      IP Address: <span>{{data.ipAddress}}</span>
+      IP Address: <span>{{data.ipAddress ? data.ipAddress : ' &nbsp;'}}</span>
     </div>
     <div>
-      Port: <span>{{data.port}}</span>
+      Port: <span>{{data.port ? data.port : ' &nbsp;'}}</span>
     </div>
   </div>
   <div *ngIf="!isEdit" class="subheader">
