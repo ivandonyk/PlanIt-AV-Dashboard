@@ -2,7 +2,7 @@
 <div class="room-modal" *ngIf="data">
   <div class="header">
     <div class="title">
-      {{data.room}}
+      {{buildingName}}: {{data.room}} - {{data.altLocation}}
     </div>
     <div class="actions">
       <div class="header-btn" *ngIf="!isEdit" (click)="isEdit = true">
@@ -90,10 +90,10 @@
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      Manufacture Warranty: Length <span>{{data.manufactureWarranty ? data.manufactureWarranty : '&nbsp;'}}</span>
+      Manufacture Warranty: Start Date <span> {{'&nbsp;'}} </span>
     </div>
     <div>
-      Manufacture Warranty: Start Date <span> {{'&nbsp;'}} </span>
+      Manufacture Warranty: Length <span>{{data.manufactureWarranty ? data.manufactureWarranty : '&nbsp;'}}</span>
     </div>
     <div>
       Manufacture Warranty: Expiration <span> {{data.warrantyExpiration ? data.warrantyExpiration : '&nbsp;'}} </span>
@@ -101,10 +101,10 @@
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      Extended Warranty/Service Contract: Length<span> {{'&nbsp;'}} </span>
+      Manufacture Warranty: Start Date<span> {{'&nbsp;'}} </span>
     </div>
     <div>
-      Manufacture Warranty: Start Date<span> {{'&nbsp;'}} </span>
+      Extended Warranty/Service Contract: Length<span> {{'&nbsp;'}} </span>
     </div>
     <div>
       Manufacture Warranty: Expiration<span> {{data.extWarrantyExpiration ? data.extWarrantyExpiration : '&nbsp;'}} </span>
@@ -116,6 +116,24 @@
   </div>
   <div *ngIf="isEdit && data" class="room-modal-edit">
     <form [formGroup]="form">
+      <div class="fields-group">
+        <mat-form-field class="form-element">
+          <mat-select matInput (selectionChange)="buildingChanged()" placeholder="Building" formControlName="buildings">
+            <mat-option *ngFor="let build of buildingsArr" [value]="build.buildingId">{{build.buildingName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-element">
+          <mat-select matInput placeholder="Room" formControlName="rooms">
+            <mat-option *ngFor="let room of roomList" [value]="room.roomId">{{room.roomName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-element">
+          <input matInput maxlength="50" placeholder="Alternate Location" formControlName="alternateLocation">
+        </mat-form-field>
+      </div>
+
+
+
       <div class="fields-group">
         <mat-form-field  class="form-element-small">
           <mat-label>
@@ -136,6 +154,8 @@
           <input matInput  formControlName="description"  placeholder="Description">
         </mat-form-field>
       </div>
+
+
       <div class="fields-group">
         <mat-form-field class="form-element-half">
           <mat-label>
@@ -209,15 +229,15 @@
       <br>
       <div class="fields-group">
         <mat-form-field class="form-element-small">
+          <input matInput readonly formControlName="manufactureWarrantyStart"  [matDatepicker]="manufactureWarrantyStart" placeholder="Manufacture Warranty: Start Date">
+          <mat-datepicker-toggle  matSuffix [for]="manufactureWarrantyStart"></mat-datepicker-toggle>
+          <mat-datepicker  #manufactureWarrantyStart></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-element-small">
           <mat-label>
             Manufacture Warranty: Length
           </mat-label>
           <input matInput readonly formControlName="manufactureWarranty"  placeholder="Manufacture Warranty: Length">
-        </mat-form-field>
-        <mat-form-field class="form-element-small">
-          <input matInput readonly formControlName="manufactureWarrantyStart"  [matDatepicker]="manufactureWarrantyStart" placeholder="Manufacture Warranty: Start Date">
-          <mat-datepicker-toggle  matSuffix [for]="manufactureWarrantyStart"></mat-datepicker-toggle>
-          <mat-datepicker  #manufactureWarrantyStart></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="form-element-small">
           <mat-label>
@@ -229,15 +249,15 @@
       <br>
       <div class="fields-group">
         <mat-form-field class="form-element-small">
+          <input matInput readonly formControlName="warrantyStart"  [matDatepicker]="warrantyStart" placeholder="Extended Warranty/Service Contract: Start Date">
+          <mat-datepicker-toggle  matSuffix [for]="warrantyStart"></mat-datepicker-toggle>
+          <mat-datepicker  #warrantyStart></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-element-small">
           <mat-label>
             Extended Warranty/Service Contract: Length
           </mat-label>
           <input matInput readonly formControlName="warrantyLength"  placeholder="Extended Warranty/Service Contract: Length">
-        </mat-form-field>
-        <mat-form-field class="form-element-small">
-          <input matInput readonly formControlName="warrantyStart"  [matDatepicker]="warrantyStart" placeholder="Extended Warranty/Service Contract: Start Date">
-          <mat-datepicker-toggle  matSuffix [for]="warrantyStart"></mat-datepicker-toggle>
-          <mat-datepicker  #warrantyStart></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="form-element-small">
           <mat-label>

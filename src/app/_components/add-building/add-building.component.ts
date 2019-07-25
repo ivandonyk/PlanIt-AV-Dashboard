@@ -99,6 +99,9 @@ export class AddBuildingComponent implements OnInit {
     this.addBuildingForm.reset();
   }
 
+
+
+
   onSubmit() {
     console.log(this.addBuildingForm.value);
     let addBuildingApiModel;
@@ -109,10 +112,18 @@ export class AddBuildingComponent implements OnInit {
     addBuildingApiModel['businessAccountId'] = userData.businessId;
     addBuildingApiModel['userName'] = userData.userName;
 
+
+    Object.keys(this.addBuildingForm.controls).forEach(item => {
+      if (this.addBuildingForm.controls[item].status !== 'VALID') {
+        const elem = document.querySelector('*[formcontrolname="' + item + '"]').closest('mat-form-field') as HTMLElement;
+        document.getElementById('addBuildingForm').scrollTop = elem.offsetTop - 190;
+      }
+    });
+
     if (this.addBuildingForm.status === 'VALID') {
 
 
-      if (this.data.buildingId) {
+      if (this.data) {
         this.systService.updBuilding(addBuildingApiModel)
           .subscribe(data => {
             console.log(data);

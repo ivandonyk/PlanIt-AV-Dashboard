@@ -1,8 +1,15 @@
 export interface SlideData {
   buildingId: number;
-  nbrRooms: number;
+  buildingName: string;
   coreEquipment: string;
-  roomsToReplace: string;
+  fiscalYear: number;
+  nbrRooms: number;
+  includes?: any;
+  length?: any;
+  roomsToReplace: Array<{
+    roomName: string;
+    year: string;
+  }>;
 }
 
 export interface Slides {

@@ -1,7 +1,7 @@
 <div class="container">
   <h1 mat-dialog-title>{{isEdit ? 'Edit Building' : 'Add Building'}}</h1>
-  <div mat-dialog-content>
-    <form [formGroup]="addBuildingForm" (ngSubmit)="onSubmit()" class="form">
+  <div mat-dialog-content id="addBuildingForm">
+    <form [formGroup]="addBuildingForm"  (ngSubmit)="onSubmit()" class="form">
     <div>
       <mat-form-field class="form-element">
         <input matInput maxlength="80" placeholder="Building Name" required="true" formControlName="buildingName" id="buildingName">

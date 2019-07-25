@@ -64,22 +64,22 @@
       <mat-form-field class="form-horizontal">
         <input matInput placeholder="Port" type="text" maxlength="10" formControlName="port">
       </mat-form-field>
-      <mat-form-field class="form-element-small">
-        <input matInput placeholder="Manufacture Warranty" type="number" formControlName="manufactureWarranty">
-      </mat-form-field>
-      <mat-form-field class="form-element-small">
+      <mat-form-field class="form-element-half">
         <input matInput [matDatepicker]="datePicker2" placeholder="Warranty start date" formControlName="warrantyStartDate">
         <mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>
         <mat-datepicker #datePicker2></mat-datepicker>
       </mat-form-field>
+      <mat-form-field class="form-element-half">
+        <input matInput placeholder="Manufacture Warranty" type="number" formControlName="manufactureWarranty">
+      </mat-form-field>
       <br>
-      <mat-form-field class="form-element-small">
+      <mat-form-field class="form-element-half">
         <input matInput [matDatepicker]="datePicker4" placeholder="Extended Warranty/Service Contract Start Date" formControlName="extWarrantyStartDate">
         <mat-datepicker-toggle matSuffix [for]="datePicker4"></mat-datepicker-toggle>
         <mat-datepicker #datePicker4></mat-datepicker>
       </mat-form-field>
-      <mat-form-field class="form-element-small">
-        <input matInput placeholder="Extended Warranty/Service Contract Length" maxlength="100" type="text" formControlName="extendedWarranty">
+      <mat-form-field class="form-element-half">
+        <input matInput placeholder="Extended Warranty/Service Contract Length" maxlength="100" type="number" formControlName="extendedWarranty">
       </mat-form-field>
       <mat-form-field class="form-element">
         <input matInput placeholder="Extended Warranty/Service Contract Provider" maxlength="100" formControlName="extendedWarrantyProvider">

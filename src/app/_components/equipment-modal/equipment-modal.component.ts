@@ -1,10 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {EquipmentDetail, EquipmentDetailUpdate} from '../../_models/systems.model';
+import {EquipmentDetail, EquipmentDetailUpdate, Rooms} from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import {MatSnackBar} from "@angular/material";
+import {MatDialog, MatSnackBar} from '@angular/material';
 import * as moment from 'moment';
+import {ConfirmModalComponent} from '../confirm-modal/confirm-modal.component';
+import {RoomsTableComponent} from "../rooms-table/rooms-table.component";
 
 
 @Component({
@@ -16,25 +18,43 @@ import * as moment from 'moment';
 export class EquipmentModalComponent implements OnInit {
   @Input() equipmentId: string;
   @Input() roomId: string;
+  @Input() dataSource: string;
   @Output() close = new EventEmitter<boolean>();
 
   public data: EquipmentDetail;
   public isEdit: Boolean = false;
   public roomIdC: number;
+  public buildingName: string = '';
   public form: FormGroup;
-
+  roomList: any;
+  buildingsArr: any;
+  buildingData: any;
 
   constructor(
     private systServ: SystemsService,
     private globalVars: GlobalVarsHelper,
     private formBuilder: FormBuilder,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    public dialog: MatDialog,
 
   ) {
 
   }
 
   ngOnInit() {
+    const equipData = JSON.parse(this.dataSource)
+    const currentEquipment = equipData.filter(item => item.equipmentId == this.equipmentId);
+    this.buildingName = currentEquipment[0].building;
+    this.buildingData = currentEquipment[0];
+
+
+    this.systServ.getBuildings()
+      .subscribe(data => {
+        this.buildingsArr = data.systemBuilding.buildings;
+        console.log(this.buildingsArr);
+      }, error => {
+        console.log(error);
+      });
     this.getEquipmentDetail();
   }
 
@@ -47,6 +67,29 @@ export class EquipmentModalComponent implements OnInit {
   }
 
 
+  getRooms() {
+    this.systServ.getRoomIds()
+      .subscribe((data) => {
+        this.roomList = data;
+      }, error2 => {
+        console.log(error2);
+      });
+  }
+
+  buildingChanged() {
+    this.globalVars.spinner = true;
+
+    this.systServ.getBuildingRooms(this.form.value.buildings)
+      .subscribe((data: Rooms) => {
+        this.roomList = data.rooms;
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+
+
   getEquipmentDetail() {
     this.globalVars.spinner = true;
 
@@ -54,6 +97,9 @@ export class EquipmentModalComponent implements OnInit {
       .subscribe((data: EquipmentDetail) => {
       this.data = data;
         this.form = this.formBuilder.group({
+          buildings: this.data ? this.buildingData.buildingId : '',
+          alternateLocation: '',
+          rooms: this.data ? this.data.roomId : '',
           room: [this.data.room],
           altLocation: [this.data.altLocation],
           manufacturer: [this.data.manufacturer],
@@ -138,7 +184,10 @@ export class EquipmentModalComponent implements OnInit {
   }
 
   confirmCancel() {
-
+    const dialogRef = this.dialog.open(ConfirmModalComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      this.isEdit = false;
+    });
   }
 
 

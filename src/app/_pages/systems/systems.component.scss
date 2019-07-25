@@ -1,20 +1,24 @@
 .header{
 
-  .slider{
-    margin: 20px 50px;
-    display: flex;
-    align-items: safe;
-    justify-content: flex-start;
-    position: relative;
 
+  .slider{
+    //margin: 20px 50px;
+    //display: flex;
+    //align-items: safe;
+    //justify-content: flex-start;
+    position: relative;
+    .siema{
+      margin: 0 30px;
+      padding: 0 5px;
+    }
     .slide{
       background: #fff;
-      padding: 10px;
+      margin: 10px;
       box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
       border-radius: 4px;
-      width: 22%;
-      margin-left: 20px;
-      min-height: 140px;
+      //width: 22%;
+      //margin-left: 20px;
+      min-height: 240px;
       position: relative;
 
 
@@ -65,10 +69,10 @@
      top: calc(50% - 20px);
    }
   .previousSlide{
-      left: -50px
+      left: 0px
     }
   .nextSlide{
-      right: -50px
+      right: 0px
     }
   }
 

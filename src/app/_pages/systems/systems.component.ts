@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Slides, RoomDetails, Room, Buildings, Rooms, Equipment, RoomDTO } from '../../_models/systems.model';
+import {Slides, RoomDetails, Room, Buildings, Rooms, Equipment, RoomDTO, SlideData} from '../../_models/systems.model';
 import { SystemsService } from '../../_services/systems.service';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -13,7 +13,8 @@ import {AddProjectDescComponent} from '../../_components/add-project-desc/add-pr
 import {AddRoomComponent} from '../../_components/add-room/add-room.component';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {AddEquipmentComponent} from '../../_components/add-equipment/add-equipment.component';
-import {AddBuildingComponent} from "../../_components/add-building/add-building.component";
+import {AddBuildingComponent} from '../../_components/add-building/add-building.component';
+import Siema from 'siema';
 
 
 @Component({
@@ -23,7 +24,7 @@ import {AddBuildingComponent} from "../../_components/add-building/add-building.
 })
 
 export class SystemsComponent implements OnInit {
-  public dataSlides: any = [];
+  public dataSlides: SlideData[] = [];
   public equipmentsLocal: string = '0';
   public dataRooms: Array<Room> = [];
   public roomDetailData: RoomDetails;
@@ -181,6 +182,8 @@ export class SystemsComponent implements OnInit {
   public documents: any;
   public projectDesc: any;
   public roomHist: any;
+  public mySiema: any;
+  public sliderFlag: Boolean = false;
   public mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
@@ -230,17 +233,24 @@ export class SystemsComponent implements OnInit {
     this.getAllEquipments();
     this.systServ.getBuildings()
       .subscribe((data: Buildings) => {
-      this.dataSlides = data.systemBuilding.buildings;
-        this.dataSlides.forEach((item, index) => {
-          let totalSl = 3;
-          if(this.mobileQuery.matches){
-            totalSl = 0;
-          }
-          this.currentSlides['index'] = totalSl;
-          if (index <= totalSl) {
-            this.currentSlides['slides'].push(item);
-          }
+      for (let i = 0; i < data.systemBuilding.buildings.length; i++) {
+        this.dataSlides.push(data.systemBuilding.buildings[i]);
+      }
+      setTimeout( () => {
+        this.mySiema = new Siema({
+          selector: '.siema',
+          duration: 200,
+          easing: 'ease-out',
+          perPage: {
+            768: 1,
+            1024: 2,
+            1280: 4,
+          },
+          startIndex: 0,
+          loop: true,
+          rtl: false,
         });
+      }, 200);
         this.globalVars.spinner = false;
       }, error => {
         console.log(error);
@@ -251,31 +261,12 @@ export class SystemsComponent implements OnInit {
     return this.form.value;
   }
   previousSlide() {
-    let totalSl = 3;
-    if(this.mobileQuery.matches) {
-      totalSl = 0;
-    }
-    if ((this.currentSlides.index - totalSl) >= 0) {
-      this.currentSlides['slides'].unshift(this.dataSlides[this.currentSlides.index - totalSl]);
-      --this.currentSlides.index;
-      this.currentSlides['slides'].pop();
-    } else {
-      this.currentSlides.index = this.dataSlides.length + 2;
-      this.currentSlides['slides'].unshift(this.dataSlides[this.currentSlides.index - totalSl]);
-      --this.currentSlides.index;
-      this.currentSlides['slides'].pop();
-    }
+    this.mySiema.prev();
+
   }
   nextSlide() {
-    if (this.currentSlides.index < (this.dataSlides.length - 1)) {
-      ++this.currentSlides.index;
-      this.currentSlides['slides'].push(this.dataSlides[this.currentSlides.index]);
-      this.currentSlides['slides'].shift();
-    } else {
-      this.currentSlides.index = 0;
-      this.currentSlides['slides'].shift();
-      this.currentSlides['slides'].push(this.dataSlides[this.currentSlides.index]);
-    }
+    this.mySiema.next();
+
   }
   openBuildingDetail(id: number | string) {
     this.dataSource = '';
@@ -602,8 +593,9 @@ export class SystemsComponent implements OnInit {
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
-
-
+  trackByFn(index, item) {
+    return index;
+  }
 
 
 }
