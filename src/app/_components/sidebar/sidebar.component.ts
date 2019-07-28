@@ -24,6 +24,7 @@ export class SidebarComponent implements OnInit {
       if (val instanceof NavigationEnd) {
         this.currentRoute = val.url;
         this.sessionGet('expire');
+        this.updateSession('expire');
       }
     });
 
@@ -35,7 +36,7 @@ export class SidebarComponent implements OnInit {
   }
 
   sessionGet(key) {
-    const stringValue = window.sessionStorage.getItem(key)
+    const stringValue = window.sessionStorage.getItem(key);
     if (stringValue !== null) {
       const value = stringValue;
       const expirationDate = new Date(value);
@@ -49,6 +50,18 @@ export class SidebarComponent implements OnInit {
       }
     }
     return null;
+  }
+
+  updateSession(key) {
+    const user = window.sessionStorage.getItem('currentUser');
+
+    if (user != null) {
+      const expirationDate = new Date(new Date().getTime() + (60000 * 20));
+      const duration = expirationDate.toISOString();
+      window.sessionStorage.setItem('expire', duration);
+    } else {
+      window.sessionStorage.removeItem(key);
+    }
   }
 
 

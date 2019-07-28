@@ -20,44 +20,7 @@ import {AddEquipmentComponent} from "../../_components/add-equipment/add-equipme
   styleUrls: ['./roomdetail.component.scss']
 })
 export class RoomdetailComponent implements OnInit {
-  public roomDetailImages: string = JSON.stringify([
-    {
-      path: 'http://rgho.st/7grz5TWyD/image.png',
-    },
-    {
-      path: 'http://rgho.st/8nyCMrhll/image.png',
-    },
-    {
-      path: 'http://rgho.st/8jbyWsDQb/image.png',
-    },
-    {
-      path: 'http://rgho.st/8ytmtzhWC/image.png',
-    },
-    {
-      path: 'http://rgho.st/7k8wxbH7Q/image.png',
-    },
-    {
-      path: 'http://rgho.st/6mjjRhxVY/image.png',
-    },
-    {
-      path: 'http://rgho.st/7k8wxbH7Q/image.png',
-    },
-    {
-      path: 'http://rgho.st/7bb8yYqJl/image.png',
-    },
-    {
-      path: 'http://rgho.st/7JlZ7r5JL/image.png',
-    },
-    {
-      path: 'http://rgho.st/7BpkM8Ts7/image.png',
-    },
-    {
-      path: 'http://rgho.st/7yjj7y9Td/image.png',
-    },
-    {
-      path: 'http://rgho.st/74mmXys6l/image.png',
-    },
-  ]);
+  public roomDetailImages: String = ''
 
   public form: FormGroup;
   public roomModalShownEdit: Boolean = false;
@@ -154,6 +117,21 @@ export class RoomdetailComponent implements OnInit {
             roomType: [data.roomType],
 
           });
+
+          const imgArr = [];
+          if (data.images.length > 0) {
+            data.images.forEach(item => {
+              imgArr.push({
+                'path': item
+              });
+            });
+            this.roomDetailImages = JSON.stringify(imgArr)
+
+          } else {
+            this.roomDetailImages = JSON.stringify([])
+          }
+
+
           this.globalVars.spinner = false;
         }, error => {
           this.globalVars.spinner = false;

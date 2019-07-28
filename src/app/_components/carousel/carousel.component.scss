@@ -47,6 +47,12 @@
         width: 100%;
         background-position: center;
         background-size: cover;
+        //background-image: attr(data-src url);
+
+        img{
+          width: 100%;
+          height: auto;
+        }
       }
     }
   }

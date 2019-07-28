@@ -11,7 +11,7 @@ export class CarouselComponent implements OnInit {
   @Input() roomDetailImages: string;
   @ViewChild('carousel', {read: DragScrollComponent}) ds: DragScrollComponent;
 
-  public mainPictureIndex: number = 0;
+  public mainPictureIndex: any = 0;
   public images: Array<{path: string}> = [];
 
 
@@ -20,6 +20,7 @@ export class CarouselComponent implements OnInit {
   ) {
   }
   ngOnInit() {
+    console.log(this)
     this.images = JSON.parse(this.roomDetailImages);
   }
   previousSlideRoom() {
@@ -36,5 +37,10 @@ export class CarouselComponent implements OnInit {
       this.mainPictureIndex = 0;
     }
 
+  }
+
+
+  regeneratePath(path) {
+    return 'url("' + path + '")';
   }
 }

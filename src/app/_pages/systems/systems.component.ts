@@ -66,44 +66,7 @@ export class SystemsComponent implements OnInit {
     }]);
   public dataRoomSource: string;
   public dataSource: string;
-  public roomDetailImages: string = JSON.stringify([
-    {
-      path: 'http://rgho.st/7grz5TWyD/image.png',
-    },
-    {
-      path: 'http://rgho.st/8nyCMrhll/image.png',
-    },
-    {
-      path: 'http://rgho.st/8jbyWsDQb/image.png',
-    },
-    {
-      path: 'http://rgho.st/8ytmtzhWC/image.png',
-    },
-    {
-      path: 'http://rgho.st/7k8wxbH7Q/image.png',
-    },
-    {
-      path: 'http://rgho.st/6mjjRhxVY/image.png',
-    },
-    {
-      path: 'http://rgho.st/7k8wxbH7Q/image.png',
-    },
-    {
-      path: 'http://rgho.st/7bb8yYqJl/image.png',
-    },
-    {
-      path: 'http://rgho.st/7JlZ7r5JL/image.png',
-    },
-    {
-      path: 'http://rgho.st/7BpkM8Ts7/image.png',
-    },
-    {
-      path: 'http://rgho.st/7yjj7y9Td/image.png',
-    },
-    {
-      path: 'http://rgho.st/74mmXys6l/image.png',
-    },
-  ]);
+  public roomDetailImages: String = ''
   public form: FormGroup;
   public roomId: number = null;
   public equipments: Equipment[] = [];
@@ -335,6 +298,18 @@ export class SystemsComponent implements OnInit {
           roomType: [data.roomType],
         });
         this.equipmentsLocal = '0';
+        const imgArr = [];
+        if (data.images.length > 0) {
+          data.images.forEach(item => {
+            imgArr.push({
+              'path': item
+            });
+          });
+          this.roomDetailImages = JSON.stringify(imgArr)
+
+        } else {
+          this.roomDetailImages = JSON.stringify([])
+        }
 
         this.getDocuments(this.roomId);
         this.getProjectDesc(this.roomId);
@@ -593,6 +568,8 @@ export class SystemsComponent implements OnInit {
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
+
+
   trackByFn(index, item) {
     return index;
   }

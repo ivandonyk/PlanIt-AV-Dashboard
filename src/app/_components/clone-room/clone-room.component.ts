@@ -3,18 +3,20 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatDialog, MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
-import {Room} from '../../_models/systems.model';
 import {UploadDocumentComponent} from '../upload-document/upload-document.component';
 import {AddPhotosComponent} from "../upload-photos/upload-photos.component";
 import {AddNoteComponent} from "../add-note/add-note.component";
+import {BuildingsIds, Rooms} from "../../_models/systems.model";
 
 @Component({
-  selector: 'app-add-room',
+  selector: 'app-clone-room',
   templateUrl: './clone-room.component.html',
   styleUrls: ['./clone-room.component.scss']
 })
 export class CloneRoomComponent implements OnInit {
-  public addRoomForm = this.fb.group({
+  public cloneRoomForm = this.fb.group({
+    buildingId: new FormControl(''),
+    buildings: new FormControl(''),
     roomChooseName: new FormControl(''),
     roomName: new FormControl(''),
     tier: new FormControl(''),
@@ -49,10 +51,11 @@ export class CloneRoomComponent implements OnInit {
   public tiers: string[] = [
     '1', '2', '3', '4', '5'
   ];
-  public buildings: string[] = [
-    'Orange Building', 'Building 1', 'Secret Building', 'Square Building', 'UFO Building'
+  roomList: any;
+  buildingsArr: any;
 
-  ];
+
+  public buildings: BuildingsIds[] = [];
   public rooms: any = [];
   public seatingTypes: string[] = [
     'Conference', 'Table', 'Fixed Classroom', 'Flexible', 'Theater'
@@ -72,58 +75,76 @@ export class CloneRoomComponent implements OnInit {
   ngOnInit() {
     this.systServ.getBuildings()
       .subscribe(data => {
+        this.buildingsArr = data.systemBuilding.buildings;
         this.rooms = data.systemBuilding.rooms;
       }, error => {
         console.log(error);
       });
-  }
 
+
+  }
+  getRooms() {
+    this.systServ.getRoomIds()
+      .subscribe((data) => {
+        this.roomList = data;
+      }, error2 => {
+        console.log(error2);
+      });
+  }
   revert() {
-    this.addRoomForm.reset();
+    this.cloneRoomForm.reset();
+  }
+  buildingChanged() {
+    this.globalVars.spinner = true;
+
+    this.systServ.getBuildingRooms(this.cloneRoomForm.value.buildings)
+      .subscribe((data: Rooms) => {
+        this.roomList = data.rooms;
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
   }
 
 
   onSubmit() {
-    console.log(this)
-    this.globalVars.spinner = true;
-    this.systServ.addRoom(this.addRoomForm.value)
-      .subscribe(data => {
-        console.log(data);
-        this.globalVars.spinner = false;
-        this.dialogRef.close();
-        this.snackbar.open('Room Added', '', {
-            duration: 1500,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          }
-        );
-      }, error => {
-        this.globalVars.spinner = false;
-        console.log(error);
-      });
+    console.log(this);
+    // this.globalVars.spinner = true;
+    // this.systServ.addRoom(this.cloneRoomForm.value)
+    //   .subscribe(data => {
+    //     console.log(data);
+    //     this.globalVars.spinner = false;
+    //     this.dialogRef.close();
+    //     this.snackbar.open('Room Added', '', {
+    //         duration: 1500,
+    //         verticalPosition: 'top',
+    //         horizontalPosition: 'right',
+    //       }
+    //     );
+    //   }, error => {
+    //     this.globalVars.spinner = false;
+    //     console.log(error);
+    //   });
   }
 
 
   cancel() {
     this.dialogRef.close();
   }
-
   get roomName() {
-    return this.addRoomForm.get('roomName');
+    return this.cloneRoomForm.get('roomName');
   }
-
   get tier() {
-    return this.addRoomForm.get('tier');
+    return this.cloneRoomForm.get('tier');
   }
-
   getRoomNameErrorMessage() {
     return this.roomName.hasError('required') ? 'Room Name is required' : '';
   }
-
   getRoomData(event) {
     this.systServ.getRoomDetails(event)
       .subscribe(data => {
-      this.addRoomForm = this.fb.group({
+      this.cloneRoomForm = this.fb.group({
           roomName: new FormControl(''),
           tier: [data.tier],
           floor: [data.floor],
@@ -154,24 +175,20 @@ export class CloneRoomComponent implements OnInit {
         console.log(error);
       });
   }
-
-
-
   openDialogAddPhoto(): void {
     console.log(this)
     const dialogRef = this.dialog.open(AddPhotosComponent, {
       data: {
-        form: this.addRoomForm.value,
+        form: this.cloneRoomForm.value,
         roomId: '',
         buildingId: '',
       }
     });
   }
-
   openDialogAddNote(): void {
     const dialogRef = this.dialog.open(AddNoteComponent, {
       data: {
-        form: this.addRoomForm.value,
+        form: this.cloneRoomForm.value,
         roomId: '',
         buildingId: '',
       }
@@ -184,7 +201,7 @@ export class CloneRoomComponent implements OnInit {
   openDialogUploadDocument(): void {
     const dialogRef = this.dialog.open(UploadDocumentComponent, {
       data: {
-        form: this.addRoomForm.value,
+        form: this.cloneRoomForm.value,
         roomId: '',
         buildingId: '',
       }

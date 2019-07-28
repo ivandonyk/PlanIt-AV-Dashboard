@@ -33,7 +33,7 @@
     <mat-expansion-panel *ngFor="let panel of ProjPlanSum" >
       <mat-expansion-panel-header (click)="getProjPlanDetail(panel.year)">
         <mat-panel-title>
-          {{panel.year ? panel.year : 'N/A'}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{panel.projects}} &nbsp;&nbsp;&nbsp;&nbsp; ${{panel.amount}}
+          {{panel.year ? panel.year : 'N/A'}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{panel.projects}} &nbsp;&nbsp;&nbsp;&nbsp; ${{numberWithCommas(panel.amount)}}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="table-container" >

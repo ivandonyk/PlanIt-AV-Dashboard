@@ -124,7 +124,7 @@ export class AddBuildingComponent implements OnInit {
 
 
       if (this.data) {
-        this.systService.updBuilding(addBuildingApiModel)
+        this.systService.updBuilding(addBuildingApiModel, this.data.buildingId)
           .subscribe(data => {
             console.log(data);
             this.dialogRef.close();

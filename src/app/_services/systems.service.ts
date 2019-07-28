@@ -161,7 +161,7 @@ export class SystemsService {
     formData.append('userName', userData.userName);
     return this.httpClient.post<any>(environment.baseUrl + '/uploadDoc', formData);
   }
-  updBuilding(data): Observable<any> {
+  updBuilding(data, id): Observable<any> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
     const formData = new FormData();
     formData.append('buildingName', data.buildingName);
@@ -178,7 +178,7 @@ export class SystemsService {
     formData.append('contactLastName', data.contactLastName);
     formData.append('contactPhoneNbr', data.contactPhoneNbr);
     formData.append('contactEmail', data.contactEmail);
-    formData.append('buildingId', data.buildingId);
+    formData.append('buildingId', id);
     formData.append('userName', userData.userName);
 
     return this.httpClient.post<any>(environment.baseUrl + '/updBuilding', formData);
