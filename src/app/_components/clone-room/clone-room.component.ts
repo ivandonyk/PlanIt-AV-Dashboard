@@ -7,6 +7,7 @@ import {UploadDocumentComponent} from '../upload-document/upload-document.compon
 import {AddPhotosComponent} from "../upload-photos/upload-photos.component";
 import {AddNoteComponent} from "../add-note/add-note.component";
 import {BuildingsIds, Rooms} from "../../_models/systems.model";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-clone-room',
@@ -17,6 +18,7 @@ export class CloneRoomComponent implements OnInit {
   public cloneRoomForm = this.fb.group({
     buildingId: new FormControl(''),
     buildings: new FormControl(''),
+    roomOld: new FormControl(''),
     roomChooseName: new FormControl(''),
     roomName: new FormControl(''),
     tier: new FormControl(''),
@@ -110,22 +112,22 @@ export class CloneRoomComponent implements OnInit {
 
   onSubmit() {
     console.log(this);
-    // this.globalVars.spinner = true;
-    // this.systServ.addRoom(this.cloneRoomForm.value)
-    //   .subscribe(data => {
-    //     console.log(data);
-    //     this.globalVars.spinner = false;
-    //     this.dialogRef.close();
-    //     this.snackbar.open('Room Added', '', {
-    //         duration: 1500,
-    //         verticalPosition: 'top',
-    //         horizontalPosition: 'right',
-    //       }
-    //     );
-    //   }, error => {
-    //     this.globalVars.spinner = false;
-    //     console.log(error);
-    //   });
+    this.globalVars.spinner = true;
+    this.systServ.addRoom(this.cloneRoomForm.value)
+      .subscribe(data => {
+        console.log(data);
+        this.globalVars.spinner = false;
+        this.dialogRef.close();
+        this.snackbar.open('Room Added', '', {
+            duration: 1500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
+      }, error => {
+        this.globalVars.spinner = false;
+        console.log(error);
+      });
   }
 
 
@@ -142,34 +144,38 @@ export class CloneRoomComponent implements OnInit {
     return this.roomName.hasError('required') ? 'Room Name is required' : '';
   }
   getRoomData(event) {
-    this.systServ.getRoomDetails(event)
+    this.systServ.getRoomDetails(event.value)
       .subscribe(data => {
       this.cloneRoomForm = this.fb.group({
-          roomName: new FormControl(''),
+          buildingId: data.buildingId ? data.buildingId : this.cloneRoomForm.value.buildingId,
+          buildings: this.cloneRoomForm.value.buildings,
+          roomOld: this.cloneRoomForm.value.roomOld,
+          roomChooseName: this.cloneRoomForm.value.roomChooseName,
+          roomName: data.roomName ? data.roomName : this.cloneRoomForm.value.roomName,
           tier: [data.tier],
           floor: [data.floor],
-          roomType: new FormControl(''),
-          coreAge: new FormControl(''),
-          integrator: new FormControl(''),
-          lastInstallDate : new FormControl(''),
-          origAvInstallDate : new FormControl(''),
-          lifecycle : new FormControl(''),
-          origAvSystemCost : new FormControl(''),
-          origAvContractor: new FormControl(''),
-          avLastUpdateDate: new FormControl(''),
-          avLastUpdateCost: new FormControl(''),
-          lastAvContractor: new FormControl(''),
-          nextAvUpdateDt: new FormControl(''),
-          nextAvUpdCost: new FormControl(''),
-          notes: new FormControl(''),
-          equipmentAge: new FormControl(''),
-          replaceUpg: new FormControl(''),
-          dateOfLastRemodel: [''],
-          seatingCapacity: new FormControl(''),
-          seatingType: new FormControl(''),
-          dimensions: new FormControl('' ),
-          ceilingHeight : new FormControl(''),
-          ceilingType : new FormControl(''),
+          roomType: data.roomType ? data.roomType : this.cloneRoomForm.value.roomType,
+          coreAge: data.coreAge ? data.coreAge : this.cloneRoomForm.value.coreAge,
+          integrator: data.integrator ? data.integrator : this.cloneRoomForm.value.integrator,
+          lastInstallDate : data.lastInstallDate  ? moment(data.lastInstallDate).toISOString() : this.cloneRoomForm.value.lastInstallDate ,
+          origAvInstallDate : data.origAvInstallDate  ? moment(data.origAvInstallDate).toISOString() : this.cloneRoomForm.value.origAvInstallDate ,
+          lifecycle : data.lifecycle  ? data.lifecycle  : this.cloneRoomForm.value.lifecycle ,
+          origAvSystemCost : data.origAvSystemCost  ? data.origAvSystemCost  : this.cloneRoomForm.value.origAvSystemCost ,
+          origAvContractor: data.origAvContractor ? data.origAvContractor : this.cloneRoomForm.value.origAvContractor,
+          avLastUpdateDate: data.avLastUpdateDate ? moment(data.avLastUpdateDate).toISOString() : this.cloneRoomForm.value.avLastUpdateDate,
+          avLastUpdateCost: data.avLastUpdateCost ? data.avLastUpdateCost : this.cloneRoomForm.value.avLastUpdateCost,
+          lastAvContractor: data.lastAvContractor ? data.lastAvContractor : this.cloneRoomForm.value.lastAvContractor,
+          nextAvUpdateDt: data.nextAvUpdateDt ? data.nextAvUpdateDt : this.cloneRoomForm.value.nextAvUpdateDt,
+          nextAvUpdCost: data.nextAvUpdCost ? data.nextAvUpdCost : this.cloneRoomForm.value.nextAvUpdCost,
+          notes: data.notes ? data.notes : this.cloneRoomForm.value.notes,
+          equipmentAge: data.equipmentAge ? data.equipmentAge : this.cloneRoomForm.value.equipmentAge,
+          replaceUpg: data.replaceUpg ? data.replaceUpg : this.cloneRoomForm.value.replaceUpg,
+          dateOfLastRemodel: data.dateOfLastRemodel ? data.dateOfLastRemodel : this.cloneRoomForm.value.dateOfLastRemodel,
+          seatingCapacity: data.seatingCapacity ? data.seatingCapacity : this.cloneRoomForm.value.seatingCapacity,
+          seatingType: data.seatingType ? data.seatingType : this.cloneRoomForm.value.seatingType,
+          dimensions: data.dimensions ? data.dimensions : this.cloneRoomForm.value.dimensions,
+          ceilingHeight : data.ceilingHeight  ? data.ceilingHeight  : this.cloneRoomForm.value.ceilingHeight ,
+          ceilingType : data.ceilingType  ? data.ceilingType  : this.cloneRoomForm.value.ceilingType ,
       });
       }, error => {
         console.log(error);

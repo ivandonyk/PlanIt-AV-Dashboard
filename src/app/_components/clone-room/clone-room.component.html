@@ -9,7 +9,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="form-element">
-        <mat-select matInput placeholder="Room to clone" (valueChange)="getRoomData($event)" >
+        <mat-select matInput placeholder="Room to clone" formControlName="roomOld" (selectionChange)="getRoomData($event)" >
           <mat-option *ngFor="let room of roomList" [value]="room.roomId">{{room.roomName}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -120,13 +120,12 @@
         </button>
       </div>
       <div class="mat-dialog-actions">
-        <button mat-raised-button color="primary" class="red-btn" type="submit" >Clone</button>
+        <button mat-raised-button color="primary" type="submit" class="red-btn"  >Clone</button>
+
         <button mat-raised-button color="primary" class="red-btn" (click)="revert()">Reset</button>
         <button mat-raised-button color="primary" class="red-btn" (click)="cancel()" >Cancel</button>
       </div>
     </form>
-
   </div>
 <br/>
-
 </div>

@@ -3,7 +3,7 @@ import { ProjectPlanningService } from '../../_services/project-planning.service
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { ProjectPlanList, ProjectPlan, ProjPlanDetailObj } from '../../_models/project-plannings.model';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {RoomDetails, RoomDTO} from '../../_models/systems.model';
+import {Equipment, RoomDetails, RoomDTO} from '../../_models/systems.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import {SystemsService} from '../../_services/systems.service';
@@ -38,6 +38,8 @@ export class ProjectPlanningComponent {
   public documents: any;
   public projectDesc: any;
   public roomHist: any;
+  public equipmentId: number;
+  public equipmentsString: string;
 
   public displayedLocalColumnsEquipments: string = JSON.stringify([
     {
@@ -123,6 +125,7 @@ export class ProjectPlanningComponent {
   ) {
     this.globalVars.spinner = true;
     this.getProjPlanSum();
+    this.getAllEquipments();
     // setInterval(() => {
     //   this.getProjPlanSum();
     //
@@ -264,10 +267,6 @@ export class ProjectPlanningComponent {
       this.roomModalShownEdit = false;
     });
   }
-
-
-
-
   getEquipment(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getEquipments(roomId)
@@ -459,11 +458,33 @@ export class ProjectPlanningComponent {
       }
     });
   }
-
-
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
+
+  updateEquipmen() {
+    this.getAllEquipments();
+  }
+
+  getAllEquipments() {
+    this.equipmentsString = '';
+    this.globalVars.spinner = true;
+    this.systServ.getAllEquipments()
+      .subscribe((data: Equipment[]) => {
+        this.equipmentsString = JSON.stringify(data);
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+
+  opemEquipmentDetailed(status, id?: number) {
+    console.log(id);
+    this.equipmentId = id;
+  }
+
+
 }
 
 

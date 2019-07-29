@@ -19,9 +19,10 @@ export class ConfirmModalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 
   cancel() {
+    this.dialogRef.close(false);
   }
 }

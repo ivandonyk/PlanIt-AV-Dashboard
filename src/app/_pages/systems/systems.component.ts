@@ -35,6 +35,7 @@ export class SystemsComponent implements OnInit {
   };
   public roomModalShown: Boolean = false;
   public roomModalShownEdit: Boolean = false;
+  public isRoomFormChanged: Boolean = false;
   public displayedColumns: string = JSON.stringify([
     {
       key: 'buildingName',
@@ -269,6 +270,7 @@ export class SystemsComponent implements OnInit {
       });
   }
   getRoomDet() {
+    this.isRoomFormChanged = false;
     this.systServ.getRoomDetails(this.roomId)
       .subscribe((data: RoomDetails) => {
         console.log(data);
@@ -311,6 +313,13 @@ export class SystemsComponent implements OnInit {
           this.roomDetailImages = JSON.stringify([])
         }
 
+        this.form.statusChanges
+          .subscribe(value => {
+            console.log(value);
+            this.isRoomFormChanged = true;
+          }, error => {
+            console.log(error);
+          });
         this.getDocuments(this.roomId);
         this.getProjectDesc(this.roomId);
         this.getRoomHist(this.roomId);
@@ -458,9 +467,6 @@ export class SystemsComponent implements OnInit {
     this.getAllEquipments();
   }
 
-
-
-
   updateRoom() {
     this.globalVars.spinner = true;
     const room: RoomDTO = {
@@ -506,10 +512,20 @@ export class SystemsComponent implements OnInit {
       });
   }
   confirmCancel(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    if (this.isRoomFormChanged === true) {
+      const dialogRef = this.dialog.open(ConfirmModalComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result)
+        if (result === true) {
+          this.updateRoom();
+        } else {
+          this.roomModalShownEdit = false;
+        }
+      });
+    } else {
       this.roomModalShownEdit = false;
-    });
+    }
+
   }
   getDocuments(roomId) {
     this.globalVars.spinner = true;

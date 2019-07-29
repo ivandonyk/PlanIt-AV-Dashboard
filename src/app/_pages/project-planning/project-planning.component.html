@@ -199,6 +199,7 @@
       </mat-expansion-panel-header>
       <app-room-table-component
         *ngIf="equipmentsLocal != '0'"
+        (clickRow)="opemEquipmentDetailed(true, $event)"
         dataSource="{{equipmentsLocal}}"
         displayedColumns="{{displayedLocalColumnsEquipments}}"
       ></app-room-table-component>
@@ -358,6 +359,15 @@
     </div>
   </div>
 </div>
+
+
+
+<app-equipment-modal
+  *ngIf="equipmentId"
+  equipmentId="{{equipmentId}}"
+  dataSource="{{equipmentsString}}"
+  (close)="updateEquipmen(); equipmentId = null">
+</app-equipment-modal>
 
 
 
