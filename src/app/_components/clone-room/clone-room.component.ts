@@ -8,6 +8,7 @@ import {AddPhotosComponent} from "../upload-photos/upload-photos.component";
 import {AddNoteComponent} from "../add-note/add-note.component";
 import {BuildingsIds, Rooms} from "../../_models/systems.model";
 import * as moment from 'moment';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 @Component({
   selector: 'app-clone-room',
@@ -71,6 +72,7 @@ export class CloneRoomComponent implements OnInit {
     private snackbar: MatSnackBar,
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
+    public authServ: AuthenticationService,
     private dialog: MatDialog
   ) { }
 
@@ -81,6 +83,9 @@ export class CloneRoomComponent implements OnInit {
         this.rooms = data.systemBuilding.rooms;
       }, error => {
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
 
 
@@ -89,8 +94,11 @@ export class CloneRoomComponent implements OnInit {
     this.systServ.getRoomIds()
       .subscribe((data) => {
         this.roomList = data;
-      }, error2 => {
-        console.log(error2);
+      }, error => {
+        console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   revert() {
@@ -106,6 +114,9 @@ export class CloneRoomComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 
@@ -127,6 +138,9 @@ export class CloneRoomComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 
@@ -179,6 +193,9 @@ export class CloneRoomComponent implements OnInit {
       });
       }, error => {
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   openDialogAddPhoto(): void {

@@ -22,10 +22,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    if (sessionStorage.getItem('currentUser') !== null) {
+    if (sessionStorage.getItem('token') !== null) {
       this.router.navigate(['/home/dashboard']);
     } else {
-      this.authService.logout();
+      // this.authService.logout();
 
     }
 
@@ -46,18 +46,29 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.f.userName.value, this.f.password.value)
       .subscribe(user => {
 
-        if (user && user.token) {
+        if (user && user.access_token) {
 
 
-          const expirationDate = new Date(new Date().getTime() + (60000 * 20));
+          const expirationDate = new Date(new Date().getTime() + (user.expires_in * 1000));
           const duration = expirationDate.toISOString();
+          window.sessionStorage.setItem('expires_in', String(user.expires_in));
           window.sessionStorage.setItem('expire', duration);
-          window.sessionStorage.setItem('currentUser', JSON.stringify(user));
-          if (this.returnUrl !== '/') {
-            this.router.navigate([this.returnUrl]);
-          } else {
-            this.router.navigate(['/home/dashboard']);
-          }
+          window.sessionStorage.setItem('token', user.access_token);
+          this.authService.getUserData(this.f.userName.value)
+            .subscribe(data => {
+              window.sessionStorage.setItem('currentUser', JSON.stringify(data));
+
+              if (this.returnUrl !== '/') {
+                this.router.navigate([this.returnUrl]);
+              } else {
+                this.router.navigate(['/home/dashboard']);
+              }
+            }, error => {
+              console.log(error)
+            })
+
+
+
 
         }
       }, error => {

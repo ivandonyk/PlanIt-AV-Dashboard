@@ -12,6 +12,7 @@ import {AddNoteComponent} from '../../_components/add-note/add-note.component';
 import {UploadDocumentComponent} from '../../_components/upload-document/upload-document.component';
 import {AddProjectDescComponent} from '../../_components/add-project-desc/add-project-desc.component';
 import {AddEquipmentComponent} from "../../_components/add-equipment/add-equipment.component";
+import {AuthenticationService} from "../../_services/authentication.service";
 
 
 @Component({
@@ -71,6 +72,7 @@ export class RoomdetailComponent implements OnInit {
     private lightbox: Lightbox,
     private snackbar: MatSnackBar,
     public dialog: MatDialog,
+    public authServ: AuthenticationService,
 
   ) {}
 
@@ -136,6 +138,9 @@ export class RoomdetailComponent implements OnInit {
         }, error => {
           this.globalVars.spinner = false;
           console.log(error);
+          if (error.error.error === 'invalid_token'){
+            this.authServ.logout();
+          }
         });
   }
 
@@ -193,6 +198,9 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   getRoomDet() {
@@ -236,6 +244,9 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   updateRoom() {
@@ -280,6 +291,9 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   getDocuments(roomId) {
@@ -291,6 +305,9 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   getProjectDesc(roomId) {
@@ -302,6 +319,9 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   getRoomHist(roomId) {
@@ -313,6 +333,9 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   openDialogAddPhoto(): void {

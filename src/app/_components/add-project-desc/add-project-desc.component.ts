@@ -4,6 +4,7 @@ import {MatDialogRef, MatSnackBar, MatTableModule, MAT_DIALOG_DATA} from '@angul
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {RoomDTO} from '../../_models/systems.model';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 @Component({
   selector: 'app-add-project-desc',
@@ -19,6 +20,7 @@ export class AddProjectDescComponent implements OnInit {
     public dialogRef: MatDialogRef<AddProjectDescComponent>,
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
+    public authServ: AuthenticationService,
     private snackbar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: {projectDesc: any, roomId: number | string, buildingId: number | string}
   ) { }
@@ -55,6 +57,9 @@ export class AddProjectDescComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 

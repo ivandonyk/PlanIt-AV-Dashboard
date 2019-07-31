@@ -5,6 +5,7 @@ import { HandleError } from '../../_services/http-error-handler.service';
 import { UserData } from '../../_models/userdata.model';
 import { SystemsService } from '../../_services/systems.service';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 
 
@@ -57,6 +58,7 @@ export class AddBuildingComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddBuildingComponent>,
+    public authServ: AuthenticationService,
     private snackbar: MatSnackBar,
     private systService: SystemsService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -88,6 +90,9 @@ export class AddBuildingComponent implements OnInit {
           });
         }, error => {
           console.log();
+          if (error.error.error === 'invalid_token'){
+            this.authServ.logout();
+          }
         });
     } else {
       this.isEdit = false;
@@ -109,7 +114,7 @@ export class AddBuildingComponent implements OnInit {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
 
 
-    addBuildingApiModel['businessAccountId'] = userData.businessId;
+    addBuildingApiModel['businessAccountId'] = userData.businessAcctId;
     addBuildingApiModel['userName'] = userData.userName;
 
 
@@ -130,6 +135,9 @@ export class AddBuildingComponent implements OnInit {
             this.dialogRef.close();
 
           }, error => {
+            if (error.error.error === 'invalid_token'){
+              this.authServ.logout();
+            }
             this.snackbar.open(error.message, '', {
                 duration: 3500,
                 verticalPosition: 'top',
@@ -149,6 +157,9 @@ export class AddBuildingComponent implements OnInit {
             );
             this.dialogRef.close();
           }, error => {
+            if (error.error.error === 'invalid_token'){
+              this.authServ.logout();
+            }
             this.snackbar.open(error.message, '', {
                 duration: 3500,
                 verticalPosition: 'top',

@@ -3,6 +3,7 @@ import { SidebarRoutesModule} from './sidebar-routes.module';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { Router, NavigationEnd } from '@angular/router';
+import {AuthenticationService} from "../../_services/authentication.service";
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -18,13 +19,14 @@ export class SidebarComponent implements OnInit {
     public globalVars: GlobalVarsHelper,
     public router: Router,
     public changeDetectorRef: ChangeDetectorRef,
-    public media: MediaMatcher
+    public media: MediaMatcher,
+    public authServ: AuthenticationService,
   ) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.currentRoute = val.url;
         this.sessionGet('expire');
-        this.updateSession('expire');
+        //this.updateSession('expire');
       }
     });
 
@@ -43,9 +45,7 @@ export class SidebarComponent implements OnInit {
       if (expirationDate > new Date()) {
         return value;
       } else {
-        window.sessionStorage.removeItem(key);
-        window.sessionStorage.removeItem('currentUser');
-        window.location.href = window.location.origin + '/login';
+        this.authServ.logout();
 
       }
     }
@@ -53,14 +53,16 @@ export class SidebarComponent implements OnInit {
   }
 
   updateSession(key) {
-    const user = window.sessionStorage.getItem('currentUser');
+    const token = window.sessionStorage.getItem('token');
 
-    if (user != null) {
-      const expirationDate = new Date(new Date().getTime() + (60000 * 20));
+    if (token != null) {
+      const expires_in = window.sessionStorage.getItem('expires_in');
+
+      const expirationDate = new Date(new Date().getTime() + (Number(expires_in) * 1000));
       const duration = expirationDate.toISOString();
       window.sessionStorage.setItem('expire', duration);
     } else {
-      window.sessionStorage.removeItem(key);
+      this.authServ.logout();
     }
   }
 

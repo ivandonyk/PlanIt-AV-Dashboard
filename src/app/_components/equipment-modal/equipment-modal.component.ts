@@ -7,6 +7,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import * as moment from 'moment';
 import {ConfirmModalComponent} from '../confirm-modal/confirm-modal.component';
 import {RoomsTableComponent} from "../rooms-table/rooms-table.component";
+import {AuthenticationService} from "../../_services/authentication.service";
 
 
 @Component({
@@ -36,6 +37,7 @@ export class EquipmentModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackbar: MatSnackBar,
     public dialog: MatDialog,
+    public authServ: AuthenticationService,
 
   ) {
 
@@ -54,6 +56,9 @@ export class EquipmentModalComponent implements OnInit {
         console.log(this.buildingsArr);
       }, error => {
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
     this.getEquipmentDetail();
   }
@@ -71,8 +76,11 @@ export class EquipmentModalComponent implements OnInit {
     this.systServ.getRoomIds()
       .subscribe((data) => {
         this.roomList = data;
-      }, error2 => {
-        console.log(error2);
+      }, error => {
+        console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 
@@ -86,6 +94,9 @@ export class EquipmentModalComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 
@@ -130,6 +141,9 @@ export class EquipmentModalComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   closeModal() {
@@ -177,6 +191,9 @@ export class EquipmentModalComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
 
 

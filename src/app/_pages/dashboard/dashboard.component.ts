@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../_services/dashboard.service';
 import { Dashboard, Systems, Lifecycle, Support } from '../../_models/dashboard.model';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 
 @Component({
@@ -21,7 +22,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashServ: DashboardService,
-    public globalVars: GlobalVarsHelper
+    public globalVars: GlobalVarsHelper,
+    public authServ: AuthenticationService,
 
   ) { }
 
@@ -36,7 +38,10 @@ export class DashboardComponent implements OnInit {
         this.dashboardData = data.dashboard;
         this.globalVars.spinner = false;
       }, error => {
-        console.log(error);
+        console.log(error.error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   getObjectData(key) {

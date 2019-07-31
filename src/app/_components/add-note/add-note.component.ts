@@ -4,6 +4,7 @@ import {MatDialogRef, MatSnackBar, MatTableModule, MAT_DIALOG_DATA} from '@angul
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {RoomDTO} from '../../_models/systems.model';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 @Component({
   selector: 'app-add-note',
@@ -21,6 +22,7 @@ export class AddNoteComponent implements OnInit {
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
     private snackbar: MatSnackBar,
+    private authServ: AuthenticationService,
     @Inject(MAT_DIALOG_DATA) public data: {form: RoomDTO, roomId: number | string, buildingId: number | string}
   ) { }
 
@@ -56,6 +58,9 @@ export class AddNoteComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 

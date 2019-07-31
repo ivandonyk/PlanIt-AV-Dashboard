@@ -16,7 +16,7 @@ export class DashboardService {
 
   getDashboardData(): Observable<Dashboard> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-    const params = new HttpParams().set('businessId', String(userData.businessId));
+    const params = new HttpParams().set('businessId', String(userData.businessAcctId));
     return this.httpClient.get<Dashboard>(environment.baseUrl + '/dashboard', {
       params: params
     });

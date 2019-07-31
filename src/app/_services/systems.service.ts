@@ -20,7 +20,7 @@ export class SystemsService {
 
   getBuildings(): Observable<Buildings> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-    const params = new HttpParams().set('businessId', String(userData.businessId));
+    const params = new HttpParams().set('businessId', String(userData.businessAcctId));
     return this.httpClient.get<Buildings>(environment.baseUrl + '/getBuildings', {
       params: params
     });
@@ -28,7 +28,7 @@ export class SystemsService {
 
   getBuildingIds(): Observable<BuildingsIds[]> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-    const params = new HttpParams().set('businessAcctId', String(userData.businessId));
+    const params = new HttpParams().set('businessAcctId', String(userData.businessAcctId));
     return this.httpClient.get<BuildingsIds[]>(environment.baseUrl + '/getBuildingIds', {
       params: params
     });
@@ -65,7 +65,7 @@ export class SystemsService {
 
   getRoooms(id?: number | string): Observable<Rooms> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-    const params = new HttpParams().set('businessId', String(userData.businessId));
+    const params = new HttpParams().set('businessId', String(userData.businessAcctId));
 
     return this.httpClient.get<Rooms>(environment.baseUrl + '/getRoomsByBus', {
       params: params
@@ -75,7 +75,7 @@ export class SystemsService {
 
   getAllEquipments(id?: number | string): Observable<Equipment[]> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-    const params = new HttpParams().set('businessId', String(userData.businessId));
+    const params = new HttpParams().set('businessId', String(userData.businessAcctId));
 
     return this.httpClient.get<Equipment[]>(environment.baseUrl + '/getEquipmentByBus', {
       params: params
@@ -83,7 +83,7 @@ export class SystemsService {
   }
   getRoomIds(id?: number | string): Observable<Equipment[]> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-    const params = new HttpParams().set('businessId', String(userData.businessId));
+    const params = new HttpParams().set('businessId', String(userData.businessAcctId));
 
     return this.httpClient.get<Equipment[]>(environment.baseUrl + '/getRoomIds', {
       params: params

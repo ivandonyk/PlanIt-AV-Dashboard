@@ -5,6 +5,7 @@ import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {BuildingsIds} from "../../_models/systems.model";
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 
 export interface DialogData {
@@ -69,6 +70,7 @@ public roomType: string[] = [
     private snackbar: MatSnackBar,
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
+    public authServ: AuthenticationService,
     public dialogRef: MatDialogRef<AddRoomComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
     ) { }
@@ -80,6 +82,9 @@ public roomType: string[] = [
         this.buildings = data;
       }, error => {
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 
@@ -103,6 +108,9 @@ public roomType: string[] = [
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 

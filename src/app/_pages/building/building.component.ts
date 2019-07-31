@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Building } from '../../_models/building.model';
 import { BuildingService } from '../../_services/building.service';
 import { MatTableDataSource} from '@angular/material';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 @Component({
   selector: 'app-building',
@@ -14,10 +15,7 @@ export class BuildingComponent implements OnInit {
   dataSource;
   buildings: Building[];
 
-  constructor(private buildingService: BuildingService) {
-
-
-  }
+  constructor(private buildingService: BuildingService, public authServ: AuthenticationService) {}
 
   ngOnInit() {
     this.dataTable();
@@ -25,16 +23,14 @@ export class BuildingComponent implements OnInit {
 
   }
 
-  private dataTable(){
+  private dataTable() {
 
     this.buildingService.getBuildings().subscribe(data => {
       this.buildings = data;
       this.dataSource = data;
-
-
-
-    })
-
+    }, error => {if (error.error.error === 'invalid_token'){
+      this.authServ.logout();
+    }});
   }
 
 }

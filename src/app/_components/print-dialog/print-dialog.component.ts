@@ -10,6 +10,7 @@ import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import { Document, Paragraph, Packer, TextRun, ShadingType, Media, WidthType } from 'docx';
 import { saveAs } from 'file-saver';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 
 
@@ -58,6 +59,7 @@ export class PrintDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<PrintDialogComponent>,
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
+    public authServ: AuthenticationService,
     private snackbar: MatSnackBar,
     private projectPlanningServ: ProjectPlanningService,
     @Inject(MAT_DIALOG_DATA) public data: {
@@ -185,6 +187,9 @@ export class PrintDialogComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
 
       });
 
@@ -198,6 +203,9 @@ export class PrintDialogComponent implements OnInit {
           currentObj.list = this.bodyRows(data.projectPlanDetailList);
       }, error => {
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 

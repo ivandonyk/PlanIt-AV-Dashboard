@@ -14,6 +14,7 @@ import {ConfirmModalComponent} from '../../_components/confirm-modal/confirm-mod
 import {PrintDialogComponent} from '../../_components/print-dialog/print-dialog.component';
 import {AddProjectDescComponent} from "../../_components/add-project-desc/add-project-desc.component";
 import {AddEquipmentComponent} from "../../_components/add-equipment/add-equipment.component";
+import {AuthenticationService} from "../../_services/authentication.service";
 
 @Component({
   selector: 'app-project-planning',
@@ -121,6 +122,7 @@ export class ProjectPlanningComponent {
     private systServ: SystemsService,
     public snackbar: MatSnackBar,
     public dialog: MatDialog,
+    public authServ: AuthenticationService,
 
   ) {
     this.globalVars.spinner = true;
@@ -175,7 +177,9 @@ export class ProjectPlanningComponent {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
 
   }
@@ -189,6 +193,9 @@ export class ProjectPlanningComponent {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   get f() {
@@ -254,6 +261,9 @@ export class ProjectPlanningComponent {
         }, error => {
           this.globalVars.spinner = false;
           console.log(error);
+          if (error.error.error === 'invalid_token'){
+            this.authServ.logout();
+          }
         });
     }
 
@@ -297,6 +307,9 @@ export class ProjectPlanningComponent {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   getRoomDet() {
@@ -341,6 +354,9 @@ export class ProjectPlanningComponent {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   updateRoom() {
@@ -385,6 +401,9 @@ export class ProjectPlanningComponent {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   getDocuments(roomId) {
@@ -396,6 +415,9 @@ export class ProjectPlanningComponent {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   getProjectDesc(roomId) {
@@ -407,6 +429,9 @@ export class ProjectPlanningComponent {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   getRoomHist(roomId) {
@@ -418,6 +443,9 @@ export class ProjectPlanningComponent {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
   openDialogAddPhoto(): void {
@@ -476,6 +504,9 @@ export class ProjectPlanningComponent {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 

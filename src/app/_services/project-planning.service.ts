@@ -13,7 +13,7 @@ export class ProjectPlanningService {
 
   getProjPlanSum(): Observable<ProjectPlanList> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-    const params = new HttpParams().set('businessId', String(userData.businessId));
+    const params = new HttpParams().set('businessId', String(userData.businessAcctId));
     return this.httpClient.get<ProjectPlanList>(environment.baseUrl + '/getProjPlanSum', {
       params: params
     });
@@ -21,7 +21,7 @@ export class ProjectPlanningService {
 
   getProjPlanDetail(year): Observable<ProjPlanDetailObj> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-    return this.httpClient.get<ProjPlanDetailObj>(environment.baseUrl + '/getProjPlanDetail?businessId=' + String(userData.businessId) + '&year=' + year);
+    return this.httpClient.get<ProjPlanDetailObj>(environment.baseUrl + '/getProjPlanDetail?businessId=' + String(userData.businessAcctId) + '&year=' + year);
   }
 
 }

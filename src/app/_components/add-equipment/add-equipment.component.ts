@@ -6,6 +6,7 @@ import {SystemsService} from '../../_services/systems.service';
 import {EquipmentDetailAdd} from '../../_models/equipment.model';
 import * as moment from 'moment';
 import {Rooms} from "../../_models/systems.model";
+import {AuthenticationService} from "../../_services/authentication.service";
 
 export interface DialogData {
   roomId: any;
@@ -52,6 +53,7 @@ export class AddEquipmentComponent implements OnInit {
     private snackbar: MatSnackBar,
     public globalVars: GlobalVarsHelper,
     public systServ: SystemsService,
+    public authServ: AuthenticationService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
 
   ) { }
@@ -63,6 +65,9 @@ export class AddEquipmentComponent implements OnInit {
         console.log(this.buildingsArr);
       }, error => {
         console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
     this.getRooms();
   }
@@ -70,8 +75,11 @@ export class AddEquipmentComponent implements OnInit {
     this.systServ.getRoomIds()
       .subscribe((data) => {
         this.roomList = data;
-      }, error2 => {
-        console.log(error2);
+      }, error => {
+        console.log(error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 
@@ -85,6 +93,9 @@ export class AddEquipmentComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
       });
   }
 
@@ -142,6 +153,9 @@ export class AddEquipmentComponent implements OnInit {
         }, error => {
           this.globalVars.spinner = false;
           console.log(error);
+          if (error.error.error === 'invalid_token'){
+            this.authServ.logout();
+          }
         });
     } else {
       this.globalVars.spinner = false;

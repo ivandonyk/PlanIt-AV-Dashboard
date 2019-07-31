@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { SystemsService } from '../../_services/systems.service';
 import { EquipmentDetail } from '../../_models/systems.model';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class EquipmentdetailComponent implements OnInit {
   constructor(
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
+    public authServ: AuthenticationService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -62,6 +64,9 @@ export class EquipmentdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
 
       });
 

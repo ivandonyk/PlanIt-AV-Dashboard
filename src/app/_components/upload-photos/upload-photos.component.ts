@@ -6,6 +6,7 @@ import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {RoomDTO} from '../../_models/systems.model';
 import { FileUploader } from 'ng2-file-upload';
 import {environment} from '../../../environments/environment';
+import {AuthenticationService} from "../../_services/authentication.service";
 
 
 @Component({
@@ -26,7 +27,8 @@ export class AddPhotosComponent implements OnInit {
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
     @Inject(MAT_DIALOG_DATA) public data: {form: RoomDTO, roomId: number | string, buildingId: number | string},
-  private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    public authServ: AuthenticationService,
 
   ) { }
 
@@ -51,9 +53,13 @@ export class AddPhotosComponent implements OnInit {
             this.globalVars.spinner = false;
             self.dialogRef.close();
 
+
           }
         }, error => {
           console.log(error);
+          if (error.error.error === 'invalid_token'){
+            this.authServ.logout();
+          }
           if (error.status === 200) {
             if (index === this.fields.length) {
               this.snackbar.open('Images Uploaded', '', {
