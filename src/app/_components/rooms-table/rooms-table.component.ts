@@ -28,7 +28,6 @@ export class RoomsTableComponent implements OnInit {
     this.columns.forEach((item) => {
       this.columnsHeader.push(item.key);
     });
-    console.log(this);
   }
 
   open(id: number) {

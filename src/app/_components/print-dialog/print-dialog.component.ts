@@ -1,16 +1,16 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {MatDialogRef, MatSnackBar, MatTableModule, MAT_DIALOG_DATA} from '@angular/material';
+import {FormBuilder, FormControl } from '@angular/forms';
+import {MatDialogRef, MatSnackBar , MAT_DIALOG_DATA} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
-import {ProjectPlan, ProjectPlanList, ProjPlanDetail, ProjPlanDetailObj} from '../../_models/project-plannings.model';
+import {ProjectPlan, ProjectPlanList , ProjPlanDetailObj} from '../../_models/project-plannings.model';
 import {ProjectPlanningService} from '../../_services/project-planning.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
-import { Document, Paragraph, Packer, TextRun, ShadingType, Media, WidthType } from 'docx';
+import { Document, Paragraph, Packer, WidthType } from 'docx';
 import { saveAs } from 'file-saver';
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AuthenticationService} from '../../_services/authentication.service';
 
 
 
@@ -125,7 +125,7 @@ export class PrintDialogComponent implements OnInit {
       if (style === 'undefined' || style == null) {
         continue;
       }
-      for (let st = 0; st < style.length; st++){
+      for (let st = 0; st < style.length; st++) {
         child.style.setProperty(style[st], style.getPropertyValue(style[st]));
       }
     }
@@ -145,7 +145,6 @@ export class PrintDialogComponent implements OnInit {
     const rangeArr = this.range(this.printForm.value.year, this.printForm.value.to);
     if (rangeArr) {
       rangeArr.forEach(item => {
-        console.log(this.ProjPlanSum)
         const result = this.ProjPlanSum.filter(yer => Number(yer.year) === Number(item));
         if (result.length > 0) {
           data.push(result[0]);
@@ -187,7 +186,7 @@ export class PrintDialogComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
 
@@ -203,7 +202,7 @@ export class PrintDialogComponent implements OnInit {
           currentObj.list = this.bodyRows(data.projectPlanDetailList);
       }, error => {
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -225,7 +224,6 @@ export class PrintDialogComponent implements OnInit {
 
 
         const result = this.ProjPlanSum.filter(yer => Number(yer.year) === Number(year));
-        console.log(result)
 
           this.singleArr.push({
             name: result[0].year,
@@ -251,7 +249,6 @@ export class PrintDialogComponent implements OnInit {
 
     setTimeout(() => {
       const svg = document.querySelector('#hiddenChart svg.ngx-charts');
-      console.log(svg)
       this.downloadSvg(svg, 'chart.png');
     }, 1000);
 
@@ -276,32 +273,18 @@ export class PrintDialogComponent implements OnInit {
   downloadPdf() {
     this.globalVars.spinner = true;
     this.customArr = [];
-
     this.generateJson();
-
     const doc = new jsPDF();
-
     doc.text('Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '', 14 , 10).setFontSize(11);
-
-
-
-
-
-
     setTimeout(() => {
       if (this.withChart) {
-
         doc.addImage(this.imgURI, 'PNG', 10, 20);
       }
-
-
-      this.customArr.forEach((item, index) => {
+      this.customArr.forEach((item) => {
         let finalY = this.withChart ? 65 : 20;
         if (doc.previousAutoTable) {
            finalY = doc.previousAutoTable.finalY;
         }
-
-
         if (item.status.list ) {
           doc.text(item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount), 10, finalY + 10).setFontSize(11);
 
@@ -325,9 +308,6 @@ export class PrintDialogComponent implements OnInit {
         }
       });
     }, 2000);
-
-    console.log(this);
-
     setTimeout(() => {
       this.globalVars.spinner = false;
       doc.save('Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.pdf');
@@ -363,7 +343,6 @@ export class PrintDialogComponent implements OnInit {
       left: 60,
       right: 60,
     };
-    console.log(this);
 
     doc.Styles.createParagraphStyle('title', 'title')
       .size(40)

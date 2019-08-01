@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../_services/dashboard.service';
 import { Dashboard, Systems, Lifecycle, Support } from '../../_models/dashboard.model';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AuthenticationService} from '../../_services/authentication.service';
 
 
 @Component({
@@ -32,7 +32,6 @@ export class DashboardComponent implements OnInit {
 
     this.dashServ.getDashboardData()
       .subscribe((data: Dashboard) => {
-        console.log(data);
         this.businessName = data.businessName;
         this.logoPath = data.logoPath;
         this.dashboardData = data.dashboard;

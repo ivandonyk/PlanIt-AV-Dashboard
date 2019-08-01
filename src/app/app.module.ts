@@ -19,7 +19,6 @@ import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
-import { fakeBackendProvider } from './_helpers/fake-backend';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { LightboxModule } from 'ngx-lightbox';
 import {CrystalGalleryModule} from 'ngx-crystal-gallery';
@@ -43,7 +42,6 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './_components/header/header.component';
 import { SidebarComponent } from './_components/sidebar/sidebar.component';
-import { MasterListComponent } from './_pages/master-list/master-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BuildingComponent } from './_pages/building/building.component';
 import { LoginComponent } from './_pages/login/login.component';
@@ -78,7 +76,6 @@ import {ProjectPlanningTableComponent} from "./_components/project-planning-tabl
     AppComponent,
     HeaderComponent,
     SidebarComponent,
-    MasterListComponent,
     BuildingComponent,
     LoginComponent,
     HomeComponent,
@@ -160,7 +157,6 @@ import {ProjectPlanningTableComponent} from "./_components/project-planning-tabl
     HttpErrorHandler,
     MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })

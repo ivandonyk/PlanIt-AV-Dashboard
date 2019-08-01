@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {MatDialog, MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
+import {FormBuilder, FormControl } from '@angular/forms';
+import {MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {UploadDocumentComponent} from '../upload-document/upload-document.component';
-import {AddPhotosComponent} from "../upload-photos/upload-photos.component";
-import {AddNoteComponent} from "../add-note/add-note.component";
-import {BuildingsIds, Rooms} from "../../_models/systems.model";
+import {AddPhotosComponent} from '../upload-photos/upload-photos.component';
+import {AddNoteComponent} from '../add-note/add-note.component';
+import {BuildingsIds, Rooms} from '../../_models/systems.model';
 import * as moment from 'moment';
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AuthenticationService} from '../../_services/authentication.service';
 
 @Component({
   selector: 'app-clone-room',
@@ -83,7 +83,7 @@ export class CloneRoomComponent implements OnInit {
         this.rooms = data.systemBuilding.rooms;
       }, error => {
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -96,7 +96,7 @@ export class CloneRoomComponent implements OnInit {
         this.roomList = data;
       }, error => {
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -114,7 +114,7 @@ export class CloneRoomComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -122,11 +122,9 @@ export class CloneRoomComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this);
     this.globalVars.spinner = true;
     this.systServ.addRoom(this.cloneRoomForm.value)
       .subscribe(data => {
-        console.log(data);
         this.globalVars.spinner = false;
         this.dialogRef.close();
         this.snackbar.open('Room Added', '', {
@@ -138,7 +136,7 @@ export class CloneRoomComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -193,13 +191,12 @@ export class CloneRoomComponent implements OnInit {
       });
       }, error => {
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
   }
   openDialogAddPhoto(): void {
-    console.log(this)
     const dialogRef = this.dialog.open(AddPhotosComponent, {
       data: {
         form: this.cloneRoomForm.value,

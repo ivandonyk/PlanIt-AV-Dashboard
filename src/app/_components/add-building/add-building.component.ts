@@ -4,8 +4,8 @@ import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { HandleError } from '../../_services/http-error-handler.service';
 import { UserData } from '../../_models/userdata.model';
 import { SystemsService } from '../../_services/systems.service';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {AuthenticationService} from "../../_services/authentication.service";
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {AuthenticationService} from '../../_services/authentication.service';
 
 
 
@@ -43,7 +43,7 @@ export class AddBuildingComponent implements OnInit {
 
   });
 
-  public isEdit: boolean = false;
+  public isEdit: Boolean = false;
 
   states: string[] = [
     'AK', 'AL', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE',
@@ -67,8 +67,7 @@ export class AddBuildingComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data)
-    if (this.data ) {
+    if (this.data) {
       this.isEdit = true;
       this.systService.getBuildingDetail(this.data.buildingId)
         .subscribe(data => {
@@ -89,7 +88,6 @@ export class AddBuildingComponent implements OnInit {
             contactEmail : new FormControl(data['contactEmail '], [Validators.email])
           });
         }, error => {
-          console.log();
           if (error.error.error === 'invalid_token'){
             this.authServ.logout();
           }
@@ -108,7 +106,6 @@ export class AddBuildingComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.addBuildingForm.value);
     let addBuildingApiModel;
     addBuildingApiModel = this.addBuildingForm.value;
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
@@ -126,12 +123,9 @@ export class AddBuildingComponent implements OnInit {
     });
 
     if (this.addBuildingForm.status === 'VALID') {
-
-
       if (this.data) {
         this.systService.updBuilding(addBuildingApiModel, this.data.buildingId)
           .subscribe(data => {
-            console.log(data);
             this.dialogRef.close();
 
           }, error => {
@@ -148,7 +142,6 @@ export class AddBuildingComponent implements OnInit {
       } else {
         this.systService.addBuilding(addBuildingApiModel)
           .subscribe(data => {
-            console.log(data);
             this.snackbar.open('Building Added', '', {
                 duration: 1500,
                 verticalPosition: 'top',
@@ -157,7 +150,7 @@ export class AddBuildingComponent implements OnInit {
             );
             this.dialogRef.close();
           }, error => {
-            if (error.error.error === 'invalid_token'){
+            if (error.error.error === 'invalid_token') {
               this.authServ.logout();
             }
             this.snackbar.open(error.message, '', {

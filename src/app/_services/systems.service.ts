@@ -139,9 +139,6 @@ export class SystemsService {
   }
   uploadImage(file): Observable<any> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-
-    console.log(file);
-
     const formData = new FormData();
     formData.append('files', file.file, file.file.name);
     formData.append('roomId', file.roomId);
@@ -151,9 +148,6 @@ export class SystemsService {
   }
   uploadDoc(file): Observable<any> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-
-    console.log(file);
-
     const formData = new FormData();
     formData.append('files', file.file, file.file.name);
     formData.append('roomId', file.roomId);

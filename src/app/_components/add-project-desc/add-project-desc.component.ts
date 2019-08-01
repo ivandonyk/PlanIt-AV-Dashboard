@@ -1,10 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MatDialogRef, MatSnackBar, MatTableModule, MAT_DIALOG_DATA} from '@angular/material';
+import {FormBuilder, FormGroup } from '@angular/forms';
+import {MatDialogRef, MatSnackBar, MAT_DIALOG_DATA} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
-import {RoomDTO} from '../../_models/systems.model';
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AuthenticationService} from '../../_services/authentication.service';
 
 @Component({
   selector: 'app-add-project-desc',
@@ -29,12 +28,11 @@ export class AddProjectDescComponent implements OnInit {
     this.form = this.fb.group({
       notes: (this.data.projectDesc && this.data.projectDesc[0]) ? this.data.projectDesc[0].projDesc : '',
     });
-    console.log(this);
   }
 
   onSubmit() {
     this.globalVars.spinner = true;
-    const username = JSON.parse(window.sessionStorage.getItem('currentUser'))
+    const username = JSON.parse(window.sessionStorage.getItem('currentUser'));
 
     const room = {
       'projDesc': this.form.value.notes,
@@ -57,7 +55,7 @@ export class AddProjectDescComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });

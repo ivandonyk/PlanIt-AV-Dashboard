@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
+import {FormBuilder, FormControl } from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {RoomDTO} from '../../_models/systems.model';
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AuthenticationService} from '../../_services/authentication.service';
 
 @Component({
   selector: 'app-add-documents',
@@ -39,7 +39,6 @@ export class UploadDocumentComponent implements OnInit {
     this.fields.forEach( (item, index) => {
       this.systServ.uploadDoc(item)
         .subscribe(data => {
-          alert(1)
             this.snackbar.open('Document Saved', '', {
                 duration: 1500,
                 verticalPosition: 'bottom',
@@ -49,7 +48,7 @@ export class UploadDocumentComponent implements OnInit {
             this.globalVars.spinner = false;
             self.dialogRef.close();
         }, error => {
-          if (error.error.error === 'invalid_token'){
+          if (error.error.error === 'invalid_token') {
             this.authServ.logout();
           }
           console.log(error);

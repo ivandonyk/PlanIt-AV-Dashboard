@@ -5,8 +5,8 @@ import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {SystemsService} from '../../_services/systems.service';
 import {EquipmentDetailAdd} from '../../_models/equipment.model';
 import * as moment from 'moment';
-import {Rooms} from "../../_models/systems.model";
-import {AuthenticationService} from "../../_services/authentication.service";
+import {Rooms} from '../../_models/systems.model';
+import {AuthenticationService} from '../../_services/authentication.service';
 
 export interface DialogData {
   roomId: any;
@@ -62,10 +62,9 @@ export class AddEquipmentComponent implements OnInit {
     this.systServ.getBuildings()
       .subscribe(data => {
         this.buildingsArr = data.systemBuilding.buildings;
-        console.log(this.buildingsArr);
       }, error => {
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -77,7 +76,7 @@ export class AddEquipmentComponent implements OnInit {
         this.roomList = data;
       }, error => {
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -93,7 +92,7 @@ export class AddEquipmentComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -107,10 +106,8 @@ export class AddEquipmentComponent implements OnInit {
     this.addEquipmentForm.reset();
   }
   onSubmit() {
-    console.log(this.addEquipmentForm.value);
     let userData = window.sessionStorage.getItem('currentUser');
     userData = JSON.parse(userData);
-    console.log(userData)
     this.globalVars.spinner = true;
 
     if (this.addEquipmentForm.status === 'VALID') {
@@ -141,7 +138,6 @@ export class AddEquipmentComponent implements OnInit {
       };
       this.systServ.addEquipment(equipment)
         .subscribe(data => {
-          console.log(data);
           this.globalVars.spinner = false;
           this.dialogRef.close();
           this.snackbar.open('Equipment Added', '', {
@@ -153,7 +149,7 @@ export class AddEquipmentComponent implements OnInit {
         }, error => {
           this.globalVars.spinner = false;
           console.log(error);
-          if (error.error.error === 'invalid_token'){
+          if (error.error.error === 'invalid_token') {
             this.authServ.logout();
           }
         });

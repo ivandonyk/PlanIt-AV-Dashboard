@@ -6,8 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import * as moment from 'moment';
 import {ConfirmModalComponent} from '../confirm-modal/confirm-modal.component';
-import {RoomsTableComponent} from "../rooms-table/rooms-table.component";
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AuthenticationService} from '../../_services/authentication.service';
 
 
 @Component({
@@ -24,8 +23,7 @@ export class EquipmentModalComponent implements OnInit {
 
   public data: EquipmentDetail;
   public isEdit: Boolean = false;
-  public roomIdC: number;
-  public buildingName: string = '';
+  public buildingName: String = '';
   public form: FormGroup;
   roomList: any;
   buildingsArr: any;
@@ -44,7 +42,7 @@ export class EquipmentModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    const equipData = JSON.parse(this.dataSource)
+    const equipData = JSON.parse(this.dataSource);
     const currentEquipment = equipData.filter(item => item.equipmentId == this.equipmentId);
     this.buildingName = currentEquipment[0].building;
     this.buildingData = currentEquipment[0];
@@ -53,10 +51,9 @@ export class EquipmentModalComponent implements OnInit {
     this.systServ.getBuildings()
       .subscribe(data => {
         this.buildingsArr = data.systemBuilding.buildings;
-        console.log(this.buildingsArr);
       }, error => {
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -78,7 +75,7 @@ export class EquipmentModalComponent implements OnInit {
         this.roomList = data;
       }, error => {
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -94,7 +91,7 @@ export class EquipmentModalComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -141,7 +138,7 @@ export class EquipmentModalComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -191,7 +188,7 @@ export class EquipmentModalComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });

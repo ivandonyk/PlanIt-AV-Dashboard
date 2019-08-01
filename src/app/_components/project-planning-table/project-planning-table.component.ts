@@ -28,8 +28,6 @@ export class ProjectPlanningTableComponent implements OnInit {
       this.columnsHeader.push(item.key);
     });
     this.data.sort = this.sort;
-
-    console.log(this);
   }
 
   open(id: number) {

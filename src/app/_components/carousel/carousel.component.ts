@@ -20,7 +20,6 @@ export class CarouselComponent implements OnInit {
   ) {
   }
   ngOnInit() {
-    console.log(this)
     this.images = JSON.parse(this.roomDetailImages);
   }
   previousSlideRoom() {

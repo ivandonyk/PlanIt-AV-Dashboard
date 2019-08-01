@@ -20,7 +20,6 @@ export class BuildingComponent implements OnInit {
   ngOnInit() {
     this.dataTable();
     console.log('In NgOnInit in building.component.ts');
-
   }
 
   private dataTable() {

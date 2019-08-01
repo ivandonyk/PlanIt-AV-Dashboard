@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
+import {MatDialogRef, MatSnackBar } from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
-import {BuildingsIds} from "../../_models/systems.model";
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {AuthenticationService} from "../../_services/authentication.service";
+import {BuildingsIds} from '../../_models/systems.model';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {AuthenticationService} from '../../_services/authentication.service';
 
 
 export interface DialogData {
@@ -78,11 +78,10 @@ public roomType: string[] = [
   ngOnInit() {
     this.systServ.getBuildingIds()
       .subscribe(data => {
-        console.log(data);
         this.buildings = data;
       }, error => {
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -96,7 +95,6 @@ public roomType: string[] = [
     this.globalVars.spinner = true;
     this.systServ.addRoom(this.addRoomForm.value)
       .subscribe(data => {
-        console.log(data);
         this.globalVars.spinner = false;
         this.dialogRef.close();
         this.snackbar.open('Room Added', '', {
@@ -108,7 +106,7 @@ public roomType: string[] = [
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });

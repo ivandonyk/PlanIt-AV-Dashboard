@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {AddBuildingComponent} from '../add-building/add-building.component';
 import {AddRoomComponent} from '../add-room/add-room.component';
 import {AddEquipmentComponent} from '../add-equipment/add-equipment.component';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog } from '@angular/material';
 import { ReferComponent } from '../refer/refer.component';
 import {CloneRoomComponent} from '../clone-room/clone-room.component';
-import {AuthenticationService} from '../../_services/authentication.service'
-import {ContactUsComponent} from "../contact-us/contact-us.component";
+import {AuthenticationService} from '../../_services/authentication.service';
+import {ContactUsComponent} from '../contact-us/contact-us.component';
 
 @Component({
   selector: 'app-header',

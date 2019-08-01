@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { SystemsService } from '../../_services/systems.service';
 import { EquipmentDetail } from '../../_models/systems.model';
-import {AuthenticationService} from "../../_services/authentication.service";
+import { AuthenticationService } from '../../_services/authentication.service';
 
 
 @Component({
@@ -32,10 +32,7 @@ export class EquipmentdetailComponent implements OnInit {
   getEquipmentDetail() {
     this.systServ.getEquipmentDetail(this.equipmentId)
       .subscribe((data: EquipmentDetail) => {
-        console.log(data);
         this.data = data;
-
-
         this.form = this.formBuilder.group({
           room: [this.data.room],
           altLocation: [this.data.altLocation],
@@ -64,7 +61,7 @@ export class EquipmentdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
 
@@ -73,10 +70,10 @@ export class EquipmentdetailComponent implements OnInit {
   }
 
 
-  updateRoom(){
+  updateRoom() {
 
   }
-  confirmCancel(){
+  confirmCancel() {
 
   }
 

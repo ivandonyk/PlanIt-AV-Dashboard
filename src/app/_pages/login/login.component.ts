@@ -64,29 +64,13 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/home/dashboard']);
               }
             }, error => {
-              console.log(error)
-            })
-
-
-
-
+              console.log(error);
+            });
         }
       }, error => {
         console.log(error);
       });
 
-    console.log(this.loginForm);
-
   }
-
-
-
-  // sessionSet(expirationInMin = 1) {
-  //   const expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin));
-  //   const duration = expirationDate.toISOString();
-  //   window.sessionStorage.setItem('expire', JSON.stringify(duration));
-  // }
-  //
-
 
 }

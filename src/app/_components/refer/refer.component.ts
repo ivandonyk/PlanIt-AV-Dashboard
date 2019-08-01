@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, Validators, FormGroup} from '@angular/forms';
-import {MatDialogRef, MatSnackBar, MatTableModule} from '@angular/material';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-refer-popup',
@@ -13,7 +13,6 @@ export class ReferComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ReferComponent>,
-    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -27,7 +26,6 @@ export class ReferComponent implements OnInit {
   }
 
   send() {
-    console.log(this.form.value.email);
     this.dialogRef.close();
   }
 

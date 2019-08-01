@@ -15,7 +15,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {AddEquipmentComponent} from '../../_components/add-equipment/add-equipment.component';
 import {AddBuildingComponent} from '../../_components/add-building/add-building.component';
 import Siema from 'siema';
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AuthenticationService} from '../../_services/authentication.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ import {AuthenticationService} from "../../_services/authentication.service";
 
 export class SystemsComponent implements OnInit {
   public dataSlides: SlideData[] = [];
-  public equipmentsLocal: string = '0';
+  public equipmentsLocal: String = '0';
   public dataRooms: Array<Room> = [];
   public roomDetailData: RoomDetails;
   public currentBuilding: Number | String;
@@ -221,7 +221,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -249,7 +249,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -263,7 +263,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -278,7 +278,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -287,7 +287,6 @@ export class SystemsComponent implements OnInit {
     this.isRoomFormChanged = false;
     this.systServ.getRoomDetails(this.roomId)
       .subscribe((data: RoomDetails) => {
-        console.log(data);
         this.roomDetailData = data;
         this.form = this.formBuilder.group({
           roomName: [data.roomName],
@@ -321,19 +320,17 @@ export class SystemsComponent implements OnInit {
               'path': item
             });
           });
-          this.roomDetailImages = JSON.stringify(imgArr)
-
+          this.roomDetailImages = JSON.stringify(imgArr);
         } else {
-          this.roomDetailImages = JSON.stringify([])
+          this.roomDetailImages = JSON.stringify([]);
         }
 
         this.form.statusChanges
           .subscribe(value => {
-            console.log(value);
             this.isRoomFormChanged = true;
           }, error => {
             console.log(error);
-            if (error.error.error === 'invalid_token'){
+            if (error.error.error === 'invalid_token') {
               this.authServ.logout();
             }
           });
@@ -348,7 +345,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -381,7 +378,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -395,8 +392,6 @@ export class SystemsComponent implements OnInit {
     }
   }
   opemEquipmentDetailed(status, id?: number) {
-    console.log(id);
-    // this.roomModalShown = false;
     this.equipmentId = id;
   }
 
@@ -432,7 +427,7 @@ export class SystemsComponent implements OnInit {
         equipmentId: number;
         manualIcon: boolean;
         photoIcon: boolean;
-        colorCode: any;l
+        colorCode: any;
         manufacturer: string;
         modelNumber: string;
         description: string;
@@ -455,7 +450,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -535,7 +530,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -544,7 +539,6 @@ export class SystemsComponent implements OnInit {
     if (this.isRoomFormChanged === true) {
       const dialogRef = this.dialog.open(ConfirmModalComponent);
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result)
         if (result === true) {
           this.updateRoom();
         } else {
@@ -565,7 +559,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -579,7 +573,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -593,7 +587,7 @@ export class SystemsComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });

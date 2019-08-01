@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {MatDialogRef, MatSnackBar, MatTableModule, MAT_DIALOG_DATA} from '@angular/material';
+import {FormBuilder, FormControl} from '@angular/forms';
+import {MatDialogRef, MatSnackBar, MAT_DIALOG_DATA} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {RoomDTO} from '../../_models/systems.model';
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AuthenticationService} from '../../_services/authentication.service';
 
 @Component({
   selector: 'app-add-note',
@@ -30,24 +30,17 @@ export class AddNoteComponent implements OnInit {
 
   onSubmit() {
     this.globalVars.spinner = true;
-
-    // const room: RoomDTO = {
-    //   notes: String(this.form.value.notes),
-    // };
-
-    const username = JSON.parse(window.sessionStorage.getItem('currentUser'))
-
-
+    const username = JSON.parse(window.sessionStorage.getItem('currentUser'));
     const room = {
       buildingId: this.data.buildingId,
       noteText: this.form.value.notes,
       roomId: this.data.roomId,
       userName: username.userName,
-    }
+    };
 
 
     this.systServ.addNote(room)
-      .subscribe( data => {
+      .subscribe( () => {
         this.snackbar.open('Note Changed', '', {
             duration: 1500,
             verticalPosition: 'bottom',
@@ -58,7 +51,7 @@ export class AddNoteComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });

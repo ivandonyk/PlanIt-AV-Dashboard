@@ -4,9 +4,7 @@ import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {RoomDTO} from '../../_models/systems.model';
-import { FileUploader } from 'ng2-file-upload';
-import {environment} from '../../../environments/environment';
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AuthenticationService} from '../../_services/authentication.service';
 
 
 @Component({
@@ -18,9 +16,7 @@ export class AddPhotosComponent implements OnInit {
   public form = this.fb.group({
     notes: new FormControl(''),
   });
-  public uploader: FileUploader;
   public fields: any = [];
-  public response: string;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddPhotosComponent>,
@@ -67,7 +63,7 @@ export class AddPhotosComponent implements OnInit {
                 }
               );
             } else {
-              if (error.error.text == 'File Upload Successful') {
+              if (error.error.text === 'File Upload Successful') {
                 this.snackbar.open('Images Uploaded', 'OK', {
                     duration: 2500,
                     verticalPosition: 'bottom',
@@ -89,9 +85,8 @@ export class AddPhotosComponent implements OnInit {
     this.dialogRef.close();
   }
   onFilesAdded(files: File[]) {
-    console.log(files);
     this.fields = [];
-    files.forEach((item, index) => {
+    files.forEach((item) => {
 
       const formData = new FormData();
       formData.append('file', item, item.name);

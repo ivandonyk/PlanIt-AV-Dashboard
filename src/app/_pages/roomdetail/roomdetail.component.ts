@@ -11,8 +11,8 @@ import {AddPhotosComponent} from '../../_components/upload-photos/upload-photos.
 import {AddNoteComponent} from '../../_components/add-note/add-note.component';
 import {UploadDocumentComponent} from '../../_components/upload-document/upload-document.component';
 import {AddProjectDescComponent} from '../../_components/add-project-desc/add-project-desc.component';
-import {AddEquipmentComponent} from "../../_components/add-equipment/add-equipment.component";
-import {AuthenticationService} from "../../_services/authentication.service";
+import {AddEquipmentComponent} from '../../_components/add-equipment/add-equipment.component';
+import {AuthenticationService} from '../../_services/authentication.service';
 
 
 @Component({
@@ -21,8 +21,7 @@ import {AuthenticationService} from "../../_services/authentication.service";
   styleUrls: ['./roomdetail.component.scss']
 })
 export class RoomdetailComponent implements OnInit {
-  public roomDetailImages: String = ''
-
+  public roomDetailImages: String = '';
   public form: FormGroup;
   public roomModalShownEdit: Boolean = false;
   public roomDetailData: RoomDetails;
@@ -32,7 +31,7 @@ export class RoomdetailComponent implements OnInit {
   public projectDesc: any;
   public roomHist: any;
   public currentBuilding: Number | String = window.location.pathname.split('/')[3];
-  public equipmentsLocal: string = '0';
+  public equipmentsLocal: String = '0';
   public displayedLocalColumnsEquipments: string = JSON.stringify([
     {
       key: 'manufacturer',
@@ -91,9 +90,7 @@ export class RoomdetailComponent implements OnInit {
       this.globalVars.spinner = true;
       this.systServ.getRoomDetails(id)
         .subscribe((data: RoomDetails) => {
-          console.log(data);
           this.roomDetailData = data;
-
           this.form = this.formBuilder.group({
             roomName: [data.roomName],
             tier: [data.tier],
@@ -127,10 +124,10 @@ export class RoomdetailComponent implements OnInit {
                 'path': item
               });
             });
-            this.roomDetailImages = JSON.stringify(imgArr)
+            this.roomDetailImages = JSON.stringify(imgArr);
 
           } else {
-            this.roomDetailImages = JSON.stringify([])
+            this.roomDetailImages = JSON.stringify([]);
           }
 
 
@@ -138,7 +135,7 @@ export class RoomdetailComponent implements OnInit {
         }, error => {
           this.globalVars.spinner = false;
           console.log(error);
-          if (error.error.error === 'invalid_token'){
+          if (error.error.error === 'invalid_token') {
             this.authServ.logout();
           }
         });
@@ -198,7 +195,7 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -206,7 +203,6 @@ export class RoomdetailComponent implements OnInit {
   getRoomDet() {
     this.systServ.getRoomDetails(this.roomId)
       .subscribe((data: RoomDetails) => {
-        console.log(data);
         this.roomDetailData = data;
         this.form = this.formBuilder.group({
           roomName: [data.roomName],
@@ -244,7 +240,7 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -291,7 +287,7 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -305,7 +301,7 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -319,7 +315,7 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
@@ -333,7 +329,7 @@ export class RoomdetailComponent implements OnInit {
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-        if (error.error.error === 'invalid_token'){
+        if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
       });
