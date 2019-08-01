@@ -44,32 +44,39 @@ export class AddPhotosComponent implements OnInit {
       this.systServ.uploadImage(item)
         .subscribe(data => {
           if (index === this.fields.length) {
-            this.snackbar.open('Images Uploaded', '', {
-                duration: 1500,
+            this.snackbar.open('Images Uploaded', 'OK', {
+                duration: 2500,
                 verticalPosition: 'bottom',
                 horizontalPosition: 'right',
               }
             );
-            this.globalVars.spinner = false;
             self.dialogRef.close();
-
-
+            this.globalVars.spinner = false;
           }
         }, error => {
           console.log(error);
-          if (error.error.error === 'invalid_token'){
+          if (error.error.error === 'invalid_token') {
             this.authServ.logout();
           }
           if (error.status === 200) {
-            if (index === this.fields.length) {
-              this.snackbar.open('Images Uploaded', '', {
-                  duration: 1500,
+            if (/exists/.test(error.error.text)) {
+              this.snackbar.open(error.error.text, 'OK', {
+                  duration: 2500,
                   verticalPosition: 'bottom',
                   horizontalPosition: 'right',
                 }
               );
-              this.globalVars.spinner = false;
-              self.dialogRef.close();
+            } else {
+              if (error.error.text == 'File Upload Successful') {
+                this.snackbar.open('Images Uploaded', 'OK', {
+                    duration: 2500,
+                    verticalPosition: 'bottom',
+                    horizontalPosition: 'right',
+                  }
+                );
+                this.globalVars.spinner = false;
+                self.dialogRef.close();
+              }
             }
           }
           this.globalVars.spinner = false;
