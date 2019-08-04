@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {FormBuilder, FormControl } from '@angular/forms';
-import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
+import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {RoomDTO} from '../../_models/systems.model';
 import {AuthenticationService} from '../../_services/authentication.service';
+import {ConfirmModalComponent} from '../confirm-modal/confirm-modal.component';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class AddPhotosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: {form: RoomDTO, roomId: number | string, buildingId: number | string},
     private snackbar: MatSnackBar,
     public authServ: AuthenticationService,
+    public dialog: MatDialog,
 
   ) { }
 
@@ -102,4 +104,19 @@ export class AddPhotosComponent implements OnInit {
   setData(index, event) {
     this.fields[index].description = event.target.value;
   }
+
+
+  confirmUpload(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: 'Are you sure you want to upload this files?',
+      }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.onSubmit();
+      }
+    });
+  }
+
 }

@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
+
+export interface DialogData {
+  title: string;
+}
 
 @Component({
   selector: 'app-add-note',
@@ -12,9 +16,12 @@ export class ConfirmModalComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ConfirmModalComponent>,
     public globalVars: GlobalVarsHelper,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+
   ) { }
 
   ngOnInit() {
+    console.log(this.data)
 
   }
 

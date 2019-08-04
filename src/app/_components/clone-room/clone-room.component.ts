@@ -19,6 +19,7 @@ export class CloneRoomComponent implements OnInit {
   public cloneRoomForm = this.fb.group({
     buildingId: new FormControl(''),
     buildings: new FormControl(''),
+    newBuilding: new FormControl(''),
     roomOld: new FormControl(''),
     roomChooseName: new FormControl(''),
     roomName: new FormControl(''),
@@ -179,7 +180,8 @@ export class CloneRoomComponent implements OnInit {
           lastAvContractor: data.lastAvContractor ? data.lastAvContractor : this.cloneRoomForm.value.lastAvContractor,
           nextAvUpdateDt: data.nextAvUpdateDt ? data.nextAvUpdateDt : this.cloneRoomForm.value.nextAvUpdateDt,
           nextAvUpdCost: data.nextAvUpdCost ? data.nextAvUpdCost : this.cloneRoomForm.value.nextAvUpdCost,
-          notes: data.notes ? data.notes : this.cloneRoomForm.value.notes,
+          notes:  this.cloneRoomForm.value.notes,
+          newBuilding:  this.cloneRoomForm.value.newBuilding,
           equipmentAge: data.equipmentAge ? data.equipmentAge : this.cloneRoomForm.value.equipmentAge,
           replaceUpg: data.replaceUpg ? data.replaceUpg : this.cloneRoomForm.value.replaceUpg,
           dateOfLastRemodel: data.dateOfLastRemodel ? data.dateOfLastRemodel : this.cloneRoomForm.value.dateOfLastRemodel,
