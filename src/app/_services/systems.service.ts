@@ -175,7 +175,32 @@ export class SystemsService {
     formData.append('buildingId', id);
     formData.append('userName', userData.userName);
 
-    return this.httpClient.post<any>(environment.baseUrl + '/updBuilding', formData);
+
+    // const headers = {
+    //   'Content-type': 'application/json'
+    // };
+
+    return this.httpClient.post<any>(environment.baseUrl + '/updBuilding', {
+      'buildingName': data.buildingName,
+      'address1': data.address1,
+      'address2': data.address2,
+      'city': data.city,
+      'state': data.state,
+      'zip': data.zip,
+      'nbrOfFloors': data.nbrOfFloors,
+      'dateConstructed': data.dateConstructed,
+      'dateLastRemodel': data.dateLastRemodel,
+      'notes': data.notes,
+      'contactFirstName': data.contactFirstName,
+      'contactLastName': data.contactLastName,
+      'contactPhoneNbr': data.contactPhoneNbr,
+      'contactEmail': data.contactEmail,
+      'buildingId': id,
+      'userName': userData.userName
+    });
+    // return this.httpClient.post<any>(environment.baseUrl + '/updBuilding', formData, {
+    //   headers
+    // });
   }
 
   addBuilding(object: AddBuildingFormModel): Observable<AddBuildingFormModel> {

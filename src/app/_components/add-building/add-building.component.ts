@@ -1,11 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, Validators} from '@angular/forms';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import { HandleError } from '../../_services/http-error-handler.service';
 import { UserData } from '../../_models/userdata.model';
 import { SystemsService } from '../../_services/systems.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {AuthenticationService} from '../../_services/authentication.service';
+import {ConfirmModalComponent} from "../confirm-modal/confirm-modal.component";
 
 
 
@@ -24,6 +25,8 @@ export interface DialogData {
 export class AddBuildingComponent implements OnInit {
 
   private handleError: HandleError;
+  private buildingsArr: any;
+  private existBuildingId: number;
 
   public addBuildingForm = this.fb.group({
     buildingName: new FormControl('', [Validators.required, Validators.maxLength(80)]),
@@ -61,15 +64,20 @@ export class AddBuildingComponent implements OnInit {
     public authServ: AuthenticationService,
     private snackbar: MatSnackBar,
     private systService: SystemsService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialog: MatDialog,
 
   ) {
   }
 
   ngOnInit() {
-    if (this.data) {
+    this.initData();
+  }
+
+  initData() {
+    if (this.data || this.existBuildingId) {
       this.isEdit = true;
-      this.systService.getBuildingDetail(this.data.buildingId)
+      this.systService.getBuildingDetail(this.data ? this.data.buildingId : this.existBuildingId )
         .subscribe(data => {
           this.addBuildingForm = this.fb.group({
             buildingName: new FormControl(data['buildingName'], [Validators.required, Validators.maxLength(80)]),
@@ -88,22 +96,40 @@ export class AddBuildingComponent implements OnInit {
             contactEmail : new FormControl(data['contactEmail '], [Validators.email])
           });
         }, error => {
-          if (error.error.error === 'invalid_token'){
+          if (error.error.error === 'invalid_token') {
             this.authServ.logout();
           }
         });
     } else {
+      this.systService.getBuildings()
+        .subscribe(data => {
+          this.buildingsArr = data.systemBuilding.buildings;
+        }, error => {
+          console.log(error);
+          if (error.error.error === 'invalid_token') {
+            this.authServ.logout();
+          }
+        });
       this.isEdit = false;
     }
   }
+
+  checkBuilding() {
+    if(!this.isEdit && this.addBuildingForm.value.buildingName.length > 0){
+      const isExist = this.buildingsArr.filter(item => this.addBuildingForm.value.buildingName === item.buildingName);
+
+      if (isExist.length > 0 ) {
+        this.existBuildingId = isExist[0].buildingId;
+        this.confirmEdit();
+      }
+    }
+  }
+
 
   revert(e) {
     e.preventDefault();
     this.addBuildingForm.reset();
   }
-
-
-
 
   onSubmit() {
     let addBuildingApiModel;
@@ -163,7 +189,19 @@ export class AddBuildingComponent implements OnInit {
           });
       }
     }
+  }
 
+  confirmEdit(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: this.addBuildingForm.value.buildingName + ' already exist. Would you like to open it?',
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.initData();
+      }
+    });
   }
 
   cancel(e) {

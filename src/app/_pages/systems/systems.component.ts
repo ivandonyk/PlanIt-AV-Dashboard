@@ -199,8 +199,16 @@ export class SystemsComponent implements OnInit {
     this.getAllEquipments();
     this.systServ.getBuildings()
       .subscribe((data: Buildings) => {
-      for (let i = 0; i < data.systemBuilding.buildings.length; i++) {
-        this.dataSlides.push(data.systemBuilding.buildings[i]);
+
+      console.log(data)
+      let dataCustom = data['systemBuilding']['buildings'].sort( (a, b) => {
+        return a.buildingName.toLowerCase().localeCompare(b.buildingName.toLowerCase());
+      })
+        console.log(dataCustom)
+
+
+      for (let i = 0; i < dataCustom.length; i++) {
+        this.dataSlides.push(dataCustom[i]);
       }
       setTimeout( () => {
         this.mySiema = new Siema({

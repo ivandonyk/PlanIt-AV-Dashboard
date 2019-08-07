@@ -6,6 +6,7 @@ export interface SlideData {
   nbrRooms: number;
   includes?: any;
   length?: any;
+  sort?: any;
   roomsToReplace: Array<{
     roomName: string;
     year: string;
