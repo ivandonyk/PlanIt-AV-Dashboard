@@ -155,7 +155,7 @@ export class AddBuildingComponent implements OnInit {
             this.dialogRef.close();
 
           }, error => {
-            if (error.error.error === 'invalid_token'){
+            if (error.error.error === 'invalid_token') {
               this.authServ.logout();
             }
             this.snackbar.open(error.message, '', {

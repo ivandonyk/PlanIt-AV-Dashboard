@@ -34,5 +34,8 @@ export class RoomsTableComponent implements OnInit {
     this.clickRow.emit(id);
   }
 
+  applyFilter(filterValue: string) {
+    this.data.filter = filterValue.trim().toLowerCase();
+  }
 
 }

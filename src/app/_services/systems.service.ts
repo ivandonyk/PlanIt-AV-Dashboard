@@ -176,9 +176,9 @@ export class SystemsService {
     formData.append('userName', userData.userName);
 
 
-    // const headers = {
-    //   'Content-type': 'application/json'
-    // };
+    const headers = {
+      'Content-type': 'application/json'
+    };
 
     return this.httpClient.post<any>(environment.baseUrl + '/updBuilding', {
       'buildingName': data.buildingName,
@@ -197,6 +197,8 @@ export class SystemsService {
       'contactEmail': data.contactEmail,
       'buildingId': id,
       'userName': userData.userName
+    }, {
+      headers
     });
     // return this.httpClient.post<any>(environment.baseUrl + '/updBuilding', formData, {
     //   headers
