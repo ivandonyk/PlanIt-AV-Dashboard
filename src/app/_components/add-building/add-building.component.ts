@@ -79,6 +79,9 @@ export class AddBuildingComponent implements OnInit {
       this.isEdit = true;
       this.systService.getBuildingDetail(this.data ? this.data.buildingId : this.existBuildingId )
         .subscribe(data => {
+          console.log(data['contactFirstName'])
+          console.log(data['contactLastName'])
+          console.log(data['contactPhoneNbr'])
           this.addBuildingForm = this.fb.group({
             buildingName: new FormControl(data['buildingName'], [Validators.required, Validators.maxLength(80)]),
             address1: new FormControl(data['address1'], [Validators.required, Validators.maxLength(80)]),
@@ -89,11 +92,11 @@ export class AddBuildingComponent implements OnInit {
             nbrOfFloors: new FormControl(data['nbrOfFloors']),
             dateConstructed: new FormControl(data['dateConstructed']),
             dateLastRemodel: new FormControl(data['dateLastRemodel']),
-            notes: new FormControl(data['notes'] ),
-            contactFirstName : new FormControl(data['contactFirstName ']),
-            contactLastName : new FormControl(data['contactLastName ']),
-            contactPhoneNbr : new FormControl(data['contactPhoneNbr ']),
-            contactEmail : new FormControl(data['contactEmail '], [Validators.email])
+            notes: new FormControl(data['notes']),
+            contactFirstName : new FormControl(data['contactFirstName']),
+            contactLastName : new FormControl(data['contactLastName']),
+            contactPhoneNbr : new FormControl(data['contactPhoneNbr']),
+            contactEmail : new FormControl(data['contactEmail'], [Validators.email])
           });
         }, error => {
           if (error.error.error === 'invalid_token') {
@@ -115,7 +118,7 @@ export class AddBuildingComponent implements OnInit {
   }
 
   checkBuilding() {
-    if(!this.isEdit && this.addBuildingForm.value.buildingName.length > 0){
+    if (!this.isEdit && this.addBuildingForm.value.buildingName.length > 0) {
       const isExist = this.buildingsArr.filter(item => this.addBuildingForm.value.buildingName === item.buildingName);
 
       if (isExist.length > 0 ) {

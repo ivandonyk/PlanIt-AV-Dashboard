@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SidebarRoutesModule} from './sidebar-routes.module';
-import {MediaMatcher} from '@angular/cdk/layout';
+import {MediaMatcher, BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import { Router, NavigationEnd } from '@angular/router';
 import {AuthenticationService} from "../../_services/authentication.service";
@@ -21,6 +21,7 @@ export class SidebarComponent implements OnInit {
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher,
     public authServ: AuthenticationService,
+    public breakpointObserver: BreakpointObserver
   ) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -30,8 +31,7 @@ export class SidebarComponent implements OnInit {
       }
     });
 
-
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.mobileQuery = media.matchMedia('(max-width: 1025px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
 
