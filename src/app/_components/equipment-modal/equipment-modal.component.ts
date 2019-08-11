@@ -42,6 +42,7 @@ export class EquipmentModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this)
     const equipData = JSON.parse(this.dataSource);
     const currentEquipment = equipData.filter(item => item.equipmentId == this.equipmentId);
     this.buildingName = currentEquipment[0].building;

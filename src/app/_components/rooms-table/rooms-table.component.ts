@@ -31,6 +31,7 @@ export class RoomsTableComponent implements OnInit {
   }
 
   open(id: number) {
+    console.log(id)
     this.clickRow.emit(id);
   }
 

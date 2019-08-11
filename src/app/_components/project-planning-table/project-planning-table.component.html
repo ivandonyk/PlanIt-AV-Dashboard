@@ -1,5 +1,7 @@
 <div class="table-container">
-
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+  </mat-form-field>
   <table mat-table  [dataSource]="data" matSort class="mat-elevation-z8 rooms-table">
 
     <ng-container *ngFor="let column of columns" matColumnDef="{{column.key}}">

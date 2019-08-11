@@ -381,6 +381,7 @@ export class SystemsComponent implements OnInit {
 
         if (this.dataRooms.length === this.equipments.length) {
           // this.equipmentsString = JSON.stringify(this.equipments);
+
         }
         this.globalVars.spinner = false;
       }, error => {

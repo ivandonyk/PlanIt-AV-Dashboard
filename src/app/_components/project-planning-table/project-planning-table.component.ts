@@ -38,5 +38,8 @@ export class ProjectPlanningTableComponent implements OnInit {
     return x ?  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : x;
   }
 
+  applyFilter(filterValue: string) {
+    this.data.filter = filterValue.trim().toLowerCase();
+  }
 
 }
