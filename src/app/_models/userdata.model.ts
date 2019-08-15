@@ -19,3 +19,30 @@ export interface LoginData {
     jti: string;
 
 }
+
+export interface UserManageData {
+    dateAdded: string;
+    id: number;
+    name: string;
+    status: string;
+    userName: string;
+    userType: string;
+}
+
+export interface AnotherUserData {
+    active: string;
+    firstName: string;
+    id: number;
+    userRoleId: number;
+    lastName: string;
+    phoneNbr: string;
+    primaryAcctAdmin: string;
+    role: string;
+    title: string;
+    userName: string;
+}
+export interface UserRoles {
+  roleDescription: string;
+  roleId: number;
+  roleName: string;
+}

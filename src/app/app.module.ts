@@ -70,6 +70,7 @@ import {PrintDialogComponent} from './_components/print-dialog/print-dialog.comp
 import {AddProjectDescComponent} from "./_components/add-project-desc/add-project-desc.component";
 import {ContactUsComponent} from "./_components/contact-us/contact-us.component";
 import {ProjectPlanningTableComponent} from "./_components/project-planning-table/project-planning-table.component";
+import {ManageUserComponent} from "./_components/manage-user/manage-user.component";
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import {ProjectPlanningTableComponent} from "./_components/project-planning-tabl
     PrintDialogComponent,
     AddProjectDescComponent,
     ContactUsComponent,
+    ManageUserComponent
   ],
   entryComponents: [
     AddBuildingComponent,
@@ -115,7 +117,7 @@ import {ProjectPlanningTableComponent} from "./_components/project-planning-tabl
     PrintDialogComponent,
     AddProjectDescComponent,
     ContactUsComponent,
-
+    ManageUserComponent
   ],
   imports: [
     BrowserModule,

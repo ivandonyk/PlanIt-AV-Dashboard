@@ -16,3 +16,6 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
   background: #f00 !important;
   color: #fff !important;
 }
+.manage-user-dialog .mat-dialog-container{
+  padding: 0 !important;
+}

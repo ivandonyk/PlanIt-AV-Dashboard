@@ -7,6 +7,7 @@ import { ReferComponent } from '../refer/refer.component';
 import {CloneRoomComponent} from '../clone-room/clone-room.component';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {ContactUsComponent} from '../contact-us/contact-us.component';
+import {ManageUserComponent} from "../manage-user/manage-user.component";
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,11 @@ export class HeaderComponent implements OnInit {
     public authServ: AuthenticationService
   ) {
   }
+  ngOnInit() {
+  }
+
+
+
   openBuildingDialog(): void {
     this.dialog.open(AddBuildingComponent);
   }
@@ -39,7 +45,10 @@ export class HeaderComponent implements OnInit {
   openReferDialog(): void {
     this.dialog.open(ReferComponent);
   }
-  ngOnInit() {
+  openManggeUserDialog(): void {
+    this.dialog.open(ManageUserComponent, {
+      panelClass: 'manage-user-dialog'
+    });
   }
 
   logout() {

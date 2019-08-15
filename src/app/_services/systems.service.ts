@@ -7,7 +7,7 @@ import {
   Room, EquipmentDetailUpdate
 } from '../_models/systems.model';
 import { EquipmentDetailAdd } from '../_models/equipment.model';
-import { UserData } from '../_models/userdata.model';
+import {AnotherUserData, UserData, UserManageData, UserRoles} from '../_models/userdata.model';
 import {AddBuildingFormModel} from '../_models/addBuildingFormModel';
 import * as moment from 'moment';
 
@@ -205,9 +205,6 @@ export class SystemsService {
     }, {
       headers
     });
-    // return this.httpClient.post<any>(environment.baseUrl + '/updBuilding', formData, {
-    //   headers
-    // });
   }
 
   addBuilding(object: AddBuildingFormModel): Observable<AddBuildingFormModel> {
@@ -242,6 +239,75 @@ export class SystemsService {
     });
   }
 
+  getAllUsers(): Observable<UserManageData[]> {
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
+    const params = new HttpParams().set('businessAccountId', String(userData.businessAcctId));
+    return this.httpClient.get<UserManageData[]>(environment.baseUrl + '/user/getAllUsers', {
+      params: params
+    });
+  }
+
+  getUser(id: number): Observable<AnotherUserData> {
+    const params = new HttpParams().set('userId', String(id));
+    return this.httpClient.get<AnotherUserData>(environment.baseUrl + '/user/getUser', {
+      params: params
+    });
+  }
+
+
+  getRoles(): Observable<UserRoles[]> {
+    return this.httpClient.get<UserRoles[]>(environment.baseUrl + '/user/getRoles');
+  }
+
+  deleteUser(id: number | string) {
+    return this.httpClient.get(environment.baseUrl + '/user/deleteUser/' + String(id));
+  }
+
+  updateUser(data, userDataObj): Observable<any> {
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
+
+
+    const headers = {
+      'Content-type': 'application/json'
+    };
+    console.log(data);
+    console.log(userDataObj);
+
+    // const formData = new FormData();
+    //
+    // formData.append('active', userDataObj.active);
+    // formData.append('businessId', String(userData.businessAcctId));
+    // formData.append('primaryAcctAdmin', userDataObj.primaryAcctAdmin);
+    // formData.append('userId', userDataObj.id);
+    // formData.append('userRoleId', userDataObj.userRoleId);
+    // formData.append('valid', userDataObj.valid);
+    // formData.append('password', data.password);
+    //
+    // formData.append('firstName', data.firstName);
+    // formData.append('lastName', data.lastName);
+    // formData.append('phoneNbr', data.phoneNbr);
+    // formData.append('title', data.title);
+    // formData.append('userName', data.userName);
+
+    // console.log(formData)
+
+    return this.httpClient.post<any>(environment.baseUrl + '/user/updateUser', {
+      active: userDataObj.active,
+      businessId: String(userData.businessAcctId),
+      primaryAcctAdmin: userDataObj.primaryAcctAdmin,
+      userId: userDataObj.id,
+      userRoleId: data.userRoleId,
+      valid: userDataObj.valid,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phoneNbr: data.phoneNbr,
+      title: data.title,
+      userName: data.userName,
+    }, {
+      headers
+    });
+  }
 
 
 }
