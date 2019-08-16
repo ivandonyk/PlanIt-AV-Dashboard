@@ -609,6 +609,13 @@ export class SystemsComponent implements OnInit {
         buildingId: this.currentBuilding,
       }
     });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result) {
+        this.getRoomDet();
+
+      }
+    });
   }
   openDialogUploadDocument(): void {
     const dialogRef = this.dialog.open(UploadDocumentComponent, {
@@ -618,6 +625,7 @@ export class SystemsComponent implements OnInit {
         buildingId: this.currentBuilding,
       }
     });
+
   }
 
 

@@ -71,6 +71,7 @@ import {AddProjectDescComponent} from "./_components/add-project-desc/add-projec
 import {ContactUsComponent} from "./_components/contact-us/contact-us.component";
 import {ProjectPlanningTableComponent} from "./_components/project-planning-table/project-planning-table.component";
 import {ManageUserComponent} from "./_components/manage-user/manage-user.component";
+import {AccountSettingsComponent} from "./_components/account-settings/account-settings.component";
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import {ManageUserComponent} from "./_components/manage-user/manage-user.compone
     PrintDialogComponent,
     AddProjectDescComponent,
     ContactUsComponent,
-    ManageUserComponent
+    ManageUserComponent,
+    AccountSettingsComponent
   ],
   entryComponents: [
     AddBuildingComponent,
@@ -117,7 +119,8 @@ import {ManageUserComponent} from "./_components/manage-user/manage-user.compone
     PrintDialogComponent,
     AddProjectDescComponent,
     ContactUsComponent,
-    ManageUserComponent
+    ManageUserComponent,
+    AccountSettingsComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import {CloneRoomComponent} from '../clone-room/clone-room.component';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {ContactUsComponent} from '../contact-us/contact-us.component';
 import {ManageUserComponent} from "../manage-user/manage-user.component";
+import {AccountSettingsComponent} from "../account-settings/account-settings.component";
 
 @Component({
   selector: 'app-header',
@@ -48,6 +49,14 @@ export class HeaderComponent implements OnInit {
   openManggeUserDialog(): void {
     this.dialog.open(ManageUserComponent, {
       panelClass: 'manage-user-dialog'
+    });
+  }
+
+  openAccountSettingsDialog(): void {
+    this.dialog.open(AccountSettingsComponent, {
+      panelClass: 'manage-user-dialog',
+      height: '400px',
+      width: '70%',
     });
   }
 

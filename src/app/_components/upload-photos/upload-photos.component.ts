@@ -48,7 +48,7 @@ export class AddPhotosComponent implements OnInit {
                 horizontalPosition: 'right',
               }
             );
-            self.dialogRef.close();
+            self.dialogRef.close(true);
             this.globalVars.spinner = false;
           }
         }, error => {
@@ -73,7 +73,7 @@ export class AddPhotosComponent implements OnInit {
                   }
                 );
                 this.globalVars.spinner = false;
-                self.dialogRef.close();
+                self.dialogRef.close(true);
               }
             }
           }
@@ -87,6 +87,7 @@ export class AddPhotosComponent implements OnInit {
     this.dialogRef.close();
   }
   onFilesAdded(files: File[]) {
+    console.log(files)
     this.fields = [];
     files.forEach((item) => {
 
@@ -118,5 +119,11 @@ export class AddPhotosComponent implements OnInit {
       }
     });
   }
+
+  onFilesRejected(files: File[]){
+    console.log(files)
+  }
+
+
 
 }

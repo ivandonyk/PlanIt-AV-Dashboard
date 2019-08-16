@@ -5,6 +5,7 @@
                   class="custom-dropzone"
                   [accept]="'image/png,image/jpeg'"
                   (filesAdded)="onFilesAdded($event)"
+                  (filesRejected)="onFilesRejected($event)"
                   [showPreviews]="true"
                   [label]="'Drop your image here (or click)'"
                   [preserveFiles]="false"
