@@ -157,11 +157,12 @@ export class SystemsService {
   }
   updBuilding(data, id): Observable<any> {
 
+    console.log(data)
     // const params = new HttpParams().set('businessId', String(userData.businessAcctId));
 
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
     const formData = new FormData();
-    formData.append('businessId', String(userData.businessAcctId));
+    formData.append('businessAccountId', String(userData.businessAcctId));
     formData.append('buildingName', data.buildingName);
     formData.append('address1', data.address1);
     formData.append('address2', data.address2);
@@ -187,7 +188,7 @@ export class SystemsService {
     return this.httpClient.post<any>(environment.baseUrl + '/updBuilding', {
       'buildingName': data.buildingName,
       'address1': data.address1,
-      'businessId': String(userData.businessAcctId),
+      'businessAccountId': Number(userData.businessAcctId),
       'address2': data.address2,
       'city': data.city,
       'state': data.state,
@@ -201,6 +202,8 @@ export class SystemsService {
       'contactPhoneNbr': data.contactPhoneNbr,
       'contactEmail': data.contactEmail,
       'buildingId': id,
+      'addressId': data.addressId,
+      'contactId': data.contactId,
       'userName': userData.userName
     }, {
       headers

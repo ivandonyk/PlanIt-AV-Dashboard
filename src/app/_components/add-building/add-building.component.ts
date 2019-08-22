@@ -7,6 +7,7 @@ import { SystemsService } from '../../_services/systems.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {ConfirmModalComponent} from "../confirm-modal/confirm-modal.component";
+import * as moment from 'moment';
 
 
 
@@ -26,6 +27,7 @@ export class AddBuildingComponent implements OnInit {
 
   private handleError: HandleError;
   private buildingsArr: any;
+  private existBuildi: any;
   private existBuildingId: number;
 
   public addBuildingForm = this.fb.group({
@@ -38,7 +40,7 @@ export class AddBuildingComponent implements OnInit {
     nbrOfFloors: new FormControl(''),
     dateConstructed: new FormControl(''),
     dateLastRemodel: new FormControl(''),
-    notes: new FormControl('' ),
+    note: new FormControl(''),
     contactFirstName : new FormControl(''),
     contactLastName : new FormControl(''),
     contactPhoneNbr : new FormControl(''),
@@ -79,9 +81,8 @@ export class AddBuildingComponent implements OnInit {
       this.isEdit = true;
       this.systService.getBuildingDetail(this.data ? this.data.buildingId : this.existBuildingId )
         .subscribe(data => {
-          console.log(data['contactFirstName'])
-          console.log(data['contactLastName'])
-          console.log(data['contactPhoneNbr'])
+          console.log(data)
+          this.existBuildi = data;
           this.addBuildingForm = this.fb.group({
             buildingName: new FormControl(data['buildingName'], [Validators.required, Validators.maxLength(80)]),
             address1: new FormControl(data['address1'], [Validators.required, Validators.maxLength(80)]),
@@ -90,9 +91,9 @@ export class AddBuildingComponent implements OnInit {
             state: new FormControl(data['state'], [Validators.required]),
             zip: new FormControl(data['zip'], [Validators.required, Validators.maxLength(10)]),
             nbrOfFloors: new FormControl(data['nbrOfFloors']),
-            dateConstructed: new FormControl(data['dateConstructed']),
-            dateLastRemodel: new FormControl(data['dateLastRemodel']),
-            notes: new FormControl(data['notes']),
+            dateConstructed: new FormControl(moment(data['dateConstructed']).toISOString()),
+            dateLastRemodel: new FormControl(moment(data['dateLastRemodel']).toISOString()),
+            note: new FormControl(data['note']),
             contactFirstName : new FormControl(data['contactFirstName']),
             contactLastName : new FormControl(data['contactLastName']),
             contactPhoneNbr : new FormControl(data['contactPhoneNbr']),
@@ -153,6 +154,9 @@ export class AddBuildingComponent implements OnInit {
 
     if (this.addBuildingForm.status === 'VALID') {
       if (this.data) {
+        addBuildingApiModel['addressId'] = this.existBuildi.addressId;
+        addBuildingApiModel['contactId'] = this.existBuildi.contactId;
+
         this.systService.updBuilding(addBuildingApiModel, this.data.buildingId)
           .subscribe(data => {
             this.dialogRef.close();
@@ -169,6 +173,7 @@ export class AddBuildingComponent implements OnInit {
             );
           });
       } else {
+        console.log(addBuildingApiModel)
         this.systService.addBuilding(addBuildingApiModel)
           .subscribe(data => {
             this.snackbar.open('Building Added', '', {

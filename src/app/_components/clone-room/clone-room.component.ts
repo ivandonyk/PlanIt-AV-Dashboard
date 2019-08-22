@@ -123,6 +123,7 @@ export class CloneRoomComponent implements OnInit {
 
 
   onSubmit() {
+    console.log(this)
     this.globalVars.spinner = true;
     this.systServ.addRoom(this.cloneRoomForm.value)
       .subscribe(data => {
