@@ -35,7 +35,6 @@ public addRoomForm = this.fb.group({
     dimensions: new FormControl('' ),
     ceilingHeight : new FormControl(''),
     ceilingType : new FormControl(''),
-    lastInstallDate : new FormControl(''),
     origAvInstallDate : new FormControl(''),
     lifecycle : new FormControl(''),
     origAvSystemCost : new FormControl(''),

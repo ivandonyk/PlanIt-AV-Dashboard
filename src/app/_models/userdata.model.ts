@@ -46,3 +46,10 @@ export interface UserRoles {
   roleId: number;
   roleName: string;
 }
+
+export interface BillingSubs {
+  id: number;
+  nbrRooms: number;
+  nbrUsers: number;
+  subscription: string;
+}

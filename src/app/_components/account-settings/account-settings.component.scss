@@ -47,6 +47,8 @@
       padding: 10px;
       width: 100%;
       color: #000;
+      cursor: pointer;
+      user-select: none;
       &.active{
         background: rgba(0,0,0,0.1);
 

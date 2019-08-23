@@ -62,7 +62,7 @@ export interface RoomDetails {
   images?: Array<string>;
   integrator: string;
   lastAvContractor: string;
-  lastInstallDate: string;
+  lastInstallDate?: string;
   lifecycle: number;
   nextAvUpdCost: number;
   nextAvUpdateDt: string;

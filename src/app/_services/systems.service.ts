@@ -7,7 +7,7 @@ import {
   Room, EquipmentDetailUpdate
 } from '../_models/systems.model';
 import { EquipmentDetailAdd } from '../_models/equipment.model';
-import {AnotherUserData, UserData, UserManageData, UserRoles} from '../_models/userdata.model';
+import {AnotherUserData, BillingSubs, UserData, UserManageData, UserRoles} from '../_models/userdata.model';
 import {AddBuildingFormModel} from '../_models/addBuildingFormModel';
 import * as moment from 'moment';
 
@@ -105,7 +105,6 @@ export class SystemsService {
       images: roomObj.images,
       integrator: String(roomObj.integrator),
       lastAvContractor: String(roomObj.lastAvContractor),
-      lastInstallDate: moment(roomObj.lastInstallDate).toISOString(),
       lifecycle: Number(roomObj.lifecycle),
       nextAvUpdCost: Number(roomObj.nextAvUpdCost),
       nextAvUpdateDt: moment(roomObj.nextAvUpdateDt).toISOString(),
@@ -117,7 +116,8 @@ export class SystemsService {
       roomName: String(roomObj.roomName),
       seatingCapacity: Number(roomObj.seatingCapacity),
       seatingType: String(roomObj.seatingType),
-      tier: Number(roomObj.tier)
+      tier: Number(roomObj.tier),
+      roomType: String(roomObj.roomType)
     };
     return this.httpClient.post<RoomDetails>(environment.baseUrl + '/addRoom', room);
   }
@@ -273,26 +273,6 @@ export class SystemsService {
     const headers = {
       'Content-type': 'application/json'
     };
-    console.log(data);
-    console.log(userDataObj);
-
-    // const formData = new FormData();
-    //
-    // formData.append('active', userDataObj.active);
-    // formData.append('businessId', String(userData.businessAcctId));
-    // formData.append('primaryAcctAdmin', userDataObj.primaryAcctAdmin);
-    // formData.append('userId', userDataObj.id);
-    // formData.append('userRoleId', userDataObj.userRoleId);
-    // formData.append('valid', userDataObj.valid);
-    // formData.append('password', data.password);
-    //
-    // formData.append('firstName', data.firstName);
-    // formData.append('lastName', data.lastName);
-    // formData.append('phoneNbr', data.phoneNbr);
-    // formData.append('title', data.title);
-    // formData.append('userName', data.userName);
-
-    // console.log(formData)
 
     return this.httpClient.post<any>(environment.baseUrl + '/user/updateUser', {
       active: userDataObj.active,
@@ -310,6 +290,23 @@ export class SystemsService {
     }, {
       headers
     });
+  }
+
+
+
+  getBillSub(): Observable<BillingSubs> {
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
+    const params = new HttpParams().set('businessAcctId', String(userData.businessAcctId));
+
+    return this.httpClient.get<BillingSubs>(environment.baseUrl + '/getBillSub', {
+      params: params
+    });
+  }
+
+
+  getAllBillSub(): Observable<BillingSubs[]> {
+
+    return this.httpClient.get<BillingSubs[]>(environment.baseUrl + '/getAllBillSub');
   }
 
 
