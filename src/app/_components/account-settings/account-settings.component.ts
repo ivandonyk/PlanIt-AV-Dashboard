@@ -42,6 +42,7 @@ export class AccountSettingsComponent implements OnInit {
 
    } else if (p === 2) {
       this.getBillingSubs();
+      this.getAllBillSub();
    } else if (p === 3) {
 
    }
@@ -57,16 +58,28 @@ export class AccountSettingsComponent implements OnInit {
     this.systService.getBillSub()
       .subscribe((data: BillingSubs) => {
         this.subsData = data;
+        this.globalVars.spinner = true;
       }, error => {
         console.log(error);
+        this.globalVars.spinner = false;
       });
+  }
+
+  getAllBillSub() {
     this.systService.getAllBillSub()
       .subscribe( (data: BillingSubs[]) => {
         this.globalVars.spinner = false;
         this.allBillSub = data;
       }, error => {
         console.log(error);
+        this.globalVars.spinner = false;
       });
+  }
+
+
+  changeSub(e) {
+    e.preventDefault();
+
   }
 
 }
