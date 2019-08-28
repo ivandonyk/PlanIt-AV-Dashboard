@@ -275,9 +275,8 @@ export class SystemsService {
     };
 
     return this.httpClient.post<any>(environment.baseUrl + '/user/updateUser', {
-      active: userDataObj.active,
       businessId: String(userData.businessAcctId),
-      primaryAcctAdmin: userDataObj.primaryAcctAdmin,
+      primaryAcctAdmin: data.primaryAcctAdmin,
       userId: userDataObj.id,
       userRoleId: data.userRoleId,
       valid: userDataObj.valid,
@@ -287,6 +286,31 @@ export class SystemsService {
       phoneNbr: data.phoneNbr,
       title: data.title,
       userName: data.userName,
+      active: data.active,
+    }, {
+      headers
+    });
+  }
+  createUser(data, userDataObj): Observable<any> {
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
+
+
+    const headers = {
+      'Content-type': 'application/json'
+    };
+
+    return this.httpClient.post<any>(environment.baseUrl + '/user/createUser', {
+      businessId: String(userData.businessAcctId),
+      primaryAcctAdmin: data.primaryAcctAdmin,
+      userRoleId: 0,
+      valid: null,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phoneNbr: data.phoneNbr,
+      title: data.title,
+      userName: data.userName,
+      active: data.active,
     }, {
       headers
     });

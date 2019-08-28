@@ -19,3 +19,6 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
 .manage-user-dialog .mat-dialog-container{
   padding: 0 !important;
 }
+app-account-settings{
+  overflow: hidden;
+}

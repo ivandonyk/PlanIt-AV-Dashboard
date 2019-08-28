@@ -17,6 +17,7 @@ export class ManageUserComponent implements OnInit {
   public userRoles: UserRoles[];
   public displayedColumns: Array<string> = ['name', 'userName', 'userType', 'dateAdded', 'status'];
   public userData: AnotherUserData;
+  public isCreateUser: boolean;
 
   public userEditForm = this.fb.group({
     firstName: new FormControl(''),
@@ -26,6 +27,8 @@ export class ManageUserComponent implements OnInit {
     title: new FormControl(''),
     password: new FormControl(''),
     userRoleId: new FormControl(''),
+    active: new FormControl(''),
+    primaryAcctAdmin: new FormControl(''),
   });
 
   constructor(
@@ -81,6 +84,8 @@ export class ManageUserComponent implements OnInit {
           title: new FormControl(data.title),
           password: new FormControl(''),
           userRoleId: new FormControl(data.userRoleId),
+          primaryAcctAdmin: new FormControl(data.primaryAcctAdmin),
+          active: new FormControl(data.active),
         });
 
         this.userData = data;
@@ -93,24 +98,40 @@ export class ManageUserComponent implements OnInit {
 
   updateUser() {
     this.globalVars.spinner = true;
-
-    console.log(this.userEditForm.value);
     const formData = this.userEditForm.value;
-    this.systService.updateUser(formData, this.userData)
-      .subscribe((data) => {
-        this.userData = null;
-        this.getUsers()
 
-        this.globalVars.spinner = false;
-      }, error => {
-        console.log(error);
-        this.globalVars.spinner = false;
-      });
+    if (this.isCreateUser) {
+      this.systService.createUser(formData, this.userData)
+        .subscribe((data) => {
+          this.userData = null;
+          this.getUsers()
 
+          this.globalVars.spinner = false;
+          this.isCreateUser = false;
+        }, error => {
+          console.log(error);
+          this.globalVars.spinner = false;
+          this.isCreateUser = false;
+        });
+    } else {
+      this.systService.updateUser(formData, this.userData)
+        .subscribe((data) => {
+          this.userData = null;
+          this.getUsers()
+
+          this.globalVars.spinner = false;
+          this.isCreateUser = false;
+        }, error => {
+          console.log(error);
+          this.globalVars.spinner = false;
+          this.isCreateUser = false;
+        });
+    }
   }
 
   cancelEdit() {
     this.userData = null;
+    this.isCreateUser = false;
   }
 
   deleteUser() {
@@ -128,4 +149,21 @@ export class ManageUserComponent implements OnInit {
         this.globalVars.spinner = false;
       });
   }
+
+
+  createUser() {
+    this.userEditForm = this.fb.group({
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+      phoneNbr: new FormControl(''),
+      userName: new FormControl(''),
+      title: new FormControl(''),
+      password: new FormControl(''),
+      userRoleId: new FormControl(''),
+      active: new FormControl(''),
+      primaryAcctAdmin: new FormControl(''),
+    });
+    this.isCreateUser = true;
+  }
+
 }

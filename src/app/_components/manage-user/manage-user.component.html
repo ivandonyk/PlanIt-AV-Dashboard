@@ -3,7 +3,7 @@
   <div class="title">
     Manage Users
   </div>
-  <div class="actions" *ngIf="userData">
+  <div class="actions" *ngIf="userData || isCreateUser">
     <div class="header-btn" (click)="updateUser();">
       <mat-icon aria-hidden="false" aria-label="Save">save</mat-icon>
     </div>
@@ -15,7 +15,7 @@
 
 <div class="container">
   <div mat-dialog-content>
-    <mat-tab-group *ngIf="!userData" [color]="'accent'">
+    <mat-tab-group *ngIf="!userData && !isCreateUser" [color]="'accent'">
       <mat-tab label="Users">
         <table  mat-table [dataSource]="userManageData" class="user-manage-table">
 
@@ -47,12 +47,19 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr  mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <br/>
+
+        <div  class="btns-cont">
+          <button mat-raised-button class="red-btn" (click)="createUser()" color="primary">
+            Create User
+          </button>
+        </div>
       </mat-tab>
     </mat-tab-group>
-    <form *ngIf="userData" [formGroup]="userEditForm">
+    <form *ngIf="userData || isCreateUser" [formGroup]="userEditForm">
 
 
-      <div class="fields-group" data-grid="3">
+      <div class="fields-group" data-grid="2">
         <mat-form-field >
           <mat-label>
             First Name
@@ -65,27 +72,18 @@
           </mat-label>
           <input autocomplete="off" matInput formControlName="lastName"  placeholder="Last Name">
         </mat-form-field>
-        <mat-form-field >
-          <mat-label>
-            Phone Number
-          </mat-label>
-          <input autocomplete="off" matInput formControlName="phoneNbr"  type="number" placeholder="Phone Number">
-        </mat-form-field>
       </div>
 
-      <div class="fields-group" data-grid="3">
+      <div class="fields-group" data-grid="1">
         <mat-form-field >
           <mat-label>
-            Username
+            UserName
           </mat-label>
           <input autocomplete="off" matInput formControlName="userName"  placeholder="User Name">
         </mat-form-field>
-        <mat-form-field >
-          <mat-label>
-            Title
-          </mat-label>
-          <input autocomplete="off" matInput formControlName="title" placeholder="Title">
-        </mat-form-field>
+      </div>
+
+      <div class="fields-group" data-grid="1">
         <mat-form-field >
           <mat-label>
             Password
@@ -95,9 +93,28 @@
       </div>
 
       <div class="fields-group" data-grid="1">
+        <mat-form-field >
+          <mat-label>
+            Title
+          </mat-label>
+          <input autocomplete="off" matInput formControlName="title" placeholder="Title">
+        </mat-form-field>
+      </div>
+
+      <div class="fields-group" data-grid="1">
+        <mat-form-field >
+          <mat-label>
+            Phone Number
+          </mat-label>
+          <input autocomplete="off" matInput formControlName="phoneNbr"  type="number" placeholder="Phone Number">
+        </mat-form-field>
+      </div>
+
+
+      <div class="fields-group" data-grid="1">
         <mat-form-field class="form-element">
           <mat-label>
-            User Role
+            User Type
           </mat-label>
           <mat-select matInput placeholder="User Role" formControlName="userRoleId">
             <mat-option *ngFor="let role of userRoles" [value]="role.roleId">{{role.roleName}}</mat-option>
@@ -106,7 +123,29 @@
       </div>
 
 
+      <div class="fields-group" data-grid="1">
+        <mat-form-field class="form-element">
+          <mat-label>
+            Primary Account Admin
+          </mat-label>
+          <mat-select matInput placeholder="Primary Account Admin" formControlName="primaryAcctAdmin">
+            <mat-option  [value]="'Y'">Y</mat-option>
+            <mat-option  [value]="'N'">N</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
+      <div class="fields-group" data-grid="1">
+        <mat-form-field class="form-element">
+          <mat-label>
+            Active
+          </mat-label>
+          <mat-select matInput placeholder="Active" formControlName="active">
+            <mat-option  [value]="'Y'">Y</mat-option>
+            <mat-option  [value]="'N'">N</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </form>
     <div *ngIf="userData" class="btns-cont">
       <button mat-raised-button class="red-btn" (click)="deleteUser()" color="primary">
