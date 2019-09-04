@@ -189,7 +189,6 @@ export class SystemsComponent implements OnInit {
       roomType: [''],
     });
     this.globalVars.spinner = true;
-
     this.mobileQuery = this.media.matchMedia('(max-width: 768px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -200,7 +199,6 @@ export class SystemsComponent implements OnInit {
     this.systServ.getBuildings()
       .subscribe((data: Buildings) => {
 
-      console.log(data)
       let dataCustom = data['systemBuilding']['buildings'].sort( (a, b) => {
         return a.buildingName.toLowerCase().localeCompare(b.buildingName.toLowerCase());
       })

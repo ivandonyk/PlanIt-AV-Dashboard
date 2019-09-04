@@ -23,6 +23,7 @@ export class EquipmentModalComponent implements OnInit {
 
   public data: EquipmentDetail;
   public isEdit: Boolean = false;
+  public isRoomFormChanged: Boolean = false;
   public buildingName: String = '';
   public form: FormGroup;
   roomList: any;
@@ -135,6 +136,15 @@ export class EquipmentModalComponent implements OnInit {
           warrantyStart: [''],
         });
 
+      this.form.statusChanges
+        .subscribe(value => {
+          this.isRoomFormChanged = true;
+        }, error => {
+          console.log(error);
+          if (error.error.error === 'invalid_token') {
+            this.authServ.logout();
+          }
+        });
       this.globalVars.spinner = false;
       }, error => {
         console.log(error);
@@ -198,11 +208,20 @@ export class EquipmentModalComponent implements OnInit {
 
   }
 
-  confirmCancel() {
-    const dialogRef = this.dialog.open(ConfirmModalComponent);
-    dialogRef.afterClosed().subscribe(result => {
+  confirmCancel(): void {
+    if (this.isRoomFormChanged === true) {
+      const dialogRef = this.dialog.open(ConfirmModalComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          this.updateRoom();
+        } else {
+          this.isEdit = false;
+        }
+      });
+    } else {
       this.isEdit = false;
-    });
+    }
+
   }
 
 

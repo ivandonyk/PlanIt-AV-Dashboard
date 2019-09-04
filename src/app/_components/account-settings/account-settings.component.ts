@@ -1,8 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { SystemsService } from '../../_services/systems.service';
-import {AnotherUserData, BillingSubs, UserManageData, UserRoles} from '../../_models/userdata.model';
+import {AnotherUserData, BillingSubs, BussAcc, UserManageData, UserRoles} from '../../_models/userdata.model';
 import {FormBuilder, FormControl} from '@angular/forms';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
+import {MatDialog, MatDialogRef} from "@angular/material";
+import {ConfirmModalComponent} from "../confirm-modal/confirm-modal.component";
 
 
 @Component({
@@ -16,7 +18,27 @@ export class AccountSettingsComponent implements OnInit {
   public currentRoute: number = 1;
   public subsData: BillingSubs = null;
   public allBillSub: BillingSubs[] = null;
+  public BusAcc: BussAcc = null;
+  public isAccountEdit: Boolean;
+  public isFormChanged: Boolean;
+  public states: string[] = [
+    'AK', 'AL', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE',
+    'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY',
+    'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MP', 'MS', 'MT',
+    'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK',
+    'OR', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UM', 'UT',
+    'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY'
+  ];
 
+  public accountEditForm = this.fb.group({
+    companyName: new FormControl(''),
+    address1: new FormControl(''),
+    address2: new FormControl(''),
+    city: new FormControl(''),
+    state: new FormControl(''),
+    zip: new FormControl(''),
+
+  });
 
   public formChooseSubs = this.fb.group({
     subscription: new FormControl(''),
@@ -26,32 +48,28 @@ export class AccountSettingsComponent implements OnInit {
   constructor(
     private systService: SystemsService,
     private fb: FormBuilder,
+    public dialog: MatDialog,
     public globalVars: GlobalVarsHelper,
+    public dialogRef: MatDialogRef<AccountSettingsComponent>,
 
   ) {
   }
 
   ngOnInit() {
+    this.getBusAcct();
   }
 
-
-
   changeRoute(p) {
-
    if (p === 1) {
-
+      this.getBusAcct();
    } else if (p === 2) {
       this.getBillingSubs();
       this.getAllBillSub();
    } else if (p === 3) {
 
    }
-
     this.currentRoute = p;
-
-
   }
-
 
   getBillingSubs() {
     this.globalVars.spinner = true;
@@ -76,10 +94,74 @@ export class AccountSettingsComponent implements OnInit {
       });
   }
 
+  getBusAcct() {
+    this.systService.getBusAcct()
+      .subscribe( (data: BussAcc) => {
+        this.BusAcc = data;
+        this.accountEditForm = this.fb.group({
+          companyName: new FormControl(data.companyName),
+          address1: new FormControl(data.address1),
+          address2: new FormControl(data.address2),
+          city: new FormControl(data.city),
+          state: new FormControl(data.state),
+          zip: new FormControl(data.zip),
+        });
 
-  changeSub(e) {
-    e.preventDefault();
+        this.accountEditForm.statusChanges
+          .subscribe(value => {
+            this.isFormChanged = true;
+          }, error => {
+            console.log(error);
+          });
 
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
   }
 
+
+  changeSub(id) {
+    this.systService.updBusBillingSubsripiton(id)
+      .subscribe( (data: any) => {
+        console.log(data);
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
+  saveAccountSetting() {
+    this.globalVars.spinner = true;
+    this.systService.updBusAcct(this.accountEditForm.value)
+      .subscribe( (data: any) => {
+        this.globalVars.spinner = false;
+        this.isAccountEdit = false;
+      }, error => {
+        console.log(error);
+        this.globalVars.spinner = false;
+      });
+  }
+
+  closeEdit(): void {
+    if (this.isFormChanged === true) {
+      const dialogRef = this.dialog.open(ConfirmModalComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          this.saveAccountSetting()
+          this.getBusAcct();
+        } else {
+          this.isAccountEdit = false;
+        }
+      });
+    } else {
+      this.isAccountEdit = false;
+    }
+
+  }
 }

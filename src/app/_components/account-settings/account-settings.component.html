@@ -3,14 +3,23 @@
   <div class="title">
     Manage Users
   </div>
-  <!--<div class="actions" *ngIf="userData">-->
-    <!--<div class="header-btn" (click)="updateUser();">-->
-      <!--<mat-icon aria-hidden="false" aria-label="Save">save</mat-icon>-->
-    <!--</div>-->
-    <!--<div class="header-btn" (click)="cancelEdit();">-->
-      <!--<mat-icon aria-hidden="false" class="closeedit" aria-label="Edit">edit</mat-icon>-->
-    <!--</div>-->
-  <!--</div>-->
+  <div class="actions">
+    <div class="header-btn" *ngIf="currentRoute == 1 && !isAccountEdit" (click)="isAccountEdit = true">
+      <mat-icon aria-hidden="false"  aria-label="Edit">edit</mat-icon>
+    </div>
+    <div class="header-btn" *ngIf="currentRoute == 1 && (isAccountEdit)" (click)="saveAccountSetting()">
+      <mat-icon aria-hidden="false" aria-label="Save">save</mat-icon>
+    </div>
+    <div class="header-btn" *ngIf="currentRoute == 1 && (isAccountEdit)" (click)="closeEdit()">
+      <mat-icon aria-hidden="false" class="closeedit"  aria-label="Edit">edit</mat-icon>
+    </div>
+    <div class="header-btn">
+      <mat-icon aria-hidden="false" aria-label="open_in_new">open_in_new</mat-icon>
+    </div>
+    <div class="header-btn">
+      <mat-icon aria-hidden="false" aria-label="Close" (click)="closeDialog()">close</mat-icon>
+    </div>
+  </div>
 </div>
 
 <!--<div class="container">-->
@@ -36,40 +45,92 @@
         </mat-list>
       </div>
       <div class="container" *ngIf="currentRoute == 1">
-        <div class="info-cont">
+        <div class="info-cont" *ngIf="BusAcc && !isAccountEdit">
           <p>
-            Institution/Company Name: <b>test Name</b>  <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
+            Institution/Company Name: <b>{{BusAcc.companyName}}</b>
+            <mat-icon (click)="isAccountEdit = true" aria-hidden="false" aria-label="Edit">edit</mat-icon>
           </p>
           <p>
-            Address 1: <b>test address 1</b>
+            Address 1: <b>{{BusAcc.address1}}</b>
           </p>
           <p>
-            Address 2: <b>test address 2</b>
+            Address 2: <b>{{BusAcc.address2}}</b>
           </p>
           <p>
-            City: <b>Test city</b> <span>State: <b>test state</b></span> <span>Zip Code: <b>test zip</b></span>
+            City: <b>{{BusAcc.city}}</b> <span>State: <b>{{BusAcc.state}}</b></span> <span>Zip Code: <b>{{BusAcc.zip}}</b></span>
           </p>
         </div>
         <br />
-        <div class="info-cont">
+        <div class="info-cont" *ngIf="BusAcc && !isAccountEdit">
           <p>
-            Primary Account Administator <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
+            Primary Account Administator
+            <mat-icon (click)="isAccountEdit = true" aria-hidden="false" aria-label="Edit">edit</mat-icon>
           </p>
           <p>
-            Name: <b>Test name</b>
+            Name: <b>{{BusAcc.name}}</b>
           </p>
           <p>
-            Title: <b>test title</b>
+            Title: <b>{{BusAcc.title}}</b>
           </p>
           <p>
-            Email: <b>test@email.com</b>
+            Email: <b>{{BusAcc.userName}}</b>
           </p>
           <p>
-            Phone: <b>+1230123123</b>
+            Phone: <b>{{BusAcc.phone}}</b>
           </p>
         </div>
 
+        <div *ngIf="isAccountEdit">
 
+
+
+          <form [formGroup]="accountEditForm">
+              <div class="fields-group" data-grid="2">
+                <mat-form-field >
+                  <mat-label>
+                    Company Name
+                  </mat-label>
+                  <input matInput formControlName="companyName"  placeholder="Company Name">
+                </mat-form-field>
+                <mat-form-field >
+                  <mat-label>
+                    City
+                  </mat-label>
+                  <input matInput formControlName="city"  type="text" placeholder="City">
+                </mat-form-field>
+              </div>
+
+
+              <div class="fields-group" data-grid="2">
+                <mat-form-field >
+                  <mat-label>
+                    Address 1
+                  </mat-label>
+                  <input matInput formControlName="address1"  type="text" placeholder="Address 1">
+                </mat-form-field>
+                <mat-form-field >
+                  <mat-label>
+                    Address 2
+                  </mat-label>
+                  <input matInput formControlName="address2"  type="text" placeholder="Address 2">
+                </mat-form-field>
+              </div>
+
+
+              <div class="fields-group" data-grid="2">
+                <mat-form-field class="form-horizontal">
+                  <mat-select required="true" placeholder="State" formControlName="state">
+                    <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field >
+                  <input matInput maxlength="10"  required="true" placeholder="Zip" formControlName="zip" id="zip">
+                </mat-form-field>
+              </div>
+            </form>
+
+
+        </div>
 
 
 
@@ -81,10 +142,10 @@
       </div>
       <div class="container" *ngIf="currentRoute == 2">
 
-        <h3 class="h3-title">
+        <h3 class="h3-title" *ngIf="subsData">
           Your Subscription
         </h3>
-        <mat-list role="list">
+        <mat-list role="list"  *ngIf="subsData">
           <mat-list-item role="listitem">
             Subscription: {{subsData.subscription}}
           </mat-list-item>
@@ -95,30 +156,21 @@
             Users: {{subsData.nbrUsers}}
           </mat-list-item>
         </mat-list>
-        <!--<form [formGroup]="formChooseSubs" class="form">-->
 
-          <!--<mat-form-field class="form-element">-->
-            <!--<mat-select matInput placeholder="Subscriptions" formControlName="subscription">-->
-              <!--<mat-option *ngFor="let sub of allBillSub" [value]="sub.id">{{sub.subscription}}</mat-option>-->
-            <!--</mat-select>-->
-          <!--</mat-form-field>-->
-          <!--<br>-->
-          <!--<button mat-raised-button class="red-btn-bd" (click)="changeSub($event)">Change Subscription</button>-->
-
-        <!--</form>-->
-
-        <h3 class="h3-title">
+        <h3 class="h3-title" *ngIf="allBillSub">
           Choose Subscription
         </h3>
-        <div class="subs-cont">
-          <div class="sub">
+        <div class="subs-cont" *ngIf="allBillSub">
+
+
+          <div class="sub"  *ngFor="let item of allBillSub">
             <mat-list role="list">
               <mat-list-item role="listitem">
                     <div class="sub-option">
                       <span>
                         Subscription
                       </span>
-                    <span>{{subsData.subscription}}</span>
+                    <span>{{item.subscription}}</span>
                     </div>
               </mat-list-item>
               <mat-list-item role="listitem">
@@ -126,7 +178,7 @@
                       <span>
                         Rooms
                       </span>
-                    <span>{{subsData.nbrRooms}}</span>
+                    <span>{{item.nbrRooms}}</span>
                     </div>
               </mat-list-item>
               <mat-list-item role="listitem">
@@ -134,73 +186,15 @@
                       <span>
                         Users
                       </span>
-                    <span>{{subsData.nbrUsers}}</span>
+                    <span>{{item.nbrUsers}}</span>
                     </div>
               </mat-list-item>
             </mat-list>
             <br>
-            <button mat-raised-button class="red-btn-bd" (click)="changeSub($event)">Choose Subscription</button>
+            <button mat-raised-button class="red-btn-bd" (click)="changeSub(item.id)">Choose Subscription</button>
           </div>
-          <div class="sub">
-            <mat-list role="list">
-              <mat-list-item role="listitem">
-                    <div class="sub-option">
-                      <span>
-                        Subscription
-                      </span>
-                    <span>{{subsData.subscription}}</span>
-                    </div>
-              </mat-list-item>
-              <mat-list-item role="listitem">
-                    <div class="sub-option">
-                      <span>
-                        Rooms
-                      </span>
-                    <span>{{subsData.nbrRooms}}</span>
-                    </div>
-              </mat-list-item>
-              <mat-list-item role="listitem">
-                    <div class="sub-option">
-                      <span>
-                        Users
-                      </span>
-                    <span>{{subsData.nbrUsers}}</span>
-                    </div>
-              </mat-list-item>
-            </mat-list>
-            <br>
-            <button mat-raised-button class="red-btn-bd" (click)="changeSub($event)">Choose Subscription</button>
-          </div>
-          <div class="sub">
-            <mat-list role="list">
-              <mat-list-item role="listitem">
-                    <div class="sub-option">
-                      <span>
-                        Subscription
-                      </span>
-                    <span>{{subsData.subscription}}</span>
-                    </div>
-              </mat-list-item>
-              <mat-list-item role="listitem">
-                    <div class="sub-option">
-                      <span>
-                        Rooms
-                      </span>
-                    <span>{{subsData.nbrRooms}}</span>
-                    </div>
-              </mat-list-item>
-              <mat-list-item role="listitem">
-                    <div class="sub-option">
-                      <span>
-                        Users
-                      </span>
-                    <span>{{subsData.nbrUsers}}</span>
-                    </div>
-              </mat-list-item>
-            </mat-list>
-            <br>
-            <button mat-raised-button class="red-btn-bd" (click)="changeSub($event)">Choose Subscription</button>
-          </div>
+
+
         </div>
 
 

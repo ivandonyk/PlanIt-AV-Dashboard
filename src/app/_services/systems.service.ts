@@ -7,7 +7,10 @@ import {
   Room, EquipmentDetailUpdate
 } from '../_models/systems.model';
 import { EquipmentDetailAdd } from '../_models/equipment.model';
-import {AnotherUserData, BillingSubs, UserData, UserManageData, UserRoles} from '../_models/userdata.model';
+import {
+  AnotherUserData, BillingSubs, BussAcc, updBusAcct, UserData, UserManageData,
+  UserRoles
+} from '../_models/userdata.model';
 import {AddBuildingFormModel} from '../_models/addBuildingFormModel';
 import * as moment from 'moment';
 
@@ -321,7 +324,6 @@ export class SystemsService {
   getBillSub(): Observable<BillingSubs> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
     const params = new HttpParams().set('businessAcctId', String(userData.businessAcctId));
-
     return this.httpClient.get<BillingSubs>(environment.baseUrl + '/getBillSub', {
       params: params
     });
@@ -329,8 +331,38 @@ export class SystemsService {
 
 
   getAllBillSub(): Observable<BillingSubs[]> {
-
     return this.httpClient.get<BillingSubs[]>(environment.baseUrl + '/getAllBillSub');
+  }
+
+  getBusAcct(): Observable<BussAcc> {
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
+    const params = new HttpParams().set('businessAcctId', String(userData.businessAcctId));
+    return this.httpClient.get<BussAcc>(environment.baseUrl + '/getBusAcct', {
+      params: params
+    });
+  }
+
+  updBusBillingSubsripiton(billSubscriptionId: number | string): Observable<string> {
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
+      return this.httpClient.post<string>(environment.baseUrl + '/updBusBillSub?businessAccontId=' + userData.businessAcctId + '&billSubscriptionId=' + billSubscriptionId, {
+    });
+  }
+
+  updBusAcct(updBusAcctObj: updBusAcct): Observable<updBusAcct> {
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
+    const params = new HttpParams().set('businessAcctId', String(userData.businessAcctId));
+
+
+    return this.httpClient.post<updBusAcct>(environment.baseUrl + '/updBusAcct',
+      {
+        businessAccontId: Number(userData.businessAcctId),
+        companyName: updBusAcctObj.companyName,
+        address1: updBusAcctObj.address1,
+        address2: updBusAcctObj.address2,
+        city: updBusAcctObj.city,
+        state: updBusAcctObj.state,
+        zip: updBusAcctObj.zip,
+      });
   }
 
 

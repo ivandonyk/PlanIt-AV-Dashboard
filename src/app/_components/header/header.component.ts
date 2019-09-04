@@ -54,9 +54,9 @@ export class HeaderComponent implements OnInit {
 
   openAccountSettingsDialog(): void {
     this.dialog.open(AccountSettingsComponent, {
-      panelClass: 'manage-user-dialog',
+      panelClass: 'user-account-setting',
       height: '400px',
-      width: '70%',
+      width: '80%',
     });
   }
 

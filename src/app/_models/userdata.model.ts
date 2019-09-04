@@ -53,3 +53,30 @@ export interface BillingSubs {
   nbrUsers: number;
   subscription: string;
 }
+
+export interface BussAcc {
+  address1: string;
+  address2: string;
+  addressId: number;
+  busAcctId: number;
+  city: string;
+  companyName: string;
+  name: string;
+  phone: string;
+  state: string;
+  title: string;
+  userId: number;
+  userName: string;
+  zip: string;
+}
+
+export interface updBusAcct {
+  address1: string;
+  address2: string;
+  addressId: number;
+  busAcctId: number;
+  city: string;
+  companyName: string;
+  state: string;
+  zip: string;
+}
