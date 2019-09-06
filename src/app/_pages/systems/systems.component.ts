@@ -29,7 +29,7 @@ export class SystemsComponent implements OnInit {
   public equipmentsLocal: String = '0';
   public dataRooms: Array<Room> = [];
   public roomDetailData: RoomDetails;
-  public currentBuilding: Number | String;
+  public currentBuilding: number | string;
   public currentSlides: Slides = {
     index: 0,
     slides: []
@@ -244,6 +244,7 @@ export class SystemsComponent implements OnInit {
 
   }
   openBuildingDetail(id: number | string) {
+    console.log(id)
     this.dataSource = '';
     this.globalVars.spinner = true;
     this.currentBuilding = id;
@@ -533,6 +534,7 @@ export class SystemsComponent implements OnInit {
         );
         this.roomModalShownEdit = false;
         this.getRoomDet();
+        this.openBuildingDetail(this.currentBuilding);
         this.globalVars.spinner = false;
       }, error => {
         this.globalVars.spinner = false;
