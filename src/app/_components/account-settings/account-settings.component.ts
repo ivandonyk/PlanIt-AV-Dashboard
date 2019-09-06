@@ -76,7 +76,7 @@ export class AccountSettingsComponent implements OnInit {
     this.systService.getBillSub()
       .subscribe((data: BillingSubs) => {
         this.subsData = data;
-        this.globalVars.spinner = true;
+        this.globalVars.spinner = false;
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;

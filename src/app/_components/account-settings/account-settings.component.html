@@ -21,9 +21,6 @@
     </div>
   </div>
 </div>
-
-<!--<div class="container">-->
-  <!--<div mat-dialog-content>-->
     <div class="main-cont">
       <div class="sidebar">
         <mat-list>
@@ -79,11 +76,7 @@
             Phone: <b>{{BusAcc.phone}}</b>
           </p>
         </div>
-
         <div *ngIf="isAccountEdit">
-
-
-
           <form [formGroup]="accountEditForm">
               <div class="fields-group" data-grid="2">
                 <mat-form-field >
@@ -99,8 +92,6 @@
                   <input matInput formControlName="city"  type="text" placeholder="City">
                 </mat-form-field>
               </div>
-
-
               <div class="fields-group" data-grid="2">
                 <mat-form-field >
                   <mat-label>
@@ -115,8 +106,6 @@
                   <input matInput formControlName="address2"  type="text" placeholder="Address 2">
                 </mat-form-field>
               </div>
-
-
               <div class="fields-group" data-grid="2">
                 <mat-form-field class="form-horizontal">
                   <mat-select required="true" placeholder="State" formControlName="state">
@@ -128,20 +117,9 @@
                 </mat-form-field>
               </div>
             </form>
-
-
         </div>
-
-
-
-
-
-
-
-
       </div>
       <div class="container" *ngIf="currentRoute == 2">
-
         <h3 class="h3-title" *ngIf="subsData">
           Your Subscription
         </h3>
@@ -193,18 +171,9 @@
             <br>
             <button mat-raised-button class="red-btn-bd" (click)="changeSub(item.id)">Choose Subscription</button>
           </div>
-
-
         </div>
-
-
       </div>
       <div class="container" *ngIf="currentRoute == 3">
-        qqq
+
       </div>
     </div>
-
-
-
-  <!--</div>-->
-<!--</div>-->
