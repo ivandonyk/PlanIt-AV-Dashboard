@@ -30,7 +30,7 @@ public addRoomForm = this.fb.group({
     dateOfLastRemodel: new FormControl(''),
     integrator: new FormControl(''),
     roomType: new FormControl(''),
-    seatingCapacity: new FormControl(''),
+    seatingCapacity: new FormControl('', Validators.maxLength(11)),
     seatingType: new FormControl(''),
     dimensions: new FormControl('' ),
     ceilingHeight : new FormControl(''),

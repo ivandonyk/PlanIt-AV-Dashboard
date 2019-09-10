@@ -4,22 +4,22 @@
     <form [formGroup]="addBuildingForm"  (ngSubmit)="onSubmit()" class="form">
     <div>
       <mat-form-field class="form-element">
-        <input matInput maxlength="80" placeholder="Building Name" required="true" formControlName="buildingName" (blur)="checkBuilding()" id="buildingName">
+        <input matInput maxlength="80" maxLength placeholder="Building Name" required="true" formControlName="buildingName" (blur)="checkBuilding()" id="buildingName">
         <mat-error *ngIf="buildingName.invalid && (buildingName.dirty || buildingName.touched)">
           Building Name Required
         </mat-error>
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput maxlength="80" required="true" placeholder="Address 1" formControlName="address1">
+        <input matInput maxlength="80" maxLength required="true" placeholder="Address 1" formControlName="address1">
         <mat-error
           *ngIf="address1.invalid && (address1.dirty || address1.touched)">{{getAddress1ErrorMessage()}}</mat-error>
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput maxlength="80" placeholder="Address 2" formControlName="address2">
+        <input matInput maxlength="80" maxLength placeholder="Address 2" formControlName="address2">
         <mat-error *ngIf="address2.invalid && (address2.dirty || address2.touched)">Address is too long</mat-error>
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput  maxlength="100" required="true" placeholder="City" formControlName="city">
+        <input matInput  maxlength="100" maxLength required="true" placeholder="City" formControlName="city">
         <mat-error *ngIf="city.invalid && (city.dirty || city.touched)">City is required</mat-error>
       </mat-form-field>
       <mat-form-field class="form-horizontal">
@@ -29,12 +29,12 @@
         <mat-error *ngIf="state.invalid && (state.dirty || state.touched)">State is required</mat-error>
       </mat-form-field>
       <mat-form-field >
-        <input matInput maxlength="10"  required="true" placeholder="Zip" formControlName="zip" id="zip">
+        <input matInput maxlength="10" maxLength required="true" placeholder="Zip" formControlName="zip" id="zip">
         <mat-error *ngIf="zip.invalid && (zip.dirty || zip.touched)">{{getZipErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
       <mat-form-field class="form-horizontal" >
-        <input matInput maxlength="3"  placeholder="Number of Floors" formControlName="nbrOfFloors" id="nbrOfFloors">
+        <input matInput maxlength="3" maxLength placeholder="Number of Floors" formControlName="nbrOfFloors" id="nbrOfFloors">
       </mat-form-field>
       <mat-form-field class="form-horizontal">
         <input matInput [matDatepicker]="datePicker1" placeholder="Date Constructed" formControlName="dateConstructed">
@@ -48,20 +48,20 @@
       </mat-form-field>
       <mat-divider></mat-divider>
       <mat-form-field class="form-element">
-        <textarea matInput  #input maxlength="1000" placeholder="Note" formControlName="note"></textarea>
+        <textarea matInput  #input maxlength="1000" maxLength placeholder="Note" formControlName="note"></textarea>
         <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput maxlength="50" placeholder="Contact First Name" formControlName="contactFirstName">
+        <input matInput maxlength="50" maxLength placeholder="Contact First Name" formControlName="contactFirstName">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput maxlength="50" placeholder="Contact Last Name" formControlName="contactLastName">
+        <input matInput maxlength="50" maxLength placeholder="Contact Last Name" formControlName="contactLastName">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput maxlength="10" type="tel" placeholder="Contact Phone Number" formControlName="contactPhoneNbr">
+        <input matInput maxlength="10" maxLength type="tel" placeholder="Contact Phone Number" formControlName="contactPhoneNbr">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput  maxlength="250" type="email" placeholder="Contact Email" formControlName="contactEmail">
+        <input matInput  maxlength="250" maxLength type="email" placeholder="Contact Email" formControlName="contactEmail">
         <mat-error *ngIf="contactEmail.invalid && (contactEmail.dirty || contactEmail.touched)">Email Invalid</mat-error>
       </mat-form-field>
       <div mat-dialog-actions>

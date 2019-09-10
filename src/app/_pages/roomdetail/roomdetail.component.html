@@ -185,19 +185,19 @@
           <mat-label>
             Room Name
           </mat-label>
-          <input matInput required="true" maxlength="255"  formControlName="roomName"  placeholder="Room Name">
+          <input matInput required="true" maxlength="255" maxLength  formControlName="roomName"  placeholder="Room Name">
         </mat-form-field>
         <mat-form-field >
           <mat-label>
             Floor
           </mat-label>
-          <input matInput maxlength="3"  formControlName="floor"  type="number" placeholder="Floor">
+          <input matInput maxlength="3" maxLength  formControlName="floor"  type="number" placeholder="Floor">
         </mat-form-field>
         <mat-form-field >
           <mat-label>
             Tier
           </mat-label>
-          <input matInput  maxlength="1" required="true" formControlName="tier"  type="number" placeholder="Tier">
+          <input matInput  maxlength="2" maxLength required="true" formControlName="tier"  type="number" placeholder="Tier">
         </mat-form-field>
       </div>
       <div class="fields-group" data-grid="4">
@@ -211,41 +211,47 @@
           <mat-label>
             Lifecycle (years)
           </mat-label>
-          <input matInput maxlength="11"  formControlName="lifecycle"  type="number" placeholder="Lifecycle (years)">
+          <input matInput maxlength="11" maxLength  formControlName="lifecycle"  type="number" placeholder="Lifecycle (years)">
         </mat-form-field>
 
         <mat-form-field >
           <mat-label>
             Estimated Update Cost
           </mat-label>
-          <input matInput type="text" formControlName="nextAvUpdCost" placeholder="Estimated Update Cost">
+          <input matInput type="number" maxlength="11" maxLength formControlName="nextAvUpdCost" placeholder="Estimated Update Cost">
         </mat-form-field>
 
         <mat-form-field >
           <mat-label>
             Last AV Contractor
           </mat-label>
-          <input matInput type="text" formControlName="lastAvContractor" placeholder="Last AV Contractor">
+          <input matInput maxlength="100" maxLength type="text" formControlName="lastAvContractor" placeholder="Last AV Contractor">
         </mat-form-field>
       </div>
       <div class="fields-group" data-grid="3">
         <mat-form-field >
-          <mat-label>
-            Room Type
-          </mat-label>
-          <input matInput type="text" formControlName="roomType" placeholder="Room Type">
+          <!--<mat-label>-->
+          <!--Room Type-->
+          <!--</mat-label>-->
+          <!--<input matInput type="text" formControlName="roomType" placeholder="Room Type">-->
+          <mat-select placeholder="Room Type" formControlName="roomType">
+            <mat-option *ngFor="let roomType of roomType" [value]="roomType">{{roomType}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field >
-          <mat-label>
-            Seating Type
-          </mat-label>
-          <input matInput  formControlName="seatingType"  placeholder="Seating Type">
+          <!--<mat-label>-->
+          <!--Seating Type-->
+          <!--</mat-label>-->
+          <!--<input matInput  formControlName="seatingType"  placeholder="Seating Type">-->
+          <mat-select placeholder="Seating Type" formControlName="seatingType">
+            <mat-option *ngFor="let seatingType of seatingTypes" [value]="seatingType">{{seatingType}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field >
           <mat-label>
             Seating Capacity
           </mat-label>
-          <input matInput maxlength="11"  formControlName="seatingCapacity"  type="number" placeholder="Seating Capacity">
+          <input matInput maxlength="11" maxLength  formControlName="seatingCapacity"  type="number" placeholder="Seating Capacity">
         </mat-form-field>
       </div>
       <div class="fields-group" data-grid="5">
@@ -253,19 +259,22 @@
           <mat-label>
             Dimensions
           </mat-label>
-          <input matInput maxlength="50"  formControlName="dimensions"  type="text" placeholder="Dimensions">
+          <input matInput maxlength="50" maxLength  formControlName="dimensions"  type="text" placeholder="Dimensions">
         </mat-form-field>
         <mat-form-field >
           <mat-label>
             Ceiling Height
           </mat-label>
-          <input matInput maxlength="11"  formControlName="ceilingHeight"  type="number" placeholder="Ceiling Height">
+          <input matInput maxlength="11" maxLength  formControlName="ceilingHeight"  type="number" placeholder="Ceiling Height">
         </mat-form-field>
         <mat-form-field >
-          <mat-label>
-            Ceiling Type
-          </mat-label>
-          <input matInput  formControlName="ceilingType"  type="text" placeholder="Ceiling Type">
+          <!--<mat-label>-->
+          <!--Ceiling Type-->
+          <!--</mat-label>-->
+          <!--<input matInput  formControlName="ceilingType"  type="text" placeholder="Ceiling Type">-->
+          <mat-select placeholder="Ceiling Type" formControlName="ceilingType">
+            <mat-option *ngFor="let ceilingType of ceilingTypes" [value]="ceilingType">{{ceilingType}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field >
           <input matInput  formControlName="dateOfLastRemodel"  [matDatepicker]="dateOfLastRemodel" placeholder="Date Of Last Remodel">
@@ -276,7 +285,7 @@
           <mat-label>
             Contractor
           </mat-label>
-          <input matInput  formControlName="integrator"  placeholder="Contractor">
+          <input matInput  formControlName="integrator" maxlength="100" maxLength  placeholder="Contractor">
         </mat-form-field>
       </div>
       <div class="fields-group" data-grid="1">
@@ -284,7 +293,7 @@
           <mat-label>
             Last AV Cost
           </mat-label>
-          <input matInput  formControlName="avLastUpdateCost"  type="number" placeholder="AV Last Update Cost">
+          <input matInput  formControlName="avLastUpdateCost" maxlength="11" maxLength type="number" placeholder="AV Last Update Cost">
         </mat-form-field>
       </div>
     </form>

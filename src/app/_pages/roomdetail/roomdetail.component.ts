@@ -64,6 +64,18 @@ export class RoomdetailComponent implements OnInit {
 
   ]);
 
+  public roomType: string[] = [
+    'Conference Room', 'Classroom', 'Boardroom', 'Huddle Room',
+    'Conference Center', 'Lobby', 'Hallway',
+  ];
+  public seatingTypes: string[] = [
+    'Conference', 'Table', 'Fixed Classroom', 'Flexible', 'Theater'
+  ];
+  public ceilingTypes: string[] = [
+    'Drywall', 'Drop', 'Open', 'Bar-joist', 'Combination'
+  ];
+
+
   constructor(
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,

@@ -72,6 +72,7 @@ import {ContactUsComponent} from "./_components/contact-us/contact-us.component"
 import {ProjectPlanningTableComponent} from "./_components/project-planning-table/project-planning-table.component";
 import {ManageUserComponent} from "./_components/manage-user/manage-user.component";
 import {AccountSettingsComponent} from "./_components/account-settings/account-settings.component";
+import {MaxlengthDirective} from "./directive/maxlength.directive";
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import {AccountSettingsComponent} from "./_components/account-settings/account-s
     AddProjectDescComponent,
     ContactUsComponent,
     ManageUserComponent,
-    AccountSettingsComponent
+    AccountSettingsComponent,
+    MaxlengthDirective
   ],
   entryComponents: [
     AddBuildingComponent,

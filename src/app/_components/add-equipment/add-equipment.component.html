@@ -13,16 +13,16 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput maxlength="50" placeholder="Alternate Location" formControlName="alternateLocation">
+        <input matInput maxlength="50" maxLength placeholder="Alternate Location" formControlName="alternateLocation">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput maxlength="100" required="true" placeholder="Manufacturer"  formControlName="manufacturer">
+        <input matInput maxlength="100" maxLength required="true" placeholder="Manufacturer"  formControlName="manufacturer">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Model/Part Number" required="true" maxlength="100"  formControlName="modelNumber">
+        <input matInput placeholder="Model/Part Number" required="true" maxlength="100" maxLength formControlName="modelNumber">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Description" maxlength="255" formControlName="description">
+        <input matInput placeholder="Description" maxlength="255" maxLength formControlName="description">
       </mat-form-field>
       <mat-form-field class="form-element-small">
         <mat-select matInput  required="true" placeholder="Class" formControlName="equipmentClass">
@@ -44,25 +44,25 @@
         <mat-datepicker #datePicker1></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="form-element-small">
-        <input matInput placeholder="Lifecycle" maxlength="11" type="number" formControlName="lifecycle">
+        <input matInput placeholder="Lifecycle" maxlength="11" maxLength type="number" formControlName="lifecycle">
       </mat-form-field>
       <mat-form-field class="form-element">
         <input matInput placeholder="Integrator" formControlName="integrator">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Country of Manufacture" maxlength="100" formControlName="countryOfManufacture">
+        <input matInput placeholder="Country of Manufacture" maxlength="100" maxLength formControlName="countryOfManufacture">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Serial #" maxlength="100" type="text" formControlName="serialNumber">
+        <input matInput placeholder="Serial #" maxlength="100" maxLength type="text" formControlName="serialNumber">
       </mat-form-field>
       <mat-form-field class="form-horizontal">
-        <input matInput placeholder="MAC Address" maxlength="20" formControlName="macAddress">
+        <input matInput placeholder="MAC Address" maxlength="20" maxLength formControlName="macAddress">
       </mat-form-field>
       <mat-form-field class="form-horizontal">
-        <input matInput placeholder="IP Address" maxlength="20" formControlName="ipAddress">
+        <input matInput placeholder="IP Address" maxlength="20" maxLength formControlName="ipAddress">
       </mat-form-field>
       <mat-form-field class="form-horizontal">
-        <input matInput placeholder="Port" type="text" maxlength="10" formControlName="port">
+        <input matInput placeholder="Port" type="text" maxlength="10" maxLength formControlName="port">
       </mat-form-field>
       <mat-form-field class="form-element-half">
         <input matInput [matDatepicker]="datePicker2" placeholder="Warranty start date" formControlName="warrantyStartDate">
@@ -79,10 +79,10 @@
         <mat-datepicker #datePicker4></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="form-element-half">
-        <input matInput placeholder="Extended Warranty/Service Contract Length" maxlength="100" type="number" formControlName="extendedWarranty">
+        <input matInput placeholder="Extended Warranty/Service Contract Length" maxlength="100" maxLength type="number" formControlName="extendedWarranty">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Extended Warranty/Service Contract Provider" maxlength="100" formControlName="extendedWarrantyProvider">
+        <input matInput placeholder="Extended Warranty/Service Contract Provider" maxlength="100" maxLength formControlName="extendedWarrantyProvider">
       </mat-form-field>
       <div class="mat-dialog-actions">
         <button mat-raised-button color="primary" type="submit" class="red-btn"  >+</button>

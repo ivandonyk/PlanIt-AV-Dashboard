@@ -34,6 +34,7 @@ export class SystemsComponent implements OnInit {
     index: 0,
     slides: []
   };
+
   public roomModalShown: Boolean = false;
   public roomModalShownEdit: Boolean = false;
   public isRoomFormChanged: Boolean = false;
@@ -151,6 +152,18 @@ export class SystemsComponent implements OnInit {
   public sliderFlag: Boolean = false;
   public mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
+
+  public roomType: string[] = [
+    'Conference Room', 'Classroom', 'Boardroom', 'Huddle Room',
+    'Conference Center', 'Lobby', 'Hallway',
+  ];
+  public seatingTypes: string[] = [
+    'Conference', 'Table', 'Fixed Classroom', 'Flexible', 'Theater'
+  ];
+  public ceilingTypes: string[] = [
+    'Drywall', 'Drop', 'Open', 'Bar-joist', 'Combination'
+  ];
+
 
   constructor(
     private systServ: SystemsService,
