@@ -102,7 +102,8 @@ export class CloneRoomComponent implements OnInit {
         }
       });
   }
-  revert() {
+  revert(e) {
+    e.preventDefault()
     this.cloneRoomForm.reset();
   }
   buildingChanged() {
@@ -145,7 +146,8 @@ export class CloneRoomComponent implements OnInit {
   }
 
 
-  cancel() {
+  cancel(e) {
+    e.preventDefault()
     this.dialogRef.close();
   }
   get roomName() {

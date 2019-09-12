@@ -150,6 +150,7 @@ export interface EquipmentDetail {
   ipAddress: string;
   port: string;
   countryManufacturer: string;
+  warrantyStartDate: string;
   manuals: string;
 }
 

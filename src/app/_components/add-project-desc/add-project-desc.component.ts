@@ -45,13 +45,14 @@ export class AddProjectDescComponent implements OnInit {
     }
     this.systServ.addProjDesc(room)
       .subscribe( data => {
-        this.snackbar.open('Saved', '', {
+        this.snackbar.open('Project Description Saved', '', {
             duration: 1500,
             verticalPosition: 'bottom',
             horizontalPosition: 'right',
           }
         );
         this.globalVars.spinner = false;
+        this.cancel();
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);

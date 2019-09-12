@@ -483,6 +483,7 @@ export class ProjectPlanningComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.getProjectDesc(this.roomId);
     });
   }
   addEquipment() {

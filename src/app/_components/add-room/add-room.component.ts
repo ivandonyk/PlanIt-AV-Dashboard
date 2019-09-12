@@ -86,7 +86,8 @@ public roomType: string[] = [
       });
   }
 
-  revert() {
+  revert(e) {
+    e.preventDefault()
     this.addRoomForm.reset();
   }
 
@@ -111,7 +112,8 @@ public roomType: string[] = [
       });
   }
 
-  cancel() {
+  cancel(e) {
+    e.preventDefault()
     this.dialogRef.close();
   }
 

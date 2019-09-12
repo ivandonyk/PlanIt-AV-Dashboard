@@ -90,7 +90,7 @@
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      Manufacture Warranty: Start Date <span> {{'&nbsp;'}} </span>
+      Manufacture Warranty: Start Date <span> {{data.warrantyStartDate ? data.warrantyStartDate : '&nbsp;'}} </span>
     </div>
     <div>
       Manufacture Warranty: Length <span>{{data.manufactureWarranty ? data.manufactureWarranty : '&nbsp;'}}</span>
@@ -141,7 +141,7 @@
 
 
         <mat-form-field class="form-element">
-          <input matInput maxlength="50" placeholder="Alternate Location" formControlName="alternateLocation">
+          <input matInput maxlength="50" placeholder="Alternate Location" formControlName="altLocation">
         </mat-form-field>
 
 

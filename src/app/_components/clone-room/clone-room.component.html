@@ -22,37 +22,25 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput placeholder="New Room Name" formControlName="roomName">
+        <input matInput placeholder="New Room Name" maxlength="255" maxLength formControlName="roomName">
       </mat-form-field>
       <mat-form-field class="form-horizontal">
-        <input matInput placeholder="Tier" formControlName="tier">
+        <mat-select matInput placeholder="Tier" required formControlName="tier">
+          <mat-option *ngFor="let tier of tiers" [value]="tier">{{tier}}</mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field class="form-horizontal">
-        <input matInput placeholder="Floor" formControlName="floor">
+        <input matInput placeholder="Floor" maxlength="3" type="number" maxLength formControlName="floor">
       </mat-form-field>
-
       <mat-form-field class="form-horizontal">
         <input matInput [matDatepicker]="datePicker1" placeholder="Last Remodel Date" formControlName="dateOfLastRemodel">
         <mat-datepicker-toggle matSuffix [for]="datePicker1"></mat-datepicker-toggle>
         <mat-datepicker #datePicker1></mat-datepicker>
       </mat-form-field>
-
-      <!--<mat-form-field class="form-horizontal">-->
-        <!--<input matInput placeholder="Сore Age" formControlName="coreAge">-->
-      <!--</mat-form-field>-->
-      <!--<mat-form-field class="form-horizontal">-->
-        <!--<input matInput placeholder="Equipment Age" formControlName="equipmentAge">-->
-      <!--</mat-form-field>-->
-      <!--<mat-form-field class="form-horizontal">-->
-        <!--<input matInput placeholder="Replace / Upgrade" formControlName="replaceUpg">-->
-      <!--</mat-form-field>-->
-
-
       <span layout="row">
         <h4>Room Details</h4>
       </span>
       <mat-divider></mat-divider>
-
       <mat-form-field class="form-element">
         <mat-select placeholder="Room Type" formControlName="roomType">
           <mat-option *ngFor="let roomType of roomType" [value]="roomType">{{roomType}}</mat-option>
@@ -64,13 +52,13 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="form-element-half">
-        <input matInput placeholder="Seating Capacity" formControlName="seatingCapacity">
+        <input matInput placeholder="Seating Capacity"  type="number" maxlength="11" maxLength formControlName="seatingCapacity">
       </mat-form-field>
       <mat-form-field class="form-element-small">
-        <input matInput placeholder="Dimensions" formControlName="dimensions">
+        <input matInput placeholder="Dimensions" maxlength="50" maxLength formControlName="dimensions">
       </mat-form-field>
       <mat-form-field class="form-element-small">
-        <input matInput placeholder="Ceiling Height" formControlName="ceilingHeight">
+        <input matInput placeholder="Ceiling Height" maxlength="11" maxLength type="number" formControlName="ceilingHeight">
       </mat-form-field>
       <mat-form-field class="form-element-small">
         <mat-select placeholder="Ceiling Type" formControlName="ceilingType">
@@ -88,48 +76,19 @@
         <mat-datepicker #datePicker4></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="form-horizontal">
-        <input matInput placeholder="Integrator" formControlName="integrator">
+        <input matInput placeholder="Integrator" maxlength="100" maxLength formControlName="integrator">
       </mat-form-field>
       <mat-form-field class="form-horizontal">
-        <input matInput placeholder="Last Update AV Cost" formControlName="avLastUpdateCost">
+        <input matInput placeholder="Last Update AV Cost" maxlength="11" maxLength type="number" formControlName="avLastUpdateCost">
         <span matPrefix>$&nbsp;</span>
       </mat-form-field>
       <mat-form-field class="form-element-small">
-        <input matInput placeholder="Lifecycle" formControlName="lifecycle">
+        <input matInput placeholder="Lifecycle" maxlength="11" maxLength type="number" formControlName="lifecycle">
       </mat-form-field>
-      <!--<mat-form-field class="form-element-small">-->
-        <!--<input matInput [matDatepicker]="datePicker2" placeholder="Original AV Install" formControlName="origAvInstallDate">-->
-        <!--<mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>-->
-        <!--<mat-datepicker #datePicker2></mat-datepicker>-->
-      <!--</mat-form-field>-->
-
-      <!--<mat-form-field class="form-element-small">-->
-        <!--<input matInput placeholder="Original AV Cost" formControlName="origAvSystemCost">-->
-        <!--<span matPrefix>$&nbsp;</span>-->
-      <!--</mat-form-field>-->
-      <!--<mat-form-field class="form-element">-->
-        <!--<input matInput placeholder="Original AV Contractor" formControlName="origAvContractor">-->
-      <!--</mat-form-field>-->
-
       <mat-form-field class="form-element-small">
-        <input matInput placeholder="Next AV Update Cost" formControlName="nextAvUpdCost">
+        <input matInput placeholder="Next AV Update Cost" maxlength="11" maxLength type="number" formControlName="nextAvUpdCost">
         <span matPrefix>$&nbsp;</span>
       </mat-form-field>
-
-
-      <!--<mat-form-field class="form-element-small">-->
-        <!--<input matInput [matDatepicker]="datePicker3" placeholder="AV Last Update" formControlName="avLastUpdateDate">-->
-        <!--<mat-datepicker-toggle matSuffix [for]="datePicker3"></mat-datepicker-toggle>-->
-        <!--<mat-datepicker #datePicker3></mat-datepicker>-->
-      <!--</mat-form-field>-->
-
-      <!--<mat-form-field class="form-element">-->
-        <!--<input matInput placeholder="Last Update AV Contractor" formControlName="lastAvContractor">-->
-      <!--</mat-form-field>-->
-      <!--<mat-form-field class="form-element-small">-->
-        <!--<input matInput placeholder="Next AV Update Year" formControlName="nextAvUpdateDt">-->
-      <!--</mat-form-field>-->
-
       <mat-form-field class="form-element">
         <textarea matInput #input maxlength="1000" placeholder="Note" formControlName="notes"></textarea>
         <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
@@ -146,10 +105,9 @@
         </button>
       </div>
       <div class="mat-dialog-actions">
-        <button mat-raised-button color="primary" type="submit" class="red-btn"  >Clone</button>
-
-        <button mat-raised-button color="primary" class="red-btn" (click)="revert()">Reset</button>
-        <button mat-raised-button color="primary" class="red-btn" (click)="cancel()" >Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="cloneRoomForm.status !== 'VALID'" class="red-btn-bd"  >Clone</button>
+        <button mat-raised-button color="primary" class="red-btn" (click)="revert($event)">Reset</button>
+        <button mat-raised-button color="primary" class="red-btn" (click)="cancel($event)" >Cancel</button>
       </div>
     </form>
   </div>

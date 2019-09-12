@@ -13,7 +13,7 @@ import {AuthenticationService} from '../../_services/authentication.service';
 })
 export class AddNoteComponent implements OnInit {
   public form = this.fb.group({
-    notes: new FormControl(this.data.form.notes),
+    notes: new FormControl(''),
   });
 
   constructor(
@@ -41,7 +41,7 @@ export class AddNoteComponent implements OnInit {
 
     this.systServ.addNote(room)
       .subscribe( () => {
-        this.snackbar.open('Note Changed', '', {
+        this.snackbar.open('Note Added', '', {
             duration: 1500,
             verticalPosition: 'bottom',
             horizontalPosition: 'right',

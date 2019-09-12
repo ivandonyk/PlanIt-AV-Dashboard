@@ -103,9 +103,17 @@ export class EquipmentModalComponent implements OnInit {
   getEquipmentDetail() {
     this.globalVars.spinner = true;
 
+
+
     this.systServ.getEquipmentDetail(this.equipmentId)
       .subscribe((data: EquipmentDetail) => {
       this.data = data;
+
+        console.log(this.data.installDate)
+        console.log(moment(this.data.installDate))
+        console.log(moment(this.data.installDate).format())
+        console.log(moment(this.data.installDate).toISOString())
+
         this.form = this.formBuilder.group({
           buildings: this.data ? this.buildingData.buildingId : '',
           alternateLocation: '',
@@ -187,7 +195,7 @@ export class EquipmentModalComponent implements OnInit {
 
     this.systServ.updEquipment(equipmentDetail)
       .subscribe( data => {
-        this.snackbar.open('Room Saved', '', {
+        this.snackbar.open('Equipment Updated', '', {
             duration: 1500,
             verticalPosition: 'bottom',
             horizontalPosition: 'right',

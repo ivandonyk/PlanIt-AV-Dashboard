@@ -257,7 +257,7 @@ export class SystemsComponent implements OnInit {
 
   }
   openBuildingDetail(id: number | string) {
-    console.log(id)
+    console.log(id);
     this.dataSource = '';
     this.globalVars.spinner = true;
     this.currentBuilding = id;
@@ -439,6 +439,7 @@ export class SystemsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.getProjectDesc(this.roomId);
     });
   }
   getEquipment(roomId) {

@@ -37,9 +37,7 @@
           Room Details
         </h4>
       </span>
-
       <mat-divider></mat-divider>
-
       <mat-form-field class="form-element">
         <mat-select placeholder="Room Type" formControlName="roomType">
           <mat-option *ngFor="let roomType of roomType" [value]="roomType">{{roomType}}</mat-option>
@@ -51,15 +49,12 @@
           <mat-option *ngFor="let seatingType of seatingTypes" [value]="seatingType">{{seatingType}}</mat-option>
         </mat-select>
       </mat-form-field>
-
       <mat-form-field class="form-element-half">
         <input matInput placeholder="Seating Capacity" maxlength="11"  maxLength type="number" formControlName="seatingCapacity">
       </mat-form-field>
-
       <mat-form-field class="form-element-small">
         <input matInput placeholder="Dimensions" maxlength="50" maxLength formControlName="dimensions">
       </mat-form-field>
-
       <mat-form-field class="form-element-small">
         <input matInput placeholder="Ceiling Height" maxlength="11" maxLength formControlName="ceilingHeight">
       </mat-form-field>
@@ -68,59 +63,37 @@
           <mat-option *ngFor="let ceilingType of ceilingTypes" [value]="ceilingType">{{ceilingType}}</mat-option>
         </mat-select>
       </mat-form-field>
-
       <span layout="row">
         <h4>AV Details</h4>
       </span>
       <mat-divider></mat-divider>
-
       <mat-form-field class="form-horizontal">
         <input matInput [matDatepicker]="datePicker4" placeholder="Last AV Install" formControlName="avLastUpdateDate">
         <mat-datepicker-toggle matSuffix [for]="datePicker4"></mat-datepicker-toggle>
         <mat-datepicker #datePicker4></mat-datepicker>
       </mat-form-field>
-
       <mat-form-field class="form-horizontal">
         <input matInput placeholder="Integrator" maxlength="100" maxLength formControlName="integrator">
       </mat-form-field>
-
       <mat-form-field class="form-horizontal">
         <input matInput placeholder="Last AV Cost" formControlName="avLastUpdateCost">
         <span matPrefix>$&nbsp;</span>
       </mat-form-field>
-
       <mat-form-field class="form-element-small">
         <input matInput placeholder="Lifecycle" type="number" maxlength="11" maxLength formControlName="lifecycle">
       </mat-form-field>
-
       <mat-form-field class="form-element-small">
         <input matInput placeholder="Estimated Update Cost" formControlName="nextAvUpdCost">
         <span matPrefix>$&nbsp;</span>
       </mat-form-field>
-
-      <!--<mat-form-field class="form-horizontal">-->
-        <!--<input matInput [matDatepicker]="datePicker2" placeholder="Original AV Install" formControlName="origAvInstallDate">-->
-        <!--<mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>-->
-        <!--<mat-datepicker #datePicker2></mat-datepicker>-->
-      <!--</mat-form-field>-->
-
-      <!--<mat-form-field class="form-horizontal">-->
-        <!--<input matInput placeholder="Original AV Integrator" formControlName="origAvContractor">-->
-      <!--</mat-form-field>-->
-
-      <!--<mat-form-field class="form-horizontal">-->
-        <!--<input matInput placeholder="Original AV Cost" formControlName="origAvSystemCost">-->
-        <!--<span matPrefix>$&nbsp;</span>-->
-      <!--</mat-form-field>-->
-
       <mat-form-field class="form-element">
         <textarea matInput #input maxlength="1000" maxLength placeholder="Note" formControlName="notes"></textarea>
         <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
       </mat-form-field>
       <div class="mat-dialog-actions">
         <button mat-raised-button color="primary" type="submit" [disabled]="addRoomForm.status !== 'VALID'"  class="red-btn-bd"  >+</button>
-        <button mat-raised-button color="primary" class="red-btn" (click)="revert()">Reset</button>
-        <button mat-raised-button color="primary" class="red-btn"  (click)="cancel()" >Cancel</button>
+        <button mat-raised-button color="primary" class="red-btn" (click)="revert($event)">Reset</button>
+        <button mat-raised-button color="primary" class="red-btn"  (click)="cancel($event)" >Cancel</button>
       </div>
     </form>
   </div>
