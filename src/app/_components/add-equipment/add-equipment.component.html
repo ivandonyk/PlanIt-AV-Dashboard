@@ -44,10 +44,10 @@
         <mat-datepicker #datePicker1></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="form-element-small">
-        <input matInput placeholder="Lifecycle" maxlength="11" maxLength type="number" formControlName="lifecycle">
+        <input matInput placeholder="Lifecycle" maxlength="11" maxLength min="0" type="number" formControlName="lifecycle">
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Integrator" formControlName="integrator">
+        <input matInput placeholder="Integrator" maxlength="100" maxLength type="number" formControlName="integrator">
       </mat-form-field>
       <mat-form-field class="form-element">
         <input matInput placeholder="Country of Manufacture" maxlength="100" maxLength formControlName="countryOfManufacture">
@@ -70,7 +70,7 @@
         <mat-datepicker #datePicker2></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="form-element-half">
-        <input matInput placeholder="Manufacture Warranty" type="number" formControlName="manufactureWarranty">
+        <input matInput placeholder="Manufacture Warranty" type="number" min="0" formControlName="manufactureWarranty">
       </mat-form-field>
       <br>
       <mat-form-field class="form-element-half">
@@ -79,7 +79,7 @@
         <mat-datepicker #datePicker4></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="form-element-half">
-        <input matInput placeholder="Extended Warranty/Service Contract Length" maxlength="100" maxLength type="number" formControlName="extendedWarranty">
+        <input matInput placeholder="Extended Warranty/Service Contract Length" maxlength="11" min="0" maxLength type="number" formControlName="extendedWarranty">
       </mat-form-field>
       <mat-form-field class="form-element">
         <input matInput placeholder="Extended Warranty/Service Contract Provider" maxlength="100" maxLength formControlName="extendedWarrantyProvider">
