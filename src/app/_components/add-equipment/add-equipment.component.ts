@@ -22,8 +22,8 @@ export interface DialogData {
 export class AddEquipmentComponent implements OnInit {
 
   public addEquipmentForm = this.fb.group({
-    buildings: this.data ? this.data.buildingId : new FormControl(''),
-    rooms: this.data ? this.data.roomId : new FormControl(''),
+    buildings: new FormControl(''),
+    rooms: new FormControl(''),
     alternateLocation: new FormControl(''),
     manufacturer: new FormControl(''),
     modelNumber: new FormControl(''),
@@ -62,6 +62,29 @@ export class AddEquipmentComponent implements OnInit {
     this.systServ.getBuildings()
       .subscribe(data => {
         this.buildingsArr = data.systemBuilding.buildings;
+        this.addEquipmentForm = this.fb.group({
+          buildings: this.data ? this.data.buildingId : new FormControl(''),
+          rooms: this.data ? this.data.roomId : new FormControl(''),
+          alternateLocation: new FormControl(''),
+          manufacturer: new FormControl(''),
+          modelNumber: new FormControl(''),
+          description: new FormControl(''),
+          integrator: new FormControl(''),
+          equipmentClass: new FormControl(''),
+          equipmentCategory: new FormControl(''),
+          lifecycle: new FormControl(''),
+          countryOfManufacture: new FormControl(''),
+          serialNumber: new FormControl(''),
+          macAddress: new FormControl(''),
+          ipAddress: new FormControl(''),
+          port: new FormControl(''),
+          dateInstalled: new FormControl(''),
+          manufactureWarranty: new FormControl(''),
+          warrantyStartDate: new FormControl(''),
+          extWarrantyStartDate: new FormControl(''),
+          extendedWarranty: new FormControl(''),
+          extendedWarrantyProvider: new FormControl(''),
+        });
       }, error => {
         console.log(error);
         if (error.error.error === 'invalid_token') {

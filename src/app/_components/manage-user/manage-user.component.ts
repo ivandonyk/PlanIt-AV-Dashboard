@@ -1,8 +1,17 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { SystemsService } from '../../_services/systems.service';
 import {AnotherUserData, UserManageData, UserRoles} from '../../_models/userdata.model';
-import {FormBuilder, FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
+import {ErrorStateMatcher} from '@angular/material/core';
+
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 
 @Component({
@@ -25,7 +34,10 @@ export class ManageUserComponent implements OnInit {
     phoneNbr: new FormControl(''),
     userName: new FormControl(''),
     title: new FormControl(''),
-    password: new FormControl(''),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#\\$%\\^&*])(?=.{8,})'),
+    ]),
     userRoleId: new FormControl(''),
     active: new FormControl(''),
     primaryAcctAdmin: new FormControl(''),
@@ -100,6 +112,7 @@ export class ManageUserComponent implements OnInit {
     this.globalVars.spinner = true;
     const formData = this.userEditForm.value;
 
+    console.log(this.userManageData)
     if (this.isCreateUser) {
       this.systService.createUser(formData, this.userData)
         .subscribe((data) => {

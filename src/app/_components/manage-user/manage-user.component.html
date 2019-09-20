@@ -64,13 +64,13 @@
           <mat-label>
             First Name
           </mat-label>
-          <input autocomplete="off" matInput formControlName="firstName"  placeholder="First Name">
+          <input autocomplete="off" maxlength="30" required maxLength matInput formControlName="firstName"  placeholder="First Name">
         </mat-form-field>
         <mat-form-field >
           <mat-label>
             Last Name
           </mat-label>
-          <input autocomplete="off" matInput formControlName="lastName"  placeholder="Last Name">
+          <input autocomplete="off" maxlength="30" required maxLength matInput formControlName="lastName"  placeholder="Last Name">
         </mat-form-field>
       </div>
 
@@ -79,7 +79,7 @@
           <mat-label>
             UserName
           </mat-label>
-          <input autocomplete="off" matInput formControlName="userName"  placeholder="User Name">
+          <input autocomplete="off"  maxlength="100" type="email" maxLength required matInput formControlName="userName"  placeholder="User Name">
         </mat-form-field>
       </div>
 
@@ -88,7 +88,9 @@
           <mat-label>
             Password
           </mat-label>
-          <input autocomplete="off" matInput formControlName="password" type="password" placeholder="Password">
+          <input autocomplete="off"  maxlength="100" maxLength matInput formControlName="password" type="password" placeholder="Password">
+          <mat-hint>Needs to be at least 8 characters, 1 capital letter, 1 number and 1 special character.</mat-hint>
+
         </mat-form-field>
       </div>
 
@@ -97,7 +99,7 @@
           <mat-label>
             Title
           </mat-label>
-          <input autocomplete="off" matInput formControlName="title" placeholder="Title">
+          <input autocomplete="off" maxlength="100" maxLength matInput formControlName="title" placeholder="Title">
         </mat-form-field>
       </div>
 
@@ -106,7 +108,7 @@
           <mat-label>
             Phone Number
           </mat-label>
-          <input autocomplete="off" matInput formControlName="phoneNbr" min="0"  type="number" placeholder="Phone Number">
+          <input autocomplete="off" maxlength="20" maxLength matInput formControlName="phoneNbr" min="0"  type="number" placeholder="Phone Number">
         </mat-form-field>
       </div>
 

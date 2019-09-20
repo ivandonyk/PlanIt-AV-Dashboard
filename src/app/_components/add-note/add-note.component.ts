@@ -48,6 +48,8 @@ export class AddNoteComponent implements OnInit {
           }
         );
         this.globalVars.spinner = false;
+        this.dialogRef.close();
+
       }, error => {
         this.globalVars.spinner = false;
         console.log(error);

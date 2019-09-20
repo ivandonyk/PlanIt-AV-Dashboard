@@ -305,8 +305,8 @@ export class SystemsService {
     return this.httpClient.post<any>(environment.baseUrl + '/user/createUser', {
       businessId: String(userData.businessAcctId),
       primaryAcctAdmin: data.primaryAcctAdmin,
-      userRoleId: 0,
       valid: null,
+      userRoleId: data.userRoleId,
       password: data.password,
       firstName: data.firstName,
       lastName: data.lastName,

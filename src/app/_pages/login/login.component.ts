@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -68,7 +69,15 @@ export class LoginComponent implements OnInit {
             });
         }
       }, error => {
-        console.log(error);
+        console.log(error.status);
+        if (error.status) {
+          this.snackbar.open('Login failed: Invalid username or password', '', {
+              duration: 3500,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            }
+          );
+        }
       });
 
   }

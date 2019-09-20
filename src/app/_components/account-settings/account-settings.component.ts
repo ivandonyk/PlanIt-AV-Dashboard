@@ -5,6 +5,7 @@ import {FormBuilder, FormControl} from '@angular/forms';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import {MatDialog, MatDialogRef} from "@angular/material";
 import {ConfirmModalComponent} from "../confirm-modal/confirm-modal.component";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class AccountSettingsComponent implements OnInit {
   public BusAcc: BussAcc = null;
   public isAccountEdit: Boolean;
   public isFormChanged: Boolean;
+
   public states: string[] = [
     'AK', 'AL', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE',
     'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY',
@@ -51,6 +53,7 @@ export class AccountSettingsComponent implements OnInit {
     public dialog: MatDialog,
     public globalVars: GlobalVarsHelper,
     public dialogRef: MatDialogRef<AccountSettingsComponent>,
+    private snackbar: MatSnackBar
 
   ) {
   }
@@ -127,9 +130,21 @@ export class AccountSettingsComponent implements OnInit {
       .subscribe( (data: any) => {
         console.log(data);
         this.globalVars.spinner = false;
+        this.snackbar.open('Success', '', {
+            duration: 3500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+         this.snackbar.open('error', '', {
+            duration: 3500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
       });
   }
   closeDialog() {
@@ -142,9 +157,21 @@ export class AccountSettingsComponent implements OnInit {
       .subscribe( (data: any) => {
         this.globalVars.spinner = false;
         this.isAccountEdit = false;
+        this.snackbar.open('Success', '', {
+            duration: 3500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
+         this.snackbar.open('error', '', {
+            duration: 3500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
       });
   }
 

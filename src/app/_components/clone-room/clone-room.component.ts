@@ -168,7 +168,7 @@ export class CloneRoomComponent implements OnInit {
           roomOld: this.cloneRoomForm.value.roomOld,
           roomChooseName: this.cloneRoomForm.value.roomChooseName,
           roomName: data.roomName ? data.roomName : this.cloneRoomForm.value.roomName,
-          tier: [data.tier],
+          tier: [String(data.tier)],
           floor: [data.floor],
           roomType: data.roomType ? data.roomType : this.cloneRoomForm.value.roomType,
           coreAge: data.coreAge ? data.coreAge : this.cloneRoomForm.value.coreAge,
@@ -187,13 +187,15 @@ export class CloneRoomComponent implements OnInit {
           newBuilding:  this.cloneRoomForm.value.newBuilding,
           equipmentAge: data.equipmentAge ? data.equipmentAge : this.cloneRoomForm.value.equipmentAge,
           replaceUpg: data.replaceUpg ? data.replaceUpg : this.cloneRoomForm.value.replaceUpg,
-          dateOfLastRemodel: data.dateOfLastRemodel ? data.dateOfLastRemodel : this.cloneRoomForm.value.dateOfLastRemodel,
+          dateOfLastRemodel: data.dateOfLastRemodel ? moment(data.dateOfLastRemodel).toISOString() : moment(this.cloneRoomForm.value.dateOfLastRemodel).toISOString(),
           seatingCapacity: data.seatingCapacity ? data.seatingCapacity : this.cloneRoomForm.value.seatingCapacity,
           seatingType: data.seatingType ? data.seatingType : this.cloneRoomForm.value.seatingType,
           dimensions: data.dimensions ? data.dimensions : this.cloneRoomForm.value.dimensions,
           ceilingHeight : data.ceilingHeight  ? data.ceilingHeight  : this.cloneRoomForm.value.ceilingHeight ,
           ceilingType : data.ceilingType  ? data.ceilingType  : this.cloneRoomForm.value.ceilingType ,
       });
+
+      console.log(this)
       }, error => {
         console.log(error);
         if (error.error.error === 'invalid_token') {
