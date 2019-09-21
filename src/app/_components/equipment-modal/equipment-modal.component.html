@@ -101,13 +101,13 @@
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      Manufacture Warranty: Start Date<span> {{'&nbsp;'}} </span>
+      Extended Warranty Start Date<span> {{data.extWarrantyStartDate ? data.extWarrantyStartDate : '&nbsp;'}} </span>
     </div>
     <div>
-      Extended Warranty/Service Contract: Length<span> {{'&nbsp;'}} </span>
+      Extended Warranty/Service Contract: Length<span> {{data.extendedWarranty ? data.extendedWarranty : '&nbsp;'}} </span>
     </div>
     <div>
-      Manufacture Warranty: Expiration<span> {{data.extWarrantyExpiration ? data.extWarrantyExpiration : '&nbsp;'}} </span>
+      Extended Warranty Expiration<span> {{data.extWarrantyExpiration ? data.extWarrantyExpiration : '&nbsp;'}} </span>
     </div>
 
   </div>
@@ -293,7 +293,7 @@
 
         <mat-form-field class="form-element-small">
           <mat-label>
-            Manufacture Warranty: Expiration
+            Extended Warranty Start Date
           </mat-label>
           <input matInput readonly formControlName="warrantyExpiration"  placeholder="Manufacture Warranty: Expiration ">
         </mat-form-field>
@@ -321,7 +321,7 @@
 
         <mat-form-field class="form-element-small">
           <mat-label>
-            Extended Warranty/Service Contract: Expiration
+            Extended Warranty Expiration
           </mat-label>
           <input matInput readonly formControlName="extWarrantyExpiration"  placeholder="Extended Warranty/Service Contract: Expiration ">
         </mat-form-field>

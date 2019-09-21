@@ -145,6 +145,8 @@ export interface EquipmentDetail {
   warrantyExpiration: string;
   extWarrantyProvider: string;
   extWarrantyExpiration: any;
+  extWarrantyStartDate: any;
+  extendedWarranty: any;
   serialNum: string;
   macAddress: string;
   ipAddress: string;

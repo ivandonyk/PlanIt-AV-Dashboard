@@ -99,6 +99,15 @@ export class EquipmentModalComponent implements OnInit {
       });
   }
 
+  insert(main_string, ins_string, pos) {
+    if(typeof(pos) == "undefined") {
+      pos = 0;
+    }
+    if(typeof(ins_string) == "undefined") {
+      ins_string = '';
+    }
+    return main_string.slice(0, pos) + ins_string + main_string.slice(pos);
+  }
 
   getEquipmentDetail() {
     this.globalVars.spinner = true;
@@ -109,10 +118,6 @@ export class EquipmentModalComponent implements OnInit {
       .subscribe((data: EquipmentDetail) => {
       this.data = data;
 
-        console.log(this.data.installDate)
-        console.log(moment(this.data.installDate))
-        console.log(moment(this.data.installDate).format())
-        console.log(moment(this.data.installDate).toISOString())
 
         this.form = this.formBuilder.group({
           buildings: this.data ? this.buildingData.buildingId : '',
@@ -125,13 +130,15 @@ export class EquipmentModalComponent implements OnInit {
           description: [this.data.description],
           equipmentClass: [this.data.equipmentClass],
           category: [this.data.category],
-          installDate: [moment(this.data.installDate).toISOString()],
+          installDate: [this.data.installDate ? moment(this.insert(this.data.installDate, '01/', 3)).toISOString() : null],
           lifecycle: [this.data.lifecycle],
           replacementDate: [this.data.replacementDate],
           integrator: [this.data.integrator],
           manufactureWarranty: [this.data.manufactureWarranty],
           warrantyExpiration: [this.data.warrantyExpiration],
           extWarrantyProvider: [this.data.extWarrantyProvider],
+          extWarrantyStartDate: [this.data.extWarrantyStartDate],
+          extendedWarranty: [this.data.extendedWarranty],
           extWarrantyExpiration: [this.data.extWarrantyExpiration],
           serialNum: [this.data.serialNum],
           macAddress: [this.data.macAddress],
@@ -168,6 +175,7 @@ export class EquipmentModalComponent implements OnInit {
   updateRoom() {
     const username = JSON.parse(window.sessionStorage.getItem('currentUser'));
 
+    console.log(moment(this.f.installDate).toISOString())
     this.globalVars.spinner = true;
     const equipmentDetail: EquipmentDetailUpdate = {
       alternateLocation: String(this.f.altLocation),
