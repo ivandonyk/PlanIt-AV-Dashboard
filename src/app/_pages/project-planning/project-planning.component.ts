@@ -15,6 +15,9 @@ import {PrintDialogComponent} from '../../_components/print-dialog/print-dialog.
 import {AddProjectDescComponent} from '../../_components/add-project-desc/add-project-desc.component';
 import {AddEquipmentComponent} from '../../_components/add-equipment/add-equipment.component';
 import {AuthenticationService} from '../../_services/authentication.service';
+import {DashboardComponent} from "../dashboard/dashboard.component";
+import {DashboardService} from "../../_services/dashboard.service";
+import {Dashboard} from "../../_models/dashboard.model";
 
 @Component({
   selector: 'app-project-planning',
@@ -114,6 +117,7 @@ export class ProjectPlanningComponent {
     },
   ]);
   public ProjPlanSumData: any;
+  public businessName: any = "";
   public roomType: string[] = [
     'Conference Room', 'Classroom', 'Boardroom', 'Huddle Room',
     'Conference Center', 'Lobby', 'Hallway',
@@ -133,6 +137,7 @@ export class ProjectPlanningComponent {
     public snackbar: MatSnackBar,
     public dialog: MatDialog,
     public authServ: AuthenticationService,
+    private dashServ: DashboardService,
 
   ) {
     this.globalVars.spinner = true;
@@ -142,6 +147,18 @@ export class ProjectPlanningComponent {
     //   this.getProjPlanSum();
     //
     // }, 15000);
+
+
+    this.dashServ.getDashboardData()
+      .subscribe((data: Dashboard) => {
+        this.businessName = data.businessName;
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error.error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
+      });
 
   }
 

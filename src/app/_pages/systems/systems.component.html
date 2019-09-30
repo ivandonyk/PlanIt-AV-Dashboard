@@ -31,21 +31,21 @@
         </button>
       </div>
       <div class="rooms-table-cont" [ngStyle]="{'display': dataSource ? 'block': 'none'}">
-        <app-room-table-component *ngIf="dataSource"         tableid="2" (clickRow)="opemRoomDetailed(true, $event)"  dataSource="{{dataSource}}" displayedColumns="{{displayedColumns}}"></app-room-table-component>
+        <app-room-table-component *ngIf="dataSource"         tableid="buildingid{{currentBuilding}}" (clickRow)="opemRoomDetailed(true, $event)"  dataSource="{{dataSource}}" displayedColumns="{{displayedColumns}}"></app-room-table-component>
 
 
       </div>
     </mat-tab>
     <mat-tab label="Rooms">
       <div class="rooms-table-cont" [ngStyle]="{'display': dataRoomSource ? 'block': 'none'}">
-        <app-room-table-component *ngIf="dataRoomSource"         tableid="3" (clickRow)="opemRoomDetailed(true, $event)"  dataSource="{{dataRoomSource}}" displayedColumns="{{displayedColumns}}"></app-room-table-component>
+        <app-room-table-component *ngIf="dataRoomSource" tableid="roomstub" (clickRow)="opemRoomDetailed(true, $event)"  dataSource="{{dataRoomSource}}" displayedColumns="{{displayedColumns}}"></app-room-table-component>
       </div>
     </mat-tab>
     <mat-tab label="Equipment">
       <div class="rooms-table-cont" [ngStyle]="{'display': equipmentsString ? 'block': 'none'}">
         <app-room-table-component
             *ngIf="equipmentsString"
-            tableid="4"
+            tableid="equipmenttub"
             (clickRow)="opemEquipmentDetailed(true, $event)"
             dataSource="{{equipmentsString}}"
             displayedColumns="{{displayedColumnsEquipments}}"

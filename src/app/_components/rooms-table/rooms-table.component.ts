@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
 import {MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -7,9 +7,9 @@ import {MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./rooms-table.component.scss']
 })
 
-export class RoomsTableComponent implements OnInit {
+export class RoomsTableComponent implements OnInit, OnDestroy {
   @Input() dataSource: string;
-  @Input() tableid: string | number;
+  @Input() tableid: any;
   @Input() displayedColumns: string ;
   @ViewChild(MatSort) sort: MatSort;
   @Output() clickRow = new EventEmitter<number>();
@@ -31,8 +31,9 @@ export class RoomsTableComponent implements OnInit {
       this.columnsHeader.push(item.key);
     });
 
-    if(window.localStorage.getItem('tableSearch' + this.tableid) != null) {
-     this.applyFilter(window.localStorage.getItem('tableSearch' + this.tableid));
+    console.log(this)
+    if(window.localStorage.getItem(this.tableid) != null) {
+     this.applyFilter(window.localStorage.getItem(this.tableid));
     }
 
   }
@@ -43,11 +44,16 @@ export class RoomsTableComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    if (!filterValue)
-      return;
-    window.localStorage.setItem('tableSearch' + this.tableid, filterValue);
+    // if (!filterValue)
+    //   return;
+    window.localStorage.setItem(this.tableid, filterValue);
     this.data.filter = filterValue.trim().toLowerCase();
     this.searchQ = filterValue;
   }
+
+  ngOnDestroy() {
+    // window.localStorage.removeItem(this.tableid);
+  }
+
 
 }

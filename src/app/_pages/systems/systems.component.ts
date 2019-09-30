@@ -258,6 +258,12 @@ export class SystemsComponent implements OnInit {
   }
   openBuildingDetail(id: number | string) {
     console.log(id);
+    window.localStorage.removeItem('buildingid' + id);
+
+    // if(){
+    //   window.localStorage.removeItem('buildingid' + id);
+    // }
+
     this.dataSource = '';
     this.globalVars.spinner = true;
     this.currentBuilding = id;

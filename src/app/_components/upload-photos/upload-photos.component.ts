@@ -86,6 +86,11 @@ export class AddPhotosComponent implements OnInit {
   cancel() {
     this.dialogRef.close();
   }
+
+  onSelect(rejectedFiles: any) {
+    this.globalVars.spinner = true;
+    console.log(111)
+  }
   onFilesAdded(files: File[]) {
     console.log(files)
     this.fields = [];
@@ -100,6 +105,9 @@ export class AddPhotosComponent implements OnInit {
         name: item.name
       });
     });
+    this.globalVars.spinner = false;
+    console.log(222)
+
   }
 
   setData(index, event) {
