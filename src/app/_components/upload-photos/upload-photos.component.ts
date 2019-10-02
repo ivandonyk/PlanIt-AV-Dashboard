@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import {FormBuilder, FormControl } from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog} from '@angular/material';
 import {SystemsService} from '../../_services/systems.service';
@@ -6,6 +6,8 @@ import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {RoomDTO} from '../../_models/systems.model';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {ConfirmModalComponent} from '../confirm-modal/confirm-modal.component';
+import {DropzoneConfigInterface, DropzoneComponent} from "ngx-dropzone-wrapper";
+import { environment} from '../../../environments/environment';
 
 
 @Component({
@@ -14,9 +16,33 @@ import {ConfirmModalComponent} from '../confirm-modal/confirm-modal.component';
   styleUrls: ['./upload-photos.component.scss']
 })
 export class AddPhotosComponent implements OnInit {
+  @ViewChild(DropzoneComponent) drpzone: DropzoneComponent;
+
+
+
   public form = this.fb.group({
     notes: new FormControl(''),
   });
+  public config: DropzoneConfigInterface = {
+    url: environment.baseUrl + '/uploadImage',
+    clickable: true,
+    autoQueue: false,
+    maxFilesize: 10,
+    autoProcessQueue: false,
+    addRemoveLinks: false,
+    uploadMultiple: true,
+    acceptedFiles: 'image/jpg,image/png,image/jpeg/*',
+    params: {
+      "access_token": sessionStorage.getItem('token')
+    },
+    init: function () {
+      // console.log(file)
+      // console.log(xhr)
+      // console.log(formData)
+    }
+    // headers:
+  };
+
   public fields: any = [];
   constructor(
     private fb: FormBuilder,
@@ -34,10 +60,20 @@ export class AddPhotosComponent implements OnInit {
 
   }
 
+  sendingPictures(file, xhr, formData){
+    console.log(file)
+    console.log(xhr)
+    console.log(formData)
+  }
 
   onSubmit() {
     const self = this;
     this.globalVars.spinner = true;
+    console.log(this.drpzone)
+    // this.drpzone.directiveRef.dropzone().processQueue();
+    let itemsProcessed = 0;
+
+    // window.document.getElementsByTagName('dropzone').processQueue();
     this.fields.forEach( (item, index) => {
       this.systServ.uploadImage(item)
         .subscribe(data => {
@@ -48,10 +84,16 @@ export class AddPhotosComponent implements OnInit {
                 horizontalPosition: 'right',
               }
             );
-            self.dialogRef.close(true);
-            this.globalVars.spinner = false;
+            itemsProcessed++;
+            if (itemsProcessed === self.fields.length) {
+              setTimeout(() => {
+                self.globalVars.spinner = false;
+                self.dialogRef.close(true);
+              }, 1500);
+            }
           }
-        }, error => {
+        },
+            error => {
           console.log(error);
           if (error.error.error === 'invalid_token') {
             this.authServ.logout();
@@ -72,15 +114,24 @@ export class AddPhotosComponent implements OnInit {
                     horizontalPosition: 'right',
                   }
                 );
-                this.globalVars.spinner = false;
-                self.dialogRef.close(true);
+                itemsProcessed++;
+                if (itemsProcessed === self.fields.length) {
+                  setTimeout(() => {
+                    self.globalVars.spinner = false;
+                    self.dialogRef.close(true);
+                  }, 1500);
+                }
+                // this.globalVars.spinner = false;
+                // self.dialogRef.close(true);
               }
             }
           }
           this.globalVars.spinner = false;
-        });
-    });
+        },
+          );
+    }, () => {
 
+    });
   }
 
   cancel() {
@@ -89,24 +140,25 @@ export class AddPhotosComponent implements OnInit {
 
   onSelect(rejectedFiles: any) {
     this.globalVars.spinner = true;
-    console.log(111)
+    console.log(111);
   }
-  onFilesAdded(files: File[]) {
+  onFilesAdded(files: any) {
     console.log(files)
-    this.fields = [];
-    files.forEach((item) => {
+    // this.fields = [];
+    // files.forEach((item) => {
 
-      const formData = new FormData();
-      formData.append('file', item, item.name);
+      // const formData = new FormData();
+      // formData.append('file', files, files.name);
       this.fields.push({
-        file: item,
+        file: files,
         description: '',
         roomId: this.data.roomId,
-        name: item.name
+        name: files.name
       });
-    });
+    // });
     this.globalVars.spinner = false;
     console.log(222)
+    console.log(this.fields);
 
   }
 
@@ -120,7 +172,7 @@ export class AddPhotosComponent implements OnInit {
       data: {
         title: 'Are you sure you want to upload this files?',
       }
-    })
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.onSubmit();
@@ -128,10 +180,21 @@ export class AddPhotosComponent implements OnInit {
     });
   }
 
-  onFilesRejected(files: File[]){
-    console.log(files)
+  onFilesRejected(files: File[]) {
+    console.log(files);
   }
 
+  public onUploadInit(args: any): void {
+    console.log('onUploadInit:', args);
+  }
+
+  public onUploadError(args: any): void {
+    console.log('onUploadError:', args);
+  }
+
+  public onUploadSuccess(args: any): void {
+    console.log('onUploadSuccess:', args);
+  }
 
 
 }

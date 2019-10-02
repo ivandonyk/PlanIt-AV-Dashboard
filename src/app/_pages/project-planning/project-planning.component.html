@@ -37,7 +37,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="table-container" >
-        <app-project-planning-table-component *ngIf="tableData['data_'+panel.year]" (clickRow)="opemRoomDetailed(true, $event)"  dataSource="{{tableData['data_'+panel.year]}}" displayedColumns="{{columnsHeader}}"></app-project-planning-table-component>
+        <app-project-planning-table-component *ngIf="tableData['data_'+panel.year]" (clickRow)="opemRoomDetailed(true, $event, panel.year)"  dataSource="{{tableData['data_'+panel.year]}}" displayedColumns="{{columnsHeader}}"></app-project-planning-table-component>
 
       </div>
     </mat-expansion-panel>
@@ -244,13 +244,13 @@
           <mat-label>
             Floor
           </mat-label>
-          <input matInput maxlength="3" maxLength  formControlName="floor" min="0"  type="number" placeholder="Floor">
+          <input matInput maxlength="3" maxLength  formControlName="floor" minlength="0"  type="number" placeholder="Floor">
         </mat-form-field>
         <mat-form-field >
           <mat-label>
             Tier
           </mat-label>
-          <input matInput  maxlength="2" maxLength required="true" formControlName="tier" min="0" type="number" placeholder="Tier">
+          <input matInput  maxlength="2" maxLength required="true" formControlName="tier" minlength="0" type="number" placeholder="Tier">
         </mat-form-field>
       </div>
       <div class="fields-group" data-grid="4">
@@ -264,14 +264,14 @@
           <mat-label>
             Lifecycle (years)
           </mat-label>
-          <input matInput maxlength="11" maxLength  formControlName="lifecycle" min="0" type="number" placeholder="Lifecycle (years)">
+          <input matInput maxlength="11" maxLength  formControlName="lifecycle" minlength="0" type="number" placeholder="Lifecycle (years)">
         </mat-form-field>
 
         <mat-form-field >
           <mat-label>
             Estimated Update Cost
           </mat-label>
-          <input matInput type="number" maxlength="11" min="0" maxLength formControlName="nextAvUpdCost" placeholder="Estimated Update Cost">
+          <input matInput type="number" maxlength="11" minlength="0" maxLength formControlName="nextAvUpdCost" placeholder="Estimated Update Cost">
         </mat-form-field>
 
         <mat-form-field >
@@ -304,7 +304,7 @@
           <mat-label>
             Seating Capacity
           </mat-label>
-          <input matInput maxlength="11" maxLength  formControlName="seatingCapacity" min="0"  type="number" placeholder="Seating Capacity">
+          <input matInput maxlength="11" maxLength  formControlName="seatingCapacity" minlength="0"  type="number" placeholder="Seating Capacity">
         </mat-form-field>
       </div>
       <div class="fields-group" data-grid="5">
@@ -318,7 +318,7 @@
           <mat-label>
             Ceiling Height
           </mat-label>
-          <input matInput maxlength="11" maxLength  formControlName="ceilingHeight"  min="0" type="number" placeholder="Ceiling Height">
+          <input matInput maxlength="11" maxLength  formControlName="ceilingHeight"  minlength="0" type="number" placeholder="Ceiling Height">
         </mat-form-field>
         <mat-form-field >
           <!--<mat-label>-->
@@ -346,7 +346,7 @@
           <mat-label>
             Last AV Cost
           </mat-label>
-          <input matInput  formControlName="avLastUpdateCost" maxlength="11" min="0" maxLength type="number" placeholder="AV Last Update Cost">
+          <input matInput  formControlName="avLastUpdateCost" maxlength="11" minlength="0" maxLength type="number" placeholder="AV Last Update Cost">
         </mat-form-field>
       </div>
     </form>

@@ -4,6 +4,7 @@ import {AnotherUserData, UserManageData, UserRoles} from '../../_models/userdata
 import {FormBuilder, FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import {ErrorStateMatcher} from '@angular/material/core';
+import { MatSnackBar} from '@angular/material';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -47,6 +48,7 @@ export class ManageUserComponent implements OnInit {
     private systService: SystemsService,
     private fb: FormBuilder,
     public globalVars: GlobalVarsHelper,
+    private snackbar: MatSnackBar,
 
   ) {
   }
@@ -119,6 +121,12 @@ export class ManageUserComponent implements OnInit {
           this.userData = null;
           this.getUsers()
 
+          this.snackbar.open('User has been added', '', {
+              duration: 3500,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            }
+          );
           this.globalVars.spinner = false;
           this.isCreateUser = false;
         }, error => {

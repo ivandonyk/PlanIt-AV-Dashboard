@@ -37,6 +37,7 @@
     "ngx-crystal-gallery": "^1.1.5",
     "ngx-drag-scroll": "^7.3.1",
     "ngx-dropzone": "^1.1.5",
+    "ngx-dropzone-wrapper": "^8.0.0",
     "ngx-lightbox": "^1.2.0",
     "rxjs": "^6.0.0",
     "save-svg-as-png": "^1.4.14",

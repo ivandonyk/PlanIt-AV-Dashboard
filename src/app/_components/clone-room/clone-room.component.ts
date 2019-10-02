@@ -126,12 +126,12 @@ export class CloneRoomComponent implements OnInit {
   onSubmit() {
     console.log(this)
     this.globalVars.spinner = true;
-    this.systServ.addRoom(this.cloneRoomForm.value)
+    this.systServ.cloneRoom(this.cloneRoomForm.value)
       .subscribe(data => {
         this.globalVars.spinner = false;
         this.dialogRef.close();
         this.snackbar.open('Room Added', '', {
-            duration: 1500,
+            duration: 2500,
             verticalPosition: 'top',
             horizontalPosition: 'right',
           }

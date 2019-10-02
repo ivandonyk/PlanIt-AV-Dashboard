@@ -44,6 +44,7 @@ export class ProjectPlanningComponent {
   public roomHist: any;
   public equipmentId: number;
   public equipmentsString: string;
+  public currentTabYear: any;
 
   public displayedLocalColumnsEquipments: string = JSON.stringify([
     {
@@ -211,6 +212,7 @@ export class ProjectPlanningComponent {
   }
   getProjPlanDetail(year) {
     // this.tableData = {};
+    this.tableData['data_' + year] = null;
     this.globalVars.spinner = true;
     this.projectPlanningServ.getProjPlanDetail(year)
       .subscribe((data: ProjPlanDetailObj) => {
@@ -227,11 +229,12 @@ export class ProjectPlanningComponent {
   get f() {
     return this.form.value;
   }
-  opemRoomDetailed(status?: boolean, id?: number) {
+  opemRoomDetailed(status?: boolean, id?: number, year?: any) {
     if (!status) {
       this.roomModalShown = false;
       this.roomId = null;
     } else {
+      this.currentTabYear = year ? year : null;
       this.roomId = id;
       this.globalVars.spinner = true;
       this.systServ.getRoomDetails(id)
@@ -421,6 +424,9 @@ export class ProjectPlanningComponent {
         );
         this.roomModalShownEdit = false;
         this.getRoomDet();
+        if (this.currentTabYear) {
+          this.getProjPlanDetail(this.currentTabYear);
+        }
         this.globalVars.spinner = false;
       }, error => {
         this.globalVars.spinner = false;

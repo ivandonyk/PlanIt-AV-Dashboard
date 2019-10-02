@@ -57,6 +57,7 @@ export interface RoomDetails {
   dateOfLastRemodel: string;
   dimensions: string;
   roomType?: string;
+  roomOld?: any;
   equipmentAge: string;
   floor: number;
   images?: Array<string>;
@@ -75,6 +76,33 @@ export interface RoomDetails {
   seatingCapacity: number;
   seatingType: string;
   tier: number;
+}
+export interface RoomClone {
+  avLastUpdateCost: number;
+  avLastUpdateDate: string;
+  buildingId: number;
+  ceilingHeight: number;
+  ceilingType: string;
+  dateOfLastRemodel: string;
+  dimensions: string;
+  floor: number;
+  integrator: string;
+  lastAvContractor: string;
+  lifecycle: number;
+  nextAvUpdCost: number;
+  nextAvUpdateDt: string;
+  notes: string;
+  coreAge: any;
+  origAvContractor: string;
+  origAvInstallDate: string;
+  origAvSystemCost: number;
+  roomId: any;
+  roomName: string;
+  roomType: string;
+  seatingCapacity: number;
+  seatingType: string;
+  tier: number;
+  userName: string;
 }
 
 export interface RoomDTO {

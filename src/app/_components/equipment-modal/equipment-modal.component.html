@@ -181,7 +181,11 @@
           <mat-label>
             Equipment Class
           </mat-label>
-          <input matInput  formControlName="equipmentClass"  placeholder="Equipment Class">
+          <mat-select matInput  required="true" placeholder="Equipment Class" formControlName="equipmentClass">
+            <mat-option [value]="'Core'">Core</mat-option>
+            <mat-option [value]="'Peripheral'">Peripheral</mat-option>
+            <mat-option [value]="'Furniture'">Furniture</mat-option>
+          </mat-select>
         </mat-form-field>
 
 
@@ -189,7 +193,10 @@
           <mat-label>
             Category
           </mat-label>
-          <input matInput  formControlName="category"  placeholder="Category">
+          <mat-select matInput placeholder="Category" formControlName="category">
+            <mat-option [value]="'Video'">Video</mat-option>
+            <mat-option [value]="'Audio'">Audio</mat-option>
+          </mat-select>
         </mat-form-field>
 
 
@@ -209,7 +216,7 @@
           <mat-label>
             Lifecycle
           </mat-label>
-          <input matInput type="number" min="0" formControlName="lifecycle"  placeholder="Lifecycle">
+          <input matInput type="number" minlength="0" maxlength="11" maxLength formControlName="lifecycle"  placeholder="Lifecycle">
         </mat-form-field>
 
 

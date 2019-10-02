@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment} from '../../environments/environment';
 import {
   Rooms, RoomDetails, Buildings, Equipment, RoomDTO, EquipmentDetail, BuildingsIds,
-  Room, EquipmentDetailUpdate
+  Room, EquipmentDetailUpdate, RoomClone
 } from '../_models/systems.model';
 import { EquipmentDetailAdd } from '../_models/equipment.model';
 import {
@@ -123,6 +123,39 @@ export class SystemsService {
       roomType: String(roomObj.roomType)
     };
     return this.httpClient.post<RoomDetails>(environment.baseUrl + '/addRoom', room);
+  }
+
+  cloneRoom(roomObj: RoomDetails): Observable<RoomClone> {
+    const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
+
+    const room: RoomClone = {
+      avLastUpdateCost: Number(roomObj.avLastUpdateCost),
+      avLastUpdateDate: moment(roomObj.avLastUpdateDate).toISOString(),
+      buildingId: Number(roomObj.buildingId),
+      ceilingHeight: Number(roomObj.ceilingHeight),
+      ceilingType: String(roomObj.ceilingType),
+      coreAge: String(roomObj.coreAge),
+      dateOfLastRemodel: moment(roomObj.dateOfLastRemodel).toISOString(),
+      dimensions: String(roomObj.dimensions),
+      floor: Number(roomObj.floor),
+      integrator: String(roomObj.integrator),
+      lastAvContractor: String(roomObj.lastAvContractor),
+      lifecycle: Number(roomObj.lifecycle),
+      nextAvUpdCost: Number(roomObj.nextAvUpdCost),
+      nextAvUpdateDt: moment(roomObj.nextAvUpdateDt).toISOString(),
+      notes: String(roomObj.notes),
+      origAvContractor: String(roomObj.origAvContractor),
+      origAvInstallDate: moment(roomObj.origAvInstallDate).toISOString(),
+      origAvSystemCost: Number(roomObj.origAvSystemCost),
+      roomName: String(roomObj.roomName),
+      roomId: String(roomObj.roomOld),
+      seatingCapacity: Number(roomObj.seatingCapacity),
+      seatingType: String(roomObj.seatingType),
+      tier: Number(roomObj.tier),
+      roomType: String(roomObj.roomType),
+      userName: String(userData.userName),
+    };
+    return this.httpClient.post<RoomClone>(environment.baseUrl + '/cloneRoom', room);
   }
 
   addEquipment(equipment: EquipmentDetailAdd): Observable<EquipmentDetailAdd> {
@@ -355,7 +388,7 @@ export class SystemsService {
 
     return this.httpClient.post<updBusAcct>(environment.baseUrl + '/updBusAcct',
       {
-        businessAccontId: Number(userData.businessAcctId),
+        businessAccountId: Number(userData.businessAcctId),
         companyName: updBusAcctObj.companyName,
         address1: updBusAcctObj.address1,
         address2: updBusAcctObj.address2,

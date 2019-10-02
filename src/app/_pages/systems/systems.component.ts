@@ -281,6 +281,7 @@ export class SystemsComponent implements OnInit {
       });
   }
   getRoooms() {
+    this.dataRoomSource = null;
     this.globalVars.spinner = true;
     this.systServ.getRoooms()
       .subscribe((data: Rooms) => {
@@ -555,6 +556,7 @@ export class SystemsComponent implements OnInit {
         this.roomModalShownEdit = false;
         this.getRoomDet();
         this.openBuildingDetail(this.currentBuilding);
+        this.getRoooms()
         this.globalVars.spinner = false;
       }, error => {
         this.globalVars.spinner = false;

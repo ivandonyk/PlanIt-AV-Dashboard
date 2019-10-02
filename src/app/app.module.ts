@@ -73,6 +73,18 @@ import {ProjectPlanningTableComponent} from "./_components/project-planning-tabl
 import {ManageUserComponent} from "./_components/manage-user/manage-user.component";
 import {AccountSettingsComponent} from "./_components/account-settings/account-settings.component";
 import {MaxlengthDirective} from "./directive/maxlength.directive";
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { environment} from '../environments/environment';
+
+// const DROPZONECONFIG: DropzoneConfigInterface = {
+//
+//   url: environment.baseUrl + '/uploadImage',
+//   maxFilesize: 100,
+//   acceptedFiles: 'image/jpg,image/png,image/jpeg/*',
+//   autoProcessQueue: false,
+// };
 
 @NgModule({
   declarations: [
@@ -158,12 +170,13 @@ import {MaxlengthDirective} from "./directive/maxlength.directive";
     CrystalGalleryModule,
     DragScrollModule,
     RouterModule.forRoot([]),
-    NgxChartsModule
+    NgxChartsModule,
+    DropzoneModule
   ],
   providers: [
     HttpErrorHandler,
     MessageService,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
