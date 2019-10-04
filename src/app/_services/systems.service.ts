@@ -377,8 +377,10 @@ export class SystemsService {
 
   updBusBillingSubsripiton(billSubscriptionId: number | string): Observable<string> {
     const userData: UserData = JSON.parse(sessionStorage.getItem('currentUser'));
-      return this.httpClient.post<string>(environment.baseUrl + '/updBusBillSub?businessAccontId=' + userData.businessAcctId + '&billSubscriptionId=' + billSubscriptionId, {
-    });
+      return this.httpClient.post<string>(environment.baseUrl + '/updBusBillSub?businessAccountId=' + userData.businessAcctId + '&billSubscriptionId=' + billSubscriptionId, {
+        businessAccountId: userData.businessAcctId,
+        billSubscriptionId: billSubscriptionId,
+      });
   }
 
   updBusAcct(updBusAcctObj: updBusAcct): Observable<updBusAcct> {

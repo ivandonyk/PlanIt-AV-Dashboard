@@ -130,21 +130,24 @@ export class AccountSettingsComponent implements OnInit {
       .subscribe( (data: any) => {
         console.log(data);
         this.globalVars.spinner = false;
-        this.snackbar.open('Success', '', {
+        this.snackbar.open(data, '', {
             duration: 3500,
             verticalPosition: 'top',
             horizontalPosition: 'right',
           }
         );
+        this.getBillingSubs()
       }, error => {
         console.log(error);
         this.globalVars.spinner = false;
-         this.snackbar.open('error', '', {
+         this.snackbar.open(error.error.text, '', {
             duration: 3500,
             verticalPosition: 'top',
             horizontalPosition: 'right',
           }
         );
+        this.getBillingSubs()
+
       });
   }
   closeDialog() {

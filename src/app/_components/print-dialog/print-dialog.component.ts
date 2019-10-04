@@ -227,11 +227,11 @@ export class PrintDialogComponent implements OnInit {
 
           this.singleArr.push({
             name: result[0].year,
-            value: result[0].amount
+            value: this.numberWithCommas(result[0].amount)
           });
         this.textChart.push({
           year: result[0].year,
-          amount: result[0].amount
+          amount: '$' + this.numberWithCommas(result[0].amount)
         });
           Object.assign(this, this.singleArr);
 
@@ -327,7 +327,7 @@ export class PrintDialogComponent implements OnInit {
       XLSX.utils.book_append_sheet(workBook, workSheet, 'AV Porject Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to);
       this.globalVars.spinner = false;
       XLSX.writeFile(workBook, 'Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.xlsx');
-    }, 5000);
+    }, 10000);
   }
 
   downloadDoc = async () => {
