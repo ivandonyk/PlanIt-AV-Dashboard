@@ -60,11 +60,11 @@ export class AddPhotosComponent implements OnInit {
 
   }
 
-  sendingPictures(file, xhr, formData){
-    console.log(file)
-    console.log(xhr)
-    console.log(formData)
-  }
+  // sendingPictures(file, xhr, formData) {
+  //   console.log(file)
+  //   console.log(xhr)
+  //   console.log(formData)
+  // }
 
   onSubmit() {
     const self = this;

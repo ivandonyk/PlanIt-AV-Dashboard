@@ -158,6 +158,7 @@ export interface Equipment {
 
 export interface EquipmentDetail {
   room: string;
+  buildingId: string;
   altLocation: string;
   roomId: any;
   manufacturer: string;
@@ -191,6 +192,7 @@ export interface EquipmentDetailUpdate {
   description: string;
   equipmentCategory: string;
   equipmentClass: string;
+  buildingId: string;
   equipmentId: number;
   extWarrantyStartDate?: string;
   extendedWarranty?: number;

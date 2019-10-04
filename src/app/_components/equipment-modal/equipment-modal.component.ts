@@ -116,13 +116,13 @@ export class EquipmentModalComponent implements OnInit {
 
     this.systServ.getEquipmentDetail(this.equipmentId)
       .subscribe((data: EquipmentDetail) => {
-      this.data = data;
+        this.data = data;
 
 
         this.form = this.formBuilder.group({
-          buildings: this.data ? this.buildingData.buildingId : '',
-          alternateLocation: '',
-          rooms: this.data ? this.data.roomId : '',
+          buildings: [this.data.buildingId],
+          alternateLocation: [this.data.altLocation],
+          rooms: [this.data.roomId],
           room: [this.data.room],
           altLocation: [this.data.altLocation],
           manufacturer: [this.data.manufacturer],
@@ -151,6 +151,9 @@ export class EquipmentModalComponent implements OnInit {
           warrantyStart: [''],
         });
 
+        setTimeout(() => {
+          this.buildingChanged();
+        }, 1000);
       this.form.statusChanges
         .subscribe(value => {
           this.isRoomFormChanged = true;
@@ -195,7 +198,8 @@ export class EquipmentModalComponent implements OnInit {
       modelNumber: String(this.f.modelNumber),
       port: String(this.f.port),
       replacementDate: moment(this.f.replacementDate).toISOString(),
-      roomId: this.data.roomId,
+      roomId: this.f.rooms,
+      buildingId: this.f.buildings,
       serialNumber: String(this.f.serialNum),
       userName: username.userName,
       warrantyExpirationDate: moment(this.f.warrantyExpiration).toISOString(),

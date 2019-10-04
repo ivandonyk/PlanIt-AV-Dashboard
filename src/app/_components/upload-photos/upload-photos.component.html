@@ -21,7 +21,7 @@
                   <!--">-->
                   <!--</ngx-dropzone>-->
 
-    <dropzone [config]="config" (init)="onUploadInit($event)" (sending)="sendingPictures()" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"  (addedFile)="onFilesAdded($event)" [message]="'Drop your image here (or click)'"></dropzone>
+    <dropzone [config]="config" (init)="onUploadInit($event)"  (error)="onUploadError($event)" (success)="onUploadSuccess($event)"  (addedFile)="onFilesAdded($event)" [message]="'Drop your image here (or click)'"></dropzone>
 
     <div class="fields-cont">
         <mat-form-field  *ngFor="let item of fields; let i = index" [attr.data-index]="i">
