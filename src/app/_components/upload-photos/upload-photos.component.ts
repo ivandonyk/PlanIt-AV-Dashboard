@@ -7,7 +7,7 @@ import {RoomDTO} from '../../_models/systems.model';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {ConfirmModalComponent} from '../confirm-modal/confirm-modal.component';
 import {DropzoneConfigInterface, DropzoneComponent} from "ngx-dropzone-wrapper";
-import { environment} from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -143,7 +143,8 @@ export class AddPhotosComponent implements OnInit {
     console.log(111);
   }
   onFilesAdded(files: any) {
-    console.log(files)
+    console.log(files);
+
     // this.fields = [];
     // files.forEach((item) => {
 

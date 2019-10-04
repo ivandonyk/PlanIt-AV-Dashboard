@@ -192,6 +192,8 @@ export interface EquipmentDetailUpdate {
   description: string;
   equipmentCategory: string;
   equipmentClass: string;
+  warrantyLength?: string;
+  extWarrantyExpiration?: string;
   buildingId: string;
   equipmentId: number;
   extWarrantyStartDate?: string;

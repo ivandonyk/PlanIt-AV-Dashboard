@@ -196,12 +196,14 @@ export class EquipmentModalComponent implements OnInit {
       manufactureWarranty: Number(this.f.manufactureWarranty),
       manufacturer: String(this.f.manufacturer),
       modelNumber: String(this.f.modelNumber),
+      extWarrantyExpiration: String(this.f.extWarrantyExpiration),
       port: String(this.f.port),
       replacementDate: moment(this.f.replacementDate).toISOString(),
       roomId: this.f.rooms,
       buildingId: this.f.buildings,
       serialNumber: String(this.f.serialNum),
       userName: username.userName,
+      warrantyLength: this.f.warrantyLength,
       warrantyExpirationDate: moment(this.f.warrantyExpiration).toISOString(),
     };
 

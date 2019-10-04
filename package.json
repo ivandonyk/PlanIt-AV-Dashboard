@@ -39,6 +39,7 @@
     "ngx-dropzone": "^1.1.5",
     "ngx-dropzone-wrapper": "^8.0.0",
     "ngx-lightbox": "^1.2.0",
+    "piexifjs": "^1.0.4",
     "rxjs": "^6.0.0",
     "save-svg-as-png": "^1.4.14",
     "siema": "^1.5.1",
