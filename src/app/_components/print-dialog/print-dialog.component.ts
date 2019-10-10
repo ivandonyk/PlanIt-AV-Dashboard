@@ -11,6 +11,9 @@ import * as XLSX from 'xlsx';
 import { Document, Paragraph, Packer, WidthType } from 'docx';
 import { saveAs } from 'file-saver';
 import {AuthenticationService} from '../../_services/authentication.service';
+import {DashboardService} from "../../_services/dashboard.service";
+import {Dashboard} from "../../_models/dashboard.model";
+import {forEach} from "@angular/router/src/utils/collection";
 
 
 
@@ -48,6 +51,7 @@ export class PrintDialogComponent implements OnInit {
   public withChart: any;
   public textChart: any = [];
   public view: Array<number> = [300, 200];
+  public businessName: any = "";
 
 
   public colorScheme = {
@@ -62,6 +66,7 @@ export class PrintDialogComponent implements OnInit {
     public authServ: AuthenticationService,
     private snackbar: MatSnackBar,
     private projectPlanningServ: ProjectPlanningService,
+    private dashServ: DashboardService,
     @Inject(MAT_DIALOG_DATA) public data: {
       years: {
         start: number,
@@ -76,6 +81,17 @@ export class PrintDialogComponent implements OnInit {
     this.years = this.range(this.data.years.start, this.data.years.end);
     this.yearsEnd = this.range(this.data.years.start, this.data.years.end);
     this.getProjPlanSum();
+
+    this.dashServ.getDashboardData()
+      .subscribe((data: Dashboard) => {
+        this.businessName = data.businessName;
+        this.globalVars.spinner = false;
+      }, error => {
+        console.log(error.error);
+        if (error.error.error === 'invalid_token'){
+          this.authServ.logout();
+        }
+      });
   }
 
 
@@ -222,19 +238,24 @@ export class PrintDialogComponent implements OnInit {
       if (elem.status.list) {
          this.getProjPlanDetail(year, elem);
 
-
         const result = this.ProjPlanSum.filter(yer => Number(yer.year) === Number(year));
 
-          this.singleArr.push({
-            name: result[0].year,
-            value: this.numberWithCommas(result[0].amount)
-          });
+
+        console.log(this.singleArr);
+
+        this.singleArr.push({
+          name: result[0].year,
+          value: Number(result[0].amount)
+        });
+
         this.textChart.push({
           year: result[0].year,
-          amount: '$' + this.numberWithCommas(result[0].amount)
+          amount: '$' + this.numberWithCommas(Number(result[0].amount))
         });
           Object.assign(this, this.singleArr);
 
+          console.log(this.textChart);
+          console.log(this.singleArr);
       }
       // if (elem.status.desc) {
       //   if (elem.list) {
@@ -244,14 +265,15 @@ export class PrintDialogComponent implements OnInit {
       //     this.getProjectDesc(elem.list.roomId, elem);
       //   }
       // }
-      this.customArr.push(elem);
+      // setTimeout(() => {
+        this.customArr.push(elem);
+      // }, 10000)
     });
 
     setTimeout(() => {
       const svg = document.querySelector('#hiddenChart svg.ngx-charts');
       this.downloadSvg(svg, 'chart.png');
     }, 1000);
-
   }
 
   bodyRows(arr) {
@@ -275,7 +297,7 @@ export class PrintDialogComponent implements OnInit {
     this.customArr = [];
     this.generateJson();
     const doc = new jsPDF();
-    doc.text('Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '', 14 , 10).setFontSize(11);
+    doc.text(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '', 14 , 10).setFontSize(11);
     setTimeout(() => {
       if (this.withChart) {
         doc.addImage(this.imgURI, 'PNG', 10, 20);
@@ -310,7 +332,7 @@ export class PrintDialogComponent implements OnInit {
     }, 2000);
     setTimeout(() => {
       this.globalVars.spinner = false;
-      doc.save('Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.pdf');
+      doc.save(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.pdf');
     }, 7000);
   }
 
@@ -320,13 +342,62 @@ export class PrintDialogComponent implements OnInit {
     await this.generateJson();
 
     setTimeout(() => {
+      this.customYearArr.forEach((item, index) => {
+        delete item.roomId;
+        Object.keys(item).forEach((itemDeep, index) => {
+          switch (itemDeep) {
+            case 'updateYear':
+              item['Update Year'] =  item['updateYear'];
+              delete item.updateYear;
+              break;
+            case 'building':
+              item['Building Name'] =  item['building'];
+              delete item.building;
+              break;
+            case 'room':
+              item['Room Name'] =  item['room'];
+              delete item.room;
+              break;
+            case 'type':
+              item['Type'] =  item['type'];
+              delete item.type;
+              break;
+            case 'tier':
+              item['Tier'] =  item['tier'];
+              delete item.tier;
+              break;
+            case 'coreAge':
+              item['Core Age'] =  item['coreAge'];
+              delete item.coreAge;
+              break;
+            case 'equipmentAge':
+              item['Equipment Age'] =  item['equipmentAge'];
+              delete item.equipmentAge;
+              break;
+            case 'projectedCost':
+              item['Projected Cost'] =  item['projectedCost'];
+              delete item.projectedCost;
+              break;
+            case 'lastAvInstallYear':
+              item['Last Av Install Year'] =  item['lastAvInstallYear'];
+              delete item.lastAvInstallYear;
+              break;
+            case 'lifecycle':
+              item['Lifecycle'] =  item['lifecycle'];
+              delete item.lifecycle;
+              break;
+          }
+        });
+      });
       const workBook = XLSX.utils.book_new();
-      const workSheet = XLSX.utils.json_to_sheet(this.customYearArr);
+      const workSheet = XLSX.utils.json_to_sheet(this.customYearArr, {
+        header: ["Update Year", "Building Name", "Room Name", "Type", "Tier", "Core Age", "Equipment Age", "Projected Cost", "Last Av Install Year", "Lifecycle"]
+      });
       const chart = XLSX.utils.json_to_sheet(this.textChart);
       XLSX.utils.book_append_sheet(workBook, chart, 'AV Projects Total by Year');
       XLSX.utils.book_append_sheet(workBook, workSheet, 'AV Porject Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to);
       this.globalVars.spinner = false;
-      XLSX.writeFile(workBook, 'Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.xlsx');
+      XLSX.writeFile(workBook, this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.xlsx');
     }, 10000);
   }
 
@@ -348,7 +419,7 @@ export class PrintDialogComponent implements OnInit {
       .size(40)
       .font('Arial');
 
-    doc.addParagraph(new Paragraph('Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to).title().style('title'));
+    doc.addParagraph(new Paragraph(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to).title().style('title'));
 
 
 
@@ -454,7 +525,7 @@ export class PrintDialogComponent implements OnInit {
       const packer = new Packer();
 
       packer.toBlob(doc).then(blob => {
-        saveAs(blob, 'Client Company AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.docx');
+        saveAs(blob, this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.docx');
       });
       this.globalVars.spinner = false;
     }, 9000);
