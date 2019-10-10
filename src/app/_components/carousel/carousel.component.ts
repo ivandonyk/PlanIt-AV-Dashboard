@@ -25,24 +25,24 @@ export class CarouselComponent implements OnInit {
   ngOnInit() {
     console.log(JSON.parse(this.roomDetailImages));
     const images = JSON.parse(this.roomDetailImages);
-    images.forEach((item, index) => {
-      console.log(item)
-
-      const imgEle = document.createElement('img');
-      imgEle.src = item.path;
-      imgEle.width = 200;
-      imgEle.height = 200;
-
-
-      fixOrientation(item.path, { image: true }, function (fixed, image) {
-        // var img = new Image();
-        // img.src = fixed;
-       console.log(fixed)
-       console.log(image);
-      });
-
-
-    })
+    // images.forEach((item, index) => {
+    //   console.log(item)
+    //
+    //   const imgEle = document.createElement('img');
+    //   imgEle.src = item.path;
+    //   imgEle.width = 200;
+    //   imgEle.height = 200;
+    //
+    //   //
+    //   // fixOrientation(item.path, { image: true }, function (fixed, image) {
+    //   //   // var img = new Image();
+    //   //   // img.src = fixed;
+    //   //  console.log(fixed)
+    //   //  console.log(image);
+    //   // });
+    //
+    //
+    // })
 
     this.images = JSON.parse(this.roomDetailImages);
   }
