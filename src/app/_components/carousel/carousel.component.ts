@@ -4,6 +4,7 @@ import { CrystalLightbox } from 'ngx-crystal-gallery';
 // import { fixOrientation } from 'fix-orientation';
 declare var EXIF: any;
 import * as fixOrientation from 'fix-orientation';
+import {GlobalVarsHelper} from '../../_helpers/global-vars';
 
 @Component({
   selector: 'app-carousel-component',
@@ -20,31 +21,44 @@ export class CarouselComponent implements OnInit {
 
   constructor(
     public crystalLightbox: CrystalLightbox,
+    public globalVars: GlobalVarsHelper,
+
   ) {
   }
   ngOnInit() {
+    const self = this;
     console.log(JSON.parse(this.roomDetailImages));
     const images = JSON.parse(this.roomDetailImages);
-    // images.forEach((item, index) => {
-    //   console.log(item)
-    //
-    //   const imgEle = document.createElement('img');
-    //   imgEle.src = item.path;
-    //   imgEle.width = 200;
-    //   imgEle.height = 200;
-    //
-    //   //
-    //   // fixOrientation(item.path, { image: true }, function (fixed, image) {
-    //   //   // var img = new Image();
-    //   //   // img.src = fixed;
-    //   //  console.log(fixed)
-    //   //  console.log(image);
-    //   // });
-    //
-    //
-    // })
+    images.forEach((item, index) => {
+      self.globalVars.spinner = true;
 
-    this.images = JSON.parse(this.roomDetailImages);
+      const img = document.createElement('img');
+      img.src = 'https://cors-anywhere.herokuapp.com/' + item.path;
+      img.width = 200;
+      img.height = 200;
+      img.crossOrigin = 'Anonymous';
+      img.onload = function () {
+        // ts-ignore
+        let loadExif = function loadExif(callback) {
+          return callback(1);
+        };
+        if (typeof EXIF !== 'undefined' && EXIF !== null && fixOrientation) {
+          // @ts-ignore
+          loadExif = function loadExif(callback) {
+            return EXIF.getData(img, function () {
+              return callback(EXIF.getTag(this, 'Orientation'));
+            });
+          };
+        }
+
+        return loadExif(function (orientation) {
+          console.log(orientation)
+          item.orientation = orientation;
+          self.images.push(item);
+          self.globalVars.spinner = false;
+        });
+      };
+    });
   }
   previousSlideRoom() {
     if (this.mainPictureIndex !== 0) {
@@ -61,19 +75,6 @@ export class CarouselComponent implements OnInit {
     }
 
   }
-  // imgToBase64(img) {
-  //   var canvas = document.createElement('canvas')
-  //   var ctx = canvas.getContext('2d')
-  //   ctx.fillStyle = '#fff';
-  //   canvas.width = 200
-  //   canvas.height = 200
-  //   ctx.drawImage(img, 0, 0)
-  //
-  //   // If the image is not png, the format
-  //   // must be specified here
-  //   return canvas.toDataURL("image/jpeg");
-  // }
-
   regeneratePath(path) {
     return 'url("' + path + '")';
   }

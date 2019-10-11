@@ -31,7 +31,7 @@ export class AddPhotosComponent implements OnInit {
     autoProcessQueue: false,
     addRemoveLinks: false,
     uploadMultiple: true,
-    acceptedFiles: 'image/jpg,image/png,image/jpeg/*',
+    acceptedFiles: 'image/*',
     params: {
       "access_token": sessionStorage.getItem('token')
     },

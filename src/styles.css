@@ -40,3 +40,6 @@ input[type=number] {
 .dz-progress{
   display: none !important;
 }
+dropzone > .dropzone.dz-wrapper .dz-message {
+  min-height: 100px !important;
+}
