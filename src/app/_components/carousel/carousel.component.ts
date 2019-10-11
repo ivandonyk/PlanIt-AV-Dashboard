@@ -55,8 +55,6 @@ export class CarouselComponent implements OnInit {
           console.log(orientation)
           item.orientation = orientation;
           self.images.push(item);
-          self.images.push(item);
-          self.images.push(item);
           self.globalVars.spinner = false;
         });
       };
