@@ -438,6 +438,7 @@ export class SystemsComponent implements OnInit {
   }
   openDialogAddProjectDesc() {
     const dialogRef = this.dialog.open(AddProjectDescComponent, {
+      width: '80%',
       data: {
         projectDesc: this.projectDesc,
         roomId: this.roomId,

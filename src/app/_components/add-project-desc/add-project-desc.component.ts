@@ -65,4 +65,14 @@ export class AddProjectDescComponent implements OnInit {
   cancel() {
     this.dialogRef.close();
   }
+
+  alphaNumber(e) {
+    const globalRegex = RegExp('[a-zA-Z0-9]', 'g');
+    console.log(e);
+    if (!globalRegex.test(e.key) && e.key !== ' ' && e.key !== '.' && e.key !== ',') {
+      e.preventDefault();
+    } else {
+    }
+
+  }
 }

@@ -43,3 +43,7 @@ input[type=number] {
 dropzone > .dropzone.dz-wrapper .dz-message {
   min-height: 100px !important;
 }
+
+mat-list-item.mat-list-item {
+  height: auto !important;
+}

@@ -3,7 +3,7 @@
   <div mat-dialog-content>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
       <mat-form-field>
-        <textarea matInput maxlength="2000" maxLength formControlName="notes" placeholder="Textarea"></textarea>
+        <textarea matInput maxlength="2000" (keydown)="alphaNumber($event)" maxLength formControlName="notes" placeholder="Textarea"></textarea>
       </mat-form-field>
     </form>
   </div>

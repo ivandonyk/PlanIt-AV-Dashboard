@@ -5,7 +5,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  //justify-content: space-evenly;
   position: relative;
 
 
@@ -49,19 +49,20 @@
   .scroller{
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    //align-items: center;
     //justify-content: space-evenly;
-    height: 250px;
-
+    height: 251px;
+    margin-top: -4px;
+    width: 100%;
 
 
 
     .slide{
 
-      width: 126px;
-      height: 121.5px;
+      width: 118px;
+      height: 118px;
       background: #fff;
-      padding: 2px 5px;
+      padding: 5px;
       overflow: hidden;
 
       div{
