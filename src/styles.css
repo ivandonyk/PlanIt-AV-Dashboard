@@ -47,3 +47,28 @@ dropzone > .dropzone.dz-wrapper .dz-message {
 mat-list-item.mat-list-item {
   height: auto !important;
 }
+
+
+
+
+img[src$="orient=2"]{
+   transform: rotateY(180deg);
+ }
+img[src$="orient=3"]{
+   transform: rotate(180deg);
+ }
+img[src$="orient=4"]{
+   transform: rotate(180deg) rotateY(180deg);
+ }
+img[src$="orient=5"]{
+   transform: rotate(270deg) rotateY(180deg);
+ }
+img[src$="orient=6"]{
+   transform: rotate(90deg);
+ }
+img[src$="orient=7"]{
+   transform: rotate(90deg) rotateY(180deg);
+ }
+img[src$="orient=8"]{
+   transform: rotate(270deg);
+ }

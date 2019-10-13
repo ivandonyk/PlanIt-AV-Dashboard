@@ -54,6 +54,7 @@ export class CarouselComponent implements OnInit {
         return loadExif(function (orientation) {
           console.log(orientation)
           item.orientation = orientation;
+          item.path = item.path + '?orient=' + orientation;
           self.images.push(item);
           self.globalVars.spinner = false;
         });
