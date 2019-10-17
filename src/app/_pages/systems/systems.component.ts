@@ -451,6 +451,7 @@ export class SystemsComponent implements OnInit {
     });
   }
   getEquipment(roomId) {
+
     this.globalVars.spinner = true;
     this.systServ.getEquipments(roomId)
       .subscribe((data: Array<{
@@ -470,6 +471,7 @@ export class SystemsComponent implements OnInit {
       }>) => {
 
         if (data.length > 0) {
+          console.log(123123123123123123)
           this.equipmentsLocal = JSON.stringify(data);
         } else {
           this.equipmentsLocal = '0';
@@ -515,6 +517,12 @@ export class SystemsComponent implements OnInit {
   }
 
   updateEquipmen() {
+    if (this.roomId) {
+      this.equipmentsLocal = '0';
+      setTimeout(() => {
+        this.getEquipment(this.roomId);
+      }, 2000);
+    }
     this.getAllEquipments();
   }
 
