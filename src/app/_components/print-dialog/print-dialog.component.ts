@@ -440,12 +440,16 @@ export class PrintDialogComponent implements OnInit {
               item['Lifecycle'] =  item['lifecycle'];
               delete item.lifecycle;
               break;
+            case 'projectDesc':
+              item['Project Description'] =  item['projectDesc'];
+              delete item.projectDesc;
+              break;
           }
         });
       });
       const workBook = XLSX.utils.book_new();
       const workSheet = XLSX.utils.json_to_sheet(this.customYearArr, {
-        header: ["Update Year", "Building Name", "Room Name", "Type", "Tier", "Core Age", "Equipment Age", "Projected Cost", "Last Av Install Year", "Lifecycle"]
+        header: ["Update Year", "Building Name", "Room Name", "Type", "Tier", "Core Age", "Equipment Age", "Projected Cost", "Last Av Install Year", "Lifecycle", "Project Description"]
       });
       const chart = XLSX.utils.json_to_sheet(this.textChart);
       XLSX.utils.book_append_sheet(workBook, chart, 'AV Projects Total by Year');
