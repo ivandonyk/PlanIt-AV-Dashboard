@@ -523,6 +523,12 @@ export class ProjectPlanningComponent {
   }
 
   updateEquipmen() {
+    if (this.roomId) {
+      this.equipmentsLocal = '0';
+      setTimeout(() => {
+        this.getEquipment(this.roomId);
+      }, 2000);
+    }
     this.getAllEquipments();
   }
 
