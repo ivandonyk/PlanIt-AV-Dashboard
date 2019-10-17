@@ -527,7 +527,7 @@ export class ProjectPlanningComponent {
       this.equipmentsLocal = '0';
       setTimeout(() => {
         this.getEquipment(this.roomId);
-      }, 2000);
+      }, 1500);
     }
     this.getAllEquipments();
   }
