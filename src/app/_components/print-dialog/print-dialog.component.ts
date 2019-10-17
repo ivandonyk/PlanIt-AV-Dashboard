@@ -5,23 +5,20 @@ import {SystemsService} from '../../_services/systems.service';
 import {GlobalVarsHelper} from '../../_helpers/global-vars';
 import {ProjectPlan, ProjectPlanList , ProjPlanDetailObj} from '../../_models/project-plannings.model';
 import {ProjectPlanningService} from '../../_services/project-planning.service';
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
-import { Document, Paragraph, Packer, WidthType } from 'docx';
+import { Document, Paragraph, Packer, WidthType, TextRun } from 'docx';
 import { saveAs } from 'file-saver';
-import {AuthenticationService} from '../../_services/authentication.service';
-import {DashboardService} from "../../_services/dashboard.service";
-import {Dashboard} from "../../_models/dashboard.model";
-import {forEach} from "@angular/router/src/utils/collection";
-
-
-
+import { AuthenticationService } from '../../_services/authentication.service';
+import { DashboardService } from '../../_services/dashboard.service';
+import { Dashboard } from '../../_models/dashboard.model';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 interface Window {
   webkitURL?: any;
   URL?: any;
 }
-
 declare let window: Window;
 
 
@@ -94,15 +91,15 @@ export class PrintDialogComponent implements OnInit {
       });
   }
 
-
   downloadSvg(svg, fileName) {
     const $this = this;
     const copy = svg.cloneNode(true);
     this.copyStylesInline(copy, svg);
     const canvas = document.createElement('canvas');
     const bbox = svg.getBBox();
-    canvas.width = (bbox.width + 400);
-    canvas.height = (bbox.height + 400);
+    console.log(bbox)
+    canvas.width = ( 300);
+    canvas.height = ( 200);
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, bbox.width, bbox.height );
     const data = (new XMLSerializer()).serializeToString(copy);
@@ -193,10 +190,9 @@ export class PrintDialogComponent implements OnInit {
               'desc': null,
             },
             'list': [],
+            'items': [],
             'desc': null,
           };
-
-
         });
         this.globalVars.spinner = false;
       }, error => {
@@ -205,9 +201,7 @@ export class PrintDialogComponent implements OnInit {
         if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
-
       });
-
   }
 
   getProjPlanDetail(year, currentObj) {
@@ -215,6 +209,7 @@ export class PrintDialogComponent implements OnInit {
       .subscribe((data: ProjPlanDetailObj) => {
           // this.customYearObj['y_' + year] = data.projectPlanDetailList;
           this.customYearArr.push(...data.projectPlanDetailList);
+          currentObj.items.push(...data.projectPlanDetailList)
           currentObj.list = this.bodyRows(data.projectPlanDetailList);
       }, error => {
         console.log(error);
@@ -254,8 +249,6 @@ export class PrintDialogComponent implements OnInit {
         });
           Object.assign(this, this.singleArr);
 
-          console.log(this.textChart);
-          console.log(this.singleArr);
       }
       // if (elem.status.desc) {
       //   if (elem.list) {
@@ -266,6 +259,7 @@ export class PrintDialogComponent implements OnInit {
       //   }
       // }
       // setTimeout(() => {
+      console.log(elem)
         this.customArr.push(elem);
       // }, 10000)
     });
@@ -296,44 +290,104 @@ export class PrintDialogComponent implements OnInit {
     this.globalVars.spinner = true;
     this.customArr = [];
     this.generateJson();
-    const doc = new jsPDF();
-    doc.text(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '', 14 , 10).setFontSize(11);
+    let dd;
+
+
     setTimeout(() => {
-      if (this.withChart) {
-        doc.addImage(this.imgURI, 'PNG', 10, 20);
-      }
-      this.customArr.forEach((item) => {
-        let finalY = this.withChart ? 65 : 20;
-        if (doc.previousAutoTable) {
-           finalY = doc.previousAutoTable.finalY;
+      dd = {
+        info: {
+          title: this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to,
+          subject: this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to,
+        },
+        content: [
+          {
+            stack: [
+              this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '',
+            ],
+            style: 'header'
+          },
+        ],
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            alignment: 'center',
+            margin: [0, 0, 0, 20],
+          },
+          title: {
+            margin: [0, 40, 40, 5],
+            bold: true,
+          }
         }
-        if (item.status.list ) {
-          doc.text(item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount), 10, finalY + 10).setFontSize(11);
 
-          doc.autoTable({
-            startY: finalY + 15,
-            head: [['Building', 'Room', 'Type', 'Tier', 'Core Age', 'Equipment Age', 'Projected Cost']],
-            body: item.list,
-            headStyles:  {
-              fillColor: [255, 255, 255],
-              textColor: [130, 130, 130],
-              lineColor: [0, 0, 0],
-              lineWidth: 0.1,
-              fontStyle: 'normal4'
+      };
 
-            },
-            bodyStyles:  {
-              lineColor: [0, 0, 0],
-              lineWidth: 0.1,
-            }, // Cells in first column centered and green
+      if (this.withChart) {
+        dd.content.push({
+          image: this.imgURI,
+          width: 250,
+          height: 150,
+        });
+      }
+
+
+      this.customArr.forEach((item, itemIndex) => {
+        if (item.status.list) {
+
+
+          item.items.forEach((room, roomIndex) => {
+            let desc = '';
+            let descTitle = '';
+            if (item.status.desc && room.projectDesc != null) {
+              desc = room.projectDesc;
+              descTitle = 'Project Description';
+            }
+
+            dd.content.push({
+              stack: [
+                  item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount),
+                ],
+                style: 'title'
+                },
+              {
+              stack: [
+                  {
+                    text: room.building + ' - ' + room.room,
+                    margin: [40, 0],
+                    bold: true
+                  },
+                  {
+                    text: 'Tier ' + room.tier,
+                    margin: [40, 0],
+                  },
+                  {
+                    text: 'Room Type: ' + room.type,
+                    margin: [40, 0],
+                  },
+                  {
+                    text: descTitle,
+                    bold: true,
+                    margin: [40, 10, 0, 0],
+                  },
+                  {
+                    text: desc,
+                    margin: [80, 10],
+                  }
+                ]
+            });
+
+
           });
         }
       });
     }, 2000);
+
+
     setTimeout(() => {
       this.globalVars.spinner = false;
-      doc.save(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.pdf');
+      pdfMake.createPdf(dd).download(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.pdf');
     }, 7000);
+
   }
 
   downloadExcel = async () => {
@@ -436,16 +490,27 @@ export class PrintDialogComponent implements OnInit {
       .font('Arial');
 
     doc.Styles.createParagraphStyle('Paragraph', 'Paragraph')
-      .quickFormat()
-      .size(30)
-      .color('000000')
-      .font('Arial');
+      .font('Arial')
+      .quickFormat();
 
-    doc.Styles.createParagraphStyle('cell', 'cell')
+    doc.Styles.createParagraphStyle('ParagraphBold', 'ParagraphBold')
+      .bold()
+      .font('Arial')
       .quickFormat()
-      .size(23)
-      .color('000000')
-      .font('Arial');
+
+    doc.Styles.createParagraphStyle('titleCustomFirst', 'titleCustomFirst')
+      .bold()
+      .size(22)
+      .font('Arial')
+      .quickFormat();
+
+    doc.Styles.createParagraphStyle('titleCustom', 'titleCustom')
+      .bold()
+      .underline('single', '000')
+      .spacing({ before: 20 * 72 * .1, after: 20 * 72 * .05})
+      .font('Arial')
+      .quickFormat();
+
 
     const svg = document.querySelector('#hiddenChart svg.ngx-charts');
     this.downloadSvg(svg, 'chart.png');
@@ -453,7 +518,7 @@ export class PrintDialogComponent implements OnInit {
       if (this.withChart) {
         const svg = document.querySelector('#hiddenChart svg.ngx-charts');
         this.downloadSvg(svg, 'chart.png');
-        doc.createImage(this.imgURI, 400, 350, {
+        doc.createImage(this.imgURI, 250, 150, {
           floating: {
             horizontalPosition: {
               offset: 1014400,
@@ -484,40 +549,26 @@ export class PrintDialogComponent implements OnInit {
       this.customArr.forEach((item, index) => {
 
         if (item.list.length > 0) {
-          doc.addParagraph(new Paragraph('').heading3());
-          doc.addParagraph(new Paragraph('').heading3());
-          doc.addParagraph(new Paragraph('').heading3());
-          doc.addParagraph(new Paragraph(item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount)).heading1().style('Heading3'));
-          doc.addParagraph(new Paragraph('').heading3());
+          doc.addParagraph(new Paragraph('').heading4());
+          doc.addParagraph(new Paragraph('').heading4());
+          doc.addParagraph(new Paragraph(item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount)).style('titleCustomFirst'));
 
-          const table = doc.createTable({
-            rows: 1 + item.list.length,
-            columns: 7,
-            width: 100,
-            widthUnitType: WidthType.PERCENTAGE,
+          item.items.forEach((room, roomIndex) => {
+            doc.addParagraph(new Paragraph(room.building + ' - ' + room.room).style('titleCustom').leftTabStop(300));
+            doc.addParagraph(new Paragraph('Tier ' + room.tier).style('Paragraph'));
+            doc.addParagraph(new Paragraph('Room Type: ' + room.type).style('Paragraph'));
+            doc.addParagraph(new Paragraph(room.building + ' - ' + room.room).style('Paragraph'));
+            if (item.status.desc && room.projectDesc != null) {
+              doc.addParagraph(new Paragraph(''));
+              const desc = room.projectDesc;
+              const descTitle = 'Project Description';
+              doc.addParagraph(new Paragraph(descTitle).style('ParagraphBold'));
+              doc.addParagraph(new Paragraph(desc).style('Paragraph'));
+            }
+
+
+            doc.addParagraph(new Paragraph('').heading4());
           });
-
-
-          table.getCell(0, 0).addParagraph(new Paragraph('Building').heading1().style('Heading2')).setMargins(headersMargin);
-          table.getCell(0, 1).addParagraph(new Paragraph('Room').heading1().style('Heading2')).setMargins(headersMargin);
-          table.getCell(0, 2).addParagraph(new Paragraph('Type').heading1().style('Heading2')).setMargins(headersMargin);
-          table.getCell(0, 3).addParagraph(new Paragraph('Tier').heading1().style('Heading2')).setMargins(headersMargin);
-          table.getCell(0, 4).addParagraph(new Paragraph('Core Age').heading1().style('Heading2')).setMargins(headersMargin);
-          table.getCell(0, 5).addParagraph(new Paragraph('Equipment Age').heading1().style('Heading2')).setMargins(headersMargin);
-          table.getCell(0, 6).addParagraph(new Paragraph('Projected Cost').heading1().style('Heading2')).setMargins(headersMargin);
-
-          if (item.list.length > 0) {
-            item.list.forEach( (itemD, indexD) => {
-              const pos = indexD + 1;
-              table.getCell(pos, 0).addParagraph(new Paragraph(String(itemD[0])).style('cell'));
-              table.getCell(pos, 1).addParagraph(new Paragraph(String(itemD[1])).style('cell'));
-              table.getCell(pos, 2).addParagraph(new Paragraph(String(itemD[2])).style('cell'));
-              table.getCell(pos, 3).addParagraph(new Paragraph(String(itemD[3])).style('cell'));
-              table.getCell(pos, 4).addParagraph(new Paragraph(String(itemD[4])).style('cell'));
-              table.getCell(pos, 5).addParagraph(new Paragraph(String(itemD[5])).style('cell'));
-              table.getCell(pos, 6).addParagraph(new Paragraph(String(itemD[6])).style('cell'));
-            });
-          }
         }
 
       });
