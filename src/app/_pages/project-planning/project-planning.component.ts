@@ -200,6 +200,7 @@ export class ProjectPlanningComponent {
           }
 
         });
+        console.log(this)
         this.globalVars.spinner = false;
       }, error => {
         console.log(error);

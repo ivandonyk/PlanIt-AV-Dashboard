@@ -226,6 +226,7 @@ export class PrintDialogComponent implements OnInit {
   generateJson = async () => {
     this.customArr = [];
     this.customYearArr = [];
+    this.textChart = [];
     this.singleArr = [];
     Object.keys(this.customObj).forEach(item => {
       const year = item.split('_')[1];
@@ -244,11 +245,16 @@ export class PrintDialogComponent implements OnInit {
         });
 
         this.textChart.push({
-          year: result[0].year,
-          amount: '$' + this.numberWithCommas(Number(result[0].amount))
+          Year: result[0].year,
+          Amount: '$' + this.numberWithCommas(Number(result[0].amount))
         });
           Object.assign(this, this.singleArr);
-
+        setTimeout(() => {
+          const textArr = document.querySelectorAll('ngx-charts-bar-vertical text');
+          for (let i = 0; i < textArr.length; i++) {
+            textArr[i].innerHTML = textArr[i].innerHTML.replace(/[^0-9]/g, '');
+          }
+        }, 200);
       }
       // if (elem.status.desc) {
       //   if (elem.list) {
@@ -263,6 +269,8 @@ export class PrintDialogComponent implements OnInit {
         this.customArr.push(elem);
       // }, 10000)
     });
+    console.log(this)
+
 
     setTimeout(() => {
       const svg = document.querySelector('#hiddenChart svg.ngx-charts');
@@ -330,10 +338,36 @@ export class PrintDialogComponent implements OnInit {
         });
       }
 
+      console.log(this.textChart)
+
+      const textChartArr = [
+        [ { text: 'Year', bold: true }, { text: 'Amount', bold: true }]
+      ];
+
+      this.textChart.forEach((item, index) => {
+        textChartArr.push([item.Year, item.Amount]);
+      } )
+
+      dd.content.push({
+        table: {
+          headerRows: 1,
+          widths: [ 'auto', 'auto' ],
+          body: textChartArr
+        }
+      });
+
+
+
 
       this.customArr.forEach((item, itemIndex) => {
         if (item.status.list) {
 
+          dd.content.push({
+              stack: [
+                item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount),
+              ],
+              style: 'title'
+            });
 
           item.items.forEach((room, roomIndex) => {
             let desc = '';
@@ -345,14 +379,8 @@ export class PrintDialogComponent implements OnInit {
 
             dd.content.push({
               stack: [
-                  item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount),
-                ],
-                style: 'title'
-                },
-              {
-              stack: [
                   {
-                    text: room.building + ' - ' + room.room,
+                    text: room.building + ' - ' + room.room + (room.projectedCost != null ? ' $' + this.numberWithCommas(room.projectedCost) : ''),
                     margin: [40, 0],
                     bold: true
                   },
@@ -380,13 +408,16 @@ export class PrintDialogComponent implements OnInit {
           });
         }
       });
+
+
+      setTimeout(() => {
+        this.globalVars.spinner = false;
+        pdfMake.createPdf(dd).download(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.pdf');
+      }, 9000);
     }, 2000);
 
 
-    setTimeout(() => {
-      this.globalVars.spinner = false;
-      pdfMake.createPdf(dd).download(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.pdf');
-    }, 7000);
+
 
   }
 
@@ -429,7 +460,8 @@ export class PrintDialogComponent implements OnInit {
               delete item.equipmentAge;
               break;
             case 'projectedCost':
-              item['Projected Cost'] =  item['projectedCost'];
+              console.log(item['projectedCost'])
+              item['Projected Cost'] =  item['projectedCost'] != null ? '$' + this.numberWithCommas(item['projectedCost']) : item['projectedCost'];
               delete item.projectedCost;
               break;
             case 'lastAvInstallYear':
@@ -447,13 +479,14 @@ export class PrintDialogComponent implements OnInit {
           }
         });
       });
+      console.log(this)
       const workBook = XLSX.utils.book_new();
       const workSheet = XLSX.utils.json_to_sheet(this.customYearArr, {
         header: ["Update Year", "Building Name", "Room Name", "Type", "Tier", "Core Age", "Equipment Age", "Projected Cost", "Last Av Install Year", "Lifecycle", "Project Description"]
       });
       const chart = XLSX.utils.json_to_sheet(this.textChart);
       XLSX.utils.book_append_sheet(workBook, chart, 'AV Projects Total by Year');
-      XLSX.utils.book_append_sheet(workBook, workSheet, 'AV Porject Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to);
+      XLSX.utils.book_append_sheet(workBook, workSheet, 'AV Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to);
       this.globalVars.spinner = false;
       XLSX.writeFile(workBook, this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.xlsx');
     }, 10000);
@@ -550,6 +583,28 @@ export class PrintDialogComponent implements OnInit {
         doc.addParagraph(new Paragraph('').heading1());
       }
 
+      if (this.textChart.length > 0) {
+        doc.addParagraph(new Paragraph('').heading1());
+        doc.addParagraph(new Paragraph('').heading1());
+
+        const table = doc.createTable({
+          rows: 1 + this.textChart.length,
+          columns: 2,
+          width: 30,
+          widthUnitType: WidthType.PERCENTAGE,
+        });
+
+        table.getCell(0, 0).addParagraph(new Paragraph('Year').heading1().style('Heading2')).setMargins(headersMargin);
+        table.getCell(0, 1).addParagraph(new Paragraph('Amount').heading1().style('Heading2')).setMargins(headersMargin);
+
+        this.textChart.forEach( (itemD, indexD) => {
+          const pos = indexD + 1;
+          table.getCell(pos, 0).addParagraph(new Paragraph(String(itemD.Year)).style('cell'));
+          table.getCell(pos, 1).addParagraph(new Paragraph(String(itemD.Amount)).style('cell'));
+        });
+      }
+
+
       this.customArr.forEach((item, index) => {
 
         if (item.list.length > 0) {
@@ -557,17 +612,20 @@ export class PrintDialogComponent implements OnInit {
           doc.addParagraph(new Paragraph('').heading4());
           doc.addParagraph(new Paragraph(item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount)).style('titleCustomFirst'));
 
+
+
+
           item.items.forEach((room, roomIndex) => {
-            doc.addParagraph(new Paragraph(room.building + ' - ' + room.room).style('titleCustom').leftTabStop(300));
-            doc.addParagraph(new Paragraph('Tier ' + room.tier).style('Paragraph'));
-            doc.addParagraph(new Paragraph('Room Type: ' + room.type).style('Paragraph'));
-            doc.addParagraph(new Paragraph(room.building + ' - ' + room.room).style('Paragraph'));
+            doc.addParagraph(new Paragraph(room.building + ' - ' + room.room + (room.projectedCost != null ? ' $' + this.numberWithCommas(room.projectedCost) : '')).style('titleCustom').indent({left: 550}));
+            doc.addParagraph(new Paragraph('Tier ' + room.tier).style('Paragraph').indent({left: 550}));
+            doc.addParagraph(new Paragraph('Room Type: ' + room.type).style('Paragraph').indent({left: 550}));
+            doc.addParagraph(new Paragraph(room.building + ' - ' + room.room).style('Paragraph').indent({left: 550}));
             if (item.status.desc && room.projectDesc != null) {
               doc.addParagraph(new Paragraph(''));
               const desc = room.projectDesc;
               const descTitle = 'Project Description';
-              doc.addParagraph(new Paragraph(descTitle).style('ParagraphBold'));
-              doc.addParagraph(new Paragraph(desc).style('Paragraph'));
+              doc.addParagraph(new Paragraph(descTitle).style('ParagraphBold').indent({left: 550}));
+              doc.addParagraph(new Paragraph(desc).style('Paragraph').indent({left: 1050}));
             }
 
 
@@ -577,13 +635,17 @@ export class PrintDialogComponent implements OnInit {
 
       });
 
-      const packer = new Packer();
 
-      packer.toBlob(doc).then(blob => {
-        saveAs(blob, this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.docx');
-      });
-      this.globalVars.spinner = false;
-    }, 9000);
+      setTimeout( () => {
+        const packer = new Packer();
+
+        packer.toBlob(doc).then(blob => {
+          saveAs(blob, this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.docx');
+        });
+        this.globalVars.spinner = false;
+      }, 9000);
+    }, 3000);
+
 
 
   }
