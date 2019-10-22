@@ -130,12 +130,12 @@ export class RoomdetailComponent implements OnInit {
 
           const imgArr = [];
           if (data.images.length > 0) {
-            data.images.forEach(item => {
-              imgArr.push({
-                'path': item
-              });
-            });
-            this.roomDetailImages = JSON.stringify(imgArr);
+            // data.images.forEach(item => {
+            //   imgArr.push({
+            //     'path': item
+            //   });
+            // });
+            this.roomDetailImages = JSON.stringify(data.images);
 
           } else {
             this.roomDetailImages = JSON.stringify([]);

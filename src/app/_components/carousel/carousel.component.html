@@ -1,11 +1,11 @@
 <div  class="carousel" *ngIf="images.length > 0">
   <div class="slide-main">
-    <div [attr.data-orient]="images[mainPictureIndex].orientation" (click)="crystalLightbox.open(images, {index: mainPictureIndex})"  [ngStyle]="{'background-image': regeneratePath(images[mainPictureIndex].path)}" alt="">
+    <div [attr.data-orient]="images[mainPictureIndex].orientationNum" (click)="crystalLightbox.open(images, {index: mainPictureIndex})"  [ngStyle]="{'background-image': regeneratePath(images[mainPictureIndex].imagePath)}" alt="">
     </div>
   </div>
   <div class="scroller">
-    <div class="slide"   *ngFor="let slide of images | slice:1; let i = index" [attr.data-index]="i" >
-      <div [attr.data-orient]="slide.orientation" (click)="crystalLightbox.open(images, {index: i+1})" [ngStyle]="{'background-image': regeneratePath(slide.path)}" >
+    <div class="slide" *ngFor="let slide of images | slice:1; let i = index" [attr.data-index]="i" >
+      <div [attr.data-orient]="slide.orientationNum" (click)="crystalLightbox.open(images, {index: i+1})" [ngStyle]="{'background-image': regeneratePath(slide.imagePath)}" >
       </div>
     </div>
   </div>
