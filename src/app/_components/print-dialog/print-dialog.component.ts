@@ -619,7 +619,6 @@ export class PrintDialogComponent implements OnInit {
             doc.addParagraph(new Paragraph(room.building + ' - ' + room.room + (room.projectedCost != null ? ' $' + this.numberWithCommas(room.projectedCost) : '')).style('titleCustom').indent({left: 550}));
             doc.addParagraph(new Paragraph('Tier ' + room.tier).style('Paragraph').indent({left: 550}));
             doc.addParagraph(new Paragraph('Room Type: ' + room.type).style('Paragraph').indent({left: 550}));
-            doc.addParagraph(new Paragraph(room.building + ' - ' + room.room).style('Paragraph').indent({left: 550}));
             if (item.status.desc && room.projectDesc != null) {
               doc.addParagraph(new Paragraph(''));
               const desc = room.projectDesc;
