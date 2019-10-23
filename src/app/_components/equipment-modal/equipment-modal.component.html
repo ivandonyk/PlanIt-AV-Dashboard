@@ -29,19 +29,19 @@
         <span>
           Manufacturer:
         </span>
-      {{data.manufacturer ? data.manufacturer : ' &nbsp;'}}
+      {{data.manufacturer != 'null' ? data.manufacturer : ' &nbsp;'}}
     </div>
     <div>
         <span>
           Model/Part Number:
         </span>
-      {{data.modelNumber ? data.modelNumber : ' &nbsp;'}}
+      {{data.modelNumber != 'null' ? data.modelNumber : ' &nbsp;'}}
     </div>
     <div>
         <span>
           Description:
         </span>
-      {{data.description ? data.description : ' &nbsp;'}}
+      {{data.description != 'null' ? data.description : ' &nbsp;'}}
     </div>
   </div>
   <div *ngIf="!isEdit" class="subheader">
@@ -49,65 +49,65 @@
         <span>
           Class:
         </span>
-      {{data.equipmentClass ? data.equipmentClass : ' &nbsp;'}}
+      {{data.equipmentClass != 'null' ? data.equipmentClass : ' &nbsp;'}}
     </div>
     <div>
       <span>Category:</span>
-      {{data.category ? data.category : ' &nbsp;'}}
+      {{data.category != 'null' ? data.category : ' &nbsp;'}}
     </div>
   </div>
   <div *ngIf="!isEdit" class="subheader">
 
     <div>
-      <span>Date Installed:</span> {{data.installDate ? data.installDate : ' &nbsp;'}}
+      <span>Date Installed:</span> {{data.installDate != 'null' ? data.installDate : ' &nbsp;'}}
     </div>
     <div>
-      <span>Lifecycle:</span> {{data.lifecycle ? data.lifecycle : ' &nbsp;'}}
+      <span>Lifecycle:</span> {{data.lifecycle != 'null' ? data.lifecycle : ' &nbsp;'}}
     </div>
     <div>
-      <span>Integrator:</span> {{data.integrator ? data.integrator : ' &nbsp;'}}
+      <span>Integrator:</span> {{data.integrator != 'null' ? data.integrator : ' &nbsp;'}}
     </div>
 
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      Country of Manufacture: <span>{{data.countryManufacturer ? data.countryManufacturer : ' &nbsp;'}}</span>
+      Country of Manufacture: <span>{{data.countryManufacturer != 'null' ? data.countryManufacturer : ' &nbsp;'}}</span>
     </div>
     <div>
-      Serial №: <span>{{data.serialNum ? data.serialNum : ' &nbsp;'}}</span>
-    </div>
-  </div>
-  <div *ngIf="!isEdit" class="subheader">
-    <div>
-      MAC Address: <span>{{data.macAddress ? data.macAddress : ' &nbsp;'}}</span>
-    </div>
-    <div>
-      IP Address: <span>{{data.ipAddress ? data.ipAddress : ' &nbsp;'}}</span>
-    </div>
-    <div>
-      Port: <span>{{data.port ? data.port : ' &nbsp;'}}</span>
+      Serial №: <span>{{data.serialNum != 'null' ? data.serialNum : ' &nbsp;'}}</span>
     </div>
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      Manufacture Warranty: Start Date <span> {{data.warrantyStartDate ? data.warrantyStartDate : '&nbsp;'}} </span>
+      MAC Address: <span>{{data.macAddress != 'null' ? data.macAddress : ' &nbsp;'}}</span>
     </div>
     <div>
-      Manufacture Warranty: Length <span>{{data.manufactureWarranty ? data.manufactureWarranty : '&nbsp;'}}</span>
+      IP Address: <span>{{data.ipAddress != 'null' ? data.ipAddress : ' &nbsp;'}}</span>
     </div>
     <div>
-      Manufacture Warranty: Expiration <span> {{data.warrantyExpiration ? data.warrantyExpiration : '&nbsp;'}} </span>
+      Port: <span>{{data.port != 'null' ? data.port : ' &nbsp;'}}</span>
     </div>
   </div>
   <div *ngIf="!isEdit" class="subheader">
     <div>
-      Extended Warranty Start Date<span> {{data.extWarrantyStartDate ? data.extWarrantyStartDate : '&nbsp;'}} </span>
+      Manufacture Warranty: Start Date <span> {{data.warrantyStartDate != 'null' ? data.warrantyStartDate : '&nbsp;'}} </span>
     </div>
     <div>
-      Extended Warranty/Service Contract: Length<span> {{data.extendedWarranty ? data.extendedWarranty : '&nbsp;'}} </span>
+      Manufacture Warranty: Length <span>{{data.manufactureWarranty != 'null' ? data.manufactureWarranty : '&nbsp;'}}</span>
     </div>
     <div>
-      Extended Warranty Expiration<span> {{data.extWarrantyExpiration ? data.extWarrantyExpiration : '&nbsp;'}} </span>
+      Manufacture Warranty: Expiration <span> {{data.warrantyExpiration != 'null' ? data.warrantyExpiration : '&nbsp;'}} </span>
+    </div>
+  </div>
+  <div *ngIf="!isEdit" class="subheader">
+    <div>
+      Extended Warranty Start Date<span> {{data.extWarrantyStartDate != 'null' ? data.extWarrantyStartDate : '&nbsp;'}} </span>
+    </div>
+    <div>
+      Extended Warranty/Service Contract: Length<span> {{data.extendedWarranty != 'null' ? data.extendedWarranty : '&nbsp;'}} </span>
+    </div>
+    <div>
+      Extended Warranty Expiration<span> {{data.extWarrantyExpiration != 'null' ? data.extWarrantyExpiration : '&nbsp;'}} </span>
     </div>
 
   </div>

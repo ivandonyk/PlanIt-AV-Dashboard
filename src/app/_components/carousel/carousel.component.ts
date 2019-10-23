@@ -18,6 +18,7 @@ export class CarouselComponent implements OnInit {
   public mainPictureIndex: any = 0;
   public images: Array<{
     imagePath: string,
+    path?: string,
     orientationDesc: string,
     orientationNum: string,
   }> = [];
@@ -31,6 +32,10 @@ export class CarouselComponent implements OnInit {
   }
   ngOnInit() {
     this.images = JSON.parse(this.roomDetailImages);
+
+    this.images.forEach((item, index) => {
+      item.path = item.imagePath + '?orient=' + item.orientationNum;
+    });
   }
   previousSlideRoom() {
     if (this.mainPictureIndex !== 0) {
