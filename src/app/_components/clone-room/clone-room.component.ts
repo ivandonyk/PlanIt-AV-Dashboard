@@ -130,7 +130,7 @@ export class CloneRoomComponent implements OnInit {
       .subscribe(data => {
         this.globalVars.spinner = false;
         this.dialogRef.close();
-        this.snackbar.open('Room Added', '', {
+        this.snackbar.open('Room Cloned', '', {
             duration: 2500,
             verticalPosition: 'top',
             horizontalPosition: 'right',
@@ -142,6 +142,16 @@ export class CloneRoomComponent implements OnInit {
         if (error.error.error === 'invalid_token') {
           this.authServ.logout();
         }
+        this.dialogRef.close();
+        if (error.error.text === 'Room cloned successfully') {
+          this.snackbar.open('Room Cloned', '', {
+              duration: 2500,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            }
+          );
+        }
+
       });
   }
 
