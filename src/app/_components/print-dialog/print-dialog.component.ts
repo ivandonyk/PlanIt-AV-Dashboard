@@ -377,6 +377,7 @@ export class PrintDialogComponent implements OnInit {
               descTitle = 'Project Description';
             }
 
+
             dd.content.push({
               stack: [
                   {
@@ -406,6 +407,7 @@ export class PrintDialogComponent implements OnInit {
 
 
           });
+
         }
       });
 
