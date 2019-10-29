@@ -208,9 +208,11 @@ export class PrintDialogComponent implements OnInit {
     this.projectPlanningServ.getProjPlanDetail(year)
       .subscribe((data: ProjPlanDetailObj) => {
           // this.customYearObj['y_' + year] = data.projectPlanDetailList;
-          this.customYearArr.push(...data.projectPlanDetailList);
-          currentObj.items.push(...data.projectPlanDetailList)
-          currentObj.list = this.bodyRows(data.projectPlanDetailList);
+
+          const dataOrdered = data.projectPlanDetailList.sort((a, b) => (a.building > b.building) ? 1 : -1)
+          this.customYearArr.push(...dataOrdered);
+          currentObj.items.push(...dataOrdered)
+          currentObj.list = this.bodyRows(dataOrdered);
       }, error => {
         console.log(error);
         if (error.error.error === 'invalid_token') {
@@ -428,8 +430,9 @@ export class PrintDialogComponent implements OnInit {
 
     await this.generateJson();
 
+
     setTimeout(() => {
-      this.customYearArr.forEach((item, index) => {
+      this.customYearArr.sort((a, b) => (a.updateYear > b.updateYear) ? 1 : -1).forEach((item, index) => {
         delete item.roomId;
         Object.keys(item).forEach((itemDeep, index) => {
           switch (itemDeep) {
