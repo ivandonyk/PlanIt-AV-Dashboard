@@ -316,7 +316,6 @@ export class SystemsService {
       userId: userDataObj.id,
       userRoleId: data.userRoleId,
       valid: userDataObj.valid,
-      password: data.password,
       firstName: data.firstName,
       lastName: data.lastName,
       phoneNbr: data.phoneNbr,

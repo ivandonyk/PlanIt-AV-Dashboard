@@ -111,30 +111,36 @@ export class ManageUserComponent implements OnInit {
   }
 
   updateUser() {
-    this.globalVars.spinner = true;
     const formData = this.userEditForm.value;
 
-    console.log(this.userManageData)
+    console.log(this)
     if (this.isCreateUser) {
-      this.systService.createUser(formData, this.userData)
-        .subscribe((data) => {
-          this.userData = null;
-          this.getUsers()
+      if (this.userEditForm.status === 'VALID') {
+        this.globalVars.spinner = true;
 
-          this.snackbar.open('User has been added', '', {
-              duration: 3500,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            }
-          );
-          this.globalVars.spinner = false;
-          this.isCreateUser = false;
-        }, error => {
-          console.log(error);
-          this.globalVars.spinner = false;
-          this.isCreateUser = false;
-        });
+        this.systService.createUser(formData, this.userData)
+          .subscribe((data) => {
+            this.userData = null;
+            this.getUsers()
+
+            this.snackbar.open('User has been added', '', {
+                duration: 3500,
+                verticalPosition: 'top',
+                horizontalPosition: 'right',
+              }
+            );
+            this.globalVars.spinner = false;
+            this.isCreateUser = false;
+          }, error => {
+            console.log(error);
+            this.globalVars.spinner = false;
+            this.isCreateUser = false;
+          });
+      }
+
     } else {
+      this.globalVars.spinner = true;
+
       this.systService.updateUser(formData, this.userData)
         .subscribe((data) => {
           this.userData = null;
@@ -177,9 +183,9 @@ export class ManageUserComponent implements OnInit {
       firstName: new FormControl(''),
       lastName: new FormControl(''),
       phoneNbr: new FormControl(''),
-      userName: new FormControl(''),
+      userName: ['', Validators.pattern(/^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(.[A-Za-z0-9]+)(.[A-Za-z]{2,})$/)],
       title: new FormControl(''),
-      password: new FormControl(''),
+      password: [''],
       userRoleId: new FormControl(''),
       active: new FormControl(''),
       primaryAcctAdmin: new FormControl(''),
