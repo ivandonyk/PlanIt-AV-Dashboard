@@ -169,7 +169,7 @@ export class ManageUserComponent implements OnInit {
         console.log(data);
         this.globalVars.spinner = false;
         this.userData = null;
-        this.getUsers()
+        this.getUsers();
 
       }, error => {
         console.log(error);
