@@ -185,7 +185,7 @@ export class ManageUserComponent implements OnInit {
       phoneNbr: new FormControl(''),
       userName: ['', Validators.pattern(/^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(.[A-Za-z0-9]+)(.[A-Za-z]{2,})$/)],
       title: new FormControl(''),
-      password: [''],
+      password: ['', Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)],
       userRoleId: new FormControl(''),
       active: new FormControl(''),
       primaryAcctAdmin: new FormControl(''),
