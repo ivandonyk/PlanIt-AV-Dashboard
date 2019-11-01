@@ -17,7 +17,6 @@ export class UploadDocumentComponent implements OnInit {
   });
   public fields: any = [];
 
-
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<UploadDocumentComponent>,
@@ -30,7 +29,6 @@ export class UploadDocumentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
   }
 
   onSubmit() {

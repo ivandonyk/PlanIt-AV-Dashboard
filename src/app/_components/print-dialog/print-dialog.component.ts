@@ -21,7 +21,6 @@ interface Window {
 }
 declare let window: Window;
 
-
 @Component({
   selector: 'app-print-dialog',
   templateUrl: './print-dialog.component.html',
@@ -50,7 +49,6 @@ export class PrintDialogComponent implements OnInit {
   public view: Array<number> = [300, 200];
   public businessName: any = "";
 
-
   public colorScheme = {
     domain: ['#fa0006']
   };
@@ -73,8 +71,6 @@ export class PrintDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-
     this.years = this.range(this.data.years.start, this.data.years.end);
     this.yearsEnd = this.range(this.data.years.start, this.data.years.end);
     this.getProjPlanSum();
@@ -208,7 +204,6 @@ export class PrintDialogComponent implements OnInit {
     this.projectPlanningServ.getProjPlanDetail(year)
       .subscribe((data: ProjPlanDetailObj) => {
           // this.customYearObj['y_' + year] = data.projectPlanDetailList;
-
           const dataOrdered = data.projectPlanDetailList.sort((a, b) => (a.building > b.building) ? 1 : -1)
           this.customYearArr.push(...dataOrdered);
           currentObj.items.push(...dataOrdered)
@@ -258,18 +253,8 @@ export class PrintDialogComponent implements OnInit {
           }
         }, 200);
       }
-      // if (elem.status.desc) {
-      //   if (elem.list) {
-      //     this.getProjectDesc(elem.list.roomId, elem);
-      //   } else {
-      //     this.getProjPlanDetail(year, elem);
-      //     this.getProjectDesc(elem.list.roomId, elem);
-      //   }
-      // }
-      // setTimeout(() => {
-      console.log(elem)
-        this.customArr.push(elem);
-      // }, 10000)
+
+      this.customArr.push(elem);
     });
     console.log(this)
 
@@ -358,9 +343,6 @@ export class PrintDialogComponent implements OnInit {
         }
       });
 
-
-
-
       this.customArr.forEach((item, itemIndex) => {
         if (item.status.list) {
 
@@ -378,7 +360,6 @@ export class PrintDialogComponent implements OnInit {
               desc = room.projectDesc;
               descTitle = 'Project Description';
             }
-
 
             dd.content.push({
               stack: [
@@ -406,30 +387,21 @@ export class PrintDialogComponent implements OnInit {
                   }
                 ]
             });
-
-
           });
-
         }
       });
-
 
       setTimeout(() => {
         this.globalVars.spinner = false;
         pdfMake.createPdf(dd).download(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.pdf');
       }, 9000);
     }, 2000);
-
-
-
-
   }
 
   downloadExcel = async () => {
     this.globalVars.spinner = true;
 
     await this.generateJson();
-
 
     setTimeout(() => {
       this.customYearArr.sort((a, b) => (a.updateYear > b.updateYear) ? 1 : -1).forEach((item, index) => {
@@ -503,7 +475,6 @@ export class PrintDialogComponent implements OnInit {
     await this.generateJson();
     const doc = new Document();
 
-
     const headersMargin = {
       top: 40,
       bottom: 40,
@@ -516,8 +487,6 @@ export class PrintDialogComponent implements OnInit {
       .font('Arial');
 
     doc.addParagraph(new Paragraph(this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to).title().style('title'));
-
-
 
     doc.Styles.createParagraphStyle('Heading2', 'Heading')
       .quickFormat()
@@ -552,7 +521,6 @@ export class PrintDialogComponent implements OnInit {
       .spacing({ before: 20 * 72 * .1, after: 20 * 72 * .05})
       .font('Arial')
       .quickFormat();
-
 
     const svg = document.querySelector('#hiddenChart svg.ngx-charts');
     this.downloadSvg(svg, 'chart.png');
@@ -609,16 +577,12 @@ export class PrintDialogComponent implements OnInit {
         });
       }
 
-
       this.customArr.forEach((item, index) => {
 
         if (item.list.length > 0) {
           doc.addParagraph(new Paragraph('').heading4());
           doc.addParagraph(new Paragraph('').heading4());
           doc.addParagraph(new Paragraph(item.proj.year + ' ' + item.proj.projects +  ' $' + this.numberWithCommas(item.proj.amount)).style('titleCustomFirst'));
-
-
-
 
           item.items.forEach((room, roomIndex) => {
             doc.addParagraph(new Paragraph(room.building + ' - ' + room.room + (room.projectedCost != null ? ' $' + this.numberWithCommas(room.projectedCost) : '')).style('titleCustom').indent({left: 550}));
@@ -631,18 +595,14 @@ export class PrintDialogComponent implements OnInit {
               doc.addParagraph(new Paragraph(descTitle).style('ParagraphBold').indent({left: 550}));
               doc.addParagraph(new Paragraph(desc).style('Paragraph').indent({left: 1050}));
             }
-
-
             doc.addParagraph(new Paragraph('').heading4());
           });
         }
 
       });
 
-
       setTimeout( () => {
         const packer = new Packer();
-
         packer.toBlob(doc).then(blob => {
           saveAs(blob, this.businessName + ' AV Capital Project Plan ' + this.printForm.value.year + ' - ' + this.printForm.value.to + '.docx');
         });

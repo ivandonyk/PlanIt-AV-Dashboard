@@ -7,6 +7,7 @@ import {GlobalVarsHelper} from '../../_helpers/global-vars';
   templateUrl: './contact-us.component.html',
   styleUrls: ['./contact-us.component.scss']
 })
+
 export class ContactUsComponent implements OnInit {
 
   constructor(

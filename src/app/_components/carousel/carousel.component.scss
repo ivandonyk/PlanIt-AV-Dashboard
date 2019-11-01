@@ -7,7 +7,6 @@
   align-items: center;
   position: relative;
 
-
   .slide-main{
     width: 250px;
     height: 247px;
@@ -44,17 +43,12 @@
     }
   }
 
-
   .scroller{
     display: flex;
     flex-wrap: wrap;
-    //align-items: center;
-    //justify-content: space-evenly;
     height: 251px;
     margin-top: -4px;
     width: 100%;
-
-
 
     .slide{
 
@@ -69,7 +63,6 @@
         width: 100%;
         background-position: center;
         background-size: cover;
-        //background-image: attr(data-src url);
         &[data-orient="2"]{
           transform: rotateY(180deg);
         }
@@ -98,12 +91,7 @@
       }
     }
   }
-
-
-
-
-
-
+  
   .previousSlide{
     position: absolute;
     left:11px;

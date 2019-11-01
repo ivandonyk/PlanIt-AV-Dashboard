@@ -6,21 +6,17 @@ import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import {ErrorStateMatcher} from '@angular/material/core';
 import { MatSnackBar} from '@angular/material';
 
-
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
-
-
 @Component({
   selector: 'app-manage-user',
   templateUrl: './manage-user.component.html',
   styleUrls: ['./manage-user.component.scss']
 })
-
 
 export class ManageUserComponent implements OnInit {
   public userManageData: UserManageData[];

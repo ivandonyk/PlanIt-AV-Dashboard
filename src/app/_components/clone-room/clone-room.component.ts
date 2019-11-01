@@ -58,7 +58,6 @@ export class CloneRoomComponent implements OnInit {
   roomList: any;
   buildingsArr: any;
 
-
   public buildings: BuildingsIds[] = [];
   public rooms: any = [];
   public seatingTypes: string[] = [
@@ -244,8 +243,4 @@ export class CloneRoomComponent implements OnInit {
       }
     });
   }
-
-
-
-
 }

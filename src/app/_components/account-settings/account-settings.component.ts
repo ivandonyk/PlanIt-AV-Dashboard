@@ -7,13 +7,11 @@ import {MatDialog, MatDialogRef} from "@angular/material";
 import {ConfirmModalComponent} from "../confirm-modal/confirm-modal.component";
 import {MatSnackBar} from '@angular/material/snack-bar';
 
-
 @Component({
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
   styleUrls: ['./account-settings.component.scss']
 })
-
 
 export class AccountSettingsComponent implements OnInit {
   public currentRoute: number = 1;
@@ -45,7 +43,6 @@ export class AccountSettingsComponent implements OnInit {
   public formChooseSubs = this.fb.group({
     subscription: new FormControl(''),
   });
-
 
   constructor(
     private systService: SystemsService,

@@ -12,8 +12,6 @@ export interface DialogData {
   roomId: any;
   buildingId: any;
 }
-
-
 @Component({
   selector: 'app-add-equipment',
   templateUrl: './add-equipment.component.html',

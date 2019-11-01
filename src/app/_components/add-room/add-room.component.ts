@@ -7,7 +7,6 @@ import {BuildingsIds} from '../../_models/systems.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {AuthenticationService} from '../../_services/authentication.service';
 
-
 export interface DialogData {
   buildingId: any;
 }
@@ -18,8 +17,6 @@ export interface DialogData {
   styleUrls: ['./add-room.component.css']
 })
 export class AddRoomComponent implements OnInit {
-
-
 
 public addRoomForm = this.fb.group({
     buildingId: this.data ? this.data.buildingId : new FormControl(''),

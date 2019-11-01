@@ -34,12 +34,10 @@
   display: flex;
   height: 100%;
 
-
   .sidebar {
     height: 100%;
     width: 205px;
     background: #ddd;
-
 
     .menu-option{
       text-decoration: none;
@@ -76,7 +74,6 @@
       //margin-left: 17px;
     }
 
-
     .info-cont{
 
       p{
@@ -92,8 +89,6 @@
         }
       }
     }
-
-
 
     form{
       //margin-left: 17px;
@@ -121,9 +116,6 @@
         position: relative;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
         transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-
-
-
 
         .sub-option{
           display: flex;
@@ -164,6 +156,7 @@ form {
   }
 
 }
+
 .closeedit{
   position: relative;
 

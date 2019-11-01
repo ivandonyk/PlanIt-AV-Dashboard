@@ -8,7 +8,6 @@ import * as moment from 'moment';
 import {ConfirmModalComponent} from '../confirm-modal/confirm-modal.component';
 import {AuthenticationService} from '../../_services/authentication.service';
 
-
 @Component({
   selector: 'app-equipment-modal',
   templateUrl: './equipment-modal.component.html',
@@ -70,7 +69,6 @@ export class EquipmentModalComponent implements OnInit {
     return this.form.value;
   }
 
-
   getRooms() {
     this.systServ.getRoomIds()
       .subscribe((data) => {
@@ -111,8 +109,6 @@ export class EquipmentModalComponent implements OnInit {
 
   getEquipmentDetail() {
     this.globalVars.spinner = true;
-
-
 
     this.systServ.getEquipmentDetail(this.equipmentId)
       .subscribe((data: EquipmentDetail) => {
@@ -225,9 +221,6 @@ export class EquipmentModalComponent implements OnInit {
           this.authServ.logout();
         }
       });
-
-
-
   }
 
   confirmCancel(): void {
@@ -245,6 +238,4 @@ export class EquipmentModalComponent implements OnInit {
     }
 
   }
-
-
 }

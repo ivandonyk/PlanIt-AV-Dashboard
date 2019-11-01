@@ -27,7 +27,6 @@ export class SidebarComponent implements OnInit {
       if (val instanceof NavigationEnd) {
         this.currentRoute = val.url;
         this.sessionGet('expire');
-        //this.updateSession('expire');
       }
     });
 
@@ -66,8 +65,6 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-
   ngOnInit() {
   }
-
 }

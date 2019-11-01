@@ -4,7 +4,6 @@ import { Dashboard, Systems, Lifecycle, Support } from '../../_models/dashboard.
 import { GlobalVarsHelper } from '../../_helpers/global-vars';
 import {AuthenticationService} from '../../_services/authentication.service';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -46,5 +45,4 @@ export class DashboardComponent implements OnInit {
   getObjectData(key) {
     return this.dashboardData[key];
   }
-
 }

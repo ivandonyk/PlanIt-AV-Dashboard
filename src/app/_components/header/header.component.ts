@@ -15,6 +15,7 @@ import {AccountSettingsComponent} from "../account-settings/account-settings.com
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
+
 export class HeaderComponent implements OnInit {
   public currentPage: number;
 
@@ -25,8 +26,6 @@ export class HeaderComponent implements OnInit {
   }
   ngOnInit() {
   }
-
-
 
   openBuildingDialog(): void {
     this.dialog.open(AddBuildingComponent);

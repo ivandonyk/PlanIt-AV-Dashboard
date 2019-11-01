@@ -5,7 +5,6 @@ import { GlobalVarsHelper } from '../../_helpers/global-vars';
 export interface DialogData {
   title: string;
 }
-
 @Component({
   selector: 'app-add-note',
   templateUrl: './confirm-modal.component.html',

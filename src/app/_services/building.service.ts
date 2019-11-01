@@ -8,9 +8,7 @@ import { environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class BuildingService {
-
   constructor(private httpClient: HttpClient) {
-
   }
 
   getBuildings(): Observable<Building[]> {

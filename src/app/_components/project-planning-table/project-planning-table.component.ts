@@ -14,7 +14,6 @@ export class ProjectPlanningTableComponent implements OnInit {
   @Output() clickRow = new EventEmitter<number>();
   public columnsHeader: Array<string> = [];
 
-
   public roomId: number = null;
   public data: any;
   public columns: Array<{key: string, title: string}>;

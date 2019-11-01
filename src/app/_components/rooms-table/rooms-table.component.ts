@@ -14,7 +14,6 @@ export class RoomsTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @Output() clickRow = new EventEmitter<number>();
 
-
   public roomId: number = null;
   public searchQ: string = '';
   public data: any;

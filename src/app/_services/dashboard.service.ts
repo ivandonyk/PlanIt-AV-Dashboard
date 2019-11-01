@@ -9,9 +9,6 @@ import { UserData } from '../_models/userdata.model';
   providedIn: 'root'
 })
 export class DashboardService {
-
-
-
   constructor(private httpClient: HttpClient) { }
 
   getDashboardData(): Observable<Dashboard> {

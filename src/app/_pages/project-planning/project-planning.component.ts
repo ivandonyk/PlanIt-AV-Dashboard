@@ -144,11 +144,6 @@ export class ProjectPlanningComponent {
     this.globalVars.spinner = true;
     this.getProjPlanSum();
     this.getAllEquipments();
-    // setInterval(() => {
-    //   this.getProjPlanSum();
-    //
-    // }, 15000);
-
 
     this.dashServ.getDashboardData()
       .subscribe((data: Dashboard) => {
@@ -160,7 +155,6 @@ export class ProjectPlanningComponent {
           this.authServ.logout();
         }
       });
-
   }
 
   openDialogPrint(): void {
@@ -172,13 +166,15 @@ export class ProjectPlanningComponent {
         }
       }
     });
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
     });
   }
+
   onSelect(event) {
   }
+
   getProjPlanSum() {
     this.projectPlanningServ.getProjPlanSum()
       .subscribe((data: ProjectPlanList) => {
@@ -269,13 +265,7 @@ export class ProjectPlanningComponent {
           this.equipmentsLocal = '0';
           const imgArr = [];
           if (data.images.length > 0) {
-            // data.images.forEach(item => {
-            //   imgArr.push({
-            //     'path': item
-            //   });
-            // });
             this.roomDetailImages = JSON.stringify(data.images);
-
           } else {
             this.roomDetailImages = JSON.stringify([]);
           }

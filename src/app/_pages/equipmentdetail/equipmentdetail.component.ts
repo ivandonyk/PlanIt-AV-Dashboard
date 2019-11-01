@@ -5,7 +5,6 @@ import { SystemsService } from '../../_services/systems.service';
 import { EquipmentDetail } from '../../_models/systems.model';
 import { AuthenticationService } from '../../_services/authentication.service';
 
-
 @Component({
   selector: 'app-equipmentdetail',
   templateUrl: './equipmentdetail.component.html',
@@ -27,7 +26,6 @@ export class EquipmentdetailComponent implements OnInit {
     this.globalVars.spinner = true;
     this.getEquipmentDetail();
   }
-
 
   getEquipmentDetail() {
     this.systServ.getEquipmentDetail(this.equipmentId)
@@ -69,13 +67,9 @@ export class EquipmentdetailComponent implements OnInit {
 
   }
 
-
   updateRoom() {
-
   }
+  
   confirmCancel() {
-
   }
-
-
 }

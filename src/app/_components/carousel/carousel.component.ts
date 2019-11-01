@@ -23,7 +23,6 @@ export class CarouselComponent implements OnInit {
     orientationNum: string,
   }> = [];
 
-
   constructor(
     public crystalLightbox: CrystalLightbox,
     public globalVars: GlobalVarsHelper,

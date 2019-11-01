@@ -17,7 +17,6 @@ import {AddBuildingComponent} from '../../_components/add-building/add-building.
 import Siema from 'siema';
 import {AuthenticationService} from '../../_services/authentication.service';
 
-
 @Component({
   selector: 'app-systems',
   templateUrl: 'systems.component.html',
@@ -164,7 +163,6 @@ export class SystemsComponent implements OnInit {
     'Drywall', 'Drop', 'Open', 'Bar-joist', 'Combination'
   ];
 
-
   constructor(
     private systServ: SystemsService,
     public globalVars: GlobalVarsHelper,
@@ -252,17 +250,15 @@ export class SystemsComponent implements OnInit {
     this.mySiema.prev();
 
   }
+
   nextSlide() {
     this.mySiema.next();
 
   }
+
   openBuildingDetail(id: number | string) {
     console.log(id);
     window.localStorage.removeItem('buildingid' + id);
-
-    // if(){
-    //   window.localStorage.removeItem('buildingid' + id);
-    // }
 
     this.dataSource = '';
     this.globalVars.spinner = true;
@@ -280,6 +276,7 @@ export class SystemsComponent implements OnInit {
         }
       });
   }
+
   getRoooms() {
     this.dataRoomSource = null;
     this.globalVars.spinner = true;
@@ -295,6 +292,7 @@ export class SystemsComponent implements OnInit {
         }
       });
   }
+
   getAllEquipments() {
     this.equipmentsString = '';
     this.globalVars.spinner = true;
@@ -310,6 +308,7 @@ export class SystemsComponent implements OnInit {
         }
       });
   }
+
   getRoomDet() {
     this.isRoomFormChanged = false;
     this.systServ.getRoomDetails(this.roomId)
@@ -377,6 +376,7 @@ export class SystemsComponent implements OnInit {
         }
       });
   }
+
   opemRoomDetailed(status?: boolean, id?: number) {
     if (!status) {
       this.roomModalShown = false;
@@ -388,9 +388,11 @@ export class SystemsComponent implements OnInit {
       this.getRoomDet();
     }
   }
+
   expand(roomId) {
     window.open(window.location.origin + '/home/room-detail/' + this.currentBuilding + '/' + roomId);
   }
+
   getEquipmentsRoom(id) {
     this.globalVars.spinner = true;
 
@@ -411,6 +413,7 @@ export class SystemsComponent implements OnInit {
         }
       });
   }
+
   changedTub(event) {
     if (event === 2) {
       this.equipments = [];
@@ -419,10 +422,10 @@ export class SystemsComponent implements OnInit {
       });
     }
   }
+
   opemEquipmentDetailed(status, id?: number) {
     this.equipmentId = id;
   }
-
 
   openDialogAddNote(): void {
     const dialogRef = this.dialog.open(AddNoteComponent, {
@@ -436,6 +439,7 @@ export class SystemsComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
   openDialogAddProjectDesc() {
     const dialogRef = this.dialog.open(AddProjectDescComponent, {
       width: '80%',
@@ -450,8 +454,8 @@ export class SystemsComponent implements OnInit {
       this.getProjectDesc(this.roomId);
     });
   }
-  getEquipment(roomId) {
 
+  getEquipment(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getEquipments(roomId)
       .subscribe((data: Array<{
@@ -488,7 +492,6 @@ export class SystemsComponent implements OnInit {
       });
   }
 
-
   addRoom(id) {
     this.dialog.open(AddRoomComponent, {
       data: {
@@ -504,8 +507,6 @@ export class SystemsComponent implements OnInit {
       }
     });
   }
-
-
 
   addEquipment() {
     this.dialog.open(AddEquipmentComponent, {
@@ -575,6 +576,7 @@ export class SystemsComponent implements OnInit {
         }
       });
   }
+
   confirmCancel(): void {
     if (this.isRoomFormChanged === true) {
       const dialogRef = this.dialog.open(ConfirmModalComponent);
@@ -590,6 +592,7 @@ export class SystemsComponent implements OnInit {
     }
 
   }
+
   getDocuments(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getDocuments(roomId)
@@ -604,6 +607,7 @@ export class SystemsComponent implements OnInit {
         }
       });
   }
+
   getProjectDesc(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getProjectDesc(roomId)
@@ -618,6 +622,7 @@ export class SystemsComponent implements OnInit {
         }
       });
   }
+
   getRoomHist(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getRoomHist(roomId)
@@ -632,6 +637,7 @@ export class SystemsComponent implements OnInit {
         }
       });
   }
+
   openDialogAddPhoto(): void {
     const dialogRef = this.dialog.open(AddPhotosComponent, {
       data: {
@@ -648,6 +654,7 @@ export class SystemsComponent implements OnInit {
       }
     });
   }
+
   openDialogUploadDocument(): void {
     const dialogRef = this.dialog.open(UploadDocumentComponent, {
       data: {
@@ -656,19 +663,13 @@ export class SystemsComponent implements OnInit {
         buildingId: this.currentBuilding,
       }
     });
-
   }
-
-
 
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-
   trackByFn(index, item) {
     return index;
   }
-
-
 }

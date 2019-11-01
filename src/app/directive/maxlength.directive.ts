@@ -14,7 +14,6 @@ export class MaxlengthDirective implements OnInit, OnDestroy {
     }
   }
 
-  // @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: any) {
     const maxLength = event.target.maxLength;
     const currentLength = event.target.value.length;
@@ -22,8 +21,6 @@ export class MaxlengthDirective implements OnInit, OnDestroy {
       event.preventDefault();
     }
   }
-
-
 
   ngOnDestroy() {
     this.elementRef.nativeElement.removeEventListener('keydown', this.handleKeyboardEvent);

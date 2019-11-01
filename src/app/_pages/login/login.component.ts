@@ -25,9 +25,6 @@ export class LoginComponent implements OnInit {
 
     if (sessionStorage.getItem('token') !== null) {
       this.router.navigate(['/home/dashboard']);
-    } else {
-      // this.authService.logout();
-
     }
 
     this.loginForm = this.fb.group({
@@ -38,17 +35,12 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-
   get f() { return this.loginForm.controls; }
-
-
 
   onSubmit() {
     this.authService.login(this.f.userName.value, this.f.password.value)
       .subscribe(user => {
-
         if (user && user.access_token) {
-
 
           const expirationDate = new Date(new Date().getTime() + (user.expires_in * 1000));
           const duration = expirationDate.toISOString();
@@ -58,7 +50,6 @@ export class LoginComponent implements OnInit {
           this.authService.getUserData(this.f.userName.value)
             .subscribe(data => {
               window.sessionStorage.setItem('currentUser', JSON.stringify(data));
-
               if (this.returnUrl !== '/') {
                 this.router.navigate([this.returnUrl]);
               } else {
@@ -79,7 +70,5 @@ export class LoginComponent implements OnInit {
           );
         }
       });
-
   }
-
 }

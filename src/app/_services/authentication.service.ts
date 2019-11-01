@@ -8,9 +8,6 @@ import { environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-
-
   constructor(private httpClient: HttpClient) { }
 
   login(userName: string, password: string): Observable<LoginData> {
@@ -42,5 +39,4 @@ export class AuthenticationService {
       params: body
     });
   }
-
 }

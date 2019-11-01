@@ -6,6 +6,7 @@ import { SidebarRoutesModule} from '../../_components/sidebar/sidebar-routes.mod
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent implements OnInit {
 
   constructor() { }

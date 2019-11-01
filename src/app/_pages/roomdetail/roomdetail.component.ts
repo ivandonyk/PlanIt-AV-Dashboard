@@ -14,12 +14,12 @@ import {AddProjectDescComponent} from '../../_components/add-project-desc/add-pr
 import {AddEquipmentComponent} from '../../_components/add-equipment/add-equipment.component';
 import {AuthenticationService} from '../../_services/authentication.service';
 
-
 @Component({
   selector: 'app-roomdetail',
   templateUrl: './roomdetail.component.html',
   styleUrls: ['./roomdetail.component.scss']
 })
+
 export class RoomdetailComponent implements OnInit {
   public roomDetailImages: String = '';
   public form: FormGroup;
@@ -152,7 +152,6 @@ export class RoomdetailComponent implements OnInit {
         });
   }
 
-
   confirmCancel(): void {
     const dialogRef = this.dialog.open(ConfirmModalComponent);
     dialogRef.afterClosed().subscribe(result => {
@@ -163,6 +162,7 @@ export class RoomdetailComponent implements OnInit {
       this.roomModalShownEdit = false;
     });
   }
+
   openDialogAddNote(): void {
     const dialogRef = this.dialog.open(AddNoteComponent, {
       data: {
@@ -172,9 +172,6 @@ export class RoomdetailComponent implements OnInit {
       }
     });
   }
-
-
-
 
   getEquipment(roomId) {
     this.globalVars.spinner = true;
@@ -211,6 +208,7 @@ export class RoomdetailComponent implements OnInit {
         }
       });
   }
+
   getRoomDet() {
     this.systServ.getRoomDetails(this.roomId)
       .subscribe((data: RoomDetails) => {
@@ -256,6 +254,7 @@ export class RoomdetailComponent implements OnInit {
         }
       });
   }
+
   updateRoom() {
     this.globalVars.spinner = true;
     const room: RoomDTO = {
@@ -303,6 +302,7 @@ export class RoomdetailComponent implements OnInit {
         }
       });
   }
+
   getDocuments(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getDocuments(roomId)
@@ -317,6 +317,7 @@ export class RoomdetailComponent implements OnInit {
         }
       });
   }
+
   getProjectDesc(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getProjectDesc(roomId)
@@ -331,6 +332,7 @@ export class RoomdetailComponent implements OnInit {
         }
       });
   }
+
   getRoomHist(roomId) {
     this.globalVars.spinner = true;
     this.systServ.getRoomHist(roomId)
@@ -345,6 +347,7 @@ export class RoomdetailComponent implements OnInit {
         }
       });
   }
+
   openDialogAddPhoto(): void {
     const dialogRef = this.dialog.open(AddPhotosComponent, {
       data: {
@@ -354,6 +357,7 @@ export class RoomdetailComponent implements OnInit {
       }
     });
   }
+
   openDialogUploadDocument(): void {
     const dialogRef = this.dialog.open(UploadDocumentComponent, {
       data: {
@@ -363,6 +367,7 @@ export class RoomdetailComponent implements OnInit {
       }
     });
   }
+
   openDialogAddProjectDesc() {
     const dialogRef = this.dialog.open(AddProjectDescComponent, {
       width: '80%',
@@ -377,6 +382,7 @@ export class RoomdetailComponent implements OnInit {
       this.getProjectDesc(this.roomId);
     });
   }
+
   addEquipment() {
     this.dialog.open(AddEquipmentComponent, {
       data: {
@@ -385,8 +391,8 @@ export class RoomdetailComponent implements OnInit {
       }
     });
   }
+
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
-
 }
